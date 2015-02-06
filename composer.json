@@ -1,0 +1,33 @@
+{
+    "name": "janhuang/dobee-php-simple-framework",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "description": "php simple framework",
+    "keyword": [ "simple framework", "php simple framework", "simple php framework" ],
+    "authors": [
+        {
+            "name": "janhuang",
+            "email": "384099566@qq.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/framework-kernel.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.7",
+        "twig/twig": "~1.0"
+    },
+    "require-dev": {
+        "dobee/framework-kernel": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/",
+            "App\\": "app/"
+        }
+    }
+}
