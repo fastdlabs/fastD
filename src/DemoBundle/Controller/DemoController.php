@@ -13,13 +13,22 @@
 
 namespace DemoBundle\Controller;
 
-class DemoController 
+use Dobee\FrameworkKernel\Framework\Controller\Controller;
+
+class DemoController extends Controller
 {
     /**
      * @Route("/", name="demo_index")
      */
     public function demoAction()
     {
-        return 'hello world';
+        $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
+
+        $post = $repository->find(1);
+
+        return $this->render('DemoBundle:Demo:index.html.twig', array(
+            'post' => $post,
+            'name' => 'janhuang'
+        ));
     }
 }
