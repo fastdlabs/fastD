@@ -31,4 +31,15 @@ class DemoController extends Controller
             'name' => 'janhuang'
         ));
     }
+
+    /**
+     * @Route("/test/{name}", name="demo_test")
+     * @Route(defaults={"name": "jan"})
+     */
+    public function testAction($name)
+    {
+        return $this->render('DemoBundle:Demo:index.html.twig', array(
+            'name' => $name
+        ));
+    }
 }
