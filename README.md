@@ -2,6 +2,20 @@
 
 php simple framework: dobee
 
+**简单**、**高效**、**敏捷**、**灵活**
+
+#安装
+
+本`donee php simple framework`依赖composer自动载入，在安装本框架前需要确保正确安装composer依赖管理。
+
+`git clone https://coding.net/janhuang/dobee-php-simple-framework.git`
+
+进入框架项目路径
+
+`composer -vvv install`
+
+**注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
+
 ##1.配置
 目前支持`yml`, `ini`, `php`三种配置文件类型。
 ###1.1 YML(YAML)
