@@ -13,11 +13,11 @@
 
 namespace App;
 
-use Dobee\FrameworkKernel\Configuration\Configuration\LoaderAbstract;
-use Dobee\FrameworkKernel\FrameworkKernel;
 use DemoBundle\DemoBundle;
+use Dobee\Kernel\Configuration\Configuration\LoaderInterface;
+use Dobee\Kernel\Kernel;
 
-class AppKernel extends FrameworkKernel
+class AppKernel extends Kernel
 {
     /**
      * register project bundles into the kernel.
@@ -34,11 +34,11 @@ class AppKernel extends FrameworkKernel
     /**
      * register project global configuration.
      *
-     * @param LoaderAbstract $loaderAbstract
+     * @param LoaderInterface $loaderInterface
      * @return mixed
      */
-    public function registerContainerConfiguration(LoaderAbstract $loaderAbstract)
+    public function registerContainerConfiguration(LoaderInterface $loaderInterface)
     {
-        $loaderAbstract->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $loaderInterface->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 }

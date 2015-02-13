@@ -13,7 +13,7 @@
 
 namespace DemoBundle\Controller;
 
-use Dobee\FrameworkKernel\Framework\Controller\Controller;
+use Dobee\Kernel\Framework\Controller\Controller;
 
 class DemoController extends Controller
 {
@@ -23,18 +23,19 @@ class DemoController extends Controller
     public function demoAction()
     {
         $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
+        
+        $post = $repository->createQuery("select * from %prefix%%table% where id = :id")
+            ->setParameters('id', 1)
+            ->getQuery()
+            ->getResult();
+        ;
 
-        $post = $repository->find(1);
-
-        return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'post' => $post,
-            'name' => 'janhuang'
-        ));
+        return json_encode($post);
     }
 
     /**
-     * @Route("/test/{name}", name="demo_test")
-     * @Route(defaults={"name": "jan"})
+     * @Route("/{name}/test", name="demo_test")
+     * @Route(defaults={"name": "jan"}, requirements={"name": "\d+"})
      */
     public function testAction($name)
     {

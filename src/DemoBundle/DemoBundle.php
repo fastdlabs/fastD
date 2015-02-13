@@ -13,7 +13,7 @@
 
 namespace DemoBundle;
 
-use Dobee\FrameworkKernel\Framework\Bundles\Bundle;
+use Dobee\Kernel\Framework\Bundles\Bundle;
 
 class DemoBundle extends Bundle
 {

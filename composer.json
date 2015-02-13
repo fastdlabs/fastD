@@ -14,7 +14,27 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/framework-kernel.git"
+            "url": "https://coding.net/janhuang/kernel.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/container.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/configuration.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/http.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/routing.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/annotation.git"
         }
     ],
     "require": {
@@ -22,7 +42,12 @@
         "twig/twig": "~1.0"
     },
     "require-dev": {
-        "dobee/framework-kernel": "*"
+        "dobee/container": "~1.0.2",
+        "dobee/configuration": "~1.0.1",
+        "dobee/http": "~1.0.3",
+        "dobee/routing": "~1.0.1",
+        "dobee/annotation": "~1.0.2",
+        "dobee/kernel": "*"
     },
     "autoload": {
         "psr-4": {

@@ -13,7 +13,7 @@
 
 namespace DemoBundle\Repository;
 
-use Dobee\FrameworkKernel\Framework\Repository\Repository;
+use Dobee\Kernel\Framework\Repository\Repository;
 
 class DemoRepository extends Repository
 {
