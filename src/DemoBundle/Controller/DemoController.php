@@ -18,6 +18,9 @@ use Dobee\Kernel\Framework\Controller\Controller;
 class DemoController extends Controller
 {
     /**
+     * examples:
+     *      url1: http://path/to/index.php/
+     *
      * @Route("/", name="demo_index")
      */
     public function demoAction()
@@ -36,8 +39,12 @@ class DemoController extends Controller
     }
 
     /**
+     * examples:
+     *      url1: http://path/to/index.php/world/test
+     *      url2: http://path/to/index.php/janhuang/test
+     *
      * @Route("/{name}/test", name="demo_test")
-     * @Route(defaults={"name": "jan"}, requirements={"name": "\d+"})
+     * @Route(defaults={"name": "jan"})
      */
     public function testAction($name)
     {
