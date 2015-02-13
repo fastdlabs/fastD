@@ -23,14 +23,16 @@ class DemoController extends Controller
     public function demoAction()
     {
         $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
-        
+
         $post = $repository->createQuery("select * from %prefix%%table% where id = :id")
             ->setParameters('id', 1)
             ->getQuery()
             ->getResult();
         ;
 
-        return json_encode($post);
+        return $this->render('DemoBundle:Demo:index.html.twig', array(
+            'post' => $post,
+        ));
     }
 
     /**
