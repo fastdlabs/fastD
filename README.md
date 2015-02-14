@@ -343,15 +343,17 @@ $repository->delete(array('id' => id));
 
 成功删除会返回影响行数，否则为0
 
-希望大伙踊跃发言，建议。
 
 #二期计划
 
+##希望大伙踊跃发言，建议。
+
 * 优化结构，整理代码
+* 强化配置设置
 * 增强数据库模型操作
 * 整合更多组件，让框架更快，更智能。
 
-*Author*: **[JanHuang](http://segmentfault.com/blog/janhuang) **
+*Author*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
 
 *Blog*: **[JanHuang Blog](http://segmentfault.com/blog/janhuang)**
 
