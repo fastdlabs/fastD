@@ -19,7 +19,7 @@ php simple framework: **dobee(逗比)**
 ##1.配置
 目前支持`yml`, `ini`, `php`三种配置文件类型。
 ###1.1 YML(YAML)
-I
+
 **注: yml(yaml)文件中，锁进使用空格锁进，一个tab等于4个空格键**
 
 ####1.1.1普通K/V字符串写法:  
@@ -181,7 +181,7 @@ class DemoController
 
 ####4.2.1 定义模板
 
-在资源目录下`src/*bundle/Resources/views/`新建`demo.html.twig`。内容为: `hello {{ name }}`，其中name为变量，需要由控制器赋值过去
+在资源目录下`src/*bundle/Resources/views/`新建`demo.html.twig`。内容为: `hello {{ name }}`，其中name为变量，需要由控制器赋值过去，详情看`DemoBundle/Resources/views`
 	
 
 ```
@@ -227,6 +227,11 @@ index.html.twig：
 {% block main %}
 	我这里是重写信息
 {% endblock %}
+```
+
+###4.5模板函数列表
+```
+path($route, array $parameters = array()) // 路由创建函数
 ```
 
 模板就介绍到这里，具体可以参考: [Twig 模板引擎
