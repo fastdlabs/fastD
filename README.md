@@ -1,6 +1,6 @@
 #dobee-php-simple-framework
 
-php simple framework: dobee
+php simple framework: dobee(逗比)
 
 **简单**、**高效**、**敏捷**、**灵活**
 
@@ -232,13 +232,129 @@ index.html.twig：
 模板就介绍到这里，具体可以参考: [Twig 模板引擎
 ](http://twig.sensiolabs.org/documentation)
 ##5.数据模型库
+数据库模型使用`Repository`作为后缀命名。与以往的`Model`不太一样，但是使用的方法类似，只是提供一个模型，更加灵活处理各个业务逻辑处理，往后会加大力度优化调整数据模型驱动这块，希望能听到不同的声音。
 
-好累，先不说了。
+**注：需要继承`Dobee\Kernel\Framework\Controller\Controller`基类才能正常使用此类方法**
 
+###5.1初探
 
+查看配置文件: `app/config/config_dev.yml` 或者 `app/config/config_prod.yml` 或者 `app/config/config.yml`。 配置文件修改调整在`AppKernel@registerContainerConfiguration`方法中可自定义，详细请看**第一章，配置**
 
-author: Jan Huang
+####5.1.1获取一个`Repository`库实例
 
-gmail: bboyjanhuang@gmail.com
+```
+$repository = $this->getConnection()->getRepository("DemoBundle:Post");
+```
+
+`getConnection` 方法可以指定配置文件中指定的链接，例如配置了读写分离，可以轻松自由的指定获取R/W模型库，如果为空，那就默认获取`default_connenction`下面的链接。详细请看`DemoBundle` 和 `config_dev.yml` 两个文件。
+
+获取出来的`Repository`默认就是当前模型链接，只对当前链接进行操作，不影响其他模型库。
+
+例如要实例两个相同`Repository`，但是操作不同链接.
+
+```
+$read = $this->getConnection('read')->getRepository("DemoBundle:Post");
+$write = $this->getConnection('write')->getRepository("DemoBundle:Post");
+```
+
+以上就是同个`Repository`模型库，但是操作对象不一样。
+
+**注：`getConnection`中参数必须是配置文件中已经配置好的，不然会抛出`ConnectionException`异常**
+
+**注：数据库字段目前仅支持以下划线作为词组分割标示，例如`category_id`，不支持`categoryId`这样风格命名，为何使用这个，因为这样比较明朗，比较容易发现和规范统一**
+
+####5.1.2简单获取数据信息
+
+1.通过主键查询字段，这里的主键指的是 `id`
+
+```
+$read->find(1);
+// 目前已主键id优先，默认主键名为:id
+```
+
+2.通过主键查询所有记录
+
+```
+$read->findAll(array('id' => 1));
+// 返回数组 参数里面查询条件数组
+```
+
+####5.1.3灵活的获取数据信息
+
+1.通过ID查询字段，可以写成下面那样:
+
+```
+$read->findBy(array('id' => 1));
+// 或
+$read->findById(1);
+```
+
+2.通过分类ID查询所有，可以写成下面那样:
+
+```
+// 两者效果等同
+$read->findAllBy(array('c_id' => 1));
+// 或
+$read->findAllByCId(1);
+// 两者效果等同 值得注意的是这里的 '_' 下划线是通过字幕大些区分的。。。
+// 例如 CategoryId => category_id
+```
+
+####5.1.4创建查询资源，自定义sql查询语句
+
+**注：有两个可选参数，分别是: `%prefix%`、`%table%`，在操作查询的时候会自动注入到相关语句中，`createQuery` 支持链式查询**
+
+例如：
+
+```
+$read
+	->createQuery("select * from %prefix%%table% where id = :id")
+	->setParameters(array('id' => 1)) // 或者 setParameters('id', 1) 效果一样
+	->getQuery()
+;
+$result = $read->getResult();
+```
+
+这样就简单的创建了一个`DQL`查询语句了。
+
+####5.1.5 DML操作
+
+1.新增一条数据
+
+```
+$repository->insert(array('title' => 'demo insert'));
+```
+
+以上会返回最后插入的ID，否则不会
+
+2.更新一条数据
+
+```
+$repository->update(array('id' => id), array('title' => 'demo update'));
+```
+
+成功更新会返回影响行数，否则为0
+
+3.删除一条数据
+
+```
+$repository->delete(array('id' => id));
+```
+
+成功删除会返回影响行数，否则为0
+
+希望大伙踊跃发言，建议。
+
+#二期计划
+
+* 优化结构，整理代码
+* 增强数据库模型操作
+* 整合更多组件，让框架更快，更智能。
+
+*Author*: **[JanHuang](http://segmentfault.com/blog/janhuang) **
+
+*Blog*: **[JanHuang Blog](http://segmentfault.com/blog/janhuang)**
+
+*Gmail*:  **bboyjanhuang@gmail.com**
 
 

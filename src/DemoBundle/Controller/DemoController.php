@@ -34,7 +34,7 @@ class DemoController extends Controller
         ;
 
         return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'post' => $post,
+            'post' => (array)$post[0],
         ));
     }
 
