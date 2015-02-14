@@ -1,6 +1,6 @@
 #dobee-php-simple-framework
 
-php simple framework: dobee(逗比)
+php simple framework: **dobee(逗比)**
 
 **简单**、**高效**、**敏捷**、**灵活**
 
@@ -352,6 +352,25 @@ $repository->delete(array('id' => id));
 * 强化配置设置
 * 增强数据库模型操作
 * 整合更多组件，让框架更快，更智能。
+
+#内置组件开发规范
+
+* 1.**命名空间必须以`Dobee\\`作为开头**
+* 2.**必须遵循psr代码规范**
+* 3.**代码必须带有注释或者说明文档，有明确、清晰的设计，需要附上开发者联系方式**
+* 4.**可以以个人名义命名，但需遵循MIT开源协议**
+
+#外置依赖组件开发规范
+
+* 1.**必须遵循psr代码规范**
+
+#框架扩展须知
+
+* 1.**可以调整外部代码，带尽量不要自行修改核心代码，遇到问题尽量想开发人员反馈**
+* 2.**更多功能可以自行发掘，如有更好想法或者框架本身做得不够好的，欢迎各位热情反馈，吐槽，吐槽热线: [JanHuang](bboyjanhuang@gmail.com)**
+* 3.**若想Make Friend的话，请加QQ：384099566，本人长期在线**
+
+
 
 *Author*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
 

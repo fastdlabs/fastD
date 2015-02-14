@@ -4,7 +4,12 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "description": "php simple framework",
-    "keyword": [ "simple framework", "php simple framework", "simple php framework" ],
+    "keyword": [
+        "dobee php",
+        "simple framework",
+        "php simple framework",
+        "simple php framework"
+    ],
     "authors": [
         {
             "name": "janhuang",
@@ -48,6 +53,12 @@
         "dobee/routing": "~1.0.1",
         "dobee/annotation": "~1.0.2",
         "dobee/kernel": "~1.0.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "web": "public"
     },
     "autoload": {
         "psr-4": {
