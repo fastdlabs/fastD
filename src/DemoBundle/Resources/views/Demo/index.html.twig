@@ -1,4 +1,9 @@
 {% extends "layout/layout.html.twig" %}
+{% block welcome %}
+    path: {{ path('demo_index') }} <br />
+    name: demo_index
+    <hr />
+{% endblock %}
 {% block main %}
     {% for key, value in post %}
         {% if key != 'content' %}
