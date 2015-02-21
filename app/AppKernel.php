@@ -16,6 +16,7 @@ namespace App;
 use DemoBundle\DemoBundle;
 use Dobee\Kernel\Configuration\Configuration\LoaderInterface;
 use Dobee\Kernel\Kernel;
+use TestBundle\TestBundle;
 
 class AppKernel extends Kernel
 {
@@ -28,6 +29,7 @@ class AppKernel extends Kernel
     {
         return array(
             new DemoBundle(),
+            new TestBundle(),
         );
     }
 

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/2/7
- * Time: 上午2:02
+ * Date: 2015-02-21
+ * Time: 18:09:24
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,14 +11,14 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace DemoBundle;
+namespace TestBundle;
 
 use Dobee\Kernel\Framework\Bundles\Bundle;
 
-class DemoBundle extends Bundle
+class TestBundle extends Bundle
 {
     public function getRoutingPrefix()
     {
-        return '/demo';
+        return '/TestBundle';
     }
 }

@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: janhuang
+ * Date: 15/2/20
+ * Time: 下午7:13
+ * Github: https://www.github.com/janhuang 
+ * Coding: https://www.coding.net/janhuang
+ * SegmentFault: http://segmentfault.com/u/janhuang
+ * Blog: http://segmentfault.com/blog/janhuang
+ * Gmail: bboyjanhuang@gmail.com
+ */
+
+set_time_limit(0);
+
+$loader = include __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/AppKernel.php';
+
+use Dobee\Kernel\Configuration\Console\Console;
+use App\AppKernel;
+
+$appKernel = new AppKernel('dev', true);
+$console = new Console($appKernel);
+
+//$console->addCommand();
+
+$console->run();
+

@@ -27,14 +27,10 @@ class DemoController extends Controller
     {
         $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
 
-        $post = $repository->createQuery("select * from %prefix%%table% where id = :id")
-            ->setParameters('id', 1)
-            ->getQuery()
-            ->getResult();
-        ;
+        $post = $repository->findById(1);
 
         return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'post' => (array)$post[0],
+            'post' => $post,
         ));
     }
 

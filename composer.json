@@ -40,6 +40,14 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/annotation.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/console.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/generator.git"
         }
     ],
     "require": {
@@ -52,7 +60,9 @@
         "dobee/http": "~1.0.3",
         "dobee/routing": "~1.0.2",
         "dobee/annotation": "~1.0.2",
-        "dobee/kernel": "~1.0.1"
+        "dobee/kernel": "*",
+        "dobee/console": "*",
+        "dobee/generator": "*"
     },
     "config": {
         "bin-dir": "bin"
