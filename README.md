@@ -349,6 +349,23 @@ $repository->delete(array('id' => id));
 成功删除会返回影响行数，否则为0
 
 
+#6.命令行工具
+
+##6.1自动创建项目Bundle
+
+打开终端(win下打开cmd并进入到框架更目录)
+
+```
+php app/console bundle:generate --bundle=TestBundle 
+或者
+php app/console bundle:generate --bundle=Bundel:TestBundle 
+```
+
+将会自动生成一个项目bundle
+
+然后将`bundle`注册到`AppKernel`。
+
+
 #二期计划
 
 ##希望大伙踊跃发言，建议。
