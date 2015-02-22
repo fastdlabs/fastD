@@ -2,7 +2,7 @@
 
 php simple framework: **dobee(逗比)**
 
-**简单**、**高效**、**敏捷**、**灵活**
+**简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
 #安装
 
@@ -76,7 +76,8 @@ public function registerBundles()
 		new {BundleName}Bundle(),
 		// ... new register bundle
 	);
-}```
+}
+```
 
 到目前为止就完成新建bundle并注册到框架中了。可以开始编写自己的控制器(C), 模型(M), 视图(V) 了
 
@@ -90,7 +91,8 @@ public function registerBundles()
 ```
 class DemoController 
 {
-	// coding....}
+	// coding....
+}
 ```	
 
 这样，一个简单的控制器就建立了。
@@ -124,7 +126,8 @@ class DemoController
 	public function demoAction()
 	{
 		return 'hello world';
-	}}
+	}
+}
 ```
 
 以上就建立了一个最简单的路由。 访问地址:`http://path/to/public/index.php/demo`
@@ -157,7 +160,9 @@ class DemoController
  	 */
 	public function testAction($name)
 	{
-		return 'hello ' . $name;	}}
+		return 'hello ' . $name;
+	}
+}
 ```
 以上建立了一个动态路由。访问地址:
 
@@ -199,7 +204,9 @@ class DemoController
  	 */
 	public function testAction($name)
 	{
-		return $this->render("DemoBundle:Demo:index.html.twig", array('name' => $name));	}}
+		return $this->render("DemoBundle:Demo:index.html.twig", array('name' => $name));
+	}
+}
 ```
 
 如无意外将现实: hello janhuang。
@@ -218,7 +225,8 @@ class DemoController
 layout.html.twig:
 hello world
 {% block main %}
-	重写{% end block %}
+	重写
+{% end block %}
 ```
 
 ```
