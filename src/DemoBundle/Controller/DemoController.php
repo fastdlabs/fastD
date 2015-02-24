@@ -25,6 +25,7 @@ class DemoController extends Controller
      */
     public function demoAction()
     {
+        // get data by read database.
         $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
 
         $post = $repository->findById(1);

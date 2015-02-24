@@ -12,8 +12,8 @@
  */
 
 $loader = include __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/../app/AppKernel.php';
 
-use App\AppKernel;
 use Dobee\Kernel\Configuration\HttpFoundation\Request;
 
 $appKernel = new AppKernel('dev', true);

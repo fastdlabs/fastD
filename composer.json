@@ -57,10 +57,10 @@
     "require-dev": {
         "dobee/container": "~1.0.2",
         "dobee/configuration": "~1.0.1",
-        "dobee/http": "~1.0.3",
+        "dobee/http": "~1.0.7",
         "dobee/routing": "~1.0.2",
         "dobee/annotation": "~1.0.2",
-        "dobee/kernel": "*",
+        "dobee/kernel": "~1.0.2",
         "dobee/console": "*",
         "dobee/generator": "*"
     },

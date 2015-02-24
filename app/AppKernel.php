@@ -11,12 +11,10 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace App;
-
-use DemoBundle\DemoBundle;
 use Dobee\Kernel\Configuration\Configuration\LoaderInterface;
 use Dobee\Kernel\Kernel;
 use TestBundle\TestBundle;
+use DemoBundle\DemoBundle;
 
 class AppKernel extends Kernel
 {

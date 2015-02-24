@@ -18,7 +18,6 @@ $loader = include __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/AppKernel.php';
 
 use Dobee\Kernel\Configuration\Console\Console;
-use App\AppKernel;
 
 $appKernel = new AppKernel('dev', true);
 $console = new Console($appKernel);

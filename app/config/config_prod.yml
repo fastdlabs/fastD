@@ -1,0 +1,37 @@
+import:
+#    - { resource:  }
+
+drivers:
+    database:
+        default_connection: read
+        write:
+            db_driver: mysql
+            db_host: localhost
+            db_port: 3306
+            db_user: root
+            db_pwd: 123456
+            db_charset: utf8
+            db_name: test
+        read:
+            db_driver: mysql
+            db_host: localhost
+            db_port: 3306
+            db_user: root
+            db_pwd: 123456
+            db_charset: utf8
+            db_name: sf_blog
+            db_prefix: sf_
+
+    cache:
+        driver: redis
+        default_connection: redis1
+        redis1:
+            host: localhost
+            port: 3306
+            user: root
+            pwd: 123456
+            charset: utf8
+            dbname: test
+
+template:
+    engine: twig
