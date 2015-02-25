@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>An Error Occurred: {{ exception.message | default(message) }}</title>
+    <style>
+
+        table td{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Oops! An Error Occurred</h1>
+<h2>The server returned a "{{ exception.message | default(message) }}".</h2>
+<div>
+    <table border="1" cellspacing="0">
+        <tr>
+            <td>Code: </td>
+            <td>{{ exception.code | default(code) }}</td>
+        </tr>
+        <tr>
+            <td>Message: </td>
+            <td>{{ exception.message | default(message) }}</td>
+        </tr>
+        <tr>
+            <td>File: </td>
+            <td>{{ exception.file | default(file) }}</td>
+        </tr>
+        <tr>
+            <td>line: </td>
+            <td>{{ exception.line | default(line) }}</td>
+        </tr>
+    </table>
+    <h2>Trace:</h2>
+
+{% for trace in traces %}
+<pre style="margin-bottom: 20px;">
+<code lang="php">
+{% if trace.file is defined %}
+file: {{ trace.file }}
+line: {{ trace.line }}
+function: {{ trace.function }}
+args: <?php var_export($trace['argv']); ?>
+{% else %}
+
+{% endif %}
+
+</code>
+</pre>
+{% endfor %}
+
+</div>
+</body>
+</html>

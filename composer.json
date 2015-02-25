@@ -60,7 +60,7 @@
         "dobee/http": "~1.0.7",
         "dobee/routing": "~1.0.2",
         "dobee/annotation": "~1.0.2",
-        "dobee/kernel": "~1.0.2",
+        "dobee/kernel": "~1.0.4",
         "dobee/console": "*",
         "dobee/generator": "*"
     },

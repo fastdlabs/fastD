@@ -22,7 +22,6 @@ class IndexController extends Controller
      */
     public function demoAction($name)
     {
-        return $this->getParameters('drivers.database.default_connection');
         return $this->render('TestBundle::index.html.twig', array(
             'name' => $this->getParameters('drivers.database.default_connection'),
         ));
