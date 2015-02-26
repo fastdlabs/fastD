@@ -4,6 +4,14 @@ php simple framework: **dobee(逗比)**
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
+##参考
+
+PSR-*: [http://www.php-fig.org/](http://www.php-fig.org/)
+
+Composer: [http://getcomposer.org/](http://getcomposer.org/)
+
+Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
+
 #安装
 
 本`donee php simple framework`依赖composer自动载入，在安装本框架前需要确保正确安装composer依赖管理。
