@@ -26,12 +26,20 @@ class DemoController extends Controller
     public function demoAction()
     {
         // get data by read database.
-        $repository = $this->getConnection('read')->getRepository("DemoBundle:Post");
+        $repositoryRead = $this->getConnection('read2')->getRepository("DemoBundle:Post");
+        $repositoryWrite = $this->getConnection('write')->getRepository("DemoBundle:Post");
 
-        $post = $repository->findById(1);
+        $postRead = $repositoryRead->findByTitle('对面向对象的理解');
+        $postRead = $repositoryRead->find(1);
+        $postReadAll = $repositoryRead->findAll();
+
+        $postRead = $repositoryRead->getPost();
+
+        $postWrite = $repositoryWrite->findById(1);
 
         return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'post' => $post,
+            'postRead' => $postRead,
+            'postWrite' => $postWrite,
         ));
     }
 

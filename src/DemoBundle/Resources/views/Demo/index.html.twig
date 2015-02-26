@@ -5,9 +5,15 @@
     <hr />
 {% endblock %}
 {% block main %}
-    {% for key, value in post %}
+    {% for key, value in postRead %}
         {% if key != 'content' %}
         {{ key }} => {{ value }}
+        {% endif %}
+    {% endfor %}
+    <hr />
+    {% for key, value in postWrite %}
+        {% if key != 'content' %}
+            {{ key }} => {{ value }}
         {% endif %}
     {% endfor %}
 {% endblock %}

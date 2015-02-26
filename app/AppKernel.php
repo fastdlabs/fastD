@@ -21,7 +21,8 @@ class AppKernel extends \Dobee\Kernel\Kernel
     {
         return array(
             new \DemoBundle\DemoBundle(),
-            new \TestBundle\TestBundle(),
+//            new \TestBundle\TestBundle(),
+//            new \Test2Bundle\Test2Bundle(),
         );
     }
 

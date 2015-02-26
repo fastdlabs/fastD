@@ -17,5 +17,11 @@ use Dobee\Kernel\Framework\Repository\Repository;
 
 class PostRepository extends Repository
 {
-
+    public function getPost()
+    {
+        return $this
+            ->createQuery("select * from sf_post where id = :id")
+            ->setParameters('id', 1)
+            ;
+    }
 }
