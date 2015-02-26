@@ -9,3 +9,4 @@
 ###02-25
 * 更新核心代码
 * 整合日志组件
+* 更新Http组件，修复nginx下pathinfo的bug

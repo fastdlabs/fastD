@@ -16,6 +16,30 @@ php simple framework: **dobee(逗比)**
 
 **注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
 
+#Nginx下配置
+
+```
+server {
+    listen       80;
+    server_name  server_name;
+    index index.php;
+    location / {
+            try_files $uri @rewriteapp;
+    }
+    location @rewriteapp {
+            rewrite ^(.*)$ /index.php$1 last;
+    }
+    location ~ \.php {
+        fastcgi_pass 127.0.0.1:9000; 
+        fastcgi_split_path_info ^(.+.php)(/.*)$;
+        include       fastcgi_params;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS              off;
+    }
+}
+```
+
 ##1.配置
 目前支持`yml`, `ini`, `php`三种配置文件类型。
 ###1.1 YML(YAML)
@@ -58,6 +82,7 @@ author:
 bundle目录结构**暂时**为
 
 ```
+- Command 		====> 命令行
 - Controller   	====> 控制器
 - Repository    ====> 数据库模型库
 - Resources		====> 资源目录

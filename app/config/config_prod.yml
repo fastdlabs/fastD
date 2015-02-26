@@ -23,15 +23,15 @@ drivers:
             db_prefix: sf_
 
     cache:
-        driver: redis
         default_connection: redis1
         redis1:
-            host: localhost
-            port: 3306
-            user: root
-            pwd: 123456
-            charset: utf8
-            dbname: test
+            cache_driver: redis
+            cache_host: localhost
+            cache_port: 3306
+            cache_user: root
+            cache_pwd: 123456
+            cache_charset: utf8
+            cache_dbname: test
 
 template:
     engine: twig

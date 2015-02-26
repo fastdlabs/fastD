@@ -10,34 +10,28 @@
  * Blog: http://segmentfault.com/blog/janhuang
  * Gmail: bboyjanhuang@gmail.com
  */
-
-use Dobee\Kernel\Configuration\Configuration\LoaderInterface;
-use Dobee\Kernel\Kernel;
-use TestBundle\TestBundle;
-use DemoBundle\DemoBundle;
-
-class AppKernel extends Kernel
+class AppKernel extends \Dobee\Kernel\Kernel
 {
     /**
-     * register project bundles into the kernel.
+     * Register project bundles into the kernel.
      *
      * @return array
      */
     public function registerBundles()
     {
         return array(
-            new DemoBundle(),
-            new TestBundle(),
+            new \DemoBundle\DemoBundle(),
+            new \TestBundle\TestBundle(),
         );
     }
 
     /**
-     * register project global configuration.
+     * Register project global configuration.
      *
-     * @param LoaderInterface $loaderInterface
-     * @return mixed
+     * @param \Dobee\Kernel\Configuration\Configuration\LoaderInterface $loaderInterface
+     * @return void
      */
-    public function registerContainerConfiguration(LoaderInterface $loaderInterface)
+    public function registerContainerConfiguration(\Dobee\Kernel\Configuration\Configuration\LoaderInterface $loaderInterface)
     {
         $loaderInterface->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
