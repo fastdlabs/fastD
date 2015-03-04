@@ -13,6 +13,7 @@
 
 namespace DemoBundle\Controller;
 
+use Dobee\Kernel\Configuration\HttpFoundation\JsonResponse;
 use Dobee\Kernel\Framework\Controller\Controller;
 
 class DemoController extends Controller
@@ -21,25 +22,14 @@ class DemoController extends Controller
      * examples:
      *      url1: http://path/to/index.php/
      *
-     * @Route("/", name="demo_index")
+     * @Route("/{name}/{age}", name="demo_index")
+     * @Route(defaults={"name": "janhuang", "age": 22})
      */
-    public function demoAction()
+    public function demoAction($name, $age)
     {
-        // get data by read database.
-        $repositoryRead = $this->getConnection('read2')->getRepository("DemoBundle:Post");
-        $repositoryWrite = $this->getConnection('write')->getRepository("DemoBundle:Post");
-
-        $postRead = $repositoryRead->findByTitle('对面向对象的理解');
-        $postRead = $repositoryRead->find(1);
-        $postReadAll = $repositoryRead->findAll();
-
-        $postRead = $repositoryRead->getPost();
-
-        $postWrite = $repositoryWrite->findById(1);
-
-        return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'postRead' => $postRead,
-            'postWrite' => $postWrite,
+        return new JsonResponse(array(
+            'name' => '大神',
+            'age' => $age
         ));
     }
 

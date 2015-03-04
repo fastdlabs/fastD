@@ -1,5 +1,6 @@
 import:
-#    - { resource:  }
+    - { resource: assets.yml }
+    - { resource: routing.yml }
 
 drivers:
     database:

@@ -39,30 +39,20 @@
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/annotation.git"
-        },
-        {
-            "type": "git",
-            "url": "https://coding.net/janhuang/console.git"
-        },
-        {
-            "type": "git",
-            "url": "https://coding.net/janhuang/generator.git"
+            "url": "https://coding.net/janhuang/finder.git"
         }
     ],
     "require": {
-        "php": ">=5.3.7",
+        "php": ">=5.4.0",
         "twig/twig": "~1.0"
     },
     "require-dev": {
         "dobee/container": "~1.0.2",
-        "dobee/configuration": "~1.0.1",
-        "dobee/http": "~1.0.9",
-        "dobee/routing": "~1.0.2",
-        "dobee/annotation": "~1.0.2",
-        "dobee/kernel": "~1.0.6",
-        "dobee/console": "*",
-        "dobee/generator": "*"
+        "dobee/configuration": "*",
+        "dobee/http": "*",
+        "dobee/routing": "*",
+        "dobee/finder": "*",
+        "dobee/kernel": "*"
     },
     "config": {
         "bin-dir": "bin"

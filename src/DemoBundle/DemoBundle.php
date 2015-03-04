@@ -17,8 +17,4 @@ use Dobee\Kernel\Framework\Bundles\Bundle;
 
 class DemoBundle extends Bundle
 {
-    public function getRoutingPrefix()
-    {
-        return '/demo';
-    }
 }

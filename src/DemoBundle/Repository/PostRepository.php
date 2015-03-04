@@ -22,6 +22,8 @@ class PostRepository extends Repository
         return $this
             ->createQuery("select * from sf_post where id = :id")
             ->setParameters('id', 1)
+            ->getQuery()
+            ->getResult()[0]
             ;
     }
 }
