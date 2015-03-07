@@ -1,4 +1,4 @@
-# dev evn config
+# Prod evn config
 
 database:
     default_connection: read
@@ -21,9 +21,25 @@ database:
         database_name: test
         database_prefix: sf_
 
+# Template engine and templates path setting
+# If you should add new template path.
+# examples:
+# create one new path
+# paths:
+#     - new path
 template:
     engine: twig
-    paths: [ %root_path%/resources, %root_path%/../src ]
+    paths:
+        - %root_path%/resources
+        - %root_path%/../src
 
+# The bundles prefix setting.
 routing:
     config: %root_path%/config/routing.yml
+
+# App logger.
+logger:
+    type: monolog
+    path: %root_path%/logs/%date%
+    rule: %date%.log
+    auto_create: true

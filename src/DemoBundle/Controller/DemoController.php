@@ -29,15 +29,6 @@ class DemoController extends Controller
      */
     public function demoAction(Request $request, JsonResponse $response, $name, $age)
     {
-        $response->setData(array(
-            'name' => $name,
-            'age' => $age,
-            'format' => $request->getFormat(),
-            'driver_connection' => $this->getDriverManager()->getConnection('write')->getConnectionName(),
-            'connection' => $this->getConnection('read')->getConnectionName(),
-            'repository' => $this->getConnection('read')->getRepository('DemoBundle:Post')->getTableName()
-        ));
-
-        return $response;
+        return $this->render('DemoBundle:Demo:index.html.twig');
     }
 }
