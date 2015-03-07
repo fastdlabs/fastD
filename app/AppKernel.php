@@ -33,7 +33,9 @@ class AppKernel extends \Dobee\Kernel\Kernel
      */
     public function registerConfigurationVariable()
     {
-        // TODO: Implement registerConfigurationVariable() method.
+        return array(
+            'date' => date('Y-m-d'),
+        );
     }
 
     /**

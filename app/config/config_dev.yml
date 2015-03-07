@@ -27,3 +27,9 @@ template:
 
 routing:
     config: %root_path%/config/routing.yml
+
+logger:
+    type: monolog
+    path: %root_path%/logs/%date%
+    rule: %date%.log
+    auto_create: true
