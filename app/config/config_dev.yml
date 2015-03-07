@@ -36,7 +36,7 @@ template:
 
 # The bundles prefix setting.
 routing:
-    config: %root_path%/routing.yml
+    config: %root_path%/config/routing.yml
 
 # App logger.
 logger:
