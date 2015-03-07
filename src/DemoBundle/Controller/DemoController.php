@@ -23,12 +23,14 @@ class DemoController extends Controller
      * examples:
      *      url1: http://path/to/index.php/
      *
-     * @Route("/{name}/{age}", name="demo_index")
+     * @Route("/", name="demo_index")
      * @Route(defaults={"name": "janhuang", "age": 22})
-     * @Route(format=["html", "json", "xml"])
+     * @Route(format=["html", "json", "xml", "php"])
      */
-    public function demoAction(Request $request, JsonResponse $response, $name, $age)
+    public function demoAction()
     {
-        return $this->render('DemoBundle:Demo:index.html.twig');
+        return $this->render('DemoBundle:Demo:index.html.twig', array(
+            'name' => 'janhuang'
+        ));
     }
 }

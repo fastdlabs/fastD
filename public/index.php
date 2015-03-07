@@ -14,7 +14,7 @@
 $loader = include __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/../app/AppKernel.php';
 
-$kernel = new AppKernel('dev');
+$kernel = new AppKernel('dev', true);
 
 $kernel->bootstrap(); // App bootstrap.
 

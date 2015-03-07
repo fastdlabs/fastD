@@ -29,17 +29,18 @@ database:
 #     - new path
 template:
     engine: twig
-    paths:
-        - %root_path%/resources
-        - %root_path%/../src
+    paths: [ %root_path%/resources, %root_path%/../src ]
+    cache_path: %root_path%/cache/
+    error_page:
+        500: error/error.html.twig
 
 # The bundles prefix setting.
 routing:
-    config: %root_path%/config/routing.yml
+    config: %root_path%/routing.yml
 
 # App logger.
 logger:
     type: monolog
-    path: %root_path%/logs/%date%
-    rule: %date%.log
+    path: %root_path%/logs
+    rule: Y-m-d
     auto_create: true
