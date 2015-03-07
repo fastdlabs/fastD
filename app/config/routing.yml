@@ -1,7 +1,3 @@
 routing:
-    demo:
-        bundle: DemoBundle\DemoBundle
-        prefix: /demo
-    test:
-        bundle: TestBundle\TestBundle
-        prefix: /test
+    DemoBundle:
+        prefix: /

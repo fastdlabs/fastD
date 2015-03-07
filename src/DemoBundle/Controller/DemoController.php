@@ -14,6 +14,7 @@
 namespace DemoBundle\Controller;
 
 use Dobee\Kernel\Configuration\HttpFoundation\JsonResponse;
+use Dobee\Kernel\Configuration\HttpFoundation\Request;
 use Dobee\Kernel\Framework\Controller\Controller;
 
 class DemoController extends Controller
@@ -24,27 +25,19 @@ class DemoController extends Controller
      *
      * @Route("/{name}/{age}", name="demo_index")
      * @Route(defaults={"name": "janhuang", "age": 22})
+     * @Route(format=["html", "json", "xml"])
      */
-    public function demoAction($name, $age)
+    public function demoAction(Request $request, JsonResponse $response, $name, $age)
     {
-        return new JsonResponse(array(
-            'name' => '大神',
-            'age' => $age
+        $response->setData(array(
+            'name' => $name,
+            'age' => $age,
+            'format' => $request->getFormat(),
+            'driver_connection' => $this->getDriverManager()->getConnection('write')->getConnectionName(),
+            'connection' => $this->getConnection('read')->getConnectionName(),
+            'repository' => $this->getConnection('read')->getRepository('DemoBundle:Post')->getTableName()
         ));
-    }
 
-    /**
-     * examples:
-     *      url1: http://path/to/index.php/world/test
-     *      url2: http://path/to/index.php/janhuang/test
-     *
-     * @Route("/{name}/test", name="demo_test")
-     * @Route(defaults={"name": "jan"})
-     */
-    public function testAction($name)
-    {
-        return $this->render('DemoBundle:Demo:index.html.twig', array(
-            'name' => $name
-        ));
+        return $response;
     }
 }

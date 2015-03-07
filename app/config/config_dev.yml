@@ -1,48 +1,29 @@
-import:
-    - { resource: assets.yml }
-    - { resource: routing.yml }
+# dev evn config
 
-drivers:
-    database:
-        default_connection: read
-        write:
-            db_driver: mysql
-            db_host: localhost
-            db_port: 3306
-            db_user: root
-            db_pwd: 123456
-            db_charset: utf8
-            db_name: sf_blog
-            db_prefix: sf_
-        read:
-            db_driver: mysql
-            db_host: localhost
-            db_port: 3306
-            db_user: root
-            db_pwd: 123456
-            db_charset: utf8
-            db_name: sf_blog
-            db_prefix: sf_
-        read2:
-            db_driver: mysql
-            db_host: localhost
-            db_port: 3306
-            db_user: root
-            db_pwd: 123456
-            db_charset: utf8
-            db_name: sf_blog
-            db_prefix: sf_
-
-    cache:
-        default_connection: redis1
-        redis1:
-            cache_driver: redis
-            cache_host: localhost
-            cache_port: 3306
-            cache_user: root
-            cache_pwd: 123456
-            cache_charset: utf8
-            cache_dbname: test
+database:
+    default_connection: read
+    write:
+        database_type: mysql
+        database_host: localhost
+        database_port: 3306
+        database_user: root
+        database_pwd: 123456
+        database_charset: utf8
+        database_name: test
+        database_prefix: sf_
+    read:
+        database_type: mysql
+        database_host: localhost
+        database_port: 3306
+        database_user: root
+        database_pwd: 123456
+        database_charset: utf8
+        database_name: test
+        database_prefix: sf_
 
 template:
     engine: twig
+    paths: [ %root_path%/resources, %root_path%/../src ]
+
+routing:
+    config: %root_path%/config/routing.yml

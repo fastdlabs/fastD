@@ -21,19 +21,44 @@ class AppKernel extends \Dobee\Kernel\Kernel
     {
         return array(
             new \DemoBundle\DemoBundle(),
-//            new \TestBundle\TestBundle(),
-//            new \Test2Bundle\Test2Bundle(),
         );
     }
 
     /**
-     * Register project global configuration.
+     * You can register global configuration variables. But you must return array()
+     * examples:
+     *      return array( 'demo' => 'name' );
      *
-     * @param \Dobee\Kernel\Configuration\Configuration\LoaderInterface $loaderInterface
+     * @return array
+     */
+    public function registerConfigurationVariable()
+    {
+        // TODO: Implement registerConfigurationVariable() method.
+    }
+
+    /**
+     * Register custom kernel plugins.
+     * Must return array.
+     * examples:
+     *  return array(
+     *      "Monolog\\Logger"
+     *  )
+     *
+     * @return array
+     */
+    public function registerPlugins()
+    {
+        // TODO: Implement registerPlugins() method.
+    }
+
+    /**
+     * Register app kernel configuration.
+     *
+     * @param $configuration
      * @return void
      */
-    public function registerContainerConfiguration(\Dobee\Kernel\Configuration\Configuration\LoaderInterface $loaderInterface)
+    public function registerContainerConfiguration(\Dobee\Kernel\Configuration\Config\LoaderInterface $configuration)
     {
-        $loaderInterface->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $configuration->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 }

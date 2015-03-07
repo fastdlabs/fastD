@@ -14,15 +14,14 @@
 $loader = include __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/../app/AppKernel.php';
 
-use Dobee\Kernel\Configuration\HttpFoundation\Request;
+$kernel = new AppKernel('dev');
 
-$appKernel = new AppKernel('dev', true);
+$kernel->bootstrap(); // App bootstrap.
 
-$request = Request::createGlobalRequest();
+$kernel
+    ->handlerGlobalRequest()
+    ->send()
+;
 
-$response = $appKernel->handleRequest($request);
-
-$response->send();
-
-$appKernel->terminate($request, $response);
+$kernel->terminate();
 
