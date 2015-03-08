@@ -1,5 +1,7 @@
 routing:
-    DemoBundle:
+    Welcomebundle:
         prefix: /
+    DemoBundle:
+        prefix: /demo
     MysqlDemoBundle:
         prefix: /mysql

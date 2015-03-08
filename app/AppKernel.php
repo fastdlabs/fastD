@@ -22,6 +22,7 @@ class AppKernel extends \Dobee\Kernel\Kernel
         return array(
             new \DemoBundle\DemoBundle(),
             new \MysqlDemoBundle\MysqlDemoBundle(),
+            new \WelcomeBundle\WelcomeBundle(),
         );
     }
 
