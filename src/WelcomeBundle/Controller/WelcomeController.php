@@ -21,10 +21,10 @@ class WelcomeController extends Controller
      * @Route("/{author}/{company}", name="welcome_index")
      * @Route(defaults={"author": "Jan", "company": "MMC"})
      */
-    public function welcomeAction($anthor, $company)
+    public function welcomeAction($author, $company)
     {
         return $this->render('welcome/welcome.html.twig', array(
-            'author' => $anthor,
+            'author' => $author,
             'company' => $company,
         ));
     }

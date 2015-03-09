@@ -2,3 +2,5 @@
 /vendor/
 composer.lock
 /app/logs/*
+/app/cache/*
+
