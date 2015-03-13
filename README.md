@@ -49,10 +49,10 @@ server {
 ```
 
 ##1.配置
-目前支持`yml`, `ini`, `php`三种配置文件类型。
+目前支持`yml`, `ini`, `php`三种配置文件类型。（本人推荐yml配置）
 ###1.1 YML(YAML)
 
-**注: yml(yaml)文件中，锁进使用空格锁进，一个tab等于4个空格键**
+**注: yml(yaml)文件中，缩进使用空格缩进，一个tab等于4个空格键，非4个空格会报错**
 
 ####1.1.1普通K/V字符串写法:  
 ````
@@ -71,9 +71,28 @@ author:
 		-other
 ```
 
-####1.1.3变量写法: 
-**暂不支持
-**
+####1.1.3变量写法:（新增） 
+这个写法比较特殊，需要在配置文件和引导文件中配合设置
+
+配置文件：
+
+`config.yml`
+
+```
+name: %name%
+```
+
+找到`app/Application.php`文件并且打开，找到`registerConfigVariable`方法，并且编辑注册自己的自定义配置变量，例如刚才申请了个变量`name`，那么需要在方法中注册到核心当中。注意，root_path不可修改，否则有可能会出现意想不到的bug，因为核心大部分都由root_path路径作为应用默认路径
+
+```
+public function registerConfigVariable()
+    {
+        return array(
+            'root_path' => $this->getRootPath(),
+            'name' => 'janhuang' // 注册新变量到核心
+        );
+    }
+```
 
 ####1.1.4引用写法: 
 **暂不支持
@@ -83,71 +102,44 @@ author:
 
 在`dobee`框架中，任何的项目或者组件代码，都会被视为一个bundle(包)，那既然是一个bundle，那么这个bundle就是独立的，与其他互不相干。
 
-###2.1如何向框架中新建一个bundle(未来会创造命令行自动生成)
+###2.1如何向框架中新建一个项目
 
-随意目录创建一个bundle目录: `xxxBundle`
+可以在`src`目录当中随意新建一个项目
 
-bundle目录结构**暂时**为
+目录结构为：
 
 ```
-- Command 		====> 命令行
-- Controller   	====> 控制器
+- Controllers   	====> 控制器
 - Repository    ====> 数据库模型库
 - Resources		====> 资源目录
-	- config	====> bundle个性配置文件目录
-	- views		====> bundle 视图目录
-- {BundleName}Bundle.php	=====>bundle引导文件。必须继承Dobee\FrameworkKernel\Framework\Bundles\Bundle
-```
+	- views		====> 视图目录
+- {name}.php	=====> 引导文件。必须继承Dobee\Framework\Bundles\Bundle
+- ```
 
-###2.2向框架注册刚新建的bundle
+###2.2注册项目到核心当中
 
-打开`app/AppKernel.php`文件，寻找`registerBundles`方法，在方法中实例化bundle引导文件
+打开`app/Application.php`文件，寻找`registerBundles`方法，在方法中实例化项目引导文件，也就是项目根目录继承`Dobee\Framework\Bundles\Bundle`的引导文件
 
 ```	
 public function registerBundles()
 	return array(
-		new {BundleName}Bundle(),
-		// ... new register bundle
+		new {name},
 	);
 }
 ```
 
-到目前为止就完成新建bundle并注册到框架中了。可以开始编写自己的控制器(C), 模型(M), 视图(V) 了
+注册项目后，即可开始正式的开发工作。
 
-##3.控制器
-###3.1新建控制器
+##3.路由
+###3.1简介
 
-在`Controller`目录下添加`{ControllerName}Controller.php`。其中`ControllerName`为自己自定义。
+与以往`ThinkPHP`框架不同，`Dobee`框架主导每个可访问的事件方法都需要配置一个合法的路由地址，以其该有的特性命名该路由前缀。其他没有配置路由地址，不能被外界访问，只可以在内部私有调用。并且注意的是，路由名字不可以重复，路由地址不可以重复，这样会造成冲突，会影响正常的业务访问。路由的配置需要配合访问的控制器/事件，以达到访问该路由即调用该事件方法。
 
-例如:
+###3.2路由配置新建控制器
 
-```
-class DemoController 
-{
-	// coding....
-}
-```	
+在项目`Controllers`中新建一个控制器，例如`DemoController.php`，控制器必须继承框架基类控制器`Dobee\Framework\Controller\Controller`
 
-这样，一个简单的控制器就建立了。
-
-建立控制器之后，就轮到控制器路由。
-
-###3.1路由
-控制器路由，通过控制访问URL来访问或者执行指定的控制器方法，每个需要被访问的控制器方法都必须要配置一个路由规则。这里并不是像ThinkPHP一样的访问。
-
-###3.2设置控制器方法路由
-
-继续控制器上例。这里定义控制器路由的方式和以往的有些不一样，因为这里配置的路由是根据方法注释来到设置，那么注释时怎么能够做到设置路由的呢？这里就是用到一个`PHP5.4`版本之后的
-一个新对象**反射**。详情: [php反射
-](http://php.net/manual/en/class.reflection.php)
-
-首先找到我们的控制器`DemoController`.
-
-**注：这里控制器方法都以Action左右结束标志**
-
-**注：路由定义都应该已`@Route(.*?)`作为路由配置标示**
-
-**注：路由名字不应该重复，在定义路由的时候需要仔细验证，后续会推出命令行路由debug工具**
+在控制器当中写上方法
 
 ```
 class DemoController
@@ -163,24 +155,23 @@ class DemoController
 }
 ```
 
-以上就建立了一个最简单的路由。 访问地址:`http://path/to/public/index.php/demo`
+这样新建了一个可访问的控制器方法路由了。访问地址为: `host/path/to/index.php/demo`。即可访问到demoAction方法，如无意外即可以看到hello world这几个大字
 
-###3.2.3配置动态路由
-
-刚才演示了一个最简单的路由设置。除了静态的，还有动态的路由配置，包括动态变量，变量类型，默认值，传输格式。
-
-```
-class DemoController
-{
-	/** 
-	 * 路由设置
-	 * @Route("/demo", name="demo_index")
-	 */
-	public function demoAction()
-	{
-		return 'hello world';
-	}
+控制器也可以配置变量哦，变量表示用花括号表示:`{变量名}`
 	
+在控制器新增多一个方法：
+
+```
+class DemoController
+{
+	/** 
+	 * 路由设置
+	 * @Route("/demo", name="demo_index")
+	 */
+	public function demoAction()
+	{
+		return 'hello world';
+	}
 	/** 
 	 * 动态路由
 	 * 路由解析
@@ -197,14 +188,34 @@ class DemoController
 	}
 }
 ```
-以上建立了一个动态路由。访问地址:
 
-`http://path/to/public/index.php/test`  => `hello janhuang`
-`http://path/to/public/index.php/test/world` => `hello world`
+新增了一个可访问控制器路由地址，并且配有变量`name`， 设置变量`name`默认值`janhuang`。设置在`defaults`注释里面。并且设置了路由变量的有效值`requirements`类型为`\w+`。
 
-这里的`/test/{world}`的world就会作为路由参数`name`传进去控制器方法里面。`name => 'world'`
+访问地址: `host/path/to/index.php/test` 默认就会将defaults的值传给`testAction`方法参数接收，那么这里可以看到的是，会变成 hello janhuang。 
 
-那么到这里，路由的基本设置就完成了，后面还有一系列的调整和优化，欢迎提出更多更好的建议。
+如果在这个路由地址后面带上自定义的名字就会变成你所输入的那个名字。 比如：访问地址: `host/path/to/index.php/test/demo`，就会出现 hello demo
+
+这里，其实你还会看到有个`method`定义，其实这里method定义的是你该路由地址允许访问的http模式，如果设置了`GET`那么这个只能允许`GET`方式访问。支持的方式可以自己定义，但是请勿玩太过了。设置`ANY`则可以用任何方式访问，设置多个访问方式，`method=["GET", "POST"]`, 以数组方式设置，`method`的值一律为大写
+
+还有一个参数设置，就是访问的格式`format`，例如`format="json"`, 那么访问的地址必须带上`.json`后缀访问，否则路由无法匹配，默认是`php`。可以设置多个访问方式，用来做[RESTful]()API专用。
+
+###3.3路由前缀配置
+
+有两个选择，在方法的类名定义处新增路由定义注释
+```
+/** 
+ * @Route("/prefix") 
+ */
+```
+
+访问制定路由的时候就要带上此前缀和路由地址访问。
+
+第二种就是通过`routing.yml`配置文件进行配置。详情可以查看配置文件，与上者配置类似.
+
+###3.4路由机制
+
+路由机制采用PHP5.4提供的 [php反射
+](http://php.net/manual/en/class.reflection.php)特性，利用注释来配置每个方法。因此这里有个缺点，开发者需要清楚知道路由的意义和项目的意义，因为路由前缀需要和项目搭上边，切随意和胡乱定义、命名，这样会带来很多维护上的问题。当然，这也是目前框架不足的地方，提示能力过弱，debug能力过弱，需要优化和提升。所以框架有计划加入更多高效高性能组件。先计划加入命令行组件Console、服务组件Server等，还有赖大家提出。
 
 ##4.模板
 	
@@ -219,30 +230,7 @@ class DemoController
 
 ####4.2.1 定义模板
 
-在资源目录下`src/*bundle/Resources/views/`新建`demo.html.twig`。内容为: `hello {{ name }}`，其中name为变量，需要由控制器赋值过去，详情看`DemoBundle/Resources/views`
-	
-
-```
-class DemoController
-{	
-	/** 
-	 * 动态路由
-	 * 路由解析
-	 * defaults 是路由参数变量的默认值。
-	 * requirements 是路由参数类型约束
-	 * method 是路由请求方法约束
-	 * he
-	 * @Route("/test/{name}", name="demo_test")
-	 * @Route(defaults={"name": "janhuang"}, requirements={"name": "\w+"}, method="GET")
- 	 */
-	public function testAction($name)
-	{
-		return $this->render("DemoBundle:Demo:index.html.twig", array('name' => $name));
-	}
-}
-```
-
-如无意外将现实: hello janhuang。
+在资源目录下`src/*/Resources/views/`新建`demo.html.twig`。内容为: `hello {{ name }}`，其中name为变量，需要由控制器赋值过去，详情看`*/Resources/views`
 
 ###4.3模板继承
 
@@ -270,21 +258,25 @@ index.html.twig：
 {% endblock %}
 ```
 
-###4.5模板函数列表
-```
-path($route, array $parameters = array()) // 路由创建函数
-```
-
-模板就介绍到这里，具体可以参考: [Twig 模板引擎
+具体可以参考: [Twig 模板引擎
 ](http://twig.sensiolabs.org/documentation)
+
+###4.5模板函数列表
+
+##path($route, array $parameters = array())
+
+###$route 路由名 例：@Route(name="demo") path('demo')
+
+###$patameters 数组，路由参数 例：@Route("/{name}/{age}", name="demo") path('demo', {"name":"janhuang", "age": 22})
+
 ##5.数据模型库
 数据库模型使用`Repository`作为后缀命名。与以往的`Model`不太一样，但是使用的方法类似，只是提供一个模型，更加灵活处理各个业务逻辑处理，往后会加大力度优化调整数据模型驱动这块，希望能听到不同的声音。
 
-**注：需要继承`Dobee\Kernel\Framework\Controller\Controller`基类才能正常使用此类方法**
+**注：需要继承`Dobee\Framework\Controller\Controller`基类才能正常使用此类方法**
 
-###5.1初探
+###5.1数据库配置
 
-查看配置文件: `app/config/config_dev.yml` 或者 `app/config/config_prod.yml` 或者 `app/config/config.yml`。 配置文件修改调整在`AppKernel@registerContainerConfiguration`方法中可自定义，详细请看**第一章，配置**
+查看配置文件: `app/config/config_dev.yml` 或者 `app/config/config_prod.yml` 或者 `app/config/config.yml`。
 
 ####5.1.1获取一个`Repository`库实例
 
@@ -304,6 +296,8 @@ $write = $this->getConnection('write')->getRepository("DemoBundle:Post");
 ```
 
 以上就是同个`Repository`模型库，但是操作对象不一样。
+
+**或者Repository必须为Repository的命令空间完整路径，否则会找不到**
 
 **注：`getConnection`中参数必须是配置文件中已经配置好的，不然会抛出`ConnectionException`异常**
 
@@ -388,51 +382,6 @@ $repository->delete(array('id' => id));
 ```
 
 成功删除会返回影响行数，否则为0
-
-
-#6.命令行工具
-
-##6.1自动创建项目Bundle
-
-打开终端(win下打开cmd并进入到框架更目录)
-
-```
-php app/console bundle:generate --bundle=TestBundle 
-或者
-php app/console bundle:generate --bundle=Bundel:TestBundle 
-```
-
-将会自动生成一个项目bundle
-
-然后将`bundle`注册到`AppKernel`。
-
-
-#二期计划
-
-##希望大伙踊跃发言，建议。
-
-* 优化结构，整理代码
-* 强化配置设置
-* 增强数据库模型操作
-* 整合更多组件，让框架更快，更智能。
-
-#内置组件开发规范
-
-* 1.**命名空间必须以`Dobee\\`作为开头**
-* 2.**必须遵循psr代码规范**
-* 3.**代码必须带有注释或者说明文档，有明确、清晰的设计，需要附上开发者联系方式**
-* 4.**可以以个人名义命名，但需遵循MIT开源协议**
-
-#外置依赖组件开发规范
-
-* 1.**必须遵循psr代码规范**
-
-#框架扩展须知
-
-* 1.**可以调整外部代码，带尽量不要自行修改核心代码，遇到问题尽量想开发人员反馈**
-* 2.**更多功能可以自行发掘，如有更好想法或者框架本身做得不够好的，欢迎各位热情反馈，吐槽，吐槽热线: [JanHuang](bboyjanhuang@gmail.com)**
-* 3.**若想Make Friend的话，请加QQ：384099566，本人长期在线**
-
 
 
 *Author*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
