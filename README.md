@@ -1,8 +1,23 @@
 #dobee-php-simple-framework
 
-php simple framework: **dobee(逗比)**
+Dobee PHP simple framework: **Dobee**
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
+
+##发起人 
+* JanHuang / bboyjanhuang@gmail.com
+
+##维护者
+* JanHuang / bboyjanhuang@gmail.com
+
+##特色
+
+	1) 简单
+	2) 灵活
+	3) RESTful路由
+	4) composer安装/管理
+	5) 灵活配置
+	6) 遵循PSR命名规范
 
 ##参考
 
@@ -14,7 +29,7 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 #安装
 
-本`donee php simple framework`依赖composer自动载入，在安装本框架前需要确保正确安装composer依赖管理。
+本`Dobee PHP simple framework`依赖composer自动载入，在安装本框架前需要确保正确安装composer依赖管理。
 
 `git clone https://coding.net/janhuang/dobee-php-simple-framework.git`
 
@@ -197,97 +212,28 @@ $app->terminate($response); // 结束http请求流程
 * 纪录请求信息
 * 纪录响应状态及相关信息
 
-#待续......
+##2.0 新建一个新项目
 
-##1.配置
-目前支持`yml`, `ini`, `php`三种配置文件类型。（本人推荐yml配置）
-###1.1 YML(YAML)
+在`src`目录下新建项目， 其中包含基础的目录`Controllers`, `Repository`, `Resources/views`, `{name}.php`。其中很清晰知道，分别是代表：控制器，模型库，模板视图，如果是Api接口，可以忽略`views`目录，项目引导文件必须继承`Dobee\Framework\Bundles\Bundle`基础引导类
 
-**注: yml(yaml)文件中，缩进使用空格缩进，一个tab等于4个空格键，非4个空格会报错**
+新建成功后，需要向应用当中注入/申请项目包信息
 
-####1.1.1普通K/V字符串写法:  
-````
-name: janhuang
-````
-
-####1.1.2数组写法: 
+`@registerBundles`
 
 ```
-name: 
-	- janhuang
-	- other
-author:
-	name:
-		-janhuang
-		-other
+return  array(
+	new 引导文件(), // 项目引导文件，每个新项目必须带要有，作为项目的初始化引导
+);
 ```
 
-####1.1.3变量写法:（新增） 
-这个写法比较特殊，需要在配置文件和引导文件中配合设置
+###2.1新建控制器
 
-配置文件：
+**因为控制器通常配合路由一起访问，所以这里会配合路由一起讲述**
 
-`config.yml`
-
-```
-name: %name%
-```
-
-找到`app/Application.php`文件并且打开，找到`registerConfigVariable`方法，并且编辑注册自己的自定义配置变量，例如刚才申请了个变量`name`，那么需要在方法中注册到核心当中。注意，root_path不可修改，否则有可能会出现意想不到的bug，因为核心大部分都由root_path路径作为应用默认路径
-
-```
-public function registerConfigVariable()
-    {
-        return array(
-            'root_path' => $this->getRootPath(),
-            'name' => 'janhuang' // 注册新变量到核心
-        );
-    }
-```
-
-####1.1.4引用写法: 
-**暂不支持**
-
-##2.项目包
-
-在`dobee`框架中，任何的项目或者组件代码，都会被视为一个bundle(包)，那既然是一个bundle，那么这个bundle就是独立的，与其他互不相干。
-
-###2.1如何向框架中新建一个项目
-
-可以在`src`目录当中随意新建一个项目
-
-目录结构为：
-
-```
-- Controllers   	====> 控制器
-- Repository    ====> 数据库模型库
-- Resources		====> 资源目录
-	- views		====> 视图目录
-- {name}.php	=====> 引导文件。必须继承Dobee\Framework\Bundles\Bundle
-```
-
-###2.2注册项目到核心当中
-
-打开`app/Application.php`文件，寻找`registerBundles`方法，在方法中实例化项目引导文件，也就是项目根目录继承`Dobee\Framework\Bundles\Bundle`的引导文件
-
-```	
-public function registerBundles()
-	return array(
-		new {name},
-	);
-}
-```
-
-注册项目后，即可开始正式的开发工作。
-
-##3.路由
-###3.1简介
 
 与以往`ThinkPHP`框架不同，`Dobee`框架主导每个可访问的事件方法都需要配置一个合法的路由地址，以其该有的特性命名该路由前缀。其他没有配置路由地址，不能被外界访问，只可以在内部私有调用。并且注意的是，路由名字不可以重复，路由地址不可以重复，这样会造成冲突，会影响正常的业务访问。路由的配置需要配合访问的控制器/事件，以达到访问该路由即调用该事件方法。
 
-###3.2路由配置新建控制器
-
-在项目`Controllers`中新建一个控制器，例如`DemoController.php`，控制器必须继承框架基类控制器`Dobee\Framework\Controller\Controller`
+在项目`Controllers`中新建一个控制器，例如`DemoController.php`，控制器只有继承框架基类控制器`Dobee\Framework\Controller\Controller`，才可以正确使用框架提供的方法
 
 在控制器当中写上方法
 
@@ -349,7 +295,7 @@ class DemoController
 
 还有一个参数设置，就是访问的格式`format`，例如`format="json"`, 那么访问的地址必须带上`.json`后缀访问，否则路由无法匹配，默认是`php`。可以设置多个访问方式，用来做[RESTful]()API专用。
 
-###3.3路由前缀配置
+###2.3路由前缀配置
 
 有两个选择，在方法的类名定义处新增路由定义注释
 ```
@@ -362,10 +308,11 @@ class DemoController
 
 第二种就是通过`routing.yml`配置文件进行配置。详情可以查看配置文件，与上者配置类似.
 
-###3.4路由机制
+###2.4路由机制
 
 路由机制采用PHP5.4提供的 [php反射
 ](http://php.net/manual/en/class.reflection.php)特性，利用注释来配置每个方法。因此这里有个缺点，开发者需要清楚知道路由的意义和项目的意义，因为路由前缀需要和项目搭上边，切随意和胡乱定义、命名，这样会带来很多维护上的问题。当然，这也是目前框架不足的地方，提示能力过弱，debug能力过弱，需要优化和提升。所以框架有计划加入更多高效高性能组件。先计划加入命令行组件Console、服务组件Server等，还有赖大家提出。
+
 
 ##4.模板
 	
@@ -413,11 +360,11 @@ index.html.twig：
 
 ###4.5模板函数列表
 
-##path($route, array $parameters = array())
+`path($route, array $parameters = array())`
 
-###$route 路由名 例：@Route(name="demo") path('demo')
+`$route 路由名 例：@Route(name="demo") path('demo')`
 
-###$patameters 数组，路由参数 例：@Route("/{name}/{age}", name="demo") path('demo', {"name":"janhuang", "age": 22})
+`$patameters 数组，路由参数 例：@Route("/{name}/{age}", name="demo") path('demo', {"name":"janhuang", "age": 22})`
 
 ##5.数据模型库
 数据库模型使用`Repository`作为后缀命名。与以往的`Model`不太一样，但是使用的方法类似，只是提供一个模型，更加灵活处理各个业务逻辑处理，往后会加大力度优化调整数据模型驱动这块，希望能听到不同的声音。
