@@ -95,8 +95,7 @@ public function registerConfigVariable()
 ```
 
 ####1.1.4引用写法: 
-**暂不支持
-**
+**暂不支持**
 
 ##2.项目包
 
@@ -114,7 +113,7 @@ public function registerConfigVariable()
 - Resources		====> 资源目录
 	- views		====> 视图目录
 - {name}.php	=====> 引导文件。必须继承Dobee\Framework\Bundles\Bundle
-- ```
+```
 
 ###2.2注册项目到核心当中
 
