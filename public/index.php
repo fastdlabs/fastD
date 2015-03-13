@@ -11,17 +11,13 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-$loader = include __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/../app/AppKernel.php';
+$app = include __DIR__ . '/../app/bootstrap/bootstrap.php';
 
-$kernel = new AppKernel('dev', true);
+$app->bootstrap();
 
-$kernel->bootstrap(); // App bootstrap.
+$response = $app->handleHttpRequest();
 
-$kernel
-    ->handlerGlobalRequest()
-    ->send()
-;
+$response->send();
 
-$kernel->terminate();
+$app->terminate($response);
 

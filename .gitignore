@@ -3,4 +3,5 @@
 composer.lock
 /app/logs/*
 /app/cache/*
-
+/src
+/app/resources/official

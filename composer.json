@@ -19,10 +19,6 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/kernel.git"
-        },
-        {
-            "type": "git",
             "url": "https://coding.net/janhuang/configuration.git"
         },
         {
@@ -36,10 +32,27 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/finder.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/container.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/database.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/template.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/framework.git"
         }
     ],
     "require": {
         "php": ">=5.4.0",
+        "monolog/monolog": "1.12.*@dev",
         "twig/twig": "~1.0"
     },
     "require-dev": {
@@ -47,7 +60,10 @@
         "dobee/http": "*",
         "dobee/routing": "*",
         "dobee/finder": "*",
-        "dobee/kernel": "*"
+        "dobee/container": "*",
+        "dobee/database": "*",
+        "dobee/template": "*",
+        "dobee/framework": "*"
     },
     "config": {
         "bin-dir": "bin"

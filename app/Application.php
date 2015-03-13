@@ -10,7 +10,7 @@
  * Blog: http://segmentfault.com/blog/janhuang
  * Gmail: bboyjanhuang@gmail.com
  */
-class AppKernel extends \Dobee\Kernel\Kernel
+class Application extends \Dobee\Framework\AppKernel
 {
     /**
      * Register project bundles into the kernel.
@@ -20,23 +20,7 @@ class AppKernel extends \Dobee\Kernel\Kernel
     public function registerBundles()
     {
         return array(
-            new \DemoBundle\DemoBundle(),
-            new \MysqlDemoBundle\MysqlDemoBundle(),
-            new \WelcomeBundle\WelcomeBundle(),
-        );
-    }
-
-    /**
-     * You can register global configuration variables. But you must return array()
-     * examples:
-     *      return array( 'demo' => 'name' );
-     *
-     * @return array
-     */
-    public function registerConfigurationVariable()
-    {
-        return array(
-            'date' => date('Y-m-d'),
+            new \OfficialBundle\OfficialBundle(),
         );
     }
 
@@ -52,16 +36,27 @@ class AppKernel extends \Dobee\Kernel\Kernel
      */
     public function registerPlugins()
     {
-        // TODO: Implement registerPlugins() method.
+        return array();
     }
 
     /**
-     * Register app kernel configuration.
+     * @return array
+     */
+    public function registerConfigVariable()
+    {
+        return array(
+            'root_path' => $this->getRootPath(),
+            'Ymd' => date('Ymd'),
+        );
+    }
+
+    /**
+     * Register application configuration
      *
-     * @param $configuration
+     * @param \Dobee\Configuration\Configuration $configuration
      * @return void
      */
-    public function registerContainerConfiguration(\Dobee\Kernel\Configuration\Config\LoaderInterface $configuration)
+    public function registerConfiguration(\Dobee\Configuration\Configuration $configuration)
     {
         $configuration->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }

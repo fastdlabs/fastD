@@ -9,7 +9,7 @@ database:
         database_user: root
         database_pwd: 123456
         database_charset: utf8
-        database_name: test
+        database_name: sf_blog
         database_prefix: sf_
     read:
         database_type: mysql
@@ -18,7 +18,7 @@ database:
         database_user: root
         database_pwd: 123456
         database_charset: utf8
-        database_name: test
+        database_name: sf_blog
         database_prefix: sf_
 
 # Template engine and templates path setting
@@ -38,10 +38,8 @@ template:
 routing:
     config: %root_path%/config/routing.yml
 
-# App logger.
+#这个是日志配置，没什么事，就别作死了。
 logger:
     type: monolog
-    path: %root_path%/logs
-    rule: %Y-m-d%
-    auto_create: true
+    path: %root_path%/logs/%Ymd%
 

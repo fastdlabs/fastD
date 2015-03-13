@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/7
- * Time: 下午3:48
+ * Date: 15/3/13
+ * Time: 下午2:47
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,11 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace MysqlDemoBundle;
+$loader = include __DIR__ . '/../../vendor/autoload.php';
+include __DIR__ . '/../Application.php';
 
-use Dobee\Kernel\Framework\Bundles\Bundle;
+$app = new Application('dev');
 
-class MysqlDemoBundle extends Bundle
-{
-
-}
+return $app;
