@@ -36,7 +36,9 @@ class Application extends \Dobee\Framework\AppKernel
      */
     public function registerPlugins()
     {
-        return array();
+        return array(
+            "Plugins\\Demo"
+        );
     }
 
     /**

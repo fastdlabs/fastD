@@ -39,14 +39,165 @@ server {
     }
     location ~ \.php {
         fastcgi_pass 127.0.0.1:9000; 
-        fastcgi_split_path_info ^(.+.php)(/.*)$;
+        fastcgi_split_path_info ^(.+.php)(/.*)$; #解析PHP pathinfo
         include       fastcgi_params;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param PATH_INFO $fastcgi_path_info; #新增PHP pathinfo
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param HTTPS              off;
     }
 }
 ```
+
+##1.Application应用文件
+
+应用主文件主要配置整个应用的配置，项目注册和配置，需要继承`AppKernel`并且重写四个方法，而且必须返回数组，分别是:
+
+`registerPlugins` **注册全局插件，并且支持构造注入**
+
+`registerBundles` **注册项目包**
+
+`registerConfigVariable` **注册全局配置变量**
+
+`registerConfiguration` **注册全局配置**
+
+##@API
+
+###@registerPlugins 
+返回插件数组，插件形式为命名空间＋类名。例如:
+
+```
+return array(
+	'Plugins\\Demo',
+);
+```
+
+必须返回数组，而且插件均以类名作为别名，在控制器中可以这样获取:
+
+$demo = $this->get('Demo'); // 别名获取
+
+插件注册是支持构造器注入，所以在插件构造方法可以注入指定对象，前提是注入的对象，必须是存在的，也就是必须是已经定义的。例如：
+
+```
+class Demo
+{
+	private $a;
+	public function __construct(A $a)
+	{
+		$this->a = $a;
+	}
+}
+```
+
+$demo = $this->get('Demo'); // 别名获取
+
+###@registerBundles
+
+注册项目到应用，例如：
+
+```
+return array(
+	new Demo(),
+);
+```
+
+###@registerConfiguration
+
+注册应用配置信息，目前支持三种配置文件格式，分别是: `yml`, `php`, `ini`。个人推荐使用`yml`作为配置文件，因为最直观，最易配置
+
+原理：最后所有配置信息都是会编译成PHP数组，所以一般按照PHP数组写法配置即可。
+
+```
+public function registerConfiguration(\Dobee\Configuration\Configuration $configuration)
+{
+        $configuration->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+}
+```
+
+然后全局配置信息就注入到应用里面。在控制器当中可以通过:
+
+```
+$this->getParameters('parent.child'); // 获取parent下的children
+```
+
+
+###@registerConfigVariable
+
+注册配置文件变量，必须返回数组，例如：
+
+```
+return array(
+	'root_path' => $this->getRootPath(),
+	'name' => 'janhuang',
+);
+```
+
+这里注册了两个变量，一个是root_path(不可修改)，一个是nam(自定义的)，在配置文件中可以这样写:
+
+```
+name: %name%
+```
+
+在控制器中获取：
+
+```
+$name = $this->getParameters('name');
+```
+
+这个获取出来的变量即是刚才注册的变量的值：janhuang。如果没有注册到方法当中，那么获取出来的值应该是：%name%，没有变化，这个是一个比较灵活的设置
+
+##应用启动流程
+
+```
+$app = new Application('dev'); // dev | prod
+$app->bootstrap(); // 应用引导
+$response = $app->handleHttpRequest(); // 监听http请求
+$response->send(); // 相应http请求
+$app->terminate($response); // 结束http请求流程
+```
+
+###流程解析
+
+初始化应用，并赋予环境类型
+
+启动应用引导:
+
+* 会把所有核心组件注册到应用里面
+* 创建对象容器
+* 然后判断是否缓存引导
+* 加载应用配置信息
+* 监听错误异常并且创建日志对象
+* 注册所有项目包
+* 读取初始化路由列表
+
+监听http请求:
+
+* 创建全局请求并且分析`header`,`server`,`cookies`,`query(GET)`,`request(POST)`
+* 将所有Bag注册到request请求对象当中
+* 将session备注到request请求当中
+
+调度路由:
+
+* 获取http请求
+* 读取路由列表，匹配路由
+* 匹配pathinfo，request method， request format。成功匹配路由并返回
+* 获取路由所在事件(控制器)
+* 闭包事件
+* 调度事件并获取相应
+* 包装响应信息
+* 返回响应对象
+
+应用接受响应:
+
+* 接受响应
+* 推送响应信息
+
+结束应用执行
+
+* 纪录运行时间
+* 纪录请求信息
+* 纪录响应状态及相关信息
+
+
 
 ##1.配置
 目前支持`yml`, `ini`, `php`三种配置文件类型。（本人推荐yml配置）
