@@ -1,6 +1,4 @@
-#dobee-php-simple-framework
-
-Dobee PHP simple framework: **Dobee**
+#Dobee-php-simple-framework 
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
@@ -18,6 +16,7 @@ Dobee PHP simple framework: **Dobee**
 	4) composer安装/管理
 	5) 灵活配置
 	6) 遵循PSR命名规范
+	7) 面向对象
 
 ##参考
 
@@ -27,9 +26,17 @@ Composer: [http://getcomposer.org/](http://getcomposer.org/)
 
 Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
-#安装
+=========
 
-本`Dobee PHP simple framework`依赖composer自动载入，在安装本框架前需要确保正确安装composer依赖管理。
+#＃环境配置
+
+##安装Composer
+
+composer下载地址[https://getcomposer.org](https://getcomposer.org)
+
+##安装Dobee
+
+在安装本框架前需要确保正确安装composer依赖管理。
 
 `git clone https://coding.net/janhuang/dobee-php-simple-framework.git`
 
@@ -39,13 +46,21 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 **注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
 
-#Nginx下配置
+##环境要求
+
+* PHP >= 5.4.*
+
+##隐藏index.php（优雅链接）
+
+###Apache
+
+框架通过public/.htaccess文件来实现优雅链接，隐藏index.php。在访问中不需要带index.php，但是要确定的是，需要开启mod_rewrite模块
+
+###Nginx
 
 ```
 server {
-    listen       80;
-    server_name  server_name;
-    index index.php;
+	#setting......
     location / {
             try_files $uri @rewriteapp;
     }
@@ -53,15 +68,1060 @@ server {
             rewrite ^(.*)$ /index.php$1 last;
     }
     location ~ \.php {
-        fastcgi_pass 127.0.0.1:9000; 
+    	#setting......
         fastcgi_split_path_info ^(.+.php)(/.*)$; #解析PHP pathinfo
-        include       fastcgi_params;
         fastcgi_param PATH_INFO $fastcgi_path_info; #新增PHP pathinfo
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param HTTPS              off;
     }
 }
 ```
+
+=====
+
+#＃应用启动流程
+
+#####初始化应用，并赋予环境类型
+
+#####启动应用引导:
+
+	1) 会把所有核心组件注册到应用里面
+	2) 创建对象容器
+	3) 然后判断是否缓存引导
+	4) 加载应用配置信息
+	5) 监听错误异常并且创建日志对象
+	6) 注册所有项目包
+	7) 读取初始化路由列表
+
+#####监听http请求:
+
+	1) 创建全局请求并且分析`header`,`server`,`cookies`,`query(GET)`,`request(POST)`
+	2) 将所有Bag注册到request请求对象当中
+	3) 将session备注到request请求当中
+
+#####调度路由:
+
+	1) 获取http请求
+	2) 读取路由列表，匹配路由
+	3) 匹配pathinfo，request method， request format。成功匹配路由并返回
+	4) 获取路由所在事件(控制器)
+	5) 闭包事件
+	6) 调度事件并获取相应
+	7) 包装响应信息
+	8) 返回响应对象
+
+#####应用接受响应:
+
+	1) 接受响应
+	2) 推送响应信息
+
+#####结束应用执行
+
+	1) 纪录运行时间
+	1) 纪录请求信息
+	3) 纪录响应状态及相关信息
+
+
+=====
+
+#＃基本功能
+
+	1 项目包
+	2 路由
+	3 控制器
+	4 请求
+	5 响应
+	6 视图
+	
+
+##1.项目包
+
+每个项目都是一个项目包，依赖于`app/Application.php`下面的`registerBundles`方法进行注册。
+
+每个项目包基本包含`Controllers`, `Repository`两个目录，如果有模板视图文件，则应该添加多个`Resources/views`目录，默认的模板视图目录在`app/resources`目录下。
+
+完整目录结构如下:
+
+```
+Commands 		// 命令行(开发中)
+Controllers		// 控制器
+Repository		// 模型库
+Event			// 事件监听(开发中)
+Handlers		// 事件处理(开发中)
+Resources/views	// 项目模板视图
+Resources/config// 项目配置文件(开发中)
+```
+
+##3.路由
+
+与以往ThinkPHP框架不同，Dobee框架主导每个可访问的事件方法都需要配置一个合法的路由地址，并且只有符合这个路由地址才可以正确调度制定事件。
+
+路由机制采用PHP5.4提供的 [php反射
+](http://php.net/manual/en/class.reflection.php) 特性，利用注释来配置每个方法。因此这里有个缺点，开发者需要清楚知道路由的意义和项目的意义。
+
+因此抛出几个意义相关的提示：
+
+	1.命名一定要有意义，切勿胡乱命名
+	2.需要按照模块类型分割路由命名
+
+
+####基本GET路由
+
+因为框架采用的是[php反射
+](http://php.net/manual/en/class.reflection.php)注释路由，所以路由配置暂时将会通过注释来定义.
+
+```
+/** 
+ * @Route("/get", name="demo_index")
+ */
+```
+
+####其他基本路由
+
+**POST**
+
+```
+/** 
+ * @Route("/post", name="demo_index", method="POST")
+ */
+```
+
+**PUT**
+
+```
+/** 
+ * @Route("/put", name="demo_index", method="PUT")
+ */
+```
+
+**DELETE**
+
+```
+/** 
+ * @Route("/delete", name="demo_index", method="DELETE")
+ */
+```
+
+**ANY(此类型路由支持任何形式访问)**
+
+```
+/** 
+ * @Route("/any", name="demo_index", method="ANY")
+ */
+```
+
+####多种请求路由
+
+```
+/** 
+ * @Route("/any", name="demo_index", method=["GET", "POST", "DELETE"])
+ */
+```
+
+####路由参数
+
+**路由参数通过标识符{参数名}表示**
+
+```
+/** 
+ * @Route("/any/arguments/{arg1}/{arg2}", name="demo_index", method="ANY")
+ */
+```
+
+####路由参数默认值
+
+```
+/** 
+ * @Route("/any/arguments/{arg1}/{arg2}", name="demo_index", method="ANY", defaults={"arg1": "ab", "arg2": "cbd"})
+ */
+```
+
+或者可以分开写
+
+```
+/** 
+ * @Route("/any/arguments/{arg1}/{arg2}", name="demo_index", method="ANY")
+ * @Route(defaults={"arg1": "abc", "arg2": "cbd"})
+ */
+```
+
+两者效果等同
+
+####路由参数类型限制
+
+```
+/** 
+ * @Route("/any/arguments/{arg1}/{arg2}", name="demo_index", method="ANY")
+ * @Route(requirements={"arg1": "\d+", "arg2": "\w+"})
+ */
+```
+
+默认允许任何字符，除特殊字符和非法字符除外
+
+####路由访问格式限制
+
+```
+/** 
+ * @Route("/format", name="demo_index", method="ANY")
+ * @Route(format="html")
+ */
+```
+
+默认的访问格式限制为php
+
+####多个路由访问格式
+
+```
+/** 
+ * @Route("/format", name="demo_index", method="ANY")
+ * @Route(format=["php", "json", "xml"])
+ */
+```
+
+访问示例: `host/path/to/format.json`
+
+##3.控制器
+
+####基础控制器
+
+这是一个基础控制器例子：
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{
+	public function welcomeAction()
+	{
+		return 'hello world';
+	}	
+}
+```
+
+####给控制器配置可访问路由
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction()
+	{
+		return 'hello world';
+	}	
+}
+```
+
+访问地址:`host/path/to/`。得到 `hello world`
+
+
+####给控制器带上路由参数
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{
+	/** 
+ 	 * @Route("/{name}", name="demo_index", method="ANY", defaults={"name": "JanHuang"})
+ 	 */
+	public function welcomeAction($name)
+	{
+		return 'hello ' . $name;
+	}	
+}
+```
+
+访问地址:
+
+	`host/path/to/`。得到 `hello JanHuang`
+
+	`host/path/to/Fedora`。得到 `hello Fedora`
+
+	`host/path/to/黄总`。得到 `hello 黄总`
+
+参数限制可以参考路由一章
+
+
+####RESTful资源控制器
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+/** 
+ * @Route("/index")
+ */
+class WelcomeController extends Controller
+{
+	/** 
+ 	 * @Route("/get", name="demo_index", method="ANY", format="json")
+ 	 */
+	public function welcomeAction()
+	{
+		return 'hello world';
+	}	
+}
+```
+
+访问地址:`host/path/to/index/get.json`。得到 `hello world`
+
+其他访问方式需要自己定义，或者有更好的想法可以提出。
+
+**注意： 如果这里class也定义了路由，那么访问路由的地址的pathinfo就应该带上前缀**
+
+
+####依赖注入控制器
+
+Dobee 对象容器时用于解析所有的已定义对象。因此，你可以在控制器所需要的构造器或者方法中，对依赖作任何的类型限制。
+
+####构造器注入
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+/** 
+ * @Route("/index")
+ */
+class WelcomeController extends Controller
+{
+	private $router;
+	public function __construct(\Dobee\Routing\Router $router)
+	{
+		$this->router = $router;
+	}
+	
+	/** 
+ 	 * @Route("/get", name="demo_index", method="ANY", format="json")
+ 	 */
+	public function welcomeAction()
+	{
+		return 'hello injection. I \'m injection Router' . get_class($this->router);
+	}	
+}
+```
+
+####方法注入
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+/** 
+ * @Route("/index")
+ */
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/get", name="demo_index", method="ANY", format="json")
+ 	 */
+	public function welcomeAction(\Dobee\Routing\Router $router)
+	{
+		return 'hello injection. I \'m injection Router' . get_class($this->router);
+	}	
+}
+```
+
+##4.请求
+
+####通过依赖注入获取实例
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		
+	}	
+}
+```
+
+####获取URL GET参数
+
+`host/path/to/?name=JanHuang`
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		$name = $request->query->get('name');
+		//TODO ......
+	}	
+}
+```
+
+####获取表单提交POST, PUT, DELETE数据
+
+`form-data:name=JanHuang&age=22`
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		$name = $request->request->get('name');
+		$age = $request->request->get('age');
+		//TODO ......
+	}	
+}
+```
+
+####获取上传文件
+
+`form-data: file=xcvzcadfbtznn==`
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		$files = $request->files;
+		$file = $request->files->get('file');
+		//TODO ......
+	}	
+}
+```
+
+####Cookies
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		$cookies = $request->cookies;
+		$key = $request->cookies->get('name')->getName();
+		$value = $request->cookies->get('name')->getValue();
+		// Set cookie
+		$request->cookies->set('name', 'JanHuang');
+		// Remove cookie
+		$request->cookies->remove('name')
+		//TODO ......
+	}	
+}
+```
+
+Request对象里面所包含的都是面向对象封装的类，所以只有通过相关的方法才能获取相应的值
+
+####Session
+
+session是比较特殊的一个东西。框架初始化的时候是不会默认给你开启session的，当只有你去获取session的时候才会给你实例化session对象参数包
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Request $request)
+	{
+		$session = $request->session; // $request->getSession();
+		$session->get('name');
+		// Set session
+		$session->set('name', 'JanHuang');
+		// Remove session
+		$session->remove('name');
+		//TODO ......
+	}	
+}
+```
+
+####其他特性
+
+#####判断请求类型
+
+`\Dobee\Http\Request::isMethod($method)`
+
+#####获取请求方法
+
+`\Dobee\Http\Request::getMethod`
+
+#####获取请求格式
+
+`\Dobee\Http\Request::getFormat`
+
+#####是否异步(Ajax)请求
+
+`\Dobee\Http\Request::isXmlHttpRequest`
+
+#####获取pathinfo
+
+`\Dobee\Http\Request::getPathInfo`
+
+#####获取ip地址
+
+`\Dobee\Http\Request::getClientIp`
+
+#####获取域名
+
+`\Dobee\Http\Request::getHost`
+
+#####获取完整域名地址
+
+`\Dobee\Http\Request::getHttpAndHost`
+
+#####获取base Url
+
+`\Dobee\Http\Request::getBaseUrl`
+
+
+##5.响应
+
+通过注入或者实例化在或者继承`\Dobee\Framework\Controller\Controller`获取`\Dobee\Http\Response`响应对象，这里比较灵活。如果以上都没有，默认系统会将返回字符串封装成一个基础的响应对象返回
+
+####响应字符串
+
+#####通过注入
+
+
+```
+namespace 项目名路径\Controllers;
+
+class WelcomeController
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(\Dobee\Http\Response $response)
+	{
+		$response->setContent('hello world');
+		
+		return $response;
+	}	
+}
+```
+
+#####通过继承
+
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction()
+	{
+		return 'hello world';
+	}	
+}
+```
+
+#####通过实例化
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction()
+	{
+		return new \Dobee\Http\Response('hello world');
+	}	
+}
+```
+
+注意`\Dobee\Http\Response`响应只支持字符串。
+
+####响应json
+
+和以上响应一样，不同的是，响应后输出的结果是json对象，主要用于与客户端交互(安卓、苹果、web前端等)。
+
+`return new \Dobee\Http\JsonResponse(array('name' => 'JanHuang'));`
+
+输出结果
+
+
+```
+{
+	"name": "JanHuang"
+}
+
+```
+
+####设置响应头
+
+需要在实例化的时候带上第三个参数，类型为数组，信息为响应头信息
+
+```
+array(
+	"Cache-Control:max-age=180"
+)
+```
+
+##6.视图
+
+框架中使用的模板引擎为[Twig](http://twig.sensiolabs.org/documentation)引擎
+
+####基本用法
+
+视图文件保存在`app/resources`下，和项目的`Resources/views`下。
+
+保存在`app/resources`下，在控制器中可以直接使用`render`方法，不过前提是需要继承框架基础控制器`Dobee\Framework\Controller\Controller`。
+
+路径表示用相对路径
+
+例如在`app/resources`目录下的应该这样写
+
+`$this->render(视图路径:视图名)`
+
+在项目`Resources/views`下应该这样写
+
+`$this->render(项目路径:视图目录:视图名)`
+
+####为视图分配变量
+
+`$this->render(项目路径:视图目录:视图名, array('name' => 'JanHuang'))`
+
+视图文件输出变量
+
+`{{ name }}`
+
+模板引擎用法具体参考[Twig](http://twig.sensiolabs.org/documentation)
+
+框架中添加了两个字定义模板函数，分别如下:
+
+**创建路由地址**
+
+	path($route, [array $parameters = array()])
+	$route 为路由名 路由的name字段
+	$parameters 可选，默认是路由参数默认值
+	@examples: {{ path('demo_index') }}
+	
+**创建灵活的资源地址**
+
+	asset($name, [$host = null], [$path = null])
+	$name 资源名
+	$host 可选 资源域名地址 可以通过`app/config/config_(dev|prod).yml`配置文件配置 默认是当前域名
+	$path 可选 资源目录地址 可以通过`app/config/config_(dev|prod).yml`配置文件配置 默认是当前baseUrl
+	@examples: {{ asset('style.css') }} => http://localhost/styls.css 默认
+	@exmpales: {{ asset('style.css') }} => http://www.mmclick.com/resrouces/style.css 参考下方配置
+	
+配置声明
+
+```
+assets:
+	host: http://www.mmclick.com
+	path: /resources/
+```
+
+=====
+
+#＃系统扩展
+	
+	1) 自定义配置
+	2) 自定义插件
+	3) 依赖注入
+	4) 访问日志
+	
+##1.自定义配置
+
+系统配置一律使用`%变量名%`作为变量配置定界符
+
+####向系统注册自己的配置变量
+
+找到`app/Application.php:registerConfigVariable()`, 方法必须返回数组
+
+```
+public function registerConfigVariable()
+{
+    return array(
+        'root_path' => $this->getRootPath(), // 此变量为系统变量，切勿改动
+        'Ymd' => date('Ymd'), // 新注册配置变量
+        'name' => 'JanHuang',
+    );
+}
+```
+
+以上注册了一个新变量`name`, 在配置文件中可以用定界符`%%`作为这个变量的声明`%name%`
+
+`app/config/config_(dev|prod).yml`
+
+```
+......
+name: %name%
+......
+```
+
+在控制器中可以通过注入的方式或者继承的方式去获取系统配置对象
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction() // welcomeAction(\Dobee\Configuration\Configuration $config)
+	{
+		return $this->getParameters('name');
+	}	
+}
+```
+
+####配置变量数组链接获取
+
+还是拿上面的例子举例
+
+
+
+`app/config/config_(dev|prod).yml`
+
+```
+......
+authors: 
+	name: %name%
+.....
+```
+举例：
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction() // welcomeAction(\Dobee\Configuration\Configuration $config)
+	{
+		return $this->getParameters('authors.name');
+	}	
+}
+```
+
+多维数组层级关系也是按照这种用`.`号链接的形式去获取。
+
+
+##自定义系统插件
+
+自定义系统插件需要遵循[psr-*](http://www.php-fig.org/)命名规范，然后通过[composer](http://getcomposer.org/)依赖引入加载。并且插件别名均已自身的`short name`作为命名。
+
+
+####新建自定义插件
+
+```
+<?php
+namespace 插件目录命名空间;
+class DemoPlugin
+{
+	public function demoPrint()
+	{
+		return 'hello custom plugin';
+	}
+}
+```
+
+也就是说这里的别名就是`DemoPlugin`
+
+在控制器中可以通过`get($plugin)`方法或者依赖注入的方式获取。
+
+通过`get($plugin)`方法需要传递别名，而通过依赖注入的方式需要完整命名
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction()
+	{
+		return $this->get('DemoPlugin')->demoPrint();
+	}	
+}
+```
+
+####在插件中实现构造器依赖注入
+
+
+```
+<?php
+namespace 插件目录命名空间;
+class DemoPlugin
+{
+	private $request;
+	public function __construct(\Dobee\Http\Request $request)
+	{
+		$this->request = $request;
+	}
+	public function demoPrint()
+	{
+		return 'hello custom plugin. Now I access pathinfo is: ' . $this->request->getPathInfo();
+	}
+}
+```
+
+从控制器中实现插件依赖注入
+
+```
+namespace 项目名路径\Controllers;
+ 
+use Dobee\Framework\Controller\Controller;
+
+class WelcomeController extends Controller
+{	
+	/** 
+ 	 * @Route("/", name="demo_index", method="ANY")
+ 	 */
+	public function welcomeAction(插件目录命名空间\DemoPlugin $demo)
+	{
+		return $demo->demoPrint();
+	}	
+}
+```
+
+##依赖注入
+
+插件，控制器，甚至核心都是可以实现依赖注入，甚至看上去是那么的简单，便捷。那么依赖注入是怎么实现的呢？别急，现在我来跟大家一一讲解。
+
+其实依赖注入，简单来说就是控制翻转(IoC)。该特性和功能的实现有赖于PHP5.4以后引入的一个[php反射
+](http://php.net/manual/en/class.reflection.php)特性。而系统中恰恰使用了这一特性来实现依赖注入功能。其他更神奇，跟有趣的功能还需要大家耐心去发现和反馈。
+
+目前核心已经实现了简单的依赖注入，覆盖率是100%，而且还支持自定义构造方法依赖注入和字定义全局变量喲
+
+##访问日志
+
+日志，是一个系统非常重要的组成组件，主要用来记录用户行为，访问信息，响应信息，错误信息，有效，快速的定位系统的不足，流程逻辑问题。
+
+目前日志驱动使用知名的[Monolog](https://github.com/Seldaek/monolog)来作为核心日志组成组件。其中格式配置在`app/config:logger`一栏， 详细可打开该文件查看。
+
+====
+
+#＃数据库
+
+	1) 配置
+	2) 获取读取/写入连接
+	3) 获取读取/写入模型库
+	4) 执行查找
+	5) 数据库事务处理(暂未通过repository支持，需要手动sql语句支持)
+	6) 查找日志纪录
+	
+目前数据库驱动采用`medoo`进行框架核心驱动，后期可能会移除该驱动进行新的整合，不过基础功能不会有太大影响
+	
+####数据库配置
+
+数据库配置主要在`app/config/config_(dev|prod).yml`文件中的`database`字段中，数据库配置必须按照以下方式配置，养成一个良好的规范，更加灵活的扩展往后的项目和调整数据库连接。
+
+例子：
+
+```
+database:
+    default_connection: read #数据库默认链接 名字为下方定义的数据库连接信息 不可忽略
+    write: 
+        database_type: mysql #数据库驱动类型 目前暂且以mysql优先, 此项忽略默认为mysql
+        database_host: localhost #数据库连接ip
+        database_port: 3306 #端口
+        database_user: root #用户
+        database_pwd: 123456 #密码
+        database_charset: utf8 #编码
+        database_name:  #库名
+        database_prefix:  #表前缀
+    read:
+        database_type: mysql
+        database_host: localhost
+        database_port: 3306
+        database_user: root
+        database_pwd: 123456
+        database_charset: utf8
+        database_name: 
+        database_prefix: 
+```
+
+####获取读取/写入连接
+
+这个获取数据库连接必须是继承`Dobee\Framework\Controller\Controller`控制器，并且通过`getConnection([$connection = null])`方法获取。**暂时不支持依赖注入的方式连接数据库**
+
+并且建议每次获取链接都指定链接类型。也就是那个数据库，如果为空，则会选择`default_connection`数据库，这里会隐藏一个危险，万一默认链接改了，那可能要改动的地方就很多了，所以是建议每次都明确指定
+
+```
+$read = $this->getConnection('read');
+// 具体操作
+```
+
+####获取读取/写入模型库
+
+这个会根据你定义的`{Name}Repository`来定义指定表名，表切会自动帮你带上表前缀， 前提是模型库必须继承`Dobee\Database\Repository\Repository`， 模型库获取需要通过`getConnection([$connection=null])`方法获取。而且获取后默认将链接赋予给模型库。
+
+例如：
+
+定义`PostRepository` 那么该模型库就是默认指向到`prefix_表名`。
+
+```
+$postRepository = $this->getConnection('read')->getRepository(项目目录命名空间:Repository:名字);
+```
+
+这里获取Repository的参数格式是： 项目命名空间:模型库名，这里模型库名不需要带上Repository
+
+比如你定义了一个：`PostRepository`在`Demo`项目下的`Repository`目录下，那就应该这样写
+
+`$postRepository = $this->getConnection('read')->getRepository('Demo:Repository:Post')`
+
+结构会返回你定义的模型库类，可以执行相关的方法。
+
+**模型库内暂时不支持依赖注入**
+
+####执行查找
+
+#####基础查找
+
+查找一条数据
+
+`find($where = array(), [$fields = '*'])`
+
+查找所有数据
+
+`findAll($where = array(), [$fields = '*'])`
+
+根据条件查找一条数据
+
+`findBy($where = array(), [$fields = '*'])`
+
+根据条件查找所有数据
+
+`findAllBy($where = array(), [$fields = '*'])`
+
+灵活根据条件查找一条数据
+
+`findBy字段名($where = array(), [$fields = '*'])` 如：`findById(1) => findBy(array('id' => 1))`
+
+灵活根据条件查找所有数据
+
+`findBy字段名($where = array(), [$fields = '*'])`
+
+如： 
+
+`findAllByTitle('hello') => findAllBy(array('title' => 'hello'));`
+`findAllByCatId(1) => findAllBy(array('cat_id' => 1));`
+
+#####基础业务操作
+
+插入
+
+`insert($datas = array());`
+
+更新
+
+`update($where = array(), $datas = array())`
+
+删除,这里删除数据不允许删除整个表数据，只允许删除符合条件的数据，这里条件参数比传
+
+`delete($where = array());`
+
+####字定义数据查询
+
+这里数据查询返回的是一个二维数组
+
+`createQuery($dql);`
+
+`getQuery()`
+
+`getResult()`
+
+如：
+
+`$connection->createQuery('sql')->getQuery()->getResult()`
+
+
+####事务处理
+
+目前事务处理系统还没有提供，需要通过`createQuery`去产生事务并且提交，后期优化会加上事务处理
+
+####日志处理
+
+日志可以通过执行过sql处理后的模型库或者链接来获取
+
+日志
+
+`logs()` 
+
+该方法返回一个数组，是执行过的所有业务语句
+
+错误信息
+
+`error()`
+
+最后执行的语句
+
+`getLastQuery()`
+
+====
+
+#@API
+
 
 ##1.Application应用文件
 
@@ -160,326 +1220,8 @@ $name = $this->getParameters('name');
 
 这个获取出来的变量即是刚才注册的变量的值：janhuang。如果没有注册到方法当中，那么获取出来的值应该是：%name%，没有变化，这个是一个比较灵活的设置
 
-##应用启动流程
 
-```
-$app = new Application('dev'); // dev | prod
-$app->bootstrap(); // 应用引导
-$response = $app->handleHttpRequest(); // 监听http请求
-$response->send(); // 相应http请求
-$app->terminate($response); // 结束http请求流程
-```
-
-###流程解析
-
-初始化应用，并赋予环境类型
-
-启动应用引导:
-
-* 会把所有核心组件注册到应用里面
-* 创建对象容器
-* 然后判断是否缓存引导
-* 加载应用配置信息
-* 监听错误异常并且创建日志对象
-* 注册所有项目包
-* 读取初始化路由列表
-
-监听http请求:
-
-* 创建全局请求并且分析`header`,`server`,`cookies`,`query(GET)`,`request(POST)`
-* 将所有Bag注册到request请求对象当中
-* 将session备注到request请求当中
-
-调度路由:
-
-* 获取http请求
-* 读取路由列表，匹配路由
-* 匹配pathinfo，request method， request format。成功匹配路由并返回
-* 获取路由所在事件(控制器)
-* 闭包事件
-* 调度事件并获取相应
-* 包装响应信息
-* 返回响应对象
-
-应用接受响应:
-
-* 接受响应
-* 推送响应信息
-
-结束应用执行
-
-* 纪录运行时间
-* 纪录请求信息
-* 纪录响应状态及相关信息
-
-##2.0 新建一个新项目
-
-在`src`目录下新建项目， 其中包含基础的目录`Controllers`, `Repository`, `Resources/views`, `{name}.php`。其中很清晰知道，分别是代表：控制器，模型库，模板视图，如果是Api接口，可以忽略`views`目录，项目引导文件必须继承`Dobee\Framework\Bundles\Bundle`基础引导类
-
-新建成功后，需要向应用当中注入/申请项目包信息
-
-`@registerBundles`
-
-```
-return  array(
-	new 引导文件(), // 项目引导文件，每个新项目必须带要有，作为项目的初始化引导
-);
-```
-
-###2.1新建控制器
-
-**因为控制器通常配合路由一起访问，所以这里会配合路由一起讲述**
-
-
-与以往`ThinkPHP`框架不同，`Dobee`框架主导每个可访问的事件方法都需要配置一个合法的路由地址，以其该有的特性命名该路由前缀。其他没有配置路由地址，不能被外界访问，只可以在内部私有调用。并且注意的是，路由名字不可以重复，路由地址不可以重复，这样会造成冲突，会影响正常的业务访问。路由的配置需要配合访问的控制器/事件，以达到访问该路由即调用该事件方法。
-
-在项目`Controllers`中新建一个控制器，例如`DemoController.php`，控制器只有继承框架基类控制器`Dobee\Framework\Controller\Controller`，才可以正确使用框架提供的方法
-
-在控制器当中写上方法
-
-```
-class DemoController
-{
-	/** 
-	 * 路由设置
-	 * @Route("/demo", name="demo_index")
-	 */
-	public function demoAction()
-	{
-		return 'hello world';
-	}
-}
-```
-
-这样新建了一个可访问的控制器方法路由了。访问地址为: `host/path/to/index.php/demo`。即可访问到demoAction方法，如无意外即可以看到hello world这几个大字
-
-控制器也可以配置变量哦，变量表示用花括号表示:`{变量名}`
-	
-在控制器新增多一个方法：
-
-```
-class DemoController
-{
-	/** 
-	 * 路由设置
-	 * @Route("/demo", name="demo_index")
-	 */
-	public function demoAction()
-	{
-		return 'hello world';
-	}
-	/** 
-	 * 动态路由
-	 * 路由解析
-	 * defaults 是路由参数变量的默认值。
-	 * requirements 是路由参数类型约束
-	 * method 是路由请求方法约束
-	 * he
-	 * @Route("/test/{name}", name="demo_test")
-	 * @Route(defaults={"name": "janhuang"}, requirements={"name": "\w+"}, method="GET")
- 	 */
-	public function testAction($name)
-	{
-		return 'hello ' . $name;
-	}
-}
-```
-
-新增了一个可访问控制器路由地址，并且配有变量`name`， 设置变量`name`默认值`janhuang`。设置在`defaults`注释里面。并且设置了路由变量的有效值`requirements`类型为`\w+`。
-
-访问地址: `host/path/to/index.php/test` 默认就会将defaults的值传给`testAction`方法参数接收，那么这里可以看到的是，会变成 hello janhuang。 
-
-如果在这个路由地址后面带上自定义的名字就会变成你所输入的那个名字。 比如：访问地址: `host/path/to/index.php/test/demo`，就会出现 hello demo
-
-这里，其实你还会看到有个`method`定义，其实这里method定义的是你该路由地址允许访问的http模式，如果设置了`GET`那么这个只能允许`GET`方式访问。支持的方式可以自己定义，但是请勿玩太过了。设置`ANY`则可以用任何方式访问，设置多个访问方式，`method=["GET", "POST"]`, 以数组方式设置，`method`的值一律为大写
-
-还有一个参数设置，就是访问的格式`format`，例如`format="json"`, 那么访问的地址必须带上`.json`后缀访问，否则路由无法匹配，默认是`php`。可以设置多个访问方式，用来做[RESTful]()API专用。
-
-###2.3路由前缀配置
-
-有两个选择，在方法的类名定义处新增路由定义注释
-```
-/** 
- * @Route("/prefix") 
- */
-```
-
-访问制定路由的时候就要带上此前缀和路由地址访问。
-
-第二种就是通过`routing.yml`配置文件进行配置。详情可以查看配置文件，与上者配置类似.
-
-###2.4路由机制
-
-路由机制采用PHP5.4提供的 [php反射
-](http://php.net/manual/en/class.reflection.php)特性，利用注释来配置每个方法。因此这里有个缺点，开发者需要清楚知道路由的意义和项目的意义，因为路由前缀需要和项目搭上边，切随意和胡乱定义、命名，这样会带来很多维护上的问题。当然，这也是目前框架不足的地方，提示能力过弱，debug能力过弱，需要优化和提升。所以框架有计划加入更多高效高性能组件。先计划加入命令行组件Console、服务组件Server等，还有赖大家提出。
-
-
-
-##4.模板
-	
-###4.1模板路径
-框架中模板目录分别是`app/Resources`和`src/*/Resources/views`两个目录，默认目录是`app/resources`Resources`。
-
-目前模板格式为`*.html.twig`
-
-**注：{{ name }} 这是输出，类似于<?php echo $name ?>   {% 这里为表达式 %}**
-
-###4.2模板渲染
-
-####4.2.1 定义模板
-
-在资源目录下`src/*/Resources/views/`新建`demo.html.twig`。内容为: `hello {{ name }}`，其中name为变量，需要由控制器赋值过去，详情看`*/Resources/views`
-
-###4.3模板继承
-
-和类继承一样，模板也是可以继承
-
-继承使用`{% extend "模板名，和渲染(render)时是一样的" %}`，这就是可以继承了父类的所有数据，并且可以重写。
-	
-###4.4模板重写
-
-例子: 
-
-```
-layout.html.twig:
-hello world
-{% block main %}
-	重写
-{% end block %}
-```
-
-```
-index.html.twig：
-{% extend 'layout.html.twig' %}
-{% block main %}
-	我这里是重写信息
-{% endblock %}
-```
-
-具体可以参考: [Twig 模板引擎
-](http://twig.sensiolabs.org/documentation)
-
-###4.5模板函数列表
-
-`path($route, array $parameters = array())`
-
-`$route 路由名 例：@Route(name="demo") path('demo')`
-
-`$patameters 数组，路由参数 例：@Route("/{name}/{age}", name="demo") path('demo', {"name":"janhuang", "age": 22})`
-
-##5.数据模型库
-数据库模型使用`Repository`作为后缀命名。与以往的`Model`不太一样，但是使用的方法类似，只是提供一个模型，更加灵活处理各个业务逻辑处理，往后会加大力度优化调整数据模型驱动这块，希望能听到不同的声音。
-
-**注：需要继承`Dobee\Framework\Controller\Controller`基类才能正常使用此类方法**
-
-###5.1数据库配置
-
-查看配置文件: `app/config/config_dev.yml` 或者 `app/config/config_prod.yml` 或者 `app/config/config.yml`。
-
-####5.1.1获取一个`Repository`库实例
-
-```
-$repository = $this->getConnection()->getRepository("DemoBundle:Post");
-```
-
-`getConnection` 方法可以指定配置文件中指定的链接，例如配置了读写分离，可以轻松自由的指定获取R/W模型库，如果为空，那就默认获取`default_connenction`下面的链接。详细请看`DemoBundle` 和 `config_dev.yml` 两个文件。
-
-获取出来的`Repository`默认就是当前模型链接，只对当前链接进行操作，不影响其他模型库。
-
-例如要实例两个相同`Repository`，但是操作不同链接.
-
-```
-$read = $this->getConnection('read')->getRepository("DemoBundle:Post");
-$write = $this->getConnection('write')->getRepository("DemoBundle:Post");
-```
-
-以上就是同个`Repository`模型库，但是操作对象不一样。
-
-**或者Repository必须为Repository的命令空间完整路径，否则会找不到**
-
-**注：`getConnection`中参数必须是配置文件中已经配置好的，不然会抛出`ConnectionException`异常**
-
-**注：数据库字段目前仅支持以下划线作为词组分割标示，例如`category_id`，不支持`categoryId`这样风格命名，为何使用这个，因为这样比较明朗，比较容易发现和规范统一**
-
-####5.1.2简单获取数据信息
-
-1.通过主键查询字段，这里的主键指的是 `id`
-
-```
-$read->find(1);
-// 目前已主键id优先，默认主键名为:id
-```
-
-2.通过主键查询所有记录
-
-```
-$read->findAll(array('id' => 1));
-// 返回数组 参数里面查询条件数组
-```
-
-####5.1.3灵活的获取数据信息
-
-1.通过ID查询字段，可以写成下面那样:
-
-```
-$read->findBy(array('id' => 1));
-// 或
-$read->findById(1);
-```
-
-2.通过分类ID查询所有，可以写成下面那样:
-
-```
-// 两者效果等同
-$read->findAllBy(array('c_id' => 1));
-// 或
-$read->findAllByCId(1);
-// 两者效果等同 值得注意的是这里的 '_' 下划线是通过字幕大些区分的。。。
-// 例如 CategoryId => category_id
-```
-
-####5.1.4创建查询资源，自定义sql查询语句
-
-**注：有两个可选参数，分别是: `%prefix%`、`%table%`，在操作查询的时候会自动注入到相关语句中，`createQuery` 支持链式查询**
-
-例如：
-
-```
-$read
-	->createQuery("select * from %prefix%%table% where id = :id")
-	->setParameters(array('id' => 1)) // 或者 setParameters('id', 1) 效果一样
-	->getQuery()
-;
-$result = $read->getResult();
-```
-
-这样就简单的创建了一个`DQL`查询语句了。
-
-####5.1.5 DML操作
-
-1.新增一条数据
-
-```
-$repository->insert(array('title' => 'demo insert'));
-```
-
-以上会返回最后插入的ID，否则不会
-
-2.更新一条数据
-
-```
-$repository->update(array('id' => id), array('title' => 'demo update'));
-```
-
-成功更新会返回影响行数，否则为0
-
-3.删除一条数据
-
-```
-$repository->delete(array('id' => id));
-```
-
-成功删除会返回影响行数，否则为0
+====
 
 
 *Author*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
@@ -487,5 +1229,11 @@ $repository->delete(array('id' => id));
 *Blog*: **[JanHuang Blog](http://segmentfault.com/blog/janhuang)**
 
 *Gmail*:  **bboyjanhuang@gmail.com**
+
+====
+
+#License
+
+####MIT
 
 
