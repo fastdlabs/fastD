@@ -20,7 +20,7 @@ class Application extends \Dobee\Framework\AppKernel
     public function registerBundles()
     {
         return array(
-            new \OfficialBundle\OfficialBundle(),
+            new \Welcome\Welcome(),
         );
     }
 
@@ -37,7 +37,6 @@ class Application extends \Dobee\Framework\AppKernel
     public function registerPlugins()
     {
         return array(
-            "Plugins\\Demo"
         );
     }
 

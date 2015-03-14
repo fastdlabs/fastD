@@ -3,5 +3,6 @@
 composer.lock
 /app/logs/*
 /app/cache/*
-/src
+/src／Plugins
+/src／OfficialBundle
 /app/resources/official
