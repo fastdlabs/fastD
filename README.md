@@ -2,13 +2,13 @@
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
-##发起人 
+#发起人 
 * JanHuang / bboyjanhuang@gmail.com
 
-##维护者
+#维护者
 * JanHuang / bboyjanhuang@gmail.com
 
-##特色
+###特色
 
 	1) 简单
 	2) 灵活
@@ -18,7 +18,7 @@
 	6) 遵循PSR命名规范
 	7) 面向对象
 
-##参考
+###参考
 
 PSR-*: [http://www.php-fig.org/](http://www.php-fig.org/)
 
@@ -30,11 +30,11 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 #＃环境配置
 
-##安装Composer
+###安装Composer
 
 composer下载地址[https://getcomposer.org](https://getcomposer.org)
 
-##安装Dobee
+###安装Dobee
 
 在安装本框架前需要确保正确安装composer依赖管理。
 
@@ -46,11 +46,11 @@ composer下载地址[https://getcomposer.org](https://getcomposer.org)
 
 **注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
 
-##环境要求
+###环境要求
 
 * PHP >= 5.4.*
 
-##隐藏index.php（优雅链接）
+###隐藏index.php（优雅链接）
 
 ###Apache
 
