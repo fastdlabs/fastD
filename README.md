@@ -1,4 +1,4 @@
-#Dobee-php-simple-framework 
+#Dobee-php-simple-framework for PHP5.4+
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
@@ -1223,12 +1223,13 @@ $name = $this->getParameters('name');
 
 ====
 
+#Author
 
-*Author*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
+*Name*:  **[JanHuang](http://segmentfault.com/blog/janhuang)**
 
-*Blog*: **[JanHuang Blog](http://segmentfault.com/blog/janhuang)**
+*Blog*: **[http://segmentfault.com/blog/janhuang](http://segmentfault.com/blog/janhuang)**
 
-*Gmail*:  **bboyjanhuang@gmail.com**
+*EMail*:  **bboyjanhuang@gmail.com**
 
 ====
 
