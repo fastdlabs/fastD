@@ -1,0 +1,930 @@
+<?php 
+namespace Dobee\Container
+{
+class Container 
+{private  $container  = array (
+);
+private  $options  = array (
+);
+public function __construct($objectives = array(), array $options = array())
+{
+if (!empty($objectives)) {
+foreach ($objectives as $alias => $class) {
+$constructor = '';
+if (false !== ($pos = strpos($class, ':'))) {
+list($class, $constructor) = explode(':', $class);
+}
+
+$this->set($this->getAlias($class), $this->createObjective($class, $constructor));
+}
+}
+
+$this->options = $options;
+}
+public function get($name)
+{
+$alias = $this->getAlias($name);
+
+if (!isset($this->container[$alias])) {
+$constructor = null;
+if (false !== ($pos = strpos($name, ':'))) {
+$constructor = substr($name, $pos + 1);
+}
+$this->set($alias, $this->createObjective($name, $constructor, $this->options));
+}
+
+return $this->container[$alias];
+}
+public function getInstance($name, array $parameters = array())
+{
+return $this->get($name)->getInstance(array_merge($this->options, $parameters));
+}
+public function getAlias($name)
+{
+if (false !== ($pos = strrpos($name, '\\'))) {
+$alias = substr($name, $pos+1);
+} else {
+$alias = $name;
+}
+
+return $alias;
+}
+public function set($name, \Dobee\Container\Objective $objective)
+{
+$this->container[$name] = $objective;
+
+return $this;
+}
+public function createObjective($class, $constructor = null, array $parameters = array())
+{
+if (!class_exists($class)) {
+throw new \InvalidArgumentException(sprintf('Container objective "%s" is undefined.', $class));
+}
+
+$objective = Objective::createObjective($class, $parameters);
+
+$objective->setContainer($this);
+
+$objective->setAlias($this->getAlias($class));
+
+if (!empty($constructor)) {
+$objective->setConstructor($constructor);
+}
+
+return $objective;
+}
+}
+interface ContainerInterface 
+{public function get($name);
+public function set($name, \Dobee\Container\Objective $objective);
+public function getInstance($name);
+}
+class Objective extends \ReflectionClass
+{const IS_IMPLICIT_ABSTRACT  = 16;
+const IS_EXPLICIT_ABSTRACT  = 32;
+const IS_FINAL  = 64;
+protected  $container ;
+protected  $alias ;
+private  $instance ;
+private  $constructor ;
+private  $parameters  = array (
+);
+public  $name  = '';
+public function setContainer(Container &$container)
+{
+$this->container = $container;
+
+return $this;
+}
+public function getContainer()
+{
+return $this->container;
+}
+public function setAlias($alias)
+{
+$this->alias = $alias;
+
+return $this;
+}
+public function getAlias()
+{
+return $this->alias;
+}
+public function setConstructor($constructor)
+{
+$this->constructor = $constructor;
+
+return $this;
+}
+public function __construct($class, array $parameters = array())
+{
+parent::__construct($class);
+
+if (is_object($class)) {
+$this->instance = $class;
+}
+
+$this->parameters = $parameters;
+}
+public function getInstance(array $parameters = array())
+{
+if (null !== $this->instance) {
+return $this->instance;
+}
+
+if (empty($this->constructor)) {
+if (null === $this->getConstructor()) {
+$this->instance = $this->newInstance();
+} else {
+if (null !== ($constructor = $this->getConstructor())) {
+$parameters = $this->getParameters($constructor, $parameters);
+}
+
+$this->instance = $this->newInstanceArgs($parameters);
+}
+} else {
+$this->instance = call_user_func_array($this->getName() . '::' . $this->constructor, $this->getParameters($this->getMethod($this->constructor), $parameters));
+}
+
+return $this->instance;
+}
+public function getParameters(\ReflectionMethod $method = null, array $parameters = array())
+{
+if (null === $method || 0 >= $method->getNumberOfRequiredParameters()) {
+return $parameters;
+}
+
+$parameters = array_merge($this->parameters, $parameters);
+
+$args = array();
+
+foreach ($method->getParameters() as $index => $parameter) {
+if (($class = $parameter->getClass()) instanceof \ReflectionClass) {
+$args[$index] = $this->container->getInstance($class->getName());
+}
+}
+
+return array_merge($args, $parameters);
+}
+public function callMethod($method, array $parameters = array())
+{
+return call_user_func_array(array($this->getInstance(), $method), $this->getParameters($this->getMethod($method), $parameters));
+}
+public static function createObjective($class, array $parameters = array())
+{
+return new static($class, $parameters);
+}
+}
+}
+namespace Dobee\Finder
+{
+class Finder 
+{private  $collections ;
+private  $filter  = array (
+);
+private static $dir ;
+private  $pwd  = './';
+public function name($name)
+{
+if (!empty($name)) {
+$this->filter['name'] = function ($fileName) use ($name) {
+
+$length = strlen(trim($name, '%'));
+
+$first = substr($name, 0, 1);
+
+$last = substr($name, -1);
+
+if ('%' === $first && '%' !==  $last) {
+return trim($name, '%') === substr($fileName, 0, $length);
+}
+
+if ('%' === $last && '%' !== $first) {
+return trim($name, '%') === substr($fileName, -$length);
+}
+
+if ('%' === $first && '%' === $last) {
+return false !== strpos($fileName, trim($name, '%'));
+}
+
+return trim($name, '%') === $fileName;
+};
+}
+
+return $this;
+}
+public function in($directory)
+{
+if (!is_dir($directory)) {
+throw new FinderException(sprintf('Not a directory: %s', $directory));
+}
+
+$this->pwd = realpath($directory);
+
+return $this;
+}
+public function scanDirectory($directory)
+{
+$this->collections = new \Dobee\Finder\FinderCollections();
+
+$handler = dir($directory);
+
+while (false !== ($entry = $handler->read())) {
+if (in_array($entry, array('.', '..'))) { continue; }
+
+if (isset($this->filter['name']) && is_callable($this->filter['name'])) {
+if (!$this->filter['name'](pathinfo($entry, PATHINFO_FILENAME))) { continue; }
+}
+
+$finder = FinderResourceBuilder::createFinder($handler->path . DIRECTORY_SEPARATOR . $entry);
+$finder->setDir($handler->path)
+->setName($entry)
+->setSize(filesize($handler->path . DIRECTORY_SEPARATOR . $entry))
+->setType(filetype($handler->path . DIRECTORY_SEPARATOR . $entry))
+;
+$this->collections->setFile($finder);
+}
+
+$handler->close();
+
+return $this->collections;
+}
+public function all()
+{
+if (self::$dir !== $this->pwd) {
+$this->scanDirectory($this->pwd);
+}
+
+return $this->collections;
+}
+public function files()
+{
+return $this->all()->files();
+}
+public function directories()
+{
+return $this->all()->directories();
+}
+public function current()
+{
+return $this->collections->current();
+}
+public function next()
+{
+$this->collections->next();
+}
+public function key()
+{
+return $this->collections->key();
+}
+public function valid()
+{
+return $this->collections->valid();
+}
+public function rewind()
+{
+$this->collections->rewind();
+}
+public function count()
+{
+return $this->collections->count();
+}
+}
+}
+namespace Dobee\Routing
+{
+class Router 
+{private  $collections ;
+private  $generator ;
+private  $matcher ;
+public function __construct()
+{
+$this->collections = new \Dobee\Routing\Collections\RouteCollections();
+
+$this->generator = new \Dobee\Routing\Generator\RouteGenerator();
+
+$this->matcher = new \Dobee\Routing\Matcher\RouteMatcher();
+}
+public function getCollections()
+{
+return $this->collections;
+}
+public function generateUrl($name, array $parameters = array())
+{
+return $this->generator->generateUrl($this->collections->getRoute($name), $parameters);
+}
+public function setRoute($name, \Dobee\Routing\RouteInterface $routeInterface = null)
+{
+return $this->collections->setRoute($name, $routeInterface);
+}
+public function getRoute($name)
+{
+return $this->collections->getRoute($name);
+}
+public function hasRoute($name)
+{
+return $this->collections->hasRoute($name);
+}
+public function removeRoute($name)
+{
+return $this->collections->removeRoute($name);
+}
+public function match($uri, \Dobee\Routing\RouteInterface $route = null)
+{
+if (null === $route) {
+return $this->matcher->match($uri, $this->collections);
+}
+
+return $this->matcher->matchRequestRoute($uri, $route);
+}
+public function matchMethod($method, \Dobee\Routing\RouteInterface $route)
+{
+return $this->matcher->matchRequestMethod($method, $route);
+}
+public function matchFormat($format, \Dobee\Routing\RouteInterface $route)
+{
+return $this->matcher->matchRequestFormat($format, $route);
+}
+}
+}
+namespace Dobee\Http
+{
+class Request 
+{public  $query ;
+public  $request ;
+public  $files ;
+public  $cookies ;
+protected  $session ;
+protected  $server ;
+protected  $headers ;
+private  $request_uri ;
+private  $base_url ;
+private  $path_info ;
+private  $format  = 'php';
+private  $content ;
+private static $request_factory ;
+private function __construct($get, $post, $files, $cookie, $server)
+{
+$this->query    = new \Dobee\Http\Bag\QueryParametersBag($get);
+$this->request  = new \Dobee\Http\Bag\RequestParametersBag($post);
+$this->files    = new \Dobee\Http\Bag\FilesParametersBag($files);
+$this->cookies  = new \Dobee\Http\Bag\CookieParametersBag($cookie);
+$this->server   = new \Dobee\Http\Bag\ServerParametersBag($server);
+$this->headers  = new \Dobee\Http\Bag\HeaderParametersBag($this->server->getHeaders());
+}
+public function getHost()
+{
+return $this->server->get('SERVER_NAME');
+}
+public function getHttpAndHost()
+{
+return $this->getSchema() . '://' . $this->getHost();
+}
+public function getSchema()
+{
+return $this->server->get('REQUEST_SCHEME');
+}
+public function getClientIp()
+{
+if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+return $_SERVER['HTTP_CLIENT_IP'];
+}
+
+if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+return $_SERVER['HTTP_X_FORWARDED_FOR'];;
+}
+
+if(isset($_SERVER['HTTP_X_FORWARDED'])) {
+return $_SERVER['HTTP_X_FORWARDED'];
+}
+
+if(isset($_SERVER['HTTP_FORWARDED_FOR'])) {
+return $_SERVER['HTTP_FORWARDED_FOR'];
+}
+
+if(isset($_SERVER['HTTP_FORWARDED'])) {
+return $_SERVER['HTTP_FORWARDED'];
+}
+
+if(isset($_SERVER['REMOTE_ADDR'])) {
+return $_SERVER['REMOTE_ADDR'];
+}
+
+return 'unknown';
+}
+public function getRequestUri()
+{
+if (null === $this->request_uri) {
+$this->request_uri = $this->prepareRequestUri();
+}
+
+return $this->request_uri;
+}
+protected function prepareRequestUri()
+{
+$requestUri = '';
+
+if ($this->headers->has('X_ORIGINAL_URL')) {
+// IIS with Microsoft Rewrite Module
+$requestUri = $this->headers->get('X_ORIGINAL_URL');
+$this->headers->remove('X_ORIGINAL_URL');
+$this->server->remove('HTTP_X_ORIGINAL_URL');
+$this->server->remove('UNENCODED_URL');
+$this->server->remove('IIS_WasUrlRewritten');
+} elseif ($this->headers->has('X_REWRITE_URL')) {
+// IIS with ISAPI_Rewrite
+$requestUri = $this->headers->get('X_REWRITE_URL');
+$this->headers->remove('X_REWRITE_URL');
+} elseif ($this->server->get('IIS_WasUrlRewritten') == '1' && $this->server->get('UNENCODED_URL') != '') {
+// IIS7 with URL Rewrite: make sure we get the unencoded URL (double slash problem)
+$requestUri = $this->server->get('UNENCODED_URL');
+$this->server->remove('UNENCODED_URL');
+$this->server->remove('IIS_WasUrlRewritten');
+} elseif ($this->server->has('REQUEST_URI')) {
+$requestUri = $this->server->get('REQUEST_URI');
+// HTTP proxy reqs setup request URI with scheme and host [and port] + the URL path, only use URL path
+$schemeAndHttpHost = $this->getHttpAndHost();
+if (strpos($requestUri, $schemeAndHttpHost) === 0) {
+$requestUri = substr($requestUri, strlen($schemeAndHttpHost));
+}
+} elseif ($this->server->has('ORIG_PATH_INFO')) {
+// IIS 5.0, PHP as CGI
+$requestUri = $this->server->get('ORIG_PATH_INFO');
+if ('' != $this->server->get('QUERY_STRING')) {
+$requestUri .= '?'.$this->server->get('QUERY_STRING');
+}
+$this->server->remove('ORIG_PATH_INFO');
+}
+
+// add parameter in server
+$this->server->add('REQUEST_URI', $requestUri);
+
+return $requestUri;
+}
+private function getUrlencodedPrefix($string, $prefix)
+{
+if (0 !== strpos(rawurldecode($string), $prefix)) {
+return false;
+}
+
+if (preg_match('#^(%[[:xdigit:]]{2}|.){{$len}}#', $string, $match)) {
+return $match[0];
+}
+
+return false;
+}
+protected function prepareBaseUrl()
+{
+$filename = basename($this->server->get('SCRIPT_FILENAME'));
+if (basename($this->server->get('SCRIPT_NAME')) === $filename) {
+$baseUrl = $this->server->get('SCRIPT_NAME');
+} elseif (basename($this->server->get('PHP_SELF')) === $filename) {
+$baseUrl = $this->server->get('PHP_SELF');
+} elseif (basename($this->server->get('ORIG_SCRIPT_NAME')) === $filename) {
+$baseUrl = $this->server->get('ORIG_SCRIPT_NAME'); // 1and1 shared hosting compatibility
+} else {
+// Backtrack up the script_filename to find the portion matching
+// php_self
+$path = $this->server->get('PHP_SELF', '');
+$file = $this->server->get('SCRIPT_FILENAME', '');
+$segs = explode('/', trim($file, '/'));
+$segs = array_reverse($segs);
+$index = 0;
+$last = count($segs);
+$baseUrl = '';
+do {
+$seg = $segs[$index];
+$baseUrl = '/'.$seg.$baseUrl;
+++$index;
+} while ($last > $index && (false !== $pos = strpos($path, $baseUrl)) && 0 != $pos);
+}
+
+// Does the baseUrl have anything in common with the request_uri?
+$requestUri = $this->getRequestUri();
+
+if ($baseUrl && false !== $prefix = $this->getUrlencodedPrefix($requestUri, $baseUrl)) {
+return $prefix;
+}
+
+if ($baseUrl && false !== $prefix = $this->getUrlencodedPrefix($requestUri, dirname($baseUrl))) {
+// directory portion of $baseUrl matches
+return rtrim($prefix, '/');
+}
+
+$truncatedRequestUri = $requestUri;
+if (false !== $pos = strpos($requestUri, '?')) {
+$truncatedRequestUri = substr($requestUri, 0, $pos);
+}
+
+$basename = basename($baseUrl);
+if (empty($basename) || !strpos(rawurldecode($truncatedRequestUri), $basename)) {
+return rtrim(str_replace($basename, '', $baseUrl), '/');
+}
+
+// If using mod_rewrite or ISAPI_Rewrite strip the script filename
+// out of baseUrl. $pos !== 0 makes sure it is not matching a value
+// from PATH_INFO or QUERY_STRING
+if (strlen($requestUri) >= strlen($baseUrl) && (false !== $pos = strpos($requestUri, $baseUrl)) && $pos !== 0) {
+$baseUrl = substr($requestUri, 0, $pos + strlen($baseUrl));
+}
+
+return rtrim($baseUrl, '/');
+}
+protected function preparePathInfo()
+{
+$baseUrl = $this->getBaseUrl();
+
+if ($this->server->has('PATH_INFO')) {
+$pathInfo = $this->server->get('PATH_INFO');
+if (false !== ($pos = strpos($pathInfo, '.'))) {
+$this->format = substr($pathInfo, ($pos + 1));
+$pathInfo = substr($pathInfo, 0, $pos);
+$this->server->add('PATH_INFO', $pathInfo);
+}
+
+return $pathInfo;
+}
+
+if (null === ($requestUri = $this->getRequestUri())) {
+return '/';
+}
+
+$pathInfo = '/';
+
+// Remove the query string from REQUEST_URI
+if ($pos = strpos($requestUri, '?')) {
+$requestUri = substr($requestUri, 0, $pos);
+}
+
+if (($pos = strpos($requestUri, '.'))) {
+$requestUri = substr($requestUri, 0, $pos);
+}
+
+if ("" != $baseUrl && false === $pathInfo = substr($requestUri, strlen($baseUrl))) {
+return '/';
+} elseif ("" == $baseUrl) {
+return $requestUri;
+}
+
+if ($requestUri == $pathInfo) {
+return '/';
+}
+
+return $pathInfo;
+}
+public function getBaseUrl()
+{
+if (null === $this->base_url) {
+$this->base_url = $this->prepareBaseUrl();
+}
+
+return $this->base_url;
+}
+public function getPathInfo()
+{
+if (null === $this->path_info) {
+$this->path_info = $this->preparePathInfo();
+}
+
+return $this->path_info;
+}
+public function getRequestTimestamp()
+{
+return $this->server->get('REQUEST_TIME_FLOAT');
+}
+public function getMethod()
+{
+return $this->server->get('REQUEST_METHOD');
+}
+public function getFormat()
+{
+return $this->format;
+}
+public function isXmlHttpRequest()
+{
+return 'xmlhttprequest' == strtolower($this->headers->get('X-Requested-With'));
+}
+public function isMethod($method)
+{
+return $this->getMethod() === strtoupper($method);
+}
+public function getQuery()
+{
+return $this->query;
+}
+public function getRequest()
+{
+return $this->request;
+}
+public function getCookie($name = null)
+{
+return $this->cookies->getCookie($name);
+}
+public function getSession($name = null)
+{
+if (null === $this->session) {
+$this->session  = new SessionParametersBag(new SessionHandler());
+}
+
+return $this->session->getSession($name);
+}
+public function getHeaders()
+{
+return $this->headers;
+}
+public function getServer()
+{
+return $this->server;
+}
+public function getFiles()
+{
+return $this->files;
+}
+public function getContent($asResource = false)
+{
+if (false === $this->content || (true === $asResource && null !== $this->content)) {
+throw new \LogicException('getContent() can only be called once when using the resource return type.');
+}
+
+if (true === $asResource) {
+$this->content = false;
+
+return fopen('php://input', 'rb');
+}
+
+if (null === $this->content) {
+$this->content = file_get_contents('php://input');
+}
+
+return $this->content;
+}
+public static function createGlobalRequest()
+{
+if (null !== self::$request_factory) {
+return self::$request_factory;
+}
+
+if ('cli-server' === php_sapi_name()) {
+if (array_key_exists('HTTP_CONTENT_LENGTH', $_SERVER)) {
+$_SERVER['CONTENT_LENGTH'] = $_SERVER['HTTP_CONTENT_LENGTH'];
+}
+if (array_key_exists('HTTP_CONTENT_TYPE', $_SERVER)) {
+$_SERVER['CONTENT_TYPE'] = $_SERVER['HTTP_CONTENT_TYPE'];
+}
+}
+
+self::$request_factory = new static($_GET, $_POST, $_FILES, $_COOKIE, $_SERVER);
+
+if (0 === strpos(self::$request_factory->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+&& in_array(strtoupper(self::$request_factory->server->get('REQUEST_METHOD', 'GET')), array('PUT', 'DELETE', 'PATCH'))
+) {
+parse_str(self::$request_factory->getContent(), $data);
+self::$request_factory->request = new \Dobee\Http\Bag\RequestParametersBag($data);
+}
+
+return self::$request_factory;
+}
+public function __get($name)
+{
+if ('session' !== $name) {
+throw new \InvalidArgumentException(sprintf('Request attribute "%s" is undefined.', $name));
+}
+
+if (null === $this->session) {
+$this->session  = new SessionParametersBag(new SessionHandler());
+}
+
+return $this->session;
+}
+}
+}
+namespace Dobee\Configuration
+{
+class Configuration 
+{private  $parameters  = array (
+);
+protected static $instance ;
+protected  $variable ;
+public function __construct(array $resource = null)
+{
+$this->variable = new \Dobee\Configuration\Variable();
+}
+public static function createConfigurationLoader(array $resource = null)
+{
+if (null === static::$instance) {
+static::$instance = new static($resource);
+}
+
+return static::$instance;
+}
+public function setVariable($key, $value = null)
+{
+$this->variable->setVariable($key, $value);
+
+return $this;
+}
+public function getVariable($key)
+{
+return $this->variable->getVariable($key);
+}
+public function load($resource = null)
+{
+switch(pathinfo($resource, PATHINFO_EXTENSION)) {
+case "ini":
+$loader = new IniFileLoader($resource);
+break;
+case "yml":
+case "yaml":
+$loader = new \Dobee\Configuration\Loader\YamlFileLoader($resource);
+break;
+default:
+$loader = new PhpFileLoader($resource);
+}
+
+$this->addLoader($loader);
+}
+public function hasParameters($name)
+{
+return isset($this->parameters[$name]);
+}
+public function addParameters($name, $value)
+{
+$this->parameters[$name] = $value;
+
+return $this;
+}
+public function removeParameters($name)
+{
+if ($this->hasparameters($name)) {
+unset($this->parameters[$name]);
+}
+
+return $this;
+}
+public function mergeParameters(array $parameters = array())
+{
+$this->parameters = array_merge($this->parameters, $parameters);
+
+return $this;
+}
+public function setParameters(array $parameters = array())
+{
+$this->parameters = $parameters;
+
+return $this;
+}
+public function getParameters($name = null)
+{
+if (null === $name) {
+return $this->parameters;
+}
+
+$keys = explode('.', $name);
+$parameters = $this->parameters;
+
+foreach ($keys as $value) {
+if (!isset($parameters[$value])) {
+throw new \InvalidArgumentException(sprintf('"%s" is undefined.', $name));
+}
+
+$parameters = $parameters[$value];
+}
+
+if (is_array($parameters)) {
+return $parameters;
+}
+
+return $this->variable->replaceVariable($parameters);
+}
+public function addLoader(\Dobee\Configuration\ConfigLoaderInterface $loaderInterface)
+{
+$this->mergeParameters($loaderInterface->getparameters());
+
+return $this;
+}
+}
+}
+namespace Dobee\Database
+{
+class DriverManager 
+{private  $mapping  = array (
+  'mysql' => 'Dobee\\Database\\Mysql\\MysqlConnection',
+  'mongo' => '',
+  'sqlit' => '',
+);
+private  $collections  = array (
+);
+private  $config  = array (
+);
+public function __construct($config = array())
+{
+$this->config = $config;
+}
+public function getConnection($connection = null)
+{
+if (isset($this->collections[$connection])) {
+return $this->collections[$connection];
+}
+
+if (null === $connection) {
+if (!isset($this->config['default_connection'])) {
+throw new ConnectionException(sprintf('Default connection is undefined.'));
+}
+
+$connection = $this->config['default_connection'];
+}
+
+$this->setConnection($connection, $this->createConnection($connection));
+
+return $this->collections[$connection];
+}
+public function setConnection($connection, \Dobee\Database\Connection\ConnectionInterface $connectionInterface)
+{
+$this->collections[$connection] = $connectionInterface;
+
+return $this;
+}
+private function createConnection($connection)
+{
+if (!isset($this->config[$connection])) {
+throw new ConnectionException(sprintf('Connection type "%s" is undefined.', $connection));
+}
+
+$config = $this->config[$connection];
+
+$connection = new $this->mapping[$config['database_type']?:'mysql']($config);
+
+$connection->setConnectionName($connection);
+
+return $connection;
+}
+}
+}
+namespace Dobee\Template
+{
+class Template 
+{private  $mapped  = array (
+  'twig' => 'Dobee\\Template\\TwigEngine\\Twig',
+);
+private  $engines  = array (
+);
+private  $provides  = array (
+);
+private  $extension  = array (
+);
+private  $options  = array (
+);
+public function setExtensions($name, $callable)
+{
+$this->extension[$name] = $callable;
+
+return $this;
+}
+public function getExtensions()
+{
+return $this->extension;
+}
+public function setProviderPath(array $provides = array())
+{
+$this->provides = $provides;
+
+return $this;
+}
+public function getProviderPath()
+{
+return $this->provides;
+}
+public function setOptions(array $options)
+{
+$this->options = $options;
+
+return $this;
+}
+public function getOptions()
+{
+return $this->options;
+}
+public function getEngine($engine)
+{
+if (!isset($this->mapped[$engine])) {
+throw new TemplateEngineException(sprintf('Template engine "%s" is undefined.', $engine));
+}
+
+if (!isset($this->engines[$engine])) {
+$templateEngine = new $this->mapped[$engine]($this->getOptions(), $this->getExtensions(), $this->getProviderPath());
+$templateEngine->setPaths($this->getProviderPath());
+$templateEngine->setExtension($this->getExtensions());
+$templateEngine->setOptions($this->getOptions());
+$this->setEngine($engine, $templateEngine);
+}
+
+return $this->engines[$engine];
+}
+public function setEngine($engine, \Dobee\Template\TemplateEngineInterface $templateEngineInterface)
+{
+$this->engines[$engine] = $templateEngineInterface;
+
+return $this;
+}
+}
+}

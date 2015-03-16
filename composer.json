@@ -48,6 +48,10 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/framework.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/compiler.git"
         }
     ],
     "require": {
@@ -63,7 +67,8 @@
         "dobee/container": "*",
         "dobee/database": "*",
         "dobee/template": "*",
-        "dobee/framework": "*"
+        "dobee/framework": "*",
+        "dobee/compiler": "*"
     },
     "config": {
         "bin-dir": "bin"
