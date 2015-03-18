@@ -52,6 +52,10 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/compiler.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/console.git"
         }
     ],
     "require": {
@@ -68,6 +72,7 @@
         "dobee/database": "*",
         "dobee/template": "*",
         "dobee/framework": "*",
+        "dobee/console": "*",
         "dobee/compiler": "*"
     },
     "config": {

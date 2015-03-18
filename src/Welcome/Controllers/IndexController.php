@@ -18,12 +18,12 @@ use Dobee\Framework\Controller\Controller;
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="welcome_index")
+     * @Route("/{id}", name="welcome_index", defaults={"id": 1})
      */
-    public function welcomeAction()
+    public function welcomeAction($id)
     {
         return $this->render('welcome/welcome.html.twig', array(
-            'version' => 'v1.0.0'
+            'version' => 'v1.0.0',
         ));
     }
 }

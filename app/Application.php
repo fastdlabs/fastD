@@ -57,8 +57,8 @@ class Application extends \Dobee\Framework\AppKernel
      * @param \Dobee\Configuration\Configuration $configuration
      * @return void
      */
-    public function registerConfiguration(\Dobee\Configuration\Configuration $configuration)
+    public function registerConfiguration(\Dobee\Configuration\Config $config)
     {
-        $configuration->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 }
