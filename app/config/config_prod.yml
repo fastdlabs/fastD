@@ -30,9 +30,10 @@ database:
 template:
     engine: twig
     paths: [ %root_path%/resources, %root_path%/../src ]
-    cache_path: %root_path%/cache/
-    error_page:
-        500: error/error.html.twig
+    cache: %root_path%/cache/
+
+error_page:
+    500: error/error.html.twig
 
 # The bundles prefix setting.
 routing:

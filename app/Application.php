@@ -47,18 +47,27 @@ class Application extends \Dobee\Framework\AppKernel
     {
         return array(
             'root_path' => $this->getRootPath(),
-            'Ymd' => date('Ymd'),
+            'env'       => $this->getEnvironment(),
+            'Ymd'       => date('Ymd'),
         );
     }
 
     /**
      * Register application configuration
      *
-     * @param \Dobee\Configuration\Configuration $configuration
+     * @param \Dobee\Configuration\Config $config
      * @return void
      */
     public function registerConfiguration(\Dobee\Configuration\Config $config)
     {
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+    }
+
+    /**
+     * @return array
+     */
+    public function registerCommands()
+    {
+        return array();
     }
 }

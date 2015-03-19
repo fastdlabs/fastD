@@ -83,7 +83,9 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": "src/",
+            "Plugins\\": "app/plugins",
+            "Extensions\\": "app/extensions"
         }
     }
 }
