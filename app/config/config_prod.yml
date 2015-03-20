@@ -1,5 +1,4 @@
-# Prod evn config
-
+# dev evn config
 database:
     default_connection: read
     write:
@@ -10,7 +9,7 @@ database:
         database_pwd: 123456
         database_charset: utf8
         database_name: test
-        database_prefix: sf_
+        database_prefix:
     read:
         database_type: mysql
         database_host: localhost
@@ -19,7 +18,7 @@ database:
         database_pwd: 123456
         database_charset: utf8
         database_name: test
-        database_prefix: sf_
+        database_prefix:
 
 # Template engine and templates path setting
 # If you should add new template path.
@@ -32,16 +31,24 @@ template:
     paths: [ %root_path%/resources, %root_path%/../src ]
     cache: %root_path%/cache/
 
+assets:
+    host: http://www.baidu.com
+
 error_page:
     500: error/error.html.twig
+
+handler:
+    error: Dobee\Framework\Events\Error@devHandler
+    exception: Dobee\Framework\Events\Exception@devHandler
+    page:
+        500: error/error.html.twig #除了这个
 
 # The bundles prefix setting.
 routing:
     config: %root_path%/config/routing.yml
 
-# App logger.
+#这个是日志配置，没什么事，就别作死了。
 logger:
     type: monolog
-    path: %root_path%/logs
-    rule: Y-m-d
-    auto_create: true
+    path: %root_path%/logs/%Ymd%
+
