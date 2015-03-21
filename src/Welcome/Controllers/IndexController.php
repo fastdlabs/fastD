@@ -14,16 +14,15 @@
 namespace Welcome\Controllers;
 
 use Dobee\Framework\Controller\Controller;
+use Dobee\Routing\Router;
 
 class IndexController extends Controller
 {
     /**
-     * @Route("/{id}", name="welcome_index", defaults={"id": 1})
+     * @Route("/", name="welcome_index")
      */
-    public function welcomeAction($id)
+    public function welcomeAction(Router $router)
     {
-        return $this->render('welcome/welcome.html.twig', array(
-            'version' => 'v1.0.0',
-        ));
+        return 'hello world';
     }
 }

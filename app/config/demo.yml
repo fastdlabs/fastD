@@ -1,4 +1,7 @@
-# dev evn config
+# 完整配置演示
+
+# 数据库配置
+# 不管是多库还是单库，必须按照下列方式配置，而且在使用的时候必须指定链接类型
 database:
     default_connection: read
     write:
@@ -20,34 +23,32 @@ database:
         database_name: test
         database_prefix:
 
-# Template engine and templates path setting
-# If you should add new template path.
-# examples:
-# create one new path
-# paths:
-#     - new path
+# 资源模板管理
 template:
-    engine: twig
-    paths: [ %root_path%/resources, %root_path%/../src ]
-    cache: %root_path%/cache/
+    engine: twig #驱动，暂时不要动，除非自己添加一个驱动到模板组件当中
+    paths: # 模板资源引用
+        - %root_path%/resources
+        - %root_path%/../src
+    cache: %root_path%/cache/%env% # 模板缓存地址
 
+# 自定义资源管理
 assets:
-    host: http://www.baidu.com
+    host: http://www.baidu.com # 资源域名
+    path:   # 资源path地址
 
-error_page:
-    500: error/error.html.twig
-
+# 自定义错误处理
 handler:
-    error: Dobee\Framework\Events\Error@devHandler
-    exception: Dobee\Framework\Events\Exception@devHandler
+    error: Dobee\Framework\Events\Error@devHandler #系统错误提示
+    exception: Dobee\Framework\Events\Exception@devHandler #系统异常提示
     page:
-        500: error/error.html.twig #除了这个
+        500: error/error.html.twig
 
-# The bundles prefix setting.
+# 路由组配置文件
 routing:
     config: %root_path%/config/routing.yml
 
-#这个是日志配置，没什么事，就别作死了。
+# 这个是日志配置，没什么事，就别作死了。
+# 暂未提供自定义功能
 logger:
     type: monolog
     path: %root_path%/logs/%Ymd%
