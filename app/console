@@ -13,10 +13,9 @@
  */
 
 include __DIR__ . '/../vendor/autoload.php';
-
 include __DIR__ . '/Application.php';
 
-$app = new Application('prod');
+$app = new Application('local');
 
 $console = $app->getConsole();
 

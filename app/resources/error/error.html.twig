@@ -1,55 +1,41 @@
-<!DOCTYPE html>
 <html>
 <head>
+    <title>{{ message }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>An Error Occurred: {{ exception.message | default(message) }}</title>
-    <style>
-        table td{
-            padding: 10px;
+    <style type="text/css">
+        *{
+            font-family:		Consolas, Courier New, Courier, monospace;
+            font-size:			14px;
+        }
+        body {
+            background-color:	#fff;
+            margin:				40px;
+            color:				#000;
+        }
+
+        #content  {
+            border:				#999 1px solid;
+            background-color:	#fff;
+            padding:			20px 20px 12px 20px;
+            line-height:160%;
+        }
+
+        h1 {
+            font-weight:		normal;
+            font-size:			24px;
+            color:				#990000;
+            margin: 			0 0 4px 0;
+        }
+        pre {
+            width: 100%;
+            overflow-x: auto;
         }
     </style>
 </head>
 <body>
-<h1>Oh shit! Appeared a little problem</h1>
-<h2>The server returned a "{{ exception.message | default(code) }}".</h2>
-<div>
-    <h2>Details:</h2>
-    <table border="1" cellspacing="0">
-        <tr>
-            <td>Code: </td>
-            <td>{{ exception.code | default(code) }}</td>
-        </tr>
-        <tr>
-            <td>Message: </td>
-            <td>{{ exception.message | default(message) }}</td>
-        </tr>
-        <tr>
-            <td>File: </td>
-            <td>{{ exception.file | default(file) }}</td>
-        </tr>
-        <tr>
-            <td>line: </td>
-            <td>{{ exception.line | default(line) }}</td>
-        </tr>
-    </table>
-    <h2>Trace:</h2>
-
-{% for trace in traces %}
-<pre style="margin-bottom: 20px;">
-<code lang="php">
-{% if trace.file is defined %}
-file: {{ trace.file }}
-line: {{ trace.line }}
-function: {{ trace.function }}
-args: <?php var_export($trace['argv']); ?>
-{% else %}
-
-{% endif %}
-
-</code>
-</pre>
-{% endfor %}
-
+<div id="content">
+    <h1>Error: {{ message }}</h1>
+    <pre>{{ trace }}</pre>
 </div>
 </body>
 </html>

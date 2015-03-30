@@ -37,8 +37,8 @@ assets:
 
 # 自定义错误处理
 handler:
-    error: Dobee\Framework\Events\Error@devHandler #系统错误提示
-    exception: Dobee\Framework\Events\Exception@devHandler #系统异常提示
+#    error: Dobee\Framework\Events\Error@devHandler #系统错误提示
+#    exception: Dobee\Framework\Events\Exception@devHandler #系统异常提示
     page:
         500: error/error.html.twig
 
