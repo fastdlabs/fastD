@@ -13,7 +13,7 @@
 
 namespace Welcome\Controllers;
 
-use Dobee\Framework\Controller\Controller;
+use Dobee\Framework\Bundle\Controllers\Controller;
 
 class IndexController extends Controller
 {
@@ -22,7 +22,6 @@ class IndexController extends Controller
      */
     public function welcomeAction()
     {
-        throw new \Exception('demo');
         return $this->render('welcome/welcome.html.twig');
     }
 }

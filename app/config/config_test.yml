@@ -42,10 +42,6 @@ handler:
     page:
         500: error/error.html.twig
 
-# 路由组配置文件
-routing:
-    config: %root_path%/config/routing.yml
-
 # 这个是日志配置，没什么事，就别作死了。
 # 暂未提供自定义功能
 logger:

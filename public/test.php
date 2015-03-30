@@ -14,7 +14,7 @@
 $loader = include __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/../app/Application.php';
 
-$app = new Application('dev');
+$app = new Application('test');
 
 $app->bootstrap();
 

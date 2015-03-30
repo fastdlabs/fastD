@@ -21,8 +21,6 @@ class Application extends \Dobee\Framework\AppKernel
     {
         return array(
             new \Welcome\Welcome(),
-            new \OfficialBundle\OfficialBundle(),
-            new \AdminBundle\AdminBundle(),
         );
     }
 
@@ -63,13 +61,5 @@ class Application extends \Dobee\Framework\AppKernel
     public function registerConfiguration(\Dobee\Configuration\Config $config)
     {
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
-    }
-
-    /**
-     * @return array
-     */
-    public function registerCommands()
-    {
-        return array();
     }
 }

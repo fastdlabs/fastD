@@ -1,5 +1,4 @@
-# 完整配置演示
-
+# 开始环境配置
 # 数据库配置
 # 不管是多库还是单库，必须按照下列方式配置，而且在使用的时候必须指定链接类型
 database:
@@ -33,8 +32,8 @@ template:
 
 # 自定义资源管理
 assets:
-    host: http://www.baidu.com # 资源域名
-    path:   # 资源path地址
+#    host:  # 资源域名
+#    path:   # 资源path地址
 
 # 自定义错误处理
 handler:
@@ -42,10 +41,6 @@ handler:
     exception: Dobee\Framework\Events\Exception@devHandler #系统异常提示
     page:
         500: error/error.html.twig
-
-# 路由组配置文件
-routing:
-    config: %root_path%/config/routing.yml
 
 # 这个是日志配置，没什么事，就别作死了。
 # 暂未提供自定义功能
