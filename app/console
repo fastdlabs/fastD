@@ -12,7 +12,11 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-$app = include __DIR__ . '/bootstrap/bootstrap.php';
+include __DIR__ . '/../vendor/autoload.php';
+
+include __DIR__ . '/Application.php';
+
+$app = new Application('prod');
 
 $console = $app->getConsole();
 

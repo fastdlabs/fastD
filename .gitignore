@@ -5,6 +5,8 @@ composer.lock
 /app/cache/*
 /src/OfficialBundle
 /app/resources/official
+/app/resources/template
+/app/resources/layout
 /bin/phpunit
 public/assets
-app/resources/template/*
+
