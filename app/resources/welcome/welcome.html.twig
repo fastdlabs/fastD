@@ -38,8 +38,8 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">Dobee {{ version }}</div>
-        <div class="quote">Author By {{ author|default('Jan') }} For {{ company | default('MMC') }}</div>
+        <div class="title">Dobee {{ version | default('v1.0.0') }}</div>
+        <div class="quote">Author By {{ author|default('Jan') }}</div>
     </div>
 </div>
 </body>

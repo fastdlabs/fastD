@@ -69,7 +69,7 @@ server {
     location @rewriteapp {
             rewrite ^(.*)$ /index.php$1 last;
     }
-    location ~ \.php {
+    location ~ ^/(dev|index)\.php(/|$) {
     	#setting......
         fastcgi_split_path_info ^(.+.php)(/.*)$; #解析PHP pathinfo
         fastcgi_param PATH_INFO $fastcgi_path_info; #新增PHP pathinfo
@@ -573,7 +573,7 @@ class WelcomeController extends Controller
  	 */
 	public function welcomeAction(\Dobee\Http\Request $request)
 	{
-		$session = $request->session; // $request->getSession();
+		$session = $request->getSession;
 		$session->get('name');
 		// Set session
 		$session->set('name', 'JanHuang');
@@ -621,6 +621,10 @@ class WelcomeController extends Controller
 #####获取base Url
 
 `\Dobee\Http\Request::getBaseUrl`
+
+#####获取user agent
+
+`\Dobee\Http\Request::getUserAgent`
 
 
 ##5.响应
@@ -780,6 +784,7 @@ assets:
 	2) 自定义插件
 	3) 依赖注入
 	4) 访问日志
+	5) 命令行
 	
 ##1.自定义配置
 
@@ -960,6 +965,24 @@ class WelcomeController extends Controller
 日志，是一个系统非常重要的组成组件，主要用来记录用户行为，访问信息，响应信息，错误信息，有效，快速的定位系统的不足，流程逻辑问题。
 
 目前日志驱动使用知名的[Monolog](https://github.com/Seldaek/monolog)来作为核心日志组成组件。其中格式配置在`app/config:logger`一栏， 详细可打开该文件查看。
+
+##命令行
+
+查看命令: `php app/console `
+
+以上会列出所有的命令
+
+执行详细命令: `php app/console 命令名`
+
+执行对应的命令逻辑...
+
+####为上线前做准备
+
+缓存配置: `php app/console config:caching`
+
+缓存路由列表: `php app/console route:caching`
+
+
 
 ====
 

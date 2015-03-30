@@ -1,3 +1,5 @@
 routing:
     OfficialBundle:
-        prefix: /
+        prefix: /official
+    AdminBundle:
+        prefix: /admin

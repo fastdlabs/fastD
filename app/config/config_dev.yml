@@ -32,8 +32,8 @@ template:
 
 # 自定义资源管理
 assets:
-    host: http://www.baidu.com # 资源域名
-    path:   # 资源path地址
+#    host:  # 资源域名
+#    path:   # 资源path地址
 
 # 自定义错误处理
 handler:

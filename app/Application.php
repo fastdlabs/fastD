@@ -21,6 +21,8 @@ class Application extends \Dobee\Framework\AppKernel
     {
         return array(
             new \Welcome\Welcome(),
+            new \OfficialBundle\OfficialBundle(),
+            new \AdminBundle\AdminBundle(),
         );
     }
 

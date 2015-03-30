@@ -6,3 +6,5 @@ composer.lock
 /src/OfficialBundle
 /app/resources/official
 /bin/phpunit
+public/assets
+app/resources/template/*

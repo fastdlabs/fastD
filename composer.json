@@ -51,7 +51,7 @@
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/compiler.git"
+            "url": "https://coding.net/janhuang/server.git"
         },
         {
             "type": "git",
@@ -64,16 +64,16 @@
         "twig/twig": "~1.0"
     },
     "require-dev": {
-        "dobee/configuration": "*",
-        "dobee/http": "*",
-        "dobee/routing": "*",
-        "dobee/finder": "*",
-        "dobee/container": "*",
-        "dobee/database": "*",
-        "dobee/template": "*",
-        "dobee/framework": "*",
-        "dobee/console": "*",
-        "dobee/compiler": "*"
+        "dobee/configuration": "~1.0.0",
+        "dobee/http": "~1.0.0",
+        "dobee/routing": "~1.0.0",
+        "dobee/finder": "~1.0.0",
+        "dobee/container": "~1.0.0",
+        "dobee/database": "~1.0.0",
+        "dobee/template": "~1.0.0",
+        "dobee/framework": "dev-dev",
+        "dobee/server": "*",
+        "dobee/console": "~1.0.0"
     },
     "config": {
         "bin-dir": "bin"
