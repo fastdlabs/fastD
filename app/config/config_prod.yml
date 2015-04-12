@@ -27,7 +27,7 @@ template:
     engine: twig #驱动，暂时不要动，除非自己添加一个驱动到模板组件当中
     paths: # 模板资源引用
         - %root_path%/resources
-        - %root_path%/../src
+        - %root_path%/src
     cache: %root_path%/cache/%env% # 模板缓存地址
 
 # 自定义资源管理
@@ -36,15 +36,11 @@ assets:
     path:   # 资源path地址
 
 # 自定义错误处理
-handler:
-    error: Dobee\Framework\Events\Error@devHandler #系统错误提示
-    exception: Dobee\Framework\Events\Exception@devHandler #系统异常提示
+errors:
     page:
-        500: error/error.html.twig
+        #500: views/errors/500.html.twig
 
-# 这个是日志配置，没什么事，就别作死了。
-# 暂未提供自定义功能
+#这个是日志配置，没什么事，就别作死了。
 logger:
-    type: monolog
-    path: %root_path%/logs/%Ymd%
+    path: %root.path%/logs/%date%/dobee.log
 

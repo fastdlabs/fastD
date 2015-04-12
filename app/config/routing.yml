@@ -1,5 +1,18 @@
-routing:
-    OfficialBundle:
-        prefix: /official
-    AdminBundle:
-        prefix: /admin
+groups:
+    admin: /admin
+
+_welcome:
+    path:       /
+    callback:   DemoBundle\Controllers\DemoController@demo
+    formats:    [ json, php ]
+    defaults:
+    requirements: { name: \w+ }
+    methods:    [ANY]
+
+demo:
+    type: annotation
+    resource: DemoBundle\DemoBundle
+
+_resource:
+    type: annotation
+    resource: Demo\DemoBundle\DemoBundle

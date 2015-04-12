@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/30
- * Time: 下午4:35
+ * Date: 15/3/9
+ * Time: 下午3:15
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,16 +11,11 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-$loader = include __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/../app/Application.php';
+namespace OfficialBundle;
 
-$app = new Application('test');
+use Dobee\Framework\Bundles\Bundle;
 
-$app->bootstrap();
+class OfficialBundle extends Bundle
+{
 
-$response = $app->handleHttpRequest();
-
-$response->send();
-
-$app->terminate($response);
-
+}

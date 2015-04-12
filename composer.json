@@ -19,43 +19,51 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/configuration.git"
+            "url": "https://git.coding.net/janhuang/http.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/http.git"
+            "url": "https://git.coding.net/janhuang/routing.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/routing.git"
+            "url": "https://git.coding.net/janhuang/finder.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/finder.git"
+            "url": "https://git.coding.net/janhuang/database.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/container.git"
+            "url": "https://git.coding.net/janhuang/template.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/database.git"
+            "url": "https://git.coding.net/janhuang/compiler.git"
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/template.git"
+            "url": "https://git.coding.net/janhuang/console.git"
+        },
+        {
+            "type": "git",
+            "url": "https://git.coding.net/janhuang/container.git"
+        },
+        {
+            "type": "git",
+            "url": "https://git.coding.net/janhuang/server.git"
+        },
+        {
+            "type": "git",
+            "url": "https://git.coding.net/janhuang/annotation.git"
+        },
+        {
+            "type": "git",
+            "url": "https://git.coding.net/janhuang/config.git"
         },
         {
             "type": "git",
             "url": "https://coding.net/janhuang/framework.git"
-        },
-        {
-            "type": "git",
-            "url": "https://coding.net/janhuang/server.git"
-        },
-        {
-            "type": "git",
-            "url": "https://coding.net/janhuang/console.git"
         }
     ],
     "require": {
@@ -64,16 +72,18 @@
         "twig/twig": "~1.0"
     },
     "require-dev": {
-        "dobee/configuration": "~1.0.0",
-        "dobee/http": "~1.0.0",
-        "dobee/routing": "~1.0.0",
-        "dobee/finder": "~1.0.0",
-        "dobee/container": "~1.0.0",
-        "dobee/database": "~1.0.0",
-        "dobee/template": "~1.0.0",
-        "dobee/framework": "dev-dev",
+        "dobee/configuration": "dev-dev",
+        "dobee/http": "dev-dev",
+        "dobee/routing": "dev-dev",
+        "dobee/container": "dev-dev",
+        "dobee/template": "dev-dev",
+        "dobee/annotation": "*",
+        "dobee/finder": "*",
+        "dobee/database": "*",
+        "dobee/compiler": "*",
         "dobee/server": "*",
-        "dobee/console": "~1.0.0"
+        "dobee/framework": "dev-dev",
+        "dobee/console": "dev-dev"
     },
     "config": {
         "bin-dir": "bin"
@@ -83,7 +93,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src/",
+            "": "app/src",
             "Plugins\\": "app/plugins"
         }
     }

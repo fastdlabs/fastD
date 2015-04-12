@@ -1,0 +1,4 @@
+<?php 
+return array (
+  '_welcome' => 'O:19:"Dobee\\Routing\\Route":11:{s:8:"' . "\0" . '*' . "\0" . 'route";s:1:"/";s:7:"' . "\0" . '*' . "\0" . 'name";s:8:"_welcome";s:8:"' . "\0" . '*' . "\0" . 'group";s:0:"";s:9:"' . "\0" . '*' . "\0" . 'format";a:2:{i:0;s:4:"json";i:1;s:3:"php";}s:11:"' . "\0" . '*' . "\0" . 'defaults";a:0:{}s:15:"' . "\0" . '*' . "\0" . 'requirements";a:1:{s:4:"name";s:3:"\\w+";}s:12:"' . "\0" . '*' . "\0" . 'arguments";a:0:{}s:13:"' . "\0" . '*' . "\0" . 'parameters";a:0:{}s:9:"' . "\0" . '*' . "\0" . 'method";a:1:{i:0;s:3:"ANY";}s:11:"' . "\0" . '*' . "\0" . 'callback";s:42:"DemoBundle\\Controllers\\DemoController@demo";s:30:"' . "\0" . 'Dobee\\Routing\\Route' . "\0" . 'pathRegex";s:6:"/^\\/$/";}',
+);
