@@ -46,9 +46,7 @@ class Application extends \Dobee\Framework\AppKernel
     public function registerConfigVariable()
     {
         return array(
-            'root_path' => $this->getRootPath(),
-            'env'       => $this->getEnvironment(),
-            'Ymd'       => date('Ymd'),
+            'date'       => date('Ymd'),
         );
     }
 

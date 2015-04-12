@@ -1,6 +1,5 @@
-# 生产环境配置
-# 数据库配置
-# 不管是多库还是单库，必须按照下列方式配置，而且在使用的时候必须指定链接类型
+# Dobee php simple framework global config.
+
 database:
     default_connection: read
     write:
@@ -10,8 +9,8 @@ database:
         database_user: root
         database_pwd: 123456
         database_charset: utf8
-        database_name: test
-        database_prefix:
+        database_name: sf_blog
+        database_prefix: sf_
     read:
         database_type: mysql
         database_host: localhost
@@ -19,23 +18,18 @@ database:
         database_user: root
         database_pwd: 123456
         database_charset: utf8
-        database_name: test
-        database_prefix:
+        database_name: sf_blog
+        database_prefix: sf_
 
-# 资源模板管理
+#下面的，没什么事就不要乱动。
 template:
-    engine: twig #驱动，暂时不要动，除非自己添加一个驱动到模板组件当中
-    paths: # 模板资源引用
-        - %root_path%/resources
-        - %root_path%/src
-    cache: %root_path%/cache/%env% # 模板缓存地址
+    engine: twig
+    paths:
+        - %root.path%/resources
+        - %root.path%/src
+    options:
+        cache: %root.path%/cache/%env%
 
-# 自定义资源管理
-assets:
-    host: http://www.baidu.com # 资源域名
-    path:   # 资源path地址
-
-# 自定义错误处理
 errors:
     page:
         #500: views/errors/500.html.twig
@@ -43,4 +37,5 @@ errors:
 #这个是日志配置，没什么事，就别作死了。
 logger:
     path: %root.path%/logs/%date%/dobee.log
+
 

@@ -1,18 +1,11 @@
-groups:
-    admin: /admin
+#_welcome:
+#    path:       /
+#    callback:   DemoBundle\Controllers\DemoController@demo
+#    formats:    [ json, php ]
+#    defaults:
+#    requirements: { name: \w+ }
+#    methods:    [ANY]
 
 _welcome:
-    path:       /
-    callback:   DemoBundle\Controllers\DemoController@demo
-    formats:    [ json, php ]
-    defaults:
-    requirements: { name: \w+ }
-    methods:    [ANY]
-
-demo:
     type: annotation
-    resource: DemoBundle\DemoBundle
-
-_resource:
-    type: annotation
-    resource: Demo\DemoBundle\DemoBundle
+    resource: Welcome\Welcome
