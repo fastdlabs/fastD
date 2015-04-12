@@ -39,10 +39,6 @@
         },
         {
             "type": "git",
-            "url": "https://git.coding.net/janhuang/compiler.git"
-        },
-        {
-            "type": "git",
             "url": "https://git.coding.net/janhuang/console.git"
         },
         {
@@ -77,10 +73,9 @@
         "dobee/routing": "dev-dev",
         "dobee/container": "dev-dev",
         "dobee/template": "dev-dev",
-        "dobee/annotation": "*",
+        "dobee/annotation": "dev-dev",
         "dobee/finder": "*",
         "dobee/database": "*",
-        "dobee/compiler": "*",
         "dobee/server": "*",
         "dobee/framework": "dev-dev",
         "dobee/console": "dev-dev"
