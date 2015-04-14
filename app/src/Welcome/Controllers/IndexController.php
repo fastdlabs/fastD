@@ -15,6 +15,11 @@ namespace Welcome\Controllers;
 
 use Dobee\Framework\Bundle\Controllers\Controller;
 
+/**
+ * Class IndexController
+ *
+ * @package Welcome\Controllers
+ */
 class IndexController extends Controller
 {
     /**

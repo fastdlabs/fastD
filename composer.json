@@ -60,6 +60,10 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/framework.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/storage.git"
         }
     ],
     "require": {
@@ -74,11 +78,12 @@
         "dobee/container": "dev-dev",
         "dobee/template": "dev-dev",
         "dobee/annotation": "dev-dev",
-        "dobee/finder": "*",
-        "dobee/database": "*",
-        "dobee/server": "*",
+        "dobee/database": "dev-dev",
+        "dobee/console": "dev-dev",
         "dobee/framework": "dev-dev",
-        "dobee/console": "dev-dev"
+        "dobee/server": "dev-dev",
+        "dobee/storage": "dev-dev",
+        "dobee/finder": "dev-dev"
     },
     "config": {
         "bin-dir": "bin"
