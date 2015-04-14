@@ -1,4 +1,8 @@
-#Dobee-php-simple-framework for PHP5.4+
+#Dobee-php-simple-framework for PHP5.4+ 
+
+#version: 1.2.0-bate1
+
+###＃更改详情请看 `UPGRADE-1.2.0.md` 文档
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
