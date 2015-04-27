@@ -1,6 +1,6 @@
 <html>
 <head>
-    <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+    {#<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>#}
 
     <style>
         body {
@@ -37,9 +37,10 @@
 </head>
 <body>
 <div class="container">
+    {{ asset('demo') }}
     <div class="content">
         <div class="title">Dobee {{ version | default('v1.2.0-bate1') }}</div>
-        <div class="quote">Author By {{ author|default('Jan') }}</div>
+        <div class="quote">Author By {{ author | default('Jan') }}</div>
     </div>
 </div>
 </body>

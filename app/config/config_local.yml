@@ -47,6 +47,10 @@ template:
     options:
         cache: %root.path%/cache/%env%
 
+assets:
+#    host:
+#    path:
+
 #自定义错误配置
 errors:
     page:

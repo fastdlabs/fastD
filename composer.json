@@ -51,10 +51,6 @@
         },
         {
             "type": "git",
-            "url": "https://git.coding.net/janhuang/annotation.git"
-        },
-        {
-            "type": "git",
             "url": "https://git.coding.net/janhuang/config.git"
         },
         {
@@ -78,16 +74,15 @@
     "require-dev": {
         "dobee/routing": "~1.1.0",
         "dobee/autoload": "~1.0.0",
-        "dobee/configuration": "dev-dev",
-        "dobee/http": "dev-dev",
-        "dobee/container": "dev-dev",
-        "dobee/template": "dev-dev",
-        "dobee/annotation": "dev-dev",
+        "dobee/config": "~1.1.0",
+        "dobee/container": "~1.1.0",
+        "dobee/template": "~1.1.0",
+        "dobee/storage": "~1.0.0",
         "dobee/database": "dev-dev",
-        "dobee/console": "dev-dev",
         "dobee/framework": "dev-dev",
+        "dobee/http": "dev-dev",
+        "dobee/console": "dev-dev",
         "dobee/server": "dev-dev",
-        "dobee/storage": "dev-dev",
         "dobee/finder": "dev-dev"
     },
     "config": {
