@@ -12,3 +12,8 @@
  */
 
 Routes::get(['/', 'name' => 'welcome'], 'Welcome\\Events\Index@welcomeAction');
+Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');
+Routes::get(['/d', 'name' => 'di'], 'Welcome\\Events\Index@pluginsDIAction');
+Routes::get(['/c', 'name' => 'db'], 'Welcome\\Events\DB@dbAction');
+Routes::get(['/r', 'name' => 'route'], 'Welcome\\Events\Route@showRoute');
+Routes::get(['/v', 'name' => 'view'], 'Welcome\\Events\View@show');

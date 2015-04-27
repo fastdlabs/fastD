@@ -26,11 +26,11 @@ class Demo
 
     public function getHelloWorld()
     {
-        return 'hello world';
+        return 'hello plugins';
     }
 
-    public function getRequest()
+    public function getRequestPathInfo()
     {
-        return $this->request;
+        return $this->request->getPathInfo();
     }
 }

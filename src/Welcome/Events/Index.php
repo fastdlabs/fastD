@@ -24,8 +24,18 @@ class Index extends EventAbstract
 {
     public function welcomeAction()
     {
+        return 'hello world';
+    }
+
+    public function pluginAction()
+    {
         $demo = $this->get('demo');
 
         return $demo->getHelloWorld();
+    }
+
+    public function pluginsDIAction()
+    {
+        return $this->get('demo')->getRequestPathInfo();
     }
 }

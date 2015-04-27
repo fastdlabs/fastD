@@ -42,8 +42,8 @@ storage:
 template:
     engine: twig
     paths:
-        - %root.path%
-        - %root.path%/src
+        - %root.path%/resources
+        - %root.path%/../src
     options:
         cache: %root.path%/cache/%env%
 
