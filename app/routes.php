@@ -1,10 +1,9 @@
-#!/usr/bin/env php
 <?php
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/19
- * Time: 下午8:03
+ * Date: 15/4/27
+ * Time: 下午12:07
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -12,11 +11,4 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-include __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/Application.php';
-
-$app = new Application('prod');
-
-$console = $app->getConsole();
-
-$console->run();
+Routes::get(['/', 'name' => 'welcome'], 'Welcome\\Events\Index@welcomeAction');

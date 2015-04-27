@@ -11,22 +11,21 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Welcome\Controllers;
+namespace Welcome\Events;
 
-use Dobee\Framework\Bundle\Controllers\Controller;
+use Dobee\Framework\Bundle\Events\EventAbstract;
 
 /**
  * Class IndexController
  *
  * @package Welcome\Controllers
  */
-class IndexController extends Controller
+class Index extends EventAbstract
 {
-    /**
-     * @Route("/", name="welcome_index")
-     */
     public function welcomeAction()
     {
-        return $this->render('welcome/welcome.html.twig');
+        $demo = $this->get('demo');
+
+        return $demo->getHelloWorld();
     }
 }

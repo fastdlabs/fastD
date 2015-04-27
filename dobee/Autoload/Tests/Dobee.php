@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/9
- * Time: 下午3:15
+ * Date: 15/4/23
+ * Time: 下午10:59
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,11 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace OfficialBundle;
+namespace Dobee\Autoload\Tests;
 
-use Dobee\Framework\Bundles\Bundle;
-
-class OfficialBundle extends Bundle
+class Dobee 
 {
 
 }

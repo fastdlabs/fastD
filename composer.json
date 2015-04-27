@@ -64,6 +64,10 @@
         {
             "type": "git",
             "url": "https://coding.net/janhuang/storage.git"
+        },
+        {
+            "type": "git",
+            "url": "https://coding.net/janhuang/autoload.git"
         }
     ],
     "require": {
@@ -72,9 +76,10 @@
         "twig/twig": "~1.0"
     },
     "require-dev": {
+        "dobee/routing": "~1.1.0",
+        "dobee/autoload": "~1.0.0",
         "dobee/configuration": "dev-dev",
         "dobee/http": "dev-dev",
-        "dobee/routing": "dev-dev",
         "dobee/container": "dev-dev",
         "dobee/template": "dev-dev",
         "dobee/annotation": "dev-dev",
@@ -93,7 +98,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": "app/src",
+            "": "src",
             "Plugins\\": "app/plugins"
         }
     }
