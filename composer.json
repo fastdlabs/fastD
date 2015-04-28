@@ -63,16 +63,14 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "monolog/monolog": "1.12.*@dev",
-        "twig/twig": "~1.0"
+        "php": ">=5.4.0"
     },
     "require-dev": {
         "dobee/routing": "~1.1.0",
         "dobee/autoload": "~1.0.0",
         "dobee/config": "dev-dev",
         "dobee/container": "~1.1.0",
-        "dobee/template": "~1.1.0",
+        "dobee/template": "dev-dev",
         "dobee/storage": "dev-dev",
         "dobee/database": "dev-dev",
         "dobee/http": "dev-dev",

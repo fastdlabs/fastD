@@ -64,13 +64,13 @@ abstract class EventAbstract
     }
 
     /**
-     * @param $plugin
+     * @param $helper
      * @param array
      * @return mixed
      */
-    public function get($plugin, array $parameters = array())
+    public function get($helper, array $parameters = array())
     {
-        return $this->container->get($plugin, $parameters);
+        return $this->container->get($helper, $parameters);
     }
 
     /**
@@ -124,7 +124,7 @@ abstract class EventAbstract
      */
     public function render($template, array $parameters = array())
     {
-        return $this->container->get('kernel.template', array($this->container))->getEngine()->render($template, $parameters);
+        return \Make::template($template, $parameters);
     }
 
     /**

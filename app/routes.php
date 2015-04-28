@@ -12,13 +12,7 @@
  */
 
 Routes::get(['/', 'name' => 'welcome'], function () {
-    $app = Application::create();
-    
-    $config = $app->getContainer()->get('kernel.config');
-
-    $storage = $app->getContainer()->get('kernel.storage', array($config->getParameters('storage')));
-
-    return $storage->getConnection('write')->get('name');
+    return Make::template('welcome/welcome.html.twig');
 });
 
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');

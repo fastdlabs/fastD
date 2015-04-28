@@ -42,8 +42,8 @@ abstract class AppKernel implements TerminalInterface
      * @var array
      */
     protected $components = array(
-        'kernel.template'   => 'Kernel\\Bridges\\Template\\TemplateEngine',
-        'kernel.logger'     => 'Kernel\\Bridges\\Logger\\Logger',
+        'kernel.template'   => 'Dobee\\Template\\TemplateManager',
+        'kernel.logger'     => 'Dobee\\Logger\\logger',
         'kernel.database'   => 'Dobee\\Database\\DriverManager',
         'kernel.storage'    => 'Dobee\\Storage\\StorageManager',
         'kernel.request'    => 'Dobee\\Http\\Request::createGlobalRequest',
@@ -64,8 +64,14 @@ abstract class AppKernel implements TerminalInterface
      */
     private $bundles = array();
 
+    /**
+     * @var static
+     */
     protected static $app;
 
+    /**
+     * @return static
+     */
     final public function __clone()
     {
         return static::$app;
@@ -181,6 +187,10 @@ abstract class AppKernel implements TerminalInterface
         $this->container = new Container($this->components);
 
         $this->container->set('kernel', $this);
+
+        if (!class_exists('\\Make')) {
+            include __DIR__ . '/Make.php';
+        }
     }
 
     /**
