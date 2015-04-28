@@ -41,19 +41,14 @@ abstract class AppKernel implements TerminalInterface
      */
     protected $components = array(
         'kernel.template'           => 'Kernel\\Bridges\\Template\\TemplateEngine',
+        'kernel.logger'             => 'Kernel\\Bridges\\Logger\\Logger',
         'kernel.storage.database'   => 'Dobee\\Database\\DriverManager',
         'kernel.storage.redis'      => 'Dobee\\Storage\\Redis\\Redis',
         'kernel.storage.memcache'   => 'Dobee\\Storage\\Memcache\\Memcache',
         'kernel.storage.memcached'  => 'Dobee\\Storage\\Memcached\\Memcached',
         'kernel.storage.ssdb'       => 'Dobee\\Storage\\SSDB\\SSDB',
-        'kernel.logger'             => 'Kernel\\Bridges\\Logger\\Logger',
         'kernel.request'            => 'Dobee\\Http\\Request::createGlobalRequest',
     );
-
-    /**
-     * @var string
-     */
-    private $event;
 
     /**
      * @var Container
@@ -293,20 +288,6 @@ abstract class AppKernel implements TerminalInterface
     }
 
     /**
-     * Handle application event.
-     *
-     * @param $event
-     * @param $callable
-     * @return mixed
-     */
-    public function handleEvent($event, $callable)
-    {
-        $this->event = $event;
-
-        return $callable();
-    }
-
-    /**
      * Application running terminate. Now, The application should be exit.
      * Here application can save request log in log.
      *
@@ -336,73 +317,15 @@ abstract class AppKernel implements TerminalInterface
     }
 
     /**
-     * @param $env
+     * @param string $env
      * @return static
      */
-    public static function create($env)
+    public static function create($env = null)
     {
         if (null === static::$app) {
             static::$app = new static($env);
         }
 
         return static::$app;
-    }
-
-    /**
-     * @return \Dobee\Console\Console
-     */
-    public function getConsole()
-    {
-        $console = new \Dobee\Console\Console($this);
-
-        $this->boot();
-
-        foreach ($this->registerCommands() as $command) {
-            if (!class_exists($command)) {
-                continue;
-            }
-
-            $command = new $command();
-            if ($command instanceof \Dobee\Console\Commands\Command) {
-                $console->addCommand($command);
-            }
-        }
-
-        return $console;
-    }
-
-    /**
-     * @return array
-     */
-    public function registerCommands()
-    {
-        $finder = new Finder();
-
-        $commands = array();
-
-        $bundles = array_merge($this->bundles, array(new \Dobee\Framework\Bundle\Bundle()));
-
-        foreach ($bundles as $bundle) {
-
-            $path = $bundle->getRootPath() . '/Commands';
-
-            if (!is_dir($path)) {
-                continue;
-            }
-
-            $commandsFiles = $finder->name('Command%')->in($path)->files();
-            if ($commandsFiles) {
-                foreach ($commandsFiles as $name => $command) {
-                    $commands[] = $bundle->getNamespace() . '\\Commands\\' . pathinfo($command->getName(), PATHINFO_FILENAME);
-                }
-            }
-        }
-
-        return $commands;
-    }
-
-    public static function __callStatic($method, $arguments = array())
-    {
-        return call_user_func_array(array(static::$app, $method), $arguments);
     }
 }

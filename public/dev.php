@@ -13,7 +13,7 @@
 
 include __DIR__ . '/../app/bootstrap.php';
 
-$app = new Application('dev');
+$app = Application::create('dev');
 
 $app->boot();
 
