@@ -13,7 +13,7 @@
 
 namespace Dobee\Framework;
 
-use Dobee\Http\Response;
+namespace Kernel\Exceptions\Handle;
 
 /**
  * Class ExceptionListenerWrapper

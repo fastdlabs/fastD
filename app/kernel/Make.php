@@ -151,6 +151,31 @@ class Make
         throw new ErrorException($message, $code);
     }
 
+    /**
+     * @return void
+     */
+    public static function handleException()
+    {
+        set_exception_handler(function (Exception $exception) {
+
+        });
+
+        set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {
+            throw new \ErrorException($error_str, \Dobee\Http\Response::HTTP_INTERNAL_SERVER_ERROR, 1, $error_file, $error_line);
+        });
+
+        register_shutdown_function(function () {
+            $error = error_get_last();
+            if ($error && in_array($error['type'], array(1, 4, 16, 64, 256, 4096, E_ALL))) {
+                return Make::
+                $exceptionHandler->handleException(new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']));
+            }
+        });
+    }
+
+    /**
+     * @param array $config
+     */
     public static function server(array $config)
     {
 

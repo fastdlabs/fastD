@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Framework;
+namespace Kernel\Exceptions\Handle;
 
 /**
  * Class ExceptionHandler

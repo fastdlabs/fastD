@@ -11,6 +11,16 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
+Routes::group('/admin', function () {
+    Routes::get(['/login', 'name' => 'login'], function () {
+        return '/admin/login';
+    });
+
+    Routes::get(['/logout', 'name' => 'logout'], function () {
+        return '/admin/logout';
+    });
+});
+
 Routes::get(['/', 'name' => 'welcome'], function () {
     return 'hello world';
 });
