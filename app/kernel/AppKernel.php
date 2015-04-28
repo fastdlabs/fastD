@@ -45,7 +45,7 @@ abstract class AppKernel implements TerminalInterface
         'kernel.template'   => 'Kernel\\Bridges\\Template\\TemplateEngine',
         'kernel.logger'     => 'Kernel\\Bridges\\Logger\\Logger',
         'kernel.database'   => 'Dobee\\Database\\DriverManager',
-        'kernel.storage'    => 'Dobee\\Storage\\Redis\\Redis',
+        'kernel.storage'    => 'Dobee\\Storage\\StorageManager',
         'kernel.request'    => 'Dobee\\Http\\Request::createGlobalRequest',
     );
 

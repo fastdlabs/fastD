@@ -14,9 +14,9 @@
 Routes::get(['/', 'name' => 'welcome'], function () {
     $app = Application::create();
 
-    $demo = $app->getContainer()->get('demo');
+    $storage = $app->getContainer()->get('kernel.storage', array($app->getContainer()->get('kernel.config')->getParameters('storage')));
 
-    return $demo->printHelloWorld();
+    return $storage->getConnection('write')->get('name');
 });
 
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');

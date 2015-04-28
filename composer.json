@@ -73,7 +73,7 @@
         "dobee/config": "dev-dev",
         "dobee/container": "~1.1.0",
         "dobee/template": "~1.1.0",
-        "dobee/storage": "~1.0.0",
+        "dobee/storage": "dev-dev",
         "dobee/database": "dev-dev",
         "dobee/http": "dev-dev",
         "dobee/console": "dev-dev",
