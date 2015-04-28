@@ -42,8 +42,8 @@ storage:
 template:
     engine: twig
     paths:
-        - %root.path%
-        - %root.path%/src
+        - %root.path%/resources
+        - %root.path%/../src
     options:
         cache: %root.path%/cache/%env%
 
@@ -51,6 +51,7 @@ template:
 errors:
     page:
 #        500: views/errors/500.html.twig
+        404: errors/error.html.twig
 
 #纪录日志配置, 不建议修改路径
 #日志名默认为dobee.log

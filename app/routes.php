@@ -12,6 +12,7 @@
  */
 
 Routes::get(['/', 'name' => 'welcome'], function () {
+    throw new \Dobee\Framework\Bundle\Exceptions\NotFoundException("not found");
     return 'hello world';
 });
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');
