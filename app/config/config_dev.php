@@ -58,38 +58,25 @@ return [
         'cache' => realpath(__DIR__ . '/../storage/templates'),
         // twig 扩展函数
         'extensions' => [
-            'path' => new \Twig_SimpleFunction('path', function ($path, array $parameters = array()) {
-                return Application::create()->getContainer()->get('kernel.routing')->generateUrl($path, $parameters);
+            'path' => new \Twig_SimpleFunction('path', function ($path, array $parameters = array(), $suffix = false) {
+                return Make::url($path, $parameters, $suffix);
             }),
             'asset' => new \Twig_SimpleFunction('asset', function ($name, $host = null, $path = null) {
-
-                $app = Application::create();
-                try {
-                    $host = $app->getContainer()->get('kernel.config')->getParameters('assets.host');
-                } catch (\InvalidArgumentException $e) {
-                    $host = $app->getContainer()->get('kernel.request')->getHttpAndHost();
-                }
-
-                try {
-                    $path = $app->getContainer()->get('kernel.config')->getParameters('assets.path');
-                } catch (\InvalidArgumentException $e) {
-                    $path = $app->getContainer()->get('kernel.request')->getBaseUrl();
-
-                    if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
-                        $path = pathinfo($path, PATHINFO_DIRNAME);
-                    }
-                }
-
-                return $host . str_replace('//', '/', $path . '/' . $name);
-            })
+                return Make::asset($name, $host, $path);
+            }),
         ],
+    ],
+    'assets' => [
+        'host' => 'http://baidu.com',
+        'path' => 'public'
     ],
     // 错误提示
     'errors' => [
-
+        '400' => '',
     ],
     // 日志对象
     'logger' => [
-
+        'name' => 'dobee.log',
+        'path' => realpath(__DIR__ . '/../storage/logs/' . date('Ymd')),
     ],
 ];
