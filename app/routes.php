@@ -13,8 +13,10 @@
 
 Routes::get(['/', 'name' => 'welcome'], function () {
     $app = Application::create();
+    
+    $config = $app->getContainer()->get('kernel.config');
 
-    $storage = $app->getContainer()->get('kernel.storage', array($app->getContainer()->get('kernel.config')->getParameters('storage')));
+    $storage = $app->getContainer()->get('kernel.storage', array($config->getParameters('storage')));
 
     return $storage->getConnection('write')->get('name');
 });
