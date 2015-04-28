@@ -76,6 +76,7 @@ return [
     ],
     // 日志对象
     'logger' => [
-
+        'name' => 'dobee.log',
+        'path' => realpath(__DIR__ . '/../storage/logs/' . date('Ymd')),
     ],
 ];

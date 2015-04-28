@@ -1,12 +1,7 @@
 .idea
 /vendor/
 composer.lock
-/app/logs/*
-/app/cache/*
-/src/OfficialBundle
-/app/resources/official
-/app/resources/template
-/app/resources/layout
+/app/storage/*
 /bin/phpunit
 public/assets
 

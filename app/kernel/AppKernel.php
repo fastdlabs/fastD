@@ -172,7 +172,7 @@ abstract class AppKernel implements TerminalInterface
 
         $this->initializeConfigure();
 
-//        $this->initializeException();
+        $this->initializeException();
 
         $this->initializeRouting();
     }
@@ -223,23 +223,6 @@ abstract class AppKernel implements TerminalInterface
         if (!$this->getDebug()) {
             error_reporting(0);
         }
-
-        $exceptionHandler = new ExceptionHandler($this);
-
-        set_exception_handler(array($exceptionHandler, 'handleException'));
-
-        set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {
-            throw new \ErrorException($error_str, Response::HTTP_INTERNAL_SERVER_ERROR, 1, $error_file, $error_line);
-        });
-
-        register_shutdown_function(function () use ($exceptionHandler) {
-            $error = error_get_last();
-            if ($error && in_array($error['type'], array(1, 4, 16, 64, 256, 4096, E_ALL))) {
-                $exceptionHandler->handleException(new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']));
-            }
-        });
-
-        unset($exceptionHandler);
     }
 
     /**
@@ -307,7 +290,7 @@ abstract class AppKernel implements TerminalInterface
     public function terminate(Request $request, Response $response)
     {
         if (!$this->getDebug()) {
-            $this->container->get('kernel.logger')->logRequest($request, $response);
+            \Make::logRequest($request, $response);
         }
     }
 

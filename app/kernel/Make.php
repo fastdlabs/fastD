@@ -109,4 +109,50 @@ class Make
 
         return $host . str_replace('//', '/', $path . '/' . $name);
     }
+
+    /**
+     * @param $content
+     * @return mixed
+     */
+    public static function log($content)
+    {
+        return static::container('kernel.logger', array(static::config('logger')))->save($content);
+    }
+
+    /**
+     * @param \Dobee\Http\Request  $request
+     * @param \Dobee\Http\Response $response
+     * @return mixed
+     */
+    public static function logRequest(\Dobee\Http\Request $request, \Dobee\Http\Response $response)
+    {
+        $content = 'request: [ date: %s, path: %s, format: %s, method: %s, ip: %s } response: { date: %s, status: %s ]';
+
+        $content = sprintf($content,
+            date('Y-m-d H:i:s', $request->getRequestTimestamp()),
+            $request->getPathInfo(),
+            $request->getFormat(),
+            $request->getMethod(),
+            $request->getClientIp(),
+            date('Y-m-d H:i:s', $response->getResponseTimestamp()),
+            $response->getStatusCode()
+        );
+
+        return static::log($content);
+    }
+
+    /**
+     * @param     $message
+     * @param int $code
+     * @throws ErrorException
+     */
+    public static function exception($message, $code = 500)
+    {
+        throw new ErrorException($message, $code);
+    }
+
+    public static function server(array $config)
+    {
+
+    }
 }

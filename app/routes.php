@@ -12,7 +12,7 @@
  */
 
 Routes::get(['/', 'name' => 'welcome'], function () {
-    return Make::template('welcome/welcome.html.twig');
+    return 'hello world';
 });
 
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');
