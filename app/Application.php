@@ -54,10 +54,10 @@ class Application extends \Dobee\Framework\AppKernel
     /**
      * Register application configuration
      *
-     * @param \Dobee\Framework\Bridges\Config\Config
+     * @param \Dobee\Config\Config
      * @return void
      */
-    public function registerConfiguration(\Dobee\Framework\Bridges\Config\Config $config)
+    public function registerConfiguration(\Dobee\Config\Config $config)
     {
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
