@@ -16,9 +16,6 @@ include __DIR__ . '/../app/bootstrap.php';
 $app = Application::create('local');
 
 $app->boot();
-echo '<pre>';
-print_r($app);
-die;
 
 $request = \Dobee\Http\Request::createGlobalRequest();
 

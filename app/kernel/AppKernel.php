@@ -37,17 +37,17 @@ abstract class AppKernel implements TerminalInterface
     private $rootPath;
 
     /**
+     * App containers.
+     * Storage app component.
+     *
      * @var array
      */
     protected $components = array(
-        'kernel.template'           => 'Kernel\\Bridges\\Template\\TemplateEngine',
-        'kernel.logger'             => 'Kernel\\Bridges\\Logger\\Logger',
-        'kernel.storage.database'   => 'Dobee\\Database\\DriverManager',
-        'kernel.storage.redis'      => 'Dobee\\Storage\\Redis\\Redis',
-        'kernel.storage.memcache'   => 'Dobee\\Storage\\Memcache\\Memcache',
-        'kernel.storage.memcached'  => 'Dobee\\Storage\\Memcached\\Memcached',
-        'kernel.storage.ssdb'       => 'Dobee\\Storage\\SSDB\\SSDB',
-        'kernel.request'            => 'Dobee\\Http\\Request::createGlobalRequest',
+        'kernel.template'   => 'Kernel\\Bridges\\Template\\TemplateEngine',
+        'kernel.logger'     => 'Kernel\\Bridges\\Logger\\Logger',
+        'kernel.database'   => 'Dobee\\Database\\DriverManager',
+        'kernel.storage'    => 'Dobee\\Storage\\Redis\\Redis',
+        'kernel.request'    => 'Dobee\\Http\\Request::createGlobalRequest',
     );
 
     /**

@@ -29,7 +29,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
             include __DIR__ . '/../../../../application/Application.php';
         }
 
-        $this->app = new \Application('local');
+        $this->app = \Application::create('local');
     }
 
     public function testContainer()

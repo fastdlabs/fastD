@@ -81,53 +81,16 @@ abstract class EventAbstract
      */
     public function getConnection($connection = null)
     {
-        return $this->container->get('kernel.storage.database', array($this->getParameters('database')))->getConnection($connection);
-    }
-
-    /**
-     * @param string $connection
-     * @return \Dobee\Storage\Redis\Redis
-     */
-    public function getRedis($connection)
-    {
-        return $this->container->get('kernel.storage.redis', array($this->getParameters('storage.redis')))->getConnection($connection);
-    }
-
-    /**
-     * @param string $connection
-     * @return \Dobee\Storage\Memcache\Memcache
-     */
-    public function getMemcache($connection)
-    {
-        return $this->container->get('kernel.storage.memcache', array($this->getParameters('storage.memcache')))->getConnection($connection);
-    }
-
-    /**
-     * @param string $connection
-     * @return \Dobee\Storage\Memcached\Memcached
-     */
-    public function getMemcached($connection)
-    {
-        return $this->container->get('kernel.storage.memcached', array($this->getParameters('storage.memcached')))->getConnection($connection);
-    }
-
-    /**
-     * @param string $connection
-     * @return \Dobee\Storage\SSDB\SSDB
-     */
-    public function getSSDB($connection)
-    {
-        return $this->container->get('kernel.storage.ssdb', array($this->getParameters('storage.ssdb')))->getConnection($connection);
+        return $this->container->get('kernel.database', array($this->getParameters('database')))->getConnection($connection);
     }
 
     /**
      * @param $connection
-     * @return mixed
-     * @deprecated
+     * @return \Dobee\Storage\StorageInterface
      */
-    public function getDisque($connection)
+    public function getStorage($connection)
     {
-        return $this->container->get('kernel.storage.disque', array($this->getParameters('storage.disque')))->getConnection($connection);
+        return $this->container->get('kernel.storage', array($this->getParameters('storage')))->getConnection($connection);
     }
 
     /**
