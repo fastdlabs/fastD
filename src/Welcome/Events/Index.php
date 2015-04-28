@@ -13,7 +13,7 @@
 
 namespace Welcome\Events;
 
-use Dobee\Framework\Bundle\Events\EventAbstract;
+use Kernel\Events\EventAbstract;
 
 /**
  * Class IndexController
@@ -31,7 +31,7 @@ class Index extends EventAbstract
     {
         $demo = $this->get('demo');
 
-        return $demo->getHelloWorld();
+        return $demo->printHelloWorld();
     }
 
     public function pluginsDIAction()

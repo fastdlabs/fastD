@@ -13,7 +13,7 @@
 
 namespace Welcome\Events;
 
-use Dobee\Framework\Bundle\Events\EventAbstract;
+use Kernel\Events\EventAbstract;
 
 class Route extends EventAbstract
 {

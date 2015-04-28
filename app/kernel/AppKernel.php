@@ -13,7 +13,6 @@
 
 namespace Kernel;
 
-use Dobee\Finder\Finder;
 use Dobee\Config\Config;
 use Dobee\Container\Container;
 use Dobee\Http\Request;
