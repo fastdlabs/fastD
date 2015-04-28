@@ -10,7 +10,7 @@
  * Blog: http://segmentfault.com/blog/janhuang
  * Gmail: bboyjanhuang@gmail.com
  */
-class Application extends \Dobee\Framework\AppKernel
+class Application extends Kernel\AppKernel
 {
     /**
      * Register project bundles into the kernel.
@@ -59,6 +59,6 @@ class Application extends \Dobee\Framework\AppKernel
      */
     public function registerConfiguration(\Dobee\Config\Config $config)
     {
-        $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+        $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
     }
 }

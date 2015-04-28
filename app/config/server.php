@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/14
- * Time: 下午3:24
+ * Date: 15/4/28
+ * Time: 下午12:29
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,11 +11,12 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Welcome;
-
-use Kernel\Bundle;
-
-class Welcome extends Bundle
-{
-
-}
+return [
+    'http' => [
+        'host' => '127.0.0.1',
+        'port' => '1680',
+        'options' => [
+            'daemonize' => true,
+        ],
+    ],
+];

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/3/14
- * Time: 下午3:24
+ * Date: 15/4/16
+ * Time: 下午5:15
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,11 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Welcome;
+namespace Dobee\Framework\Bridges\Server\Handlers;
 
-use Kernel\Bundle;
-
-class Welcome extends Bundle
+class RequestHandler 
 {
 
 }

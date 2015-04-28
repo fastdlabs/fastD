@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/23
- * Time: 下午10:59
+ * Date: 15/4/10
+ * Time: 上午11:26
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,9 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Autoload\Tests;
+namespace Kernel\Exceptions;
 
-class Dobee 
+class NotFoundException extends FrameworkException
 {
-
+    protected $code = 404;
 }
