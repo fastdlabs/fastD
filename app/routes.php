@@ -12,10 +12,19 @@
  */
 
 Routes::get(['/', 'name' => 'welcome'], function () {
-    return 'hello world';
+    $app = Application::create();
+
+    $demo = $app->getContainer()->get('demo');
+
+    return $demo->printHelloWorld();
 });
+
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');
+
 Routes::get(['/d', 'name' => 'di'], 'Welcome\\Events\Index@pluginsDIAction');
+
 Routes::get(['/c', 'name' => 'db'], 'Welcome\\Events\DB@dbAction');
+
 Routes::get(['/r', 'name' => 'route'], 'Welcome\\Events\Route@showRoute');
+
 Routes::get(['/v', 'name' => 'view'], 'Welcome\\Events\View@show');

@@ -12,11 +12,6 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-include __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/Application.php';
+include __DIR__ . '/bootstrap.php';
 
-$app = new Application('prod');
-
-$console = $app->getConsole();
-
-$console->run();
+$app = Application::create('prod');

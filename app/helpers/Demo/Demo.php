@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Plugins\Demo;
+namespace Helpers\Demo;
 
 use Dobee\Http\Request;
 
@@ -24,7 +24,7 @@ class Demo
         $this->request = $request;
     }
 
-    public function getHelloWorld()
+    public function printHelloWorld()
     {
         return 'hello plugins';
     }
