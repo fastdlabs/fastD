@@ -22,7 +22,6 @@ Routes::group('/admin', function () {
 });
 
 Routes::get(['/', 'name' => 'welcome'], function () {
-    throw new \Kernel\Exceptions\NotFoundException('not found');
     return 'hello world';
 });
 

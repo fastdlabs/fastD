@@ -14,6 +14,7 @@
 namespace Kernel;
 
 use Dobee\Config\Config;
+use Dobee\Console\Console;
 use Dobee\Container\Container;
 use Dobee\Http\Request;
 use Dobee\Http\Response;
@@ -321,5 +322,15 @@ abstract class AppKernel implements TerminalInterface
         }
 
         return static::$app;
+    }
+
+    /**
+     * @return \Dobee\Console\Console
+     */
+    public function getConsole()
+    {
+        $console = new Console($this);
+
+
     }
 }

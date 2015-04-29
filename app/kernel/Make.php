@@ -85,6 +85,15 @@ class Make
     }
 
     /**
+     * @param $name
+     * @return mixed
+     */
+    public static function helper($name)
+    {
+        return static::container($name);
+    }
+
+    /**
      * @param      $name
      * @param null $host
      * @param null $path
