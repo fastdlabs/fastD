@@ -16,6 +16,7 @@ namespace Kernel;
 use Dobee\Config\Config;
 use Dobee\Console\Console;
 use Dobee\Container\Container;
+use Dobee\Finder\Finder;
 use Dobee\Http\Request;
 use Dobee\Http\Response;
 
@@ -331,6 +332,35 @@ abstract class AppKernel implements TerminalInterface
     {
         $console = new Console($this);
 
+        $finder = new Finder();
 
+        $bundles = array_merge($this->getBundles(), array(new Bundle()));
+
+        foreach ($bundles as $bundle) {
+
+            $path = $bundle->getRootPath() . '/Commands';
+
+            if (!is_dir($path)) {
+                continue;
+            }
+            $commands = $finder->name('Command%')->in($path)->files();
+
+            if ($commands) {
+                foreach ($commands as $name => $command) {
+                    $command = $bundle->getNamespace() . '\\Commands\\' . pathinfo($command->getName(), PATHINFO_FILENAME);
+                    if (!class_exists($command)) {
+                        continue;
+                    }
+
+                    $command = new $command();
+                    if ($command instanceof \Dobee\Console\Commands\Command) {
+                        $console->addCommand($command);
+                    }
+
+                }
+            }
+        }
+
+        return $console;
     }
 }

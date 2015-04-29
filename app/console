@@ -16,4 +16,6 @@ include __DIR__ . '/bootstrap.php';
 
 $app = Application::create('prod');
 
-//$console = $app->
+$console = $app->getConsole();
+
+$console->run();
