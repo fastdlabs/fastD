@@ -22,6 +22,7 @@ Routes::group('/admin', function () {
 });
 
 Routes::get(['/', 'name' => 'welcome'], function () {
+    throw new \Kernel\Exceptions\NotFoundException('not found');
     return 'hello world';
 });
 
@@ -34,3 +35,9 @@ Routes::get(['/c', 'name' => 'db'], 'Welcome\\Events\DB@dbAction');
 Routes::get(['/r', 'name' => 'route'], 'Welcome\\Events\Route@showRoute');
 
 Routes::get(['/v', 'name' => 'view'], 'Welcome\\Events\View@show');
+
+Routes::get(['/redis', 'name' => 'redis'], function() {
+    $redis = Make::storage('write');
+
+    return $redis->get('name');
+});

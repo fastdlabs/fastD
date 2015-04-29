@@ -172,7 +172,7 @@ abstract class AppKernel implements TerminalInterface
 
         $this->initializeConfigure();
 
-//        $this->initializeException();
+        $this->initializeException();
 
         $this->initializeRouting();
     }
@@ -223,6 +223,8 @@ abstract class AppKernel implements TerminalInterface
         if (!$this->getDebug()) {
             error_reporting(0);
         }
+
+        \Make::handleException();
     }
 
     /**

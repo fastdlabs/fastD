@@ -11,6 +11,11 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
+/**
+ * Make class.
+ *
+ * Make some action.
+ */
 class Make 
 {
     /**
@@ -18,7 +23,7 @@ class Make
      * @param array $parameters
      * @return string
      */
-    public static function template($template, array $parameters = array())
+    public static function render($template, array $parameters = array())
     {
         return static::container('kernel.template', array(static::config('template')))->getEngine()->render($template, $parameters);
     }
@@ -142,39 +147,37 @@ class Make
     }
 
     /**
-     * @param     $message
-     * @param int $code
-     * @throws ErrorException
-     */
-    public static function exception($message, $code = 500)
-    {
-        throw new ErrorException($message, $code);
-    }
-
-    /**
      * @return void
      */
     public static function handleException()
     {
         set_exception_handler(function (Exception $exception) {
+            if (!Make::container('kernel')->getDebug()) {
+                Make::log(sprintf('exception:[ code: %s, message: %s, file: %s, line: %s ]', $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+            }
 
+            if (false !== strpos(Make::request()->getPathInfo(), 'api')) {
+                return (new \Dobee\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()));
+            }
+
+            return (new \Dobee\Http\Response($exception->getMessage(), $exception->getCode()))->send();
         });
 
         set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {
-            throw new \ErrorException($error_str, \Dobee\Http\Response::HTTP_INTERNAL_SERVER_ERROR, 1, $error_file, $error_line);
+            throw new \ErrorException($error_str, 500, 1, $error_file, $error_line);
         });
 
         register_shutdown_function(function () {
             $error = error_get_last();
             if ($error && in_array($error['type'], array(1, 4, 16, 64, 256, 4096, E_ALL))) {
-                return Make::
-                $exceptionHandler->handleException(new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']));
+                throw new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']);
             }
         });
     }
 
     /**
      * @param array $config
+     * @return \Dobee\Server\ServerInterface
      */
     public static function server(array $config)
     {
