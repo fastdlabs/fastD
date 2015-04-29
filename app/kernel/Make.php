@@ -157,7 +157,7 @@ class Make
             }
 
             if (false !== strpos(Make::request()->getPathInfo(), 'api')) {
-                return (new \Dobee\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()));
+                return (new \Dobee\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
             }
 
             return (new \Dobee\Http\Response($exception->getMessage(), $exception->getCode()))->send();
