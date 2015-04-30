@@ -4,7 +4,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="./app/bootstrap.php"
+         bootstrap="./vendor/autoload.php"
         >
     <php>
         <!-- Silence E_USER_DEPRECATED (-16385 == -1 & ~E_USER_DEPRECATED) -->
@@ -12,7 +12,7 @@
     </php>
     <testsuites>
         <testsuite name="Dobee php simple framework Tests">
-            <directory>./app/kernel/Tests/</directory>
+            <directory>./app/tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
