@@ -25,17 +25,8 @@ return [
         'debug' => true,
         'cache' => realpath(__DIR__ . '/../storage/templates'),
         // twig 扩展函数
-        'extensions' => [
-            'path' => new \Twig_SimpleFunction('path', function ($path, array $parameters = array(), $suffix = false) {
-                return Make::url($path, $parameters, $suffix);
-            }),
-            'asset' => new \Twig_SimpleFunction('asset', function ($name, $host = null, $path = null) {
-                return Make::asset($name, $host, $path);
-            }),
-        ],
         'global' => [
-            'request'   => Make::request(),
-            'app'       => Make::container('kernel'),
+            'app'       => Make::app(),
             'make'      => Make::getMakeTool(),
         ],
     ],
