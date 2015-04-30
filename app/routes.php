@@ -11,18 +11,15 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-Routes::group('/admin', function () {
-    Routes::get(['/login', 'name' => 'login'], function () {
-        return '/admin/login';
-    });
 
-    Routes::get(['/logout', 'name' => 'logout'], function () {
-        return '/admin/logout';
-    });
-});
 
-Routes::get(['/', 'name' => 'welcome'], function () {
-    return 'hello world';
+Routes::get('/', function () {
+    throw new \Kernel\Exceptions\NotFoundException('not found');
+    return Make::render('welcome/welcome.html.twig', [
+        'guide' => [
+
+        ],
+    ]);
 });
 
 Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');

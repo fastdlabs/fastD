@@ -124,7 +124,7 @@ abstract class EventAbstract
      */
     public function render($template, array $parameters = array())
     {
-        return \Make::template($template, $parameters);
+        return \Make::render($template, $parameters);
     }
 
     /**

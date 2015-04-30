@@ -59,10 +59,6 @@
         },
         {
             "type": "git",
-            "url": "https://coding.net/janhuang/autoload.git"
-        },
-        {
-            "type": "git",
             "url": "https://coding.net/janhuang/logger.git"
         }
     ],
@@ -70,8 +66,7 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "dobee/routing": "~1.1.0",
-        "dobee/autoload": "~1.0.0",
+        "dobee/routing": "dev-dev",
         "dobee/config": "dev-dev",
         "dobee/container": "~1.1.0",
         "dobee/template": "dev-dev",

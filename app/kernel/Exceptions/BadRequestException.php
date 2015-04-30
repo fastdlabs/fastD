@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/10
- * Time: 上午11:30
+ * Date: 15/4/30
+ * Time: 上午11:28
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -13,7 +13,7 @@
 
 namespace Kernel\Exceptions;
 
-class BadRequestException extends FrameworkException
+class BadRequestException extends \Exception
 {
     protected $code = 400;
 }

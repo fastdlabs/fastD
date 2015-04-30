@@ -43,7 +43,7 @@ return [
             'port' => 6379
         ],
     ],
-    // session存储
+    // session存储 咱不可用
     'session' => [
 
     ],
@@ -65,14 +65,19 @@ return [
                 return Make::asset($name, $host, $path);
             }),
         ],
+        'global' => [
+            'request'   => Make::request(),
+            'app'       => Make::container('kernel'),
+        ],
     ],
+    // 资源管理
     'assets' => [
         'host' => 'http://baidu.com',
         'path' => 'public'
     ],
     // 错误提示
     'errors' => [
-        '400' => '',
+        '404' => 'errors/404.html.twig',
     ],
     // 日志对象
     'logger' => [

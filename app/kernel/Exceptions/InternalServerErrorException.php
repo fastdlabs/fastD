@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/16
- * Time: 下午5:15
+ * Date: 15/4/30
+ * Time: 上午11:30
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,9 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Framework\Bridges\Server\Handlers;
+namespace Kernel\Exceptions;
 
-class RequestHandler 
+class InternalServerErrorException extends \Exception
 {
-
+    protected $code = 500;
 }

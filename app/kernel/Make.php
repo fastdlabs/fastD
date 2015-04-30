@@ -134,31 +134,11 @@ class Make
     }
 
     /**
-     * @param \Dobee\Http\Request  $request
-     * @param \Dobee\Http\Response $response
-     * @return mixed
-     */
-    public static function logRequest(\Dobee\Http\Request $request, \Dobee\Http\Response $response)
-    {
-        $content = 'request: [ date: %s, path: %s, format: %s, method: %s, ip: %s } response: { date: %s, status: %s ]';
-
-        $content = sprintf($content,
-            date('Y-m-d H:i:s', $request->getRequestTimestamp()),
-            $request->getPathInfo(),
-            $request->getFormat(),
-            $request->getMethod(),
-            $request->getClientIp(),
-            date('Y-m-d H:i:s', $response->getResponseTimestamp()),
-            $response->getStatusCode()
-        );
-
-        return static::log($content);
-    }
-
-    /**
+     * Application exception handle.
+     *
      * @return void
      */
-    public static function handleException()
+    public static function exception()
     {
         set_exception_handler(function (Exception $exception) {
             if (!Make::container('kernel')->getDebug()) {
@@ -169,7 +149,64 @@ class Make
                 return (new \Dobee\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
             }
 
-            return (new \Dobee\Http\Response($exception->getMessage(), $exception->getCode()))->send();
+            $error = <<<E
+<html>
+<head>
+    <title>%s</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        *{
+            font-family:		Consolas, Courier New, Courier, monospace;
+            font-size:			14px;
+        }
+        body {
+            background-color:	#fff;
+            margin:				40px;
+            color:				#000;
+        }
+
+        #content  {
+            border:				#999 1px solid;
+            background-color:	#fff;
+            padding:			20px 20px 12px 20px;
+            line-height:26px;
+        }
+
+        h1 {
+            font-weight:		normal;
+            font-size:			24px;
+            color:				#990000;
+            margin: 			0 0 4px 0;
+        }
+        pre {
+            width: auto;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <h1>Error: %s</h1>
+    <pre>%s</pre>
+</div>
+</body>
+</html>
+E;
+            $error = sprintf($error,
+                $exception->getMessage(),
+                $exception->getMessage(),
+                $exception->getTraceAsString()
+            );
+
+            if (!Make::container('kernel')->getDebug()) {
+                try {
+                    $error = Make::render(Make::config('errors.' . $exception->getCode()), array('exception' => $exception));
+                } catch(Exception $e){
+                    $error = $exception->getMessage();
+                }
+            }
+
+            return (new \Dobee\Http\Response($error, $exception->getCode()))->send();
         });
 
         set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {
@@ -182,14 +219,5 @@ class Make
                 throw new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']);
             }
         });
-    }
-
-    /**
-     * @param array $config
-     * @return \Dobee\Server\ServerInterface
-     */
-    public static function server(array $config)
-    {
-
     }
 }

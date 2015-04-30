@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/10
+ * Date: 15/4/30
  * Time: 上午11:28
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
@@ -13,7 +13,7 @@
 
 namespace Kernel\Exceptions;
 
-class ForbiddenException extends FrameworkException
+class ForbiddenException extends \Exception
 {
     protected $code = 403;
 }

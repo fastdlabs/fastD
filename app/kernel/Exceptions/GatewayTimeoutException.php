@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/10
- * Time: 上午11:26
+ * Date: 15/4/30
+ * Time: 上午11:31
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -13,7 +13,7 @@
 
 namespace Kernel\Exceptions;
 
-class FrameworkException extends \Exception
+class GatewayTimeoutException extends \Exception
 {
-    protected $code = 500;
+    protected $code = 504;
 }

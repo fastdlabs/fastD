@@ -43,7 +43,7 @@ return [
             'port' => 6379
         ],
     ],
-    // session存储
+    // session存储 咱不可用
     'session' => [
 
     ],
@@ -51,11 +51,11 @@ return [
     'template' => [
         'engine' => 'twig',
         'paths' => [
-            __DIR__ . '/../views',
-            __DIR__ . '/../../src',
+            realpath(__DIR__ . '/../views'),
+            realpath(__DIR__ . '/../../src'),
         ],
-        'debug' => false,
-        'cache' => __DIR__ . '/../storage/templates',
+        'debug' => true,
+        'cache' => realpath(__DIR__ . '/../storage/templates'),
         // twig 扩展函数
         'extensions' => [
             'path' => new \Twig_SimpleFunction('path', function ($path, array $parameters = array(), $suffix = false) {
@@ -65,19 +65,23 @@ return [
                 return Make::asset($name, $host, $path);
             }),
         ],
+        'global' => [
+            'request'   => Make::request(),
+            'app'       => Make::container('kernel'),
+        ],
     ],
-    // 资源配置
+    // 资源管理
     'assets' => [
-//        'host' => '',
-//        'path' => ''
+        'host' => 'http://baidu.com',
+        'path' => 'public'
     ],
     // 错误提示
     'errors' => [
-        '400' => '',
+        '404' => 'errors/404.html.twig',
     ],
     // 日志对象
     'logger' => [
         'name' => 'dobee.log',
-        'path' => __DIR__ . '/../storage/logs/' . date('Ymd'),
+        'path' => realpath(__DIR__ . '/../storage/logs/' . date('Ymd')),
     ],
 ];

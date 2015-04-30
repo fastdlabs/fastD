@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/4/27
- * Time: 下午4:32
+ * Date: 15/4/30
+ * Time: 上午11:31
  * Github: https://www.github.com/janhuang 
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -11,8 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-$loader = include __DIR__ . '/../vendor/autoload.php';
+namespace Kernel\Exceptions;
 
-include __DIR__ . '/Application.php';
-
-return $loader;
+class ServiceUnavailableException extends \Exception
+{
+    protected $code = 503;
+}

@@ -34,7 +34,7 @@ class Application extends Kernel\AppKernel
      *
      * @return array
      */
-    public function registerPlugins()
+    public function registerHelpers()
     {
         return array(
             'demo' => 'Helpers\\Demo\\Demo'

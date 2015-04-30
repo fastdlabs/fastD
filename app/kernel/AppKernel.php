@@ -91,7 +91,7 @@ abstract class AppKernel implements TerminalInterface
         $this->debug = 'prod' === $this->environment ? false : true;
 
         $this->components = array_merge(
-            $this->registerPlugins(),
+            $this->registerHelpers(),
             array(
                 'plugins.upload' => 'Dobee\\Plugins\\Uploaded\\Uploader',
                 'plugins.paging' => 'Dobee\\Plugins\\Paging\\Pagination',
@@ -148,7 +148,7 @@ abstract class AppKernel implements TerminalInterface
      *
      * @return array
      */
-    abstract public function registerPlugins();
+    abstract public function registerHelpers();
 
     /**
      * Register application configuration
@@ -226,11 +226,13 @@ abstract class AppKernel implements TerminalInterface
             error_reporting(0);
         }
 
-        \Make::handleException();
+        \Make::exception();
     }
 
     /**
      * Loaded application routing.
+     *
+     * Loaded register bundle routes configuration.
      */
     public function initializeRouting()
     {
@@ -239,6 +241,12 @@ abstract class AppKernel implements TerminalInterface
         }
 
         include $this->getRootPath() . '/routes.php';
+
+        foreach ($this->getBundles() as $bundle) {
+            if (file_exists($routes = $bundle->getConfigurationPath() . '/routes.php')) {
+                include $routes;
+            }
+        }
 
         $this->container->set('kernel.routing', \Routes::getRouter());
     }
@@ -294,7 +302,19 @@ abstract class AppKernel implements TerminalInterface
     public function terminate(Request $request, Response $response)
     {
         if (!$this->getDebug()) {
-            \Make::logRequest($request, $response);
+            $content = 'request: [ date: %s, path: %s, format: %s, method: %s, ip: %s } response: { date: %s, status: %s ]';
+
+            $content = sprintf($content,
+                date('Y-m-d H:i:s', $request->getRequestTimestamp()),
+                $request->getPathInfo(),
+                $request->getFormat(),
+                $request->getMethod(),
+                $request->getClientIp(),
+                date('Y-m-d H:i:s', $response->getResponseTimestamp()),
+                $response->getStatusCode()
+            );
+
+            \Make::log($content);
         }
     }
 
@@ -356,7 +376,6 @@ abstract class AppKernel implements TerminalInterface
                     if ($command instanceof \Dobee\Console\Commands\Command) {
                         $console->addCommand($command);
                     }
-
                 }
             }
         }
