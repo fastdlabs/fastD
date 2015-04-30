@@ -11,10 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-
-
 Routes::get('/', function () {
-    throw new \Kernel\Exceptions\NotFoundException('not found');
     return Make::render('welcome/welcome.html.twig', [
         'guide' => [
 

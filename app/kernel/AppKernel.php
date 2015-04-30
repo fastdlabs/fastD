@@ -17,6 +17,7 @@ use Dobee\Config\Config;
 use Dobee\Console\Console;
 use Dobee\Container\Container;
 use Dobee\Finder\Finder;
+use Dobee\Http\JsonResponse;
 use Dobee\Http\Request;
 use Dobee\Http\Response;
 
@@ -286,6 +287,10 @@ abstract class AppKernel implements TerminalInterface
 
         if ($response instanceof Response) {
             return $response;
+        }
+
+        if (is_array($response)) {
+            return new JsonResponse($response);
         }
 
         return new Response($response);
