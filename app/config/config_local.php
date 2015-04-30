@@ -43,46 +43,9 @@ return [
             'port' => 6379
         ],
     ],
-    // session存储 咱不可用
-    'session' => [
-
-    ],
-    // 模板引擎
-    'template' => [
-        'engine' => 'twig',
-        'paths' => [
-            realpath(__DIR__ . '/../views'),
-            realpath(__DIR__ . '/../../src'),
-        ],
-        'debug' => true,
-        'cache' => realpath(__DIR__ . '/../storage/templates'),
-        // twig 扩展函数
-        'extensions' => [
-            'path' => new \Twig_SimpleFunction('path', function ($path, array $parameters = array(), $suffix = false) {
-                return Make::url($path, $parameters, $suffix);
-            }),
-            'asset' => new \Twig_SimpleFunction('asset', function ($name, $host = null, $path = null) {
-                return Make::asset($name, $host, $path);
-            }),
-        ],
-        'global' => [
-            'request'   => Make::request(),
-            'app'       => Make::container('kernel'),
-            'make'      => Make::getMakeTool(),
-        ],
-    ],
     // 资源管理
     'assets' => [
         'host' => 'http://baidu.com',
         'path' => 'public'
-    ],
-    // 错误提示
-    'errors' => [
-        '404' => 'errors/404.html.twig',
-    ],
-    // 日志对象
-    'logger' => [
-        'name' => 'dobee.log',
-        'path' => realpath(__DIR__ . '/../storage/logs/' . date('Ymd')),
     ],
 ];
