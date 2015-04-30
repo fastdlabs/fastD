@@ -19,6 +19,37 @@
 class Make 
 {
     /**
+     * @param $url
+     * @param $statusCode
+     * @return \Dobee\Http\RedirectResponse
+     */
+    public static function redirect($url, $statusCode)
+    {
+        return new \Dobee\Http\RedirectResponse($url, $statusCode);
+    }
+
+    /**
+     * @param $connection
+     * @param $repository
+     * @return \Dobee\Database\Repository\Repository
+     */
+    public static function repository($connection, $repository)
+    {
+        return static::db($connection)->getRepository($repository);
+    }
+
+    /**
+     * @param       $event
+     * @param       $handle
+     * @param array $parameters
+     * @return array|string|\Dobee\Http\Response
+     */
+    public static function event($event, $handle, array $parameters = array())
+    {
+        return static::app()->getContainer()->getProvider()->callServiceMethod($event, $handle, $parameters);
+    }
+
+    /**
      * @param       $template
      * @param array $parameters
      * @return string
@@ -44,7 +75,15 @@ class Make
      */
     public static function container($name, array $parameters = array())
     {
-        return Application::create()->getContainer()->get($name, $parameters);
+        return static::app()->getContainer()->get($name, $parameters);
+    }
+
+    /**
+     * @return \Kernel\AppKernel
+     */
+    public static function app()
+    {
+        return Application::create();
     }
 
     /**
@@ -85,12 +124,13 @@ class Make
     }
 
     /**
-     * @param $name
+     * @param string $name
+     * @param array $parameters
      * @return mixed
      */
-    public static function helper($name)
+    public static function helper($name, array $parameters = array())
     {
-        return static::container($name);
+        return static::container($name, $parameters);
     }
 
     /**

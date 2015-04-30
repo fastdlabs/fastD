@@ -35,16 +35,6 @@ abstract class EventAbstract
     protected $container;
 
     /**
-     * @var DriverManager
-     */
-    protected $driverManager;
-
-    /**
-     * @var TemplateEngineInterface
-     */
-    protected $templateEngine;
-
-    /**
      * @param Container $container
      * @return $this
      */
@@ -70,7 +60,7 @@ abstract class EventAbstract
      */
     public function get($helper, array $parameters = array())
     {
-        return $this->container->get($helper, $parameters);
+        return \Make::helper($helper, $parameters);
     }
 
     /**
@@ -81,7 +71,7 @@ abstract class EventAbstract
      */
     public function getConnection($connection = null)
     {
-        return $this->container->get('kernel.database', array($this->getParameters('database')))->getConnection($connection);
+        return \Make::db($connection);
     }
 
     /**
@@ -90,7 +80,7 @@ abstract class EventAbstract
      */
     public function getStorage($connection)
     {
-        return $this->container->get('kernel.storage', array($this->getParameters('storage')))->getConnection($connection);
+        return \Make::storage($connection);
     }
 
     /**
@@ -101,7 +91,7 @@ abstract class EventAbstract
      */
     public function getParameters($name = null)
     {
-        return $this->container->get('kernel.config')->getParameters($name);
+        return \Make::config($name);
     }
 
     /**
@@ -112,7 +102,7 @@ abstract class EventAbstract
      */
     public function generateUrl($name, array $parameters = array(), $suffix = false)
     {
-        return $this->container->get('kernel.routing')->generateUrl($name, $parameters, $suffix);
+        return \Make::url($name, $parameters, $suffix);
     }
 
     /**
@@ -134,69 +124,6 @@ abstract class EventAbstract
      */
     public function redirect($url, $statusCode = 302)
     {
-        return new RedirectResponse($url, $statusCode);
-    }
-
-    /**
-     * @param array  $responses
-     * @param int    $statusCode
-     * @param array  $headers
-     * @param string $format
-     * @return Response
-     */
-    public function response(array $responses = array(), $statusCode = Response::HTTP_OK, array $headers = array(), $format = 'json')
-    {
-        $responseData = array(
-            'status' => $statusCode,
-            'message' => isset(Response::$statusTexts[$statusCode]) ? Response::$statusTexts[$statusCode] : 'Internal Server Error',
-        );
-
-        if (!empty($responses)) {
-            $responseData['body'] = $responses;
-        }
-
-        switch (strtolower($format)) {
-            case 'json':
-                return $this->responseJson($responseData, $statusCode, $headers);
-                break;
-            case 'xml':
-                return $this->responseXml($responseData, $statusCode, $headers);
-                break;
-            default:
-                return $this->responseText($responseData, $statusCode, $headers);
-        }
-    }
-
-    /**
-     * @param array $responseData
-     * @param int   $statusCode
-     * @param array $headers
-     * @return JsonResponse
-     */
-    public function responseJson(array $responseData, $statusCode = Response::HTTP_OK, array $headers = array())
-    {
-        return new JsonResponse($responseData, $statusCode, $headers);
-    }
-
-    /**
-     * @param array $responseData
-     * @param int   $statusCode
-     * @param array $headers
-     * @return XmlResponse
-     */
-    public function responseXml(array $responseData, $statusCode = Response::HTTP_OK, array $headers = array())
-    {
-        return new XmlResponse($responseData, $statusCode, $headers);
-    }
-
-    /**
-     * @param array $responseData
-     * @param int   $statusCode
-     * @param array $headers
-     * @return Response
-     */
-    public function responseText(array $responseData, $statusCode = Response::HTTP_OK, array $headers = array())
-    {
-        return new Response($responseData, $statusCode, $headers);
+        return \Make::redirect($url, $statusCode);
     }
 }
