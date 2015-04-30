@@ -19,6 +19,69 @@
 class Make 
 {
     /**
+     * @param      $name
+     * @param null $value
+     * @return \Dobee\Http\Session\Session
+     */
+    public static function session($name, $value = null)
+    {
+        if (null === $value) {
+            return static::request()->getSession()->getSession($name);
+        }
+
+        return static::request()->getSession()->setSession($name, $value);
+    }
+
+    /**
+     * @param        $name
+     * @param null   $value
+     * @param int    $expire
+     * @param string $path
+     * @return \Dobee\Http\Cookie\CookieInterface
+     */
+    public static function cookie($name, $value = null, $expire = 0, $path = '/')
+    {
+        if (null === $value) {
+            return static::request()->cookies->getCookie($name);
+        }
+
+        return static::request()->cookies->setCookie($name, $value, $expire, $path);
+    }
+
+    /**
+     * @param null   $name
+     * @param string $filter
+     * @return bool|string
+     */
+    public static function get($name = null, $filter = \Dobee\Http\Bag\Filter::STRING)
+    {
+        return static::request()->query->get($name, $filter);
+    }
+
+    /**
+     * @param        $name
+     * @param string $filter
+     * @return bool|string
+     */
+    public static function post($name, $filter = \Dobee\Http\Bag\Filter::STRING)
+    {
+        return static::request()->request->get($name);
+    }
+
+    /**
+     * @param null $name
+     * @return bool|\Dobee\Http\Bag\FilesBag|\Dobee\Http\Files\FileCollections
+     */
+    public static function files($name = null)
+    {
+        if (null === $name) {
+            return static::request()->files;
+        }
+
+        return static::request()->files->getFiles($name);
+    }
+
+    /**
      * @param $url
      * @param $statusCode
      * @return \Dobee\Http\RedirectResponse
@@ -259,5 +322,32 @@ E;
                 throw new \ErrorException($error['message'], $error['type'], 1, $error['file'], $error['line']);
             }
         });
+    }
+
+    /**
+     * @var Make
+     */
+    protected static $make;
+
+    /**
+     * @param $method
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        return call_user_func_array("Make::" . $method, $arguments);
+    }
+
+    /**
+     * @return Make
+     */
+    public static function getMakeTool()
+    {
+        if (null === static::$make) {
+            static::$make = new static();
+        }
+
+        return static::$make;
     }
 }

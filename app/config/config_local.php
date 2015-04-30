@@ -68,6 +68,7 @@ return [
         'global' => [
             'request'   => Make::request(),
             'app'       => Make::container('kernel'),
+            'make'      => Make::getMakeTool(),
         ],
     ],
     // 资源管理
