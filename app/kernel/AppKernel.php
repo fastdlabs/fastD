@@ -372,7 +372,7 @@ abstract class AppKernel implements TerminalInterface
             if (!is_dir($path)) {
                 continue;
             }
-            $commands = $finder->name('Command%')->in($path)->files();
+            $commands = $finder->in($path)->files();
 
             if ($commands) {
                 foreach ($commands as $name => $command) {

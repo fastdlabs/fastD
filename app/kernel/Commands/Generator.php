@@ -17,7 +17,7 @@ use Dobee\Console\Commands\Command;
 use Dobee\Console\Format\Input;
 use Dobee\Console\Format\Output;
 
-class GeneratorCommand extends Command
+class Generator extends Command
 {
     /**
      * @return string

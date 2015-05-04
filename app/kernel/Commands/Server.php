@@ -22,7 +22,7 @@ use Dobee\Framework\ExceptionListenerWrapper;
 use Dobee\Http\Request;
 use Dobee\Server\HttpServer;
 
-class ServerCommand extends Command
+class Server extends Command
 {
     /**
      * @var \Dobee\Server\ServerInterface
