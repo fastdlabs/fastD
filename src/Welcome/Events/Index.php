@@ -13,6 +13,8 @@
 
 namespace Welcome\Events;
 
+use Dobee\Http\Request;
+use Dobee\Routing\Router;
 use Kernel\Events\EventAbstract;
 
 /**
@@ -27,15 +29,13 @@ class Index extends EventAbstract
         return 'hello world';
     }
 
-    public function pluginAction()
+    public function pluginAction(Request $request)
     {
-        $demo = $this->get('demo');
-
-        return $demo->printHelloWorld();
+        return $request->server->all();
     }
 
-    public function pluginsDIAction()
+    public function pluginsDIAction(Router $router)
     {
-        return $this->get('demo')->getRequestPathInfo();
+
     }
 }

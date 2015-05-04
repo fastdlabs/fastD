@@ -16,7 +16,6 @@ namespace Dobee\Framework\Bundle\Commands;
 use Dobee\Console\Commands\Command;
 use Dobee\Console\Format\Input;
 use Dobee\Console\Format\Output;
-use Dobee\Routing\RouteException;
 use Dobee\Routing\Router;
 
 class RouteDumpCommand extends Command

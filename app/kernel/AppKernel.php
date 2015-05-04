@@ -357,6 +357,8 @@ abstract class AppKernel implements TerminalInterface
      */
     public function getConsole()
     {
+        $this->boot();
+
         $console = new Console($this);
 
         $finder = new Finder();

@@ -13,6 +13,7 @@
 
 namespace Welcome\Events;
 
+use Dobee\Routing\Router;
 use Kernel\Events\EventAbstract;
 
 class Route extends EventAbstract

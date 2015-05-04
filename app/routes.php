@@ -27,6 +27,5 @@ Routes::get(['/v', 'name' => 'view'], 'Welcome\\Events\View@show');
 
 Routes::get(['/redis', 'name' => 'redis'], function() {
     $redis = Make::storage('write');
-
     return $redis->get('name');
 });
