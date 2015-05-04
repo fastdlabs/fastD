@@ -211,6 +211,8 @@ abstract class AppKernel implements TerminalInterface
 
         $config->setVariable($variables);
 
+        $config->load($this->getRootPath() . '/config/config.php');
+
         $this->registerConfiguration($config);
     }
 

@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-$local = [
+return [
     // 数据库配置
     'database' => [
         'write' => [
@@ -49,8 +49,3 @@ $local = [
         'path' => 'public'
     ],
 ];
-
-return array_merge(
-    include __DIR__ . '/config.php',
-    $local
-);
