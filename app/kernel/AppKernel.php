@@ -93,10 +93,6 @@ abstract class AppKernel implements TerminalInterface
 
         $this->components = array_merge(
             $this->registerHelpers(),
-            array(
-                'plugins.upload' => 'Dobee\\Plugins\\Uploaded\\Uploader',
-                'plugins.paging' => 'Dobee\\Plugins\\Paging\\Pagination',
-            ),
             $this->components
         );
 

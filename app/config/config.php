@@ -19,11 +19,11 @@ return [
     'template' => [
         'engine' => 'twig',
         'paths' => [
-            realpath(__DIR__ . '/../views'),
-            realpath(__DIR__ . '/../../src'),
+            __DIR__ . '/../views',
+            __DIR__ . '/../../src',
         ],
         'debug' => true,
-        'cache' => realpath(__DIR__ . '/../storage/templates'),
+        'cache' => __DIR__ . '/../storage/templates',
         // twig 扩展函数
         'global' => [
             'app'       => Make::app(),
@@ -38,6 +38,6 @@ return [
     // 日志对象
     'logger' => [
         'name' => 'dobee.log',
-        'path' => realpath(__DIR__ . '/../storage/logs/' . date('Ymd')),
+        'path' => __DIR__ . '/../storage/logs/' . date('Ymd'),
     ],
 ];

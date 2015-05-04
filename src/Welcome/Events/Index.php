@@ -36,6 +36,6 @@ class Index extends EventAbstract
 
     public function pluginsDIAction(Router $router)
     {
-
+        return 'hello world';
     }
 }
