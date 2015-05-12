@@ -274,7 +274,7 @@ abstract class AppKernel implements TerminalInterface
         if (!is_callable($response = $route->getCallback())) {
             list ($event, $handle) = explode('@', $response);
 
-            if (method_exists(($event = $this->container->get($event)), 'setContainer')) {
+            if (method_exists(($event = $this->container->set($event, $event)->get($event)), 'setContainer')) {
                 $event->setContainer($this->container);
             }
 
