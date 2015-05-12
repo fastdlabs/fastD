@@ -66,7 +66,7 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "dobee/routing": "~1.1.2",
+        "dobee/routing": "~1.1.5",
         "dobee/config": "~1.1.2",
         "dobee/container": "~1.1.0",
         "dobee/template": "~1.1.1",
