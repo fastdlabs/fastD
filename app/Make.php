@@ -49,39 +49,6 @@ class Make
     }
 
     /**
-     * @param null   $name
-     * @param string $filter
-     * @return bool|string
-     */
-    public static function get($name = null, $filter = \Dobee\Http\Bag\Filter::STRING)
-    {
-        return static::request()->query->get($name, $filter);
-    }
-
-    /**
-     * @param        $name
-     * @param string $filter
-     * @return bool|string
-     */
-    public static function post($name, $filter = \Dobee\Http\Bag\Filter::STRING)
-    {
-        return static::request()->request->get($name, $filter);
-    }
-
-    /**
-     * @param null $name
-     * @return bool|\Dobee\Http\Bag\FilesBag|\Dobee\Http\Files\FileCollections
-     */
-    public static function files($name = null)
-    {
-        if (null === $name) {
-            return static::request()->files;
-        }
-
-        return static::request()->files->getFiles($name);
-    }
-
-    /**
      * @param $url
      * @param $statusCode
      * @return \Dobee\Http\RedirectResponse
