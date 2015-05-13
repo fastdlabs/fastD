@@ -65,7 +65,7 @@ class Make
      */
     public static function post($name, $filter = \Dobee\Http\Bag\Filter::STRING)
     {
-        return static::request()->request->get($name);
+        return static::request()->request->get($name, $filter);
     }
 
     /**
