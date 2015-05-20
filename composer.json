@@ -2,7 +2,7 @@
     "name": "janhuang/dobee-php-simple-framework",
     "type": "project",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "description": "php simple framework",
     "keyword": [
         "dobee php",
