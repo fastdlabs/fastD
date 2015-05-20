@@ -1,6 +1,6 @@
 #Dobee-php-simple-framework for PHP5.4+ 
 
-#version: 1.2.0
+#version: 1.0.x
 
 **简单**、**高效**、**敏捷**、**灵活**、**组件式更新**
 
