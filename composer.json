@@ -26,9 +26,9 @@
         "dobee/database": "1.0.1",
         "dobee/logger": "1.0.0",
         "dobee/http": "1.1.1",
-        "dobee/console": "dev-dev",
-        "dobee/server": "dev-dev",
-        "dobee/finder": "dev-dev"
+        "dobee/console": "dev-master",
+        "dobee/server": "dev-master",
+        "dobee/finder": "dev-master"
     },
     "config": {
         "bin-dir": "bin"
