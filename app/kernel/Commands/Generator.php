@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Framework\Bundle\Commands;
+namespace Kernel\Commands;
 
 use Dobee\Console\Commands\Command;
 use Dobee\Console\Format\Input;
@@ -57,7 +57,7 @@ class Generator extends Command
 
         $bundle = str_replace(':', DIRECTORY_SEPARATOR, $bundle);
 
-        $source = $this->getProvider()->getRootPath() . '/src';
+        $source = $this->getProvider()->getRootPath() . '/../src';
 
         $this->builderStructure($source, $bundle);
     }
@@ -96,17 +96,13 @@ class Generator extends Command
             strtolower(str_replace(DIRECTORY_SEPARATOR, '_', $bundle)) . '_index'
         );
 
-        $controllerFile = $bundlePath . DIRECTORY_SEPARATOR . 'Controllers/IndexController.php';
+        $controllerFile = $bundlePath . DIRECTORY_SEPARATOR . 'Events/Index.php';
 
         if (!file_exists($controllerFile)) {
             file_put_contents($controllerFile, $controller);
         }
 
         $bootstrapName = ucfirst(end($bundleArray));
-
-        if (false === (strpos($bootstrapName, 'Bundle'))) {
-            $bootstrapName .= 'Bundle';
-        }
 
         $bootstrap = sprintf(
             $this->getBootstrapTemplate(),
@@ -119,6 +115,11 @@ class Generator extends Command
         if (!file_exists($bootstrapFile)) {
             file_put_contents($bootstrapFile, $bootstrap);
         }
+
+        $routes = $bundlePath . DIRECTORY_SEPARATOR . 'Resources/config/routes.php';
+        if (!file_exists($routes)) {
+            file_put_contents($routes, '<?php ' . PHP_EOL);
+        }
     }
 
     public function getControllerTemplate()
@@ -126,18 +127,12 @@ class Generator extends Command
         return <<<CONTROLLER
 <?php
 
-namespace %s\Controllers;
+namespace %s\Events;
 
-use Dobee\Framework\Bundle\Controllers\Controller;
+use Kernel\Events\EventAbstract;
 
-/**
- * @Route("%s")
- */
-class IndexController extends Controller
+class Index extends EventAbstract
 {
-    /**
-     * @Route("/", name="%s")
-     */
     public function indexAction()
     {
         return 'hello world';
@@ -153,7 +148,7 @@ CONTROLLER;
 
 namespace %s;
 
-use Dobee\Framework\Bundle\Bundle;
+use Kernel\Bundle;
 
 class %s extends Bundle
 {

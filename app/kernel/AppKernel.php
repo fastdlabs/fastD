@@ -28,6 +28,8 @@ use Dobee\Http\Response;
  */
 abstract class AppKernel implements TerminalInterface
 {
+    const VERSION = '1.0.5';
+
     /**
      * @var string
      */
@@ -373,6 +375,7 @@ abstract class AppKernel implements TerminalInterface
             if ($commands) {
                 foreach ($commands as $name => $command) {
                     $command = $bundle->getNamespace() . '\\Commands\\' . pathinfo($command->getName(), PATHINFO_FILENAME);
+
                     if (!class_exists($command)) {
                         continue;
                     }
