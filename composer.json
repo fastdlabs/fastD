@@ -17,9 +17,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
+        "php": ">=5.4.0",
         "dobee/routing": "1.2.0",
         "dobee/config": "1.1.2",
         "dobee/container": "1.1.0",
