@@ -11,21 +11,15 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-Routes::get('/', function () {
-    return 'hello world';
-});
 
-Routes::get(['/p', 'name' => 'plugins'], 'Welcome\\Events\Index@pluginAction');
-
-Routes::get(['/d', 'name' => 'di'], 'Welcome\\Events\Index@pluginsDIAction');
-
-Routes::get(['/c', 'name' => 'db'], 'Welcome\\Events\DB@dbAction');
-
-Routes::get(['/r', 'name' => 'route'], 'Welcome\\Events\Route@showRoute');
-
-Routes::get(['/v', 'name' => 'view'], 'Welcome\\Events\View@show');
-
-Routes::get(['/redis', 'name' => 'redis'], function() {
-    $redis = Make::storage('write');
-    return $redis->get('name');
-});
+/**
+ * Global route setting
+ *
+ * Routes::get();
+ * Routes::post()
+ * Routes::put
+ * Routes::delete
+ * Routes::patch() // is unsupport
+ * Routes::head
+ * Routes::options
+ */

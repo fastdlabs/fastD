@@ -28,7 +28,7 @@ use Dobee\Http\Response;
  */
 abstract class AppKernel implements TerminalInterface
 {
-    const VERSION = '1.0.5';
+    const VERSION = '1.0.x';
 
     /**
      * @var string
