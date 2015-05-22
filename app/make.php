@@ -257,6 +257,9 @@ class Make
 <body>
 <div id="content">
     <h1>Error: %s</h1>
+    <h2>File: %s</h2>
+    <h2>Line: %s</h2>
+    <hr />
     <pre>%s</pre>
 </div>
 </body>
@@ -265,6 +268,8 @@ E;
             $error = sprintf($error,
                 $exception->getMessage(),
                 $exception->getMessage(),
+                $exception->getFile(),
+                $exception->getLine(),
                 $exception->getTraceAsString()
             );
 

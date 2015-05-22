@@ -23,3 +23,7 @@
  * Routes::head
  * Routes::options
  */
+
+Routes::get('/', function () {
+    return 'hello world';
+});
