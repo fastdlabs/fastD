@@ -273,8 +273,8 @@ E;
                 $exception->getTraceAsString()
             );
 
+            $code = $exception->getCode();
             if (!Make::container('kernel')->getDebug()) {
-                $code = $exception->getCode();
                 if ($code <= 0 || $code >= 500) {
                     $code = 500;
                 }
