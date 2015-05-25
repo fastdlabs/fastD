@@ -260,7 +260,13 @@ abstract class AppKernel implements TerminalInterface
     {
         $router = $this->container->get('kernel.routing');
 
-        return $router->match($request->getPathInfo());
+        $route = $router->match($request->getPathInfo());
+
+        $router->matchMethod($request->getMethod(), $route);
+
+        $router->matchFormat($request->getFormat(), $route);
+
+        return $route;
     }
 
     /**
