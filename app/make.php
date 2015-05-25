@@ -274,9 +274,13 @@ E;
             );
 
             if (!Make::container('kernel')->getDebug()) {
+                $code = $exception->getCode();
+                if ($code <= 0 || $code >= 500) {
+                    $code = 500;
+                }
                 try {
-                    $error = Make::render(Make::config('errors.' . $exception->getCode()), array('exception' => $exception));
-                } catch(Exception $e){
+                    $error = Make::render(Make::config('errors.' . $code), array('exception' => $exception));
+                } catch(InvalidArgumentException $e){
                     $error = $exception->getMessage();
                 }
             }
