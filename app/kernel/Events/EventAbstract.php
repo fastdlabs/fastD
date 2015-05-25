@@ -120,10 +120,11 @@ abstract class EventAbstract
     /**
      * @param     $url
      * @param int $statusCode
+     * @param array $headers
      * @return RedirectResponse
      */
-    public function redirect($url, $statusCode = 302)
+    public function redirect($url, $statusCode = 302, array $headers = [])
     {
-        return \Make::redirect($url, $statusCode);
+        return \Make::redirect($url, $statusCode, $headers);
     }
 }

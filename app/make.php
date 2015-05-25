@@ -51,11 +51,12 @@ class Make
     /**
      * @param $url
      * @param $statusCode
+     * @param array $headers
      * @return \Dobee\Http\RedirectResponse
      */
-    public static function redirect($url, $statusCode)
+    public static function redirect($url, $statusCode, array $headers = array())
     {
-        return new \Dobee\Http\RedirectResponse($url, $statusCode);
+        return new \Dobee\Http\RedirectResponse($url, $statusCode, $headers);
     }
 
     /**
