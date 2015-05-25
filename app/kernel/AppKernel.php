@@ -48,7 +48,7 @@ abstract class AppKernel implements TerminalInterface
      */
     protected $components = array(
         'kernel.template'   => 'Dobee\\Template\\TemplateManager',
-        'kernel.logger'     => 'Dobee\\Logger\\logger',
+        'kernel.logger'     => 'Dobee\\Logger\\Logger',
         'kernel.database'   => 'Dobee\\Database\\DriverManager',
         'kernel.storage'    => 'Dobee\\Storage\\StorageManager',
         'kernel.request'    => 'Dobee\\Http\\Request::createGlobalRequest',

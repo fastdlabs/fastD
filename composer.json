@@ -27,6 +27,7 @@
         "dobee/logger": "1.0.0",
         "dobee/http": "1.1.3",
         "dobee/console": "dev-master",
+        "dobee/uploader": "dev-master",
         "dobee/server": "dev-master",
         "dobee/finder": "dev-master"
     },
