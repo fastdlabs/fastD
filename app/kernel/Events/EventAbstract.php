@@ -54,6 +54,17 @@ abstract class EventAbstract
     }
 
     /**
+     * @param       $event
+     * @param       $handle
+     * @param array $parameters
+     * @return array|Response|string
+     */
+    public function call($event, $handle, array $parameters = [])
+    {
+        return \Make::event($event, $handle, $parameters);
+    }
+
+    /**
      * @param $helper
      * @param array
      * @return mixed
