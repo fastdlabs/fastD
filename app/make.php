@@ -176,7 +176,7 @@ class Make
             try {
                 $host = static::config('assets.host');
             } catch (\InvalidArgumentException $e) {
-                $host = static::container('kernel.request')->getHttpAndHost();
+                $host = '//' . static::container('kernel.request')->getHost();
             }
         }
 
