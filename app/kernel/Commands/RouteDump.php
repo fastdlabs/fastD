@@ -83,7 +83,7 @@ class RouteDump extends Command
                 $route->getName() . str_repeat(' ', ($length - strlen($route->getName()))) .
                 $method . str_repeat(' ', ($length - strlen($method))) .
                 str_replace('//', '/', $group . str_repeat(' ', ($length - strlen($group)))) .
-                $route->getPath()
+                str_replace('//', '/', $route->getPath())
             );
         }
     }
