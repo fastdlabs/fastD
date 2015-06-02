@@ -43,6 +43,8 @@ class RestEvent extends EventAbstract
      */
     protected $headers = [];
 
+    protected $allowOrigin = null;
+
     /**
      *
      */
@@ -51,7 +53,27 @@ class RestEvent extends EventAbstract
         $this->headers = [
             'Accept'    => sprintf($this->getAccept(), $this->getTitle(), $this->getVersion()),
             'Version'   => $this->getVersion(),
+            'X-' . $this->getTitle() . '-Media-Type' => $this->getTitle() . '.' . $this->getVersion(),
         ];
+    }
+
+    /**
+     * @return null
+     */
+    public function getAllowOrigin()
+    {
+        return $this->allowOrigin;
+    }
+
+    /**
+     * @param null $allowOrigin
+     * @return $this
+     */
+    public function setAllowOrigin($allowOrigin)
+    {
+        $this->allowOrigin = $allowOrigin;
+
+        return $this;
     }
 
     /**
@@ -81,6 +103,11 @@ class RestEvent extends EventAbstract
      */
     public function responseJson(array $responseData, $status  = Response::HTTP_OK, array $headers = array())
     {
+        if (null !== $this->getAllowOrigin()) {
+            $headers = array_merge($headers, [
+                'Access-Control-Allow-Origin' => $this->getAllowOrigin(),
+            ]);
+        }
         return new JsonResponse($responseData, $status, array_merge(
             $this->headers,
             $headers
