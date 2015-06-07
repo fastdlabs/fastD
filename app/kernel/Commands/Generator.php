@@ -110,7 +110,7 @@ class Generator extends Command
             $bootstrapName
         );
 
-        $bootstrapFile = $bundlePath . DIRECTORY_SEPARATOR . ucfirst(end($bundleArray)) . '.php';
+        $bootstrapFile = $bundlePath . DIRECTORY_SEPARATOR . 'Boot.php';
 
         if (!file_exists($bootstrapFile)) {
             file_put_contents($bootstrapFile, $bootstrap);
@@ -150,7 +150,7 @@ namespace %s;
 
 use Kernel\Bundle;
 
-class %s extends Bundle
+class Boot extends Bundle
 {
 
 }
