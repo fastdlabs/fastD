@@ -15,6 +15,7 @@ namespace Kernel\Extensions;
 
 use Dobee\Http\JsonResponse;
 use Dobee\Http\Response;
+use Kernel\Events\EventAbstract;
 
 /**
  * Class RestEvent
