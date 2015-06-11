@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Kernel\Events;
+namespace Kernel\Extensions;
 
 use Dobee\Http\JsonResponse;
 use Dobee\Http\Response;
@@ -21,7 +21,7 @@ use Dobee\Http\Response;
  *
  * @package Kernel\Events
  */
-class RestEvent extends EventAbstract
+class RestEventExtension extends EventAbstract
 {
     /**
      * @var string
