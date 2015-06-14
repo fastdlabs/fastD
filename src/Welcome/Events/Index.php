@@ -13,7 +13,8 @@
 
 namespace Welcome\Events;
 
-use Dobee\Http\Request;
+use Dobee\Protocol\Http\JsonResponse;
+use Dobee\Protocol\Http\Request;
 use Dobee\Routing\Router;
 use Kernel\Events\EventAbstract;
 
@@ -31,7 +32,7 @@ class Index extends EventAbstract
 
     public function pluginAction(Request $request)
     {
-        return $request->server->all();
+        return new JsonResponse($request->server->all());
     }
 
     public function pluginsDIAction(Router $router)

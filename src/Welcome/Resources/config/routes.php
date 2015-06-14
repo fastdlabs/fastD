@@ -11,8 +11,4 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-Routes::group('/welcome', function () {
-    Routes::get('/', function () {
-        return 'welcome home';
-    });
-});
+Routes::get(['/di', 'name' => 'di'], 'Welcome\Events\Index@pluginAction');

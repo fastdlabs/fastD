@@ -24,11 +24,6 @@
  * Routes::options
  */
 
-class A{
-    function test()
-    {
-        return 'hello world';
-    }
-}
-
-Routes::get('/', [new A(), 'test']);
+Routes::get('/', function () {
+    return 'hello dobee';
+});

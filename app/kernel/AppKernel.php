@@ -287,6 +287,7 @@ abstract class AppKernel implements TerminalInterface
                 break;
             case 'string':
                 list ($event, $handle) = explode('@', $callback);
+                $event = $this->container->set('callback', $event)->get('callback');
                 $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
                 break;
             // ObjectClosure.  Cannot support closure parameter injection.

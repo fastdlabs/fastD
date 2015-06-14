@@ -25,7 +25,7 @@
         "dobee/database": "~0.1.0",
         "dobee/storage": "~0.1.0",
         "dobee/logger": "~0.1.0",
-        "dobee/template": "~0.1.0",
+        "dobee/template": "~0.1.1",
         "dobee/console": "~0.1.0",
         "dobee/finder": "~0.1.0"
     },
