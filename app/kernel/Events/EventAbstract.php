@@ -15,12 +15,6 @@ namespace Kernel\Events;
 
 use Dobee\Container\Container;
 use Dobee\Database\Connection\ConnectionInterface;
-use Dobee\Database\DriverManager;
-use Dobee\Http\RedirectResponse;
-use Dobee\Template\TemplateEngineInterface;
-use Dobee\Http\Response;
-use Dobee\Http\JsonResponse;
-use Dobee\Http\XmlResponse;
 
 /**
  * Class Controller
@@ -30,48 +24,39 @@ use Dobee\Http\XmlResponse;
 abstract class EventAbstract
 {
     /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * @param Container $container
-     * @return $this
-     */
-    public function setContainer(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    /**
      * @return Container
      */
     public function getContainer()
     {
-        return $this->container;
+        return \Make::container();
     }
 
     /**
      * @param       $event
      * @param       $handle
      * @param array $parameters
-     * @return array|Response|string
+     * @return \Dobee\Protocol\Http\Response|string
      */
     public function call($event, $handle, array $parameters = [])
     {
-        return \Make::event($event, $handle, $parameters);
+        return \Make::callEvent($event, $handle, $parameters);
     }
 
     /**
-     * @param $helper
-     * @param array
+     * Get custom defined helper obj.
+     *
+     * @param string $helper
+     * @param array $parameters
+     * @param bool $newInstance
      * @return mixed
      */
-    public function get($helper, array $parameters = array())
+    public function get($helper, $parameters = array(), $newInstance = false)
     {
-        return \Make::helper($helper, $parameters);
+        if (is_string($parameters)) {
+            $parameters = $this->getParameters($parameters);
+        }
+
+        return \Make::container()->get($helper, $parameters, $newInstance);
     }
 
     /**
@@ -95,7 +80,7 @@ abstract class EventAbstract
     }
 
     /**
-     * get config parameters.
+     * Get custom config parameters.
      *
      * @param string $name
      * @return mixed
@@ -132,7 +117,7 @@ abstract class EventAbstract
      * @param     $url
      * @param int $statusCode
      * @param array $headers
-     * @return RedirectResponse
+     * @return \Dobee\Protocol\Http\RedirectResponse
      */
     public function redirect($url, $statusCode = 302, array $headers = [])
     {

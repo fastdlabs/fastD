@@ -53,11 +53,11 @@ class Make
 
     /**
      * @param $url
-     * @param $statusCode
+     * @param int $statusCode
      * @param array $headers
      * @return \Dobee\Protocol\Http\RedirectResponse
      */
-    public static function redirect($url, $statusCode, array $headers = array())
+    public static function redirect($url, $statusCode = 302, array $headers = array())
     {
         return new \Dobee\Protocol\Http\RedirectResponse($url, $statusCode, $headers);
     }
@@ -76,9 +76,9 @@ class Make
      * @param       $event
      * @param       $handle
      * @param array $parameters
-     * @return array|string|\Dobee\Protocol\Http\Response
+     * @return string|\Dobee\Protocol\Http\Response
      */
-    public static function event($event, $handle, array $parameters = array())
+    public static function callEvent($event, $handle, array $parameters = array())
     {
         return static::app()->getContainer()->getProvider()->callServiceMethod($event, $handle, $parameters);
     }
@@ -99,7 +99,7 @@ class Make
      */
     public static function config($parameters)
     {
-        return static::container()->get('kernel.config')->getParameters($parameters);
+        return static::container()->get('kernel.config')->get($parameters);
     }
 
     /**
@@ -156,16 +156,6 @@ class Make
     }
 
     /**
-     * @param string $name
-     * @param array $parameters
-     * @return mixed
-     */
-    public static function helper($name, array $parameters = array())
-    {
-        return static::container()->get($name, $parameters);
-    }
-
-    /**
      * @param      $name
      * @param null $host
      * @param null $path
@@ -197,12 +187,14 @@ class Make
     }
 
     /**
-     * @param $content
-     * @return mixed
+     * @param array $config
+     * @return \Monolog\Logger
      */
-    public static function log($content)
+    public static function logger(array $config = array())
     {
-        return static::container()->get('kernel.logger', array(static::config('logger')))->save($content);
+        $logger = static::container()->get('kernel.logger');
+
+        return $logger->createLogger($config);
     }
 
     /**
@@ -214,7 +206,7 @@ class Make
     {
         set_exception_handler(function (Exception $exception) {
             if (!Make::container()->get('kernel')->getDebug()) {
-                Make::log(sprintf('exception:[ code: %s, message: %s, file: %s, line: %s ]', $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+                Make::logger(Make::config('logger'))->addInfo(sprintf('exception:[ code: %s, message: %s, file: %s, line: %s ]', $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
             }
 
             if (false !== strpos(Make::request()->getPathInfo(), 'api')) {
