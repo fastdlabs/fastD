@@ -19,7 +19,7 @@ $app = Application::create('prod');
 
 $app->boot();
 
-$request = \Dobee\Http\Request::createGlobalRequest();
+$request = \Dobee\Protocol\Http\Request::createRequestHandle();
 
 $response = $app->handleHttpRequest($request);
 

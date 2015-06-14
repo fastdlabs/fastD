@@ -17,9 +17,8 @@ use Dobee\Config\Config;
 use Dobee\Console\Console;
 use Dobee\Container\Container;
 use Dobee\Finder\Finder;
-use Dobee\Http\JsonResponse;
-use Dobee\Http\Request;
-use Dobee\Http\Response;
+use Dobee\Protocol\Http\Request;
+use Dobee\Protocol\Http\Response;
 
 /**
  * Class AppKernel
@@ -28,7 +27,7 @@ use Dobee\Http\Response;
  */
 abstract class AppKernel implements TerminalInterface
 {
-    const VERSION = '1.0.x';
+    const VERSION = '1.1.x';
 
     /**
      * @var string
@@ -51,7 +50,7 @@ abstract class AppKernel implements TerminalInterface
         'kernel.logger'     => 'Dobee\\Logger\\Logger',
         'kernel.database'   => 'Dobee\\Database\\DriverManager',
         'kernel.storage'    => 'Dobee\\Storage\\StorageManager',
-        'kernel.request'    => 'Dobee\\Http\\Request::createGlobalRequest',
+        'kernel.request'    => 'Dobee\\Protocol\\Http\\Request::createRequestHandle',
     );
 
     /**
@@ -295,10 +294,6 @@ abstract class AppKernel implements TerminalInterface
             return $response;
         }
 
-        if (is_array($response)) {
-            return new JsonResponse($response);
-        }
-
         return new Response($response);
     }
 
@@ -316,12 +311,12 @@ abstract class AppKernel implements TerminalInterface
             $content = 'request: [ date: %s, path: %s, format: %s, method: %s, ip: %s } response: { date: %s, status: %s ]';
 
             $content = sprintf($content,
-                date('Y-m-d H:i:s', $request->getRequestTimestamp()),
+                date('Y-m-d H:i:s', $request->getRequestTime()),
                 $request->getPathInfo(),
                 $request->getFormat(),
                 $request->getMethod(),
                 $request->getClientIp(),
-                date('Y-m-d H:i:s', $response->getResponseTimestamp()),
+                date('Y-m-d H:i:s', microtime(true)),
                 $response->getStatusCode()
             );
 

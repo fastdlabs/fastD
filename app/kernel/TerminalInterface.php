@@ -13,8 +13,8 @@
 
 namespace Kernel;
 
-use Dobee\Http\Request;
-use Dobee\Http\Response;
+use Dobee\Protocol\Http\Request;
+use Dobee\Protocol\Http\Response;
 
 /**
  * Interface TerminalInterface

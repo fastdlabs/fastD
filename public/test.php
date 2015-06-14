@@ -15,11 +15,11 @@ $loader = include __DIR__ . '/../vendor/autoload.php';
 
 include __DIR__ . '/../app/Application.php';
 
-$app = Application::create('local');
+$app = Application::create('test');
 
 $app->boot();
 
-$request = \Dobee\Http\Request::createGlobalRequest();
+$request = \Dobee\Protocol\Http\Request::createRequestHandle();
 
 $response = $app->handleHttpRequest($request);
 

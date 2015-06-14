@@ -43,6 +43,7 @@ class Version extends Command
      */
     public function execute(Input $input, Output $output)
     {
-        $output->writeln(AppKernel::VERSION, Output::STYLE_SUCCESS);
+        $output->writeln('Doboee application version: ', Output::STYLE_SUCCESS);
+        $output->writeln(AppKernel::VERSION, Output::STYLE_BG_SUCCESS);
     }
 }
