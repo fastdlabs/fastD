@@ -26,10 +26,10 @@ class Make
     public static function session($name, $value = null)
     {
         if (null === $value) {
-            return static::request()->getSession()->getSession($name);
+            return static::request()->getSession($name);
         }
 
-        return static::request()->getSession()->setSession($name, $value);
+        return static::request()->setSession($name, $value);
     }
 
     /**
@@ -37,15 +37,18 @@ class Make
      * @param null   $value
      * @param int    $expire
      * @param string $path
-     * @return \Dobee\Protocol\Http\Cookie\CookieInterface
+     * @param null   $domain
+     * @param bool   $secure
+     * @param bool   $httpOnly
+     * @return \Dobee\Protocol\Http\Attribute\CookiesAttribute|\Dobee\Protocol\Http\Cookie\Cookie
      */
-    public static function cookie($name, $value = null, $expire = 0, $path = '/')
+    public static function cookie($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true)
     {
         if (null === $value) {
-            return static::request()->cookies->getCookie($name);
+            return static::request()->getCookie($name);
         }
 
-        return static::request()->cookies->setCookie($name, $value, $expire, $path);
+        return static::request()->setCookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 
     /**
@@ -87,7 +90,7 @@ class Make
      */
     public static function render($template, array $parameters = array())
     {
-        return static::container('kernel.template', array(static::config('template')))->getEngine()->render($template, $parameters);
+        return static::container()->get('kernel.template', array(static::config('template')))->getEngine()->render($template, $parameters);
     }
 
     /**
@@ -96,17 +99,15 @@ class Make
      */
     public static function config($parameters)
     {
-        return static::container('kernel.config')->getParameters($parameters);
+        return static::container()->get('kernel.config')->getParameters($parameters);
     }
 
     /**
-     * @param       $name
-     * @param array $parameters
-     * @return mixed
+     * @return \Dobee\Container\Container
      */
-    public static function container($name, array $parameters = array())
+    public static function container()
     {
-        return static::app()->getContainer()->get($name, $parameters);
+        return static::app()->getContainer();
     }
 
     /**
@@ -123,7 +124,7 @@ class Make
      */
     public static function db($connection)
     {
-        return static::container('kernel.database', array(static::config('database')))->getConnection($connection);
+        return static::container()->get('kernel.database', array(static::config('database')))->getConnection($connection);
     }
 
     /**
@@ -132,7 +133,7 @@ class Make
      */
     public static function storage($connection)
     {
-        return static::container('kernel.storage', array(static::config('storage')))->getConnection($connection);
+        return static::container()->get('kernel.storage', array(static::config('storage')))->getConnection($connection);
     }
 
     /**
@@ -143,7 +144,7 @@ class Make
      */
     public static function url($name, array $parameters = array(), $suffix = false)
     {
-        return static::request()->getBaseUrl() . static::container('kernel.routing')->generateUrl($name, $parameters, $suffix);
+        return static::request()->getBaseUrl() . static::container()->get('kernel.routing')->generateUrl($name, $parameters, $suffix);
     }
 
     /**
@@ -151,7 +152,7 @@ class Make
      */
     public static function request()
     {
-        return static::container('kernel.request');
+        return static::container()->get('kernel.request');
     }
 
     /**
@@ -161,7 +162,7 @@ class Make
      */
     public static function helper($name, array $parameters = array())
     {
-        return static::container($name, $parameters);
+        return static::container()->get($name, $parameters);
     }
 
     /**
@@ -176,7 +177,7 @@ class Make
             try {
                 $host = static::config('assets.host');
             } catch (\InvalidArgumentException $e) {
-                $host = '//' . static::container('kernel.request')->getHost();
+                $host = '//' . static::request()->getDomain();
             }
         }
 
@@ -184,7 +185,7 @@ class Make
             try {
                 $path = static::config('assets.path');
             } catch (\InvalidArgumentException $e) {
-                $path = static::container('kernel.request')->getBaseUrl();
+                $path = static::request()->getBaseUrl();
 
                 if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
                     $path = pathinfo($path, PATHINFO_DIRNAME);
@@ -201,7 +202,7 @@ class Make
      */
     public static function log($content)
     {
-        return static::container('kernel.logger', array(static::config('logger')))->save($content);
+        return static::container()->get('kernel.logger', array(static::config('logger')))->save($content);
     }
 
     /**
@@ -212,7 +213,7 @@ class Make
     public static function exception()
     {
         set_exception_handler(function (Exception $exception) {
-            if (!Make::container('kernel')->getDebug()) {
+            if (!Make::container()->get('kernel')->getDebug()) {
                 Make::log(sprintf('exception:[ code: %s, message: %s, file: %s, line: %s ]', $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
             }
 
@@ -275,7 +276,7 @@ E;
             );
 
             $code = $exception->getCode();
-            if (!Make::container('kernel')->getDebug()) {
+            if (!Make::container()->get('kernel')->getDebug()) {
                 if ($code <= 0 || $code >= 500) {
                     $code = 500;
                 }
