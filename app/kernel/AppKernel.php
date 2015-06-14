@@ -278,16 +278,24 @@ abstract class AppKernel implements TerminalInterface
     {
         $route = $this->detachRoute($request);
 
-        if (!is_callable($response = $route->getCallback())) {
-            list ($event, $handle) = explode('@', $response);
+        $callback = $route->getCallback();
 
-            if (method_exists(($event = $this->container->set($event, $event)->get($event)), 'setContainer')) {
-                $event->setContainer($this->container);
-            }
+        switch (gettype($callback)) {
+            case 'array':
+                $event = $this->container->set('callback', $callback[0])->get('callback');
+                $response = $this->container->getProvider()->callServiceMethod($event, $callback[1], $route->getParameters());
+                break;
+            case 'string':
+                list ($event, $handle) = explode('@', $callback);
+                if (method_exists(($event = $this->container->set($event, $event)->get($event)), 'setContainer')) {
+                    $event->setContainer($this->container);
+                }
+                $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
+                break;
+            // ObjectClosure
+            default:
+                $response = $callback();
 
-            $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
-        } else {
-            $response = $response();
         }
 
         if ($response instanceof Response) {

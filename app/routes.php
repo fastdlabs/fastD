@@ -24,6 +24,11 @@
  * Routes::options
  */
 
-Routes::get('/', function (\Dobee\Protocol\Http\Request $request) {
-    return 'hello world';
-});
+class A{
+    function test()
+    {
+        return 'hello world';
+    }
+}
+
+Routes::get('/', [new A(), 'test']);
