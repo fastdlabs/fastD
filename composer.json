@@ -27,7 +27,6 @@
         "dobee/logger": "1.0.0",
         "dobee/protocol": "dev-master",
         "dobee/console": "dev-master",
-        "dobee/server": "dev-master",
         "dobee/finder": "dev-master"
     },
     "config": {
