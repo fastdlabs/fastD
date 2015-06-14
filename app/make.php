@@ -21,7 +21,7 @@ class Make
     /**
      * @param      $name
      * @param null $value
-     * @return \Dobee\Http\Session\Session
+     * @return \Dobee\Protocol\Http\Session\Session
      */
     public static function session($name, $value = null)
     {
@@ -37,7 +37,7 @@ class Make
      * @param null   $value
      * @param int    $expire
      * @param string $path
-     * @return \Dobee\Http\Cookie\CookieInterface
+     * @return \Dobee\Protocol\Http\Cookie\CookieInterface
      */
     public static function cookie($name, $value = null, $expire = 0, $path = '/')
     {
@@ -52,11 +52,11 @@ class Make
      * @param $url
      * @param $statusCode
      * @param array $headers
-     * @return \Dobee\Http\RedirectResponse
+     * @return \Dobee\Protocol\Http\RedirectResponse
      */
     public static function redirect($url, $statusCode, array $headers = array())
     {
-        return new \Dobee\Http\RedirectResponse($url, $statusCode, $headers);
+        return new \Dobee\Protocol\Http\RedirectResponse($url, $statusCode, $headers);
     }
 
     /**
@@ -73,7 +73,7 @@ class Make
      * @param       $event
      * @param       $handle
      * @param array $parameters
-     * @return array|string|\Dobee\Http\Response
+     * @return array|string|\Dobee\Protocol\Http\Response
      */
     public static function event($event, $handle, array $parameters = array())
     {
@@ -147,7 +147,7 @@ class Make
     }
 
     /**
-     * @return \Dobee\Http\Request
+     * @return \Dobee\Protocol\Http\Request
      */
     public static function request()
     {
@@ -217,7 +217,7 @@ class Make
             }
 
             if (false !== strpos(Make::request()->getPathInfo(), 'api')) {
-                return (new \Dobee\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
+                return (new \Dobee\Protocol\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
             }
 
             $error = <<<E
@@ -286,7 +286,7 @@ E;
                 }
             }
 
-            return (new \Dobee\Http\Response($error, $exception->getCode()))->send();
+            return (new \Dobee\Protocol\Http\Response($error, $exception->getCode()))->send();
         });
 
         set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {

@@ -24,6 +24,6 @@
  * Routes::options
  */
 
-Routes::get('/', function () {
+Routes::get('/', function (\Dobee\Protocol\Http\Request $request) {
     return 'hello world';
 });
