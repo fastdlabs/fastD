@@ -15,7 +15,6 @@ namespace Welcome\Events;
 
 use Dobee\Protocol\Http\JsonResponse;
 use Dobee\Protocol\Http\Request;
-use Dobee\Routing\Router;
 use Kernel\Events\EventAbstract;
 
 /**
@@ -25,18 +24,31 @@ use Kernel\Events\EventAbstract;
  */
 class Index extends EventAbstract
 {
-    public function welcomeAction()
+    public function oneAction(Request $request)
     {
-        return 'hello world';
+        return new JsonResponse($request->header->all());
     }
 
-    public function pluginAction(Request $request)
+    public function twoAction(Request $request)
     {
-        return new JsonResponse($request->server->all());
+        return $request->createRequest('http://www.baidu.com')->get();
     }
 
-    public function pluginsDIAction(Router $router)
+    public function uploadAction(Request $request)
     {
-        return 'hello world';
+        $files = $request->getUploader([
+            'save.path' => $this->get('kernel')->getRootPath().'/storage/cache',
+            'max.size' => '10M',
+        ])->uploading()->getUploadFiles();
+
+        $uploadFiles = [];
+
+        foreach ($files as $file) {
+            $uploadFiles[] = [$file->getOriginalName()];
+        }
+
+        unset($files);
+
+        return new JsonResponse($uploadFiles);
     }
 }

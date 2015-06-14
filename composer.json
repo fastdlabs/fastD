@@ -1,5 +1,5 @@
 {
-    "name": "dobee/dobee-framework",
+    "name": "janhung/dobee-framework",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dobee/protocol": "~0.1.0",
+        "dobee/protocol": "~0.1.1",
         "dobee/routing": "~0.1.0",
         "dobee/config": "~0.1.0",
         "dobee/container": "~0.1.0",
