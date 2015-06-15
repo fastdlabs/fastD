@@ -31,7 +31,7 @@ class Index extends EventAbstract
 
     public function twoAction(Request $request)
     {
-        return $request->createRequest('http://www.baidu.com')->get();
+        return $request->createRequest($this->generateUrl('/one'))->delete();
     }
 
     public function uploadAction(Request $request)
@@ -44,14 +44,6 @@ class Index extends EventAbstract
             ->uploading()
             ->getUploadFiles();
 
-        $uploadFiles = [];
-
-        foreach ($files as $file) {
-            $uploadFiles[] = [$file->getOriginalName()];
-        }
-
-        unset($files);
-
-        return new JsonResponse($uploadFiles);
+        return new JsonResponse($files);
     }
 }

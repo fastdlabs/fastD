@@ -15,7 +15,7 @@ namespace Welcome;
 
 use Kernel\Bundle;
 
-class Welcome extends Bundle
+class Boot extends Bundle
 {
 
 }

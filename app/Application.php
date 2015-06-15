@@ -20,7 +20,8 @@ class Application extends Kernel\AppKernel
     public function registerBundles()
     {
         return array(
-            new \Welcome\Welcome(),
+            new \Welcome\Boot(),
+            new \Api\V1\Boot(),
         );
     }
 

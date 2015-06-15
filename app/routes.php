@@ -24,12 +24,5 @@
  * Routes::options
  */
 
-Routes::get('/one', 'Welcome\\Events\\Index@oneAction');
+// Rest Api
 
-Routes::get('/two', 'Welcome\\Events\\Index@twoAction');
-
-Routes::post('/upload', 'Welcome\\Events\\Index@uploadAction');
-
-Routes::get('/', function () {
-    return Make::render('welcome/upload.twig');
-});

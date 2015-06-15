@@ -12,6 +12,9 @@
  */
 
 return [
+    'demo' => [
+        'name' => '%date%'
+    ],
     // 数据库配置
     'database' => [
         'write' => [
@@ -19,10 +22,10 @@ return [
             'database_host'     => 'localhost',
             'database_port'     => 3306,
             'database_user'     => 'root',
-            'database_pwd'      => '',
+            'database_pwd'      => '123456',
             'database_charset'  => 'utf8',
             'database_name'     => 'test',
-            'database_prefix'   => ''
+            'database_prefix'   => 'ws_'
         ],
         'read' => [
             'database_type'     => 'mysql',
@@ -37,11 +40,11 @@ return [
     ],
     // 存储配置
     'storage' => [
-        /*'write' => [
+        'write' => [
             'type' => 'redis',
             'host' => '11.11.11.11',
             'port' => 6379
-        ],*/
+        ],
     ],
     // 资源管理
     'assets' => [

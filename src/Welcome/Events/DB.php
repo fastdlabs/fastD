@@ -19,8 +19,8 @@ class DB extends EventAbstract
 {
     public function dbAction()
     {
-        $read = $this->getConnection('read');
+        $read = $this->getConnection('write');
 
-        return 'DB connection: ' . get_class($read);
+        print_r($read);
     }
 }
