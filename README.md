@@ -64,11 +64,7 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 在安装本框架前需要确保正确安装 `composer` 依赖管理。
 
-`git clone https://coding.net/janhuang/dobee-php-simple-framework.git`
-
-进入框架项目路径
-
-`composer -vvv install`
+`composer create-project janhuang/dobee-php-simple-framework path v1.1.1`
 
 **注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
 
