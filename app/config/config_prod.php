@@ -37,15 +37,20 @@ return [
     ],
     // 存储配置
     'storage' => [
-        'write' => [
+        /*'write' => [
             'type' => 'redis',
             'host' => '11.11.11.11',
             'port' => 6379
-        ],
+        ],*/
     ],
     // 资源管理
     'assets' => [
-        'host' => 'http://baidu.com',
-        'path' => 'public'
+        /*'host' => 'http://baidu.com',
+        'path' => 'public'*/
+    ],
+
+    // 错误提示
+    'errors' => [
+        '404' => 'errors/404.html.twig',
     ],
 ];

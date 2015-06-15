@@ -36,10 +36,13 @@ class Index extends EventAbstract
 
     public function uploadAction(Request $request)
     {
-        $files = $request->getUploader([
-            'save.path' => $this->get('kernel')->getRootPath().'/storage/cache',
-            'max.size' => '10M',
-        ])->uploading()->getUploadFiles();
+        $files = $request
+            ->getUploader([
+                'save.path' => $this->get('kernel')->getRootPath().'/storage/cache',
+                'max.size' => '10M',
+            ])
+            ->uploading()
+            ->getUploadFiles();
 
         $uploadFiles = [];
 

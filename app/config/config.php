@@ -11,10 +11,6 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 return [
-    // session存储 暂不可用
-    'session' => [
-
-    ],
     // 模板引擎
     'template' => [
         'engine' => 'twig',
@@ -31,10 +27,6 @@ return [
         ],
     ],
 
-    // 错误提示
-    'errors' => [
-        '404' => 'errors/404.html.twig',
-    ],
     // 日志对象
     'logger' => [
         'save.name' => 'dobee.log',
