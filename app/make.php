@@ -144,7 +144,11 @@ class Make
      */
     public static function url($name, array $parameters = array(), $suffix = false)
     {
-        return static::request()->getBaseUrl() . static::container()->get('kernel.routing')->generateUrl($name, $parameters, $suffix);
+        $url = static::container()->get('kernel.routing')->generateUrl($name, $parameters, $suffix);
+        if ('http' !== substr($url, 0, 4)) {
+            $url = static::request()->getBaseUrl() . $url;
+        }
+        return $url;
     }
 
     /**
