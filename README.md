@@ -10,9 +10,6 @@
 #维护者
 * JanHuang / bboyjanhuang@gmail.com
 
-###简介
-满满都是FastD，FastD是你，你是FastD，FastD，让开发充满乐趣。
-
 ###特色
 
 	1) 简单 
