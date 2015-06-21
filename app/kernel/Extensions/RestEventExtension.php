@@ -13,8 +13,8 @@
 
 namespace Kernel\Extensions;
 
-use Dobee\Protocol\Http\JsonResponse;
-use Dobee\Protocol\Http\Response;
+use FastD\Protocol\Http\JsonResponse;
+use FastD\Protocol\Http\Response;
 use Kernel\Events\EventAbstract;
 
 /**

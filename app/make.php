@@ -21,7 +21,7 @@ class Make
     /**
      * @param      $name
      * @param null $value
-     * @return \Dobee\Protocol\Http\Session\Session
+     * @return \FastD\Protocol\Http\Session\Session
      */
     public static function session($name, $value = null)
     {
@@ -40,7 +40,7 @@ class Make
      * @param null   $domain
      * @param bool   $secure
      * @param bool   $httpOnly
-     * @return \Dobee\Protocol\Http\Attribute\CookiesAttribute|\Dobee\Protocol\Http\Cookie\Cookie
+     * @return \FastD\Protocol\Http\Attribute\CookiesAttribute|\FastD\Protocol\Http\Cookie\Cookie
      */
     public static function cookie($name, $value = null, $expire = 0, $path = '/', $domain = null, $secure = false, $httpOnly = true)
     {
@@ -55,17 +55,17 @@ class Make
      * @param $url
      * @param int $statusCode
      * @param array $headers
-     * @return \Dobee\Protocol\Http\RedirectResponse
+     * @return \FastD\Protocol\Http\RedirectResponse
      */
     public static function redirect($url, $statusCode = 302, array $headers = array())
     {
-        return new \Dobee\Protocol\Http\RedirectResponse($url, $statusCode, $headers);
+        return new \FastD\Protocol\Http\RedirectResponse($url, $statusCode, $headers);
     }
 
     /**
      * @param $connection
      * @param $repository
-     * @return \Dobee\Database\Repository\Repository
+     * @return \FastD\Database\Repository\Repository
      */
     public static function repository($connection, $repository)
     {
@@ -76,7 +76,7 @@ class Make
      * @param       $event
      * @param       $handle
      * @param array $parameters
-     * @return string|\Dobee\Protocol\Http\Response
+     * @return string|\FastD\Protocol\Http\Response
      */
     public static function callEvent($event, $handle, array $parameters = array())
     {
@@ -103,7 +103,7 @@ class Make
     }
 
     /**
-     * @return \Dobee\Container\Container
+     * @return \FastD\Container\Container
      */
     public static function container()
     {
@@ -120,7 +120,7 @@ class Make
 
     /**
      * @param $connection
-     * @return \Dobee\Database\Connection\ConnectionInterface
+     * @return \FastD\Database\Connection\ConnectionInterface
      */
     public static function db($connection)
     {
@@ -129,7 +129,7 @@ class Make
 
     /**
      * @param $connection
-     * @return \Dobee\Storage\StorageInterface
+     * @return \FastD\Storage\StorageInterface
      */
     public static function storage($connection)
     {
@@ -148,7 +148,7 @@ class Make
     }
 
     /**
-     * @return \Dobee\Protocol\Http\Request
+     * @return \FastD\Protocol\Http\Request
      */
     public static function request()
     {
@@ -210,7 +210,7 @@ class Make
             }
 
             if (false !== strpos(Make::request()->getPathInfo(), 'api')) {
-                return (new \Dobee\Protocol\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
+                return (new \FastD\Protocol\Http\JsonResponse(array('error' => $exception->getMessage()), $exception->getCode()))->send();
             }
 
             $error = <<<E
@@ -279,7 +279,7 @@ E;
                 }
             }
 
-            return (new \Dobee\Protocol\Http\Response($error, $exception->getCode()))->send();
+            return (new \FastD\Protocol\Http\Response($error, $exception->getCode()))->send();
         });
 
         set_error_handler(function ($error_code, $error_str, $error_file, $error_line) {

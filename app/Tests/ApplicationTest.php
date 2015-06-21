@@ -11,10 +11,10 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Framework\Tests;
+namespace FastD\Framework\Tests;
 
-use Dobee\Http\Request;
-use Dobee\Http\Response;
+use FastD\Http\Request;
+use FastD\Http\Response;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,7 +50,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         $this->app->initializeConfigure();
 
-        $this->assertInstanceOf('Dobee\\Config\\Config', $this->app->getContainer()->get('kernel.config'));
+        $this->assertInstanceOf('FastD\\Config\\Config', $this->app->getContainer()->get('kernel.config'));
 
         $this->assertEquals('read', $this->app->getContainer()->get('kernel.config')->getParameters('database.default_connection'));
     }

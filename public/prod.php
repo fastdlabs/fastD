@@ -22,7 +22,7 @@ $app = Application::create('prod');
 
 $app->boot();
 
-$request = \Dobee\Protocol\Http\Request::createRequestHandle();
+$request = \FastD\Protocol\Http\Request::createRequestHandle();
 
 $response = $app->handleHttpRequest($request);
 

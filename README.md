@@ -1,4 +1,4 @@
-#Dobee-php-simple-framework for PHP5.4+ 
+#FastD-php-simple-framework for PHP5.4+ 
 
 #version: 1.0.x
 
@@ -11,7 +11,7 @@
 * JanHuang / bboyjanhuang@gmail.com
 
 ###简介
-满满都是Dobee，Dobee是你，你是Dobee，Dobee，让开发充满乐趣。
+满满都是FastD，FastD是你，你是FastD，FastD，让开发充满乐趣。
 
 ###特色
 
@@ -44,7 +44,7 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 ##如果你觉得安装过于复杂，没关系，我已经打包好了。直接去下载吧。
 
-地址：[https://coding.net/u/janhuang/p/dobee-framework-stable-src/git](https://coding.net/u/janhuang/p/dobee-framework-stable-src/git)
+地址：[https://coding.net/u/janhuang/p/FastD-framework-stable-src/git](https://coding.net/u/janhuang/p/FastD-framework-stable-src/git)
 
 *寻找标签，最新的版本即可。*
 
@@ -60,11 +60,11 @@ Git: [http://git-scm.com/book/zh/v1](http://git-scm.com/book/zh/v1)
 
 `composer` 下载地址: [composer](https://getcomposer.org)
 
-###安装Dobee
+###安装FastD
 
 在安装本框架前需要确保正确安装 `composer` 依赖管理。
 
-`composer create-project janhuang/dobee-php-simple-framework path v1.1.1`
+`composer create-project janhuang/FastD-php-simple-framework path v1.1.1`
 
 **注意：因为国内访问composer超级缓慢的问题，建议使用代理或者国内镜像进行安装**
 
@@ -171,9 +171,9 @@ Routes::get(['/', 'name' => 'welcome'], function () {
 
 为何能够输出 `hello name`
 
-这里的话，因为路由绑定的是一个匿名函数，所以这里直接会触发匿名函数。这里要注意的是，函数体内必需 `return` 相关信息。如果返回的数组，会默认给你返回 `\Dobee\Http\JsonResponse` 对象， 如果是字符串，则会返回 `\Dobee\Http\Response`
+这里的话，因为路由绑定的是一个匿名函数，所以这里直接会触发匿名函数。这里要注意的是，函数体内必需 `return` 相关信息。如果返回的数组，会默认给你返回 `\FastD\Http\JsonResponse` 对象， 如果是字符串，则会返回 `\FastD\Http\Response`
 
-路由资源创建完成后回返回 `\Dobee\Routing\RouteInterface` 对象，可以动态配置路由信息
+路由资源创建完成后回返回 `\FastD\Routing\RouteInterface` 对象，可以动态配置路由信息
 
 例如：
 
@@ -282,7 +282,7 @@ Routes::post(['/any', 'name' => 'any'], function () {
 
         事件。一个不陌生的名词，却也是一个不易理解的名词。在 `javascript` 中事件相信都不陌生，但是在 "世界上最好的语言" `php` 中又是怎么一个概念呢？首先要理解一点很容易的就是，用户的每一个请求，其实就是每一个相同的事件: *请求事件*。 当然可以在这个请求事件中绑定不同的触发器。例如最简单的就是一个简单的MVC框架，可以在每次访问都调用制定的控制器一样，其控制器就是绑定了指定的路由地址，因为用户在访问的时候就出发了那个事件。
 
-在 `Dobee php simple framework` 中，已经删除了控制器的概念了，只有事件绑定，当然事件机制目前还不是很完善，可以说甚至还没成型，但是这个是未来方向。框架中约定每个路由绑定一个或者多个事件，在触发事件中可以在绑定指定事件。下列指定一个简单的例子：
+在 `FastD php simple framework` 中，已经删除了控制器的概念了，只有事件绑定，当然事件机制目前还不是很完善，可以说甚至还没成型，但是这个是未来方向。框架中约定每个路由绑定一个或者多个事件，在触发事件中可以在绑定指定事件。下列指定一个简单的例子：
 
 
 ====
@@ -339,7 +339,7 @@ Make工具所含API：
 
 数据库，这东西会用的人多，懂的人少，精的人更尼玛少。说多都是泪。
 
-用咱们 `Dobee` 去创建数据库连接也很简单，而且支持多库查询哦，么么哒。
+用咱们 `FastD` 去创建数据库连接也很简单，而且支持多库查询哦，么么哒。
 
 ===
 
@@ -449,7 +449,7 @@ Make工具所含API：
 
 &nbsp;
 
-以上所有查询结果返回的是 `\Dobee\Database\Result\ResultCollection` 对象，实现 `AccessArray, Iterator` 接口，可格式化，通过 `toArray, toJson, toObject...` 等进行格式化
+以上所有查询结果返回的是 `\FastD\Database\Result\ResultCollection` 对象，实现 `AccessArray, Iterator` 接口，可格式化，通过 `toArray, toJson, toObject...` 等进行格式化
 
 ##3. 模型库 Repository
 

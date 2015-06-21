@@ -13,9 +13,9 @@
 
 namespace Kernel\Commands;
 
-use Dobee\Console\Commands\Command;
-use Dobee\Console\Format\Input;
-use Dobee\Console\Format\Output;
+use FastD\Console\Commands\Command;
+use FastD\Console\Format\Input;
+use FastD\Console\Format\Output;
 
 class Generator extends Command
 {

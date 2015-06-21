@@ -14,7 +14,7 @@ namespace Kernel;
 
 /**
  * Class Bundle
- * @package Dobee\Kernel\Framework\Bundles
+ * @package FastD\Kernel\Framework\Bundles
  */
 class Bundle
 {

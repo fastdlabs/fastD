@@ -55,10 +55,10 @@ class Application extends Kernel\AppKernel
     /**
      * Register application configuration
      *
-     * @param \Dobee\Config\Config
+     * @param \FastD\Config\Config
      * @return void
      */
-    public function registerConfiguration(\Dobee\Config\Config $config)
+    public function registerConfiguration(\FastD\Config\Config $config)
     {
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
     }

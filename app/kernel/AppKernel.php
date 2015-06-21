@@ -13,17 +13,17 @@
 
 namespace Kernel;
 
-use Dobee\Config\Config;
-use Dobee\Console\Console;
-use Dobee\Container\Container;
-use Dobee\Finder\Finder;
-use Dobee\Protocol\Http\Request;
-use Dobee\Protocol\Http\Response;
+use FastD\Config\Config;
+use FastD\Console\Console;
+use FastD\Container\Container;
+use FastD\Finder\Finder;
+use FastD\Protocol\Http\Request;
+use FastD\Protocol\Http\Response;
 
 /**
  * Class AppKernel
  *
- * @package Dobee\Framework
+ * @package FastD\Framework
  */
 abstract class AppKernel implements TerminalInterface
 {
@@ -46,11 +46,11 @@ abstract class AppKernel implements TerminalInterface
      * @var array
      */
     protected $components = array(
-        'kernel.template'   => 'Dobee\\Template\\TemplateManager',
-        'kernel.logger'     => 'Dobee\\Logger\\Logger',
-        'kernel.database'   => 'Dobee\\Database\\DriverManager',
-        'kernel.storage'    => 'Dobee\\Storage\\StorageManager',
-        'kernel.request'    => 'Dobee\\Protocol\\Http\\Request::createRequestHandle',
+        'kernel.template'   => 'FastD\\Template\\TemplateManager',
+        'kernel.logger'     => 'FastD\\Logger\\Logger',
+        'kernel.database'   => 'FastD\\Database\\DriverManager',
+        'kernel.storage'    => 'FastD\\Storage\\StorageManager',
+        'kernel.request'    => 'FastD\\Protocol\\Http\\Request::createRequestHandle',
     );
 
     /**
@@ -237,7 +237,7 @@ abstract class AppKernel implements TerminalInterface
     public function initializeRouting()
     {
         if (!class_exists('\\Routes')) {
-            include $this->getRootPath() . '/../vendor/dobee/routing/src/Dobee/Routing/Routes.php';
+            include $this->getRootPath() . '/../vendor/FastD/routing/src/FastD/Routing/Routes.php';
         }
 
         include $this->getRootPath() . '/routes.php';
@@ -253,7 +253,7 @@ abstract class AppKernel implements TerminalInterface
 
     /**
      * @param Request $request
-     * @return \Dobee\Routing\Route
+     * @return \FastD\Routing\Route
      */
     public function detachRoute(Request $request)
     {
@@ -358,7 +358,7 @@ abstract class AppKernel implements TerminalInterface
     }
 
     /**
-     * @return \Dobee\Console\Console
+     * @return \FastD\Console\Console
      */
     public function getConsole()
     {
@@ -388,7 +388,7 @@ abstract class AppKernel implements TerminalInterface
                     }
 
                     $command = new $command();
-                    if ($command instanceof \Dobee\Console\Commands\Command) {
+                    if ($command instanceof \FastD\Console\Commands\Command) {
                         $console->addCommand($command);
                     }
                 }

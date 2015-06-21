@@ -13,8 +13,8 @@
 
 namespace Welcome\Events;
 
-use Dobee\Protocol\Http\JsonResponse;
-use Dobee\Protocol\Http\Request;
+use FastD\Protocol\Http\JsonResponse;
+use FastD\Protocol\Http\Request;
 use Kernel\Events\EventAbstract;
 
 /**

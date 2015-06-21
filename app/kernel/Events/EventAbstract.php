@@ -13,13 +13,13 @@
 
 namespace Kernel\Events;
 
-use Dobee\Container\Container;
-use Dobee\Database\Connection\ConnectionInterface;
+use FastD\Container\Container;
+use FastD\Database\Connection\ConnectionInterface;
 
 /**
  * Class Controller
  *
- * @package Dobee\Framework\Controller
+ * @package FastD\Framework\Controller
  */
 abstract class EventAbstract
 {
@@ -35,7 +35,7 @@ abstract class EventAbstract
      * @param       $event
      * @param       $handle
      * @param array $parameters
-     * @return \Dobee\Protocol\Http\Response|string
+     * @return \FastD\Protocol\Http\Response|string
      */
     public function call($event, $handle, array $parameters = [])
     {
@@ -72,7 +72,7 @@ abstract class EventAbstract
 
     /**
      * @param $connection
-     * @return \Dobee\Storage\StorageInterface
+     * @return \FastD\Storage\StorageInterface
      */
     public function getStorage($connection)
     {
@@ -117,7 +117,7 @@ abstract class EventAbstract
      * @param     $url
      * @param int $statusCode
      * @param array $headers
-     * @return \Dobee\Protocol\Http\RedirectResponse
+     * @return \FastD\Protocol\Http\RedirectResponse
      */
     public function redirect($url, $statusCode = 302, array $headers = [])
     {

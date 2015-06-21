@@ -24,5 +24,7 @@
  * Routes::options
  */
 
-// Rest Api
+Routes::get('/', function () {
+    return 'hello FastD.';
+});
 

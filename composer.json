@@ -1,11 +1,12 @@
 {
-    "name": "janhung/dobee-framework",
+    "name": "fastd/fastd",
     "type": "project",
     "license": "MIT",
-    "minimum-stability": "stable",
-    "description": "php simple framework",
+    "minimum-stability": "dev",
+    "description": "FastD php simple framework",
     "keyword": [
-        "dobee php",
+        "fastd ",
+        "fastd php",
         "simple framework",
         "php simple framework",
         "simple php framework"
@@ -18,16 +19,16 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "dobee/protocol": "~0.1.1",
-        "dobee/routing": "~0.1.0",
-        "dobee/config": "~0.1.0",
-        "dobee/container": "~0.1.0",
-        "dobee/database": "~0.1.0",
-        "dobee/storage": "~0.1.0",
-        "dobee/logger": "~0.1.0",
-        "dobee/template": "~0.1.1",
-        "dobee/console": "~0.1.0",
-        "dobee/finder": "~0.1.0"
+        "fastd/protocol": "~0.1.0",
+        "fastd/routing": "~0.1.0",
+        "fastd/database": "~0.1.0",
+        "fastd/container": "~0.1.0",
+        "fastd/config": "~0.1.0",
+        "fastd/storage": "dev-dev",
+        "fastd/logger": "dev-dev",
+        "fastd/console": "dev-dev",
+        "fastd/finder": "dev-dev",
+        "fastd/template": "dev-dev"
     },
     "config": {
         "bin-dir": "bin"

@@ -13,7 +13,7 @@
 
 namespace Helpers\Demo;
 
-use Dobee\Protocol\Http\Request;
+use FastD\Protocol\Http\Request;
 
 class Demo
 {

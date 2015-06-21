@@ -29,7 +29,7 @@ return [
 
     // 日志对象
     'logger' => [
-        'save.name' => 'dobee.log',
+        'save.name' => 'FastD.log',
         'save.path' => __DIR__ . '/../storage/logs/' . date('Ymd'),
     ],
 ];

@@ -11,21 +11,21 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Dobee\Framework\Bundle\Commands;
+namespace FastD\Framework\Bundle\Commands;
 
-use Dobee\Config\Loader\YmlFileLoader;
-use Dobee\Console\Commands\Command;
-use Dobee\Console\Format\Input;
-use Dobee\Console\Format\Output;
-use Dobee\Framework\ExceptionHandler;
-use Dobee\Framework\ExceptionListenerWrapper;
-use Dobee\Http\Request;
-use Dobee\Server\HttpServer;
+use FastD\Config\Loader\YmlFileLoader;
+use FastD\Console\Commands\Command;
+use FastD\Console\Format\Input;
+use FastD\Console\Format\Output;
+use FastD\Framework\ExceptionHandler;
+use FastD\Framework\ExceptionListenerWrapper;
+use FastD\Http\Request;
+use FastD\Server\HttpServer;
 
 class Server extends Command
 {
     /**
-     * @var \Dobee\Server\ServerInterface
+     * @var \FastD\Server\ServerInterface
      */
     protected $http;
 
@@ -34,7 +34,7 @@ class Server extends Command
      */
     public function getName()
     {
-        return 'dobee:http';
+        return 'FastD:http';
     }
 
     /**
@@ -42,7 +42,7 @@ class Server extends Command
      */
     public function configure()
     {
-        $this->setDescription('Thank for you use Dobee Http Server');
+        $this->setDescription('Thank for you use FastD Http Server');
 
         $this->setArguments('action');
 

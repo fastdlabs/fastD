@@ -13,13 +13,13 @@
 
 namespace Kernel;
 
-use Dobee\Protocol\Http\Request;
-use Dobee\Protocol\Http\Response;
+use FastD\Protocol\Http\Request;
+use FastD\Protocol\Http\Response;
 
 /**
  * Interface TerminalInterface
  *
- * @package Dobee\Framework
+ * @package FastD\Framework
  */
 interface TerminalInterface
 {
