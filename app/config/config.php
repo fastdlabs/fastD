@@ -29,7 +29,7 @@ return [
 
     // 日志对象
     'logger' => [
-        'save.name' => 'FastD.log',
-        'save.path' => __DIR__ . '/../storage/logs/' . date('Ymd'),
+        'access' => '%root.path%/storage/logs/%date%/fastd.log',
+        'error' => '%root.path%/storage/logs/%date%/error.log',
     ],
 ];

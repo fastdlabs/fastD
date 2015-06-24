@@ -30,6 +30,7 @@
         "fastd/logger": "dev-dev",
         "fastd/console": "dev-dev",
         "fastd/finder": "dev-dev",
+        "fastd/debug": "dev-dev",
         "fastd/template": "dev-dev"
     },
     "config": {

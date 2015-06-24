@@ -16,7 +16,9 @@ namespace Kernel;
 use FastD\Config\Config;
 use FastD\Console\Console;
 use FastD\Container\Container;
+use FastD\Debug\Debugger;
 use FastD\Finder\Finder;
+use FastD\Logger\Logger;
 use FastD\Protocol\Http\Request;
 use FastD\Protocol\Http\Response;
 
@@ -27,7 +29,7 @@ use FastD\Protocol\Http\Response;
  */
 abstract class AppKernel implements TerminalInterface
 {
-    const VERSION = '1.1.x';
+    const VERSION = 'v0.1.x';
 
     /**
      * @var string
@@ -222,11 +224,7 @@ abstract class AppKernel implements TerminalInterface
      */
     public function initializeException()
     {
-        if (!$this->getDebug()) {
-            error_reporting(0);
-        }
-
-        \Make::exception();
+        Debugger::enable(Logger::createLogger($this->container->get('kernel.config')->get('logger.error')));
     }
 
     /**
@@ -314,19 +312,17 @@ abstract class AppKernel implements TerminalInterface
     public function terminate(Request $request, Response $response)
     {
         if (!$this->getDebug()) {
-            $content = 'request: [ date: %s, path: %s, format: %s, method: %s, ip: %s } response: { date: %s, status: %s ]';
-
-            $content = sprintf($content,
-                date('Y-m-d H:i:s', $request->getRequestTime()),
-                $request->getPathInfo(),
-                $request->getFormat(),
-                $request->getMethod(),
-                $request->getClientIp(),
-                date('Y-m-d H:i:s', microtime(true)),
-                $response->getStatusCode()
-            );
-
-            \Make::logger(\Make::config('logger'))->addInfo($content);
+            $context = [
+                'request_date'  =>date('Y-m-d H:i:s', $request->getRequestTime()),
+                'response_date' => date('Y-m-d H:i:s', microtime(true)),
+                'ip'            => $request->getClientIp(),
+                'format'        => $request->getFormat(),
+                'method'        => $request->getMethod(),
+                'status_code'   => $response->getStatusCode(),
+                '_GET'          => $request->query->all(),
+                '_POST'         => $request->request->all(),
+            ];
+            Logger::createLogger($this->container->get('kernel.config')->get('logger.access'))->info('request', $context);
         }
     }
 
