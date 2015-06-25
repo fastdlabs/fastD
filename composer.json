@@ -18,14 +18,14 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "fastd/protocol": "~0.1.0",
-        "fastd/routing": "~0.1.0",
-        "fastd/database": "~0.1.0",
-        "fastd/container": "~0.1.0",
-        "fastd/config": "~0.1.0"
+        "php": ">=5.4.0"
     },
     "require-dev": {
+        "fastd/protocol": "dev-dev",
+        "fastd/routing": "dev-dev",
+        "fastd/database": "dev-dev",
+        "fastd/container": "dev-dev",
+        "fastd/config": "dev-dev",
         "fastd/storage": "dev-dev",
         "fastd/logger": "dev-dev",
         "fastd/console": "dev-dev",

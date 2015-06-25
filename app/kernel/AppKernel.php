@@ -235,7 +235,7 @@ abstract class AppKernel implements TerminalInterface
     public function initializeRouting()
     {
         if (!class_exists('\\Routes')) {
-            include $this->getRootPath() . '/../vendor/FastD/routing/src/FastD/Routing/Routes.php';
+            include $this->getRootPath() . '/../vendor/fastd/routing/src/FastD/Routing/Routes.php';
         }
 
         include $this->getRootPath() . '/routes.php';
