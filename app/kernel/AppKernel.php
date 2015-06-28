@@ -16,7 +16,7 @@ namespace Kernel;
 use FastD\Config\Config;
 use FastD\Console\Console;
 use FastD\Container\Container;
-use FastD\Debug\Debugger;
+use FastD\Debug\Debug;
 use FastD\Finder\Finder;
 use FastD\Logger\Logger;
 use FastD\Protocol\Http\Request;
@@ -224,7 +224,7 @@ abstract class AppKernel implements TerminalInterface
      */
     public function initializeException()
     {
-        Debugger::enable(Logger::createLogger($this->container->get('kernel.config')->get('logger.error')));
+        Debug::enable(Logger::createLogger($this->container->get('kernel.config')->get('logger.error')));
     }
 
     /**
