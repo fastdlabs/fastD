@@ -34,7 +34,7 @@ class RouteDump extends Command
     public function configure()
     {
         $this
-            ->setArgument('route', null)
+            ->setOption('name', null)
             ->setDescription('Thank for you use routing dump tool.')
         ;
     }
