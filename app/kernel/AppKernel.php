@@ -289,9 +289,6 @@ abstract class AppKernel extends Terminal
             $path = $request->getBaseUrl();
             if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
                 $path = pathinfo($path, PATHINFO_DIRNAME);
-                if ('/' == $path) {
-                    $path = '';
-                }
             }
             Debug::showDebugBar($path . '/debugbar', $context);
         }
