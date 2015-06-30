@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: janhuang
- * Date: 15/6/15
- * Time: 下午8:38
+ * Date: 15/6/30
+ * Time: 下午5:41
  * Github: https://www.github.com/janhuang
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -12,39 +12,27 @@
  * WebSite: http://www.janhuang.me
  */
 
+namespace Api\V1\Commands;
 
-namespace Welcome\Commands;
-
-
-use FastD\Console\Commands\Command;
-use FastD\Console\Format\Input;
-use FastD\Console\Format\Output;
+use FastD\Console\Command;
+use FastD\Console\IO\Input;
+use FastD\Console\IO\Output;
 
 class Test extends Command
 {
-    /**
-     * @return string
-     */
+
     public function getName()
     {
-        return 'test';
+        return 'api:demo';
     }
 
-    /**
-     * @return void|$this
-     */
     public function configure()
     {
         // TODO: Implement configure() method.
     }
 
-    /**
-     * @param Input  $input
-     * @param Output $output
-     * @return void
-     */
     public function execute(Input $input, Output $output)
     {
-
+        $output->writeln('api demo');
     }
 }

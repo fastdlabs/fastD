@@ -21,7 +21,9 @@ class Bundle
     /**
      * @var string
      */
-    private $rootPath;
+    protected $rootPath;
+
+    protected $namespace;
 
     /**
      * @return string
@@ -33,5 +35,14 @@ class Bundle
         }
 
         return $this->rootPath;
+    }
+
+    public function getNamespace()
+    {
+        if (null === $this->namespace) {
+            $this->namespace = (new \ReflectionClass($this))->getNamespaceName();
+        }
+
+        return $this->namespace;
     }
 }

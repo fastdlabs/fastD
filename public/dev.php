@@ -18,7 +18,7 @@ $loader = include __DIR__ . '/../vendor/autoload.php';
 
 include __DIR__ . '/../app/Application.php';
 
-$app = Application::create('dev');
+$app = new Application('dev');
 
 $app->boot();
 

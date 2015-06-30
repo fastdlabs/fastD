@@ -24,7 +24,3 @@
  * Routes::options
  */
 
-Routes::get('/', function () {
-    return 'hello FastD.';
-});
-

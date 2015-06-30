@@ -20,8 +20,13 @@ $loader = include __DIR__ . '/../vendor/autoload.php';
 
 include __DIR__ . '/Application.php';
 
-$app = Application::create('prod');
+$argvInput = new \FastD\Console\ArgvInput();
 
-$console = $app->getConsole();
+$env = $argvInput->hasParameterOption(['--env', '-e']) ? $argvInput->getParameterOption(['--env', '-e']) : 'dev';
 
-$console->run();
+$app = new Application($env);
+
+$console = new \FastD\Console\Console($app);
+
+$console->run($argvInput);
+

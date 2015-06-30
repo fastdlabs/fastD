@@ -13,9 +13,9 @@
 
 namespace Welcome\Commands;
 
-use FastD\Console\Commands\Command;
-use FastD\Console\Format\Input;
-use FastD\Console\Format\Output;
+use FastD\Console\Command;
+use FastD\Console\IO\Input;
+use FastD\Console\IO\Output;
 
 class DemoCommand extends Command
 {
@@ -42,6 +42,6 @@ class DemoCommand extends Command
      */
     public function execute(Input $input, Output $output)
     {
-        // TODO: Implement execute() method.
+        $output->writeln('hello world');
     }
 }

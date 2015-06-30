@@ -42,7 +42,7 @@ class Index extends TemplateEvent
     public function dbAction()
     {
         $read = $this->getConnection('read');
-        
+
         return $read->getConnectionInfo();
     }
 

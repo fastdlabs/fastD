@@ -16,7 +16,6 @@ namespace Kernel;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Debug\Debug;
-use FastD\Logger\Logger;
 use FastD\Protocol\Http\Request;
 use FastD\Protocol\Http\Response;
 
@@ -25,7 +24,7 @@ use FastD\Protocol\Http\Response;
  *
  * @package FastD\Framework
  */
-abstract class AppKernel implements TerminalInterface
+abstract class AppKernel extends Terminal
 {
     const VERSION = 'v0.1.x';
 
@@ -78,7 +77,7 @@ abstract class AppKernel implements TerminalInterface
      *
      * @param $env
      */
-    protected function __construct($env)
+    public function __construct($env)
     {
         $this->environment = $env;
 
@@ -125,33 +124,6 @@ abstract class AppKernel implements TerminalInterface
     {
         return $this->container;
     }
-
-    /**
-     * Register project bundle.
-     *
-     * @return \Kernel\Bundle[]
-     */
-    abstract public function registerBundles();
-
-    /**
-     * Register application plugins.
-     *
-     * @return array
-     */
-    abstract public function registerHelpers();
-
-    /**
-     * Register application configuration
-     *
-     * @param Config $config
-     * @return void
-     */
-    abstract public function registerConfiguration(Config $config);
-
-    /**
-     * @return array
-     */
-    abstract public function registerConfigVariable();
 
     /**
      * Bootstrap application. Loading cache,bundles,configuration,router and other.
@@ -289,19 +261,29 @@ abstract class AppKernel implements TerminalInterface
      */
     public function terminate(Request $request, Response $response)
     {
+        $context = [
+            'request_date'  => date('Y-m-d H:i:s', $request->getRequestTime()),
+            'response_date' => date('Y-m-d H:i:s', microtime(true)),
+            'ip'            => $request->getClientIp(),
+            'format'        => $request->getFormat(),
+            'method'        => $request->getMethod(),
+            'status_code'   => $response->getStatusCode(),
+            '_GET'          => $request->query->all(),
+            '_POST'         => $request->request->all(),
+        ];
+
         if (!$this->isDebug()) {
-            $context = [
-                'request_date'  => date('Y-m-d H:i:s', $request->getRequestTime()),
-                'response_date' => date('Y-m-d H:i:s', microtime(true)),
-                'ip'            => $request->getClientIp(),
-                'format'        => $request->getFormat(),
-                'method'        => $request->getMethod(),
-                'status_code'   => $response->getStatusCode(),
-                '_GET'          => $request->query->all(),
-                '_POST'         => $request->request->all(),
-            ];
-            Logger::createLogger($this->container->get('kernel.config')->get('logger.access'))->info('request', $context);
+            $this
+                ->container
+                ->get('kernel.logger')
+                ->createLogger($this->container->get('kernel.config')->get('logger.access'))
+                ->addInfo('request,', $context)
+            ;
         }
+        if ($this->isDebug()) {
+            Debug::showDebugBar(dirname($request->getBaseUrl()) . '/debugbar', $context);
+        }
+        unset($context);
     }
 
     /**
@@ -316,18 +298,5 @@ abstract class AppKernel implements TerminalInterface
         }
 
         return $this->rootPath;
-    }
-
-    /**
-     * @param string $env
-     * @return static
-     */
-    public static function create($env = null)
-    {
-        if (null === static::$app) {
-            static::$app = new static($env);
-        }
-
-        return static::$app;
     }
 }
