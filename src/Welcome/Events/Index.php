@@ -34,6 +34,18 @@ class Index extends TemplateEvent
         return $this->render('welcome/welcome.html.twig');
     }
 
+    public function diAction(Request $request)
+    {
+        return new JsonResponse($request->query->all());
+    }
+
+    public function dbAction()
+    {
+        $read = $this->getConnection('read');
+        
+        return $read->getConnectionInfo();
+    }
+
     public function oneAction(Request $request)
     {
         return new JsonResponse($request->header->all());

@@ -32,7 +32,7 @@ return [
             'database_host'     => 'localhost',
             'database_port'     => 3306,
             'database_user'     => 'root',
-            'database_pwd'      => '',
+            'database_pwd'      => '123456',
             'database_charset'  => 'utf8',
             'database_name'     => 'test',
             'database_prefix'   => ''

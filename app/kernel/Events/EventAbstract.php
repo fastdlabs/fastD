@@ -128,7 +128,7 @@ abstract class EventAbstract
     public function getConnection($connection = null)
     {
         if (null === $this->database) {
-            $this->database = $this->get('kernel.database');
+            $this->database = $this->get('kernel.database', [$this->getParameters('database')]);
         }
 
         return $this->database->getConnection($connection);
@@ -141,7 +141,7 @@ abstract class EventAbstract
     public function getStorage($connection)
     {
         if (null === $this->storage) {
-            $this->storage = $this->get('kernel.storage');
+            $this->storage = $this->get('kernel.storage', [$this->getParameters('storage')]);
         }
 
         return $this->storage->getConnection($connection);
@@ -162,6 +162,9 @@ abstract class EventAbstract
         return $this->config->get($name);
     }
 
+    /**
+     * @return Router
+     */
     public function getRouting()
     {
         if (null === $this->routing) {

@@ -14,3 +14,5 @@
 Routes::get('/welcome', 'Welcome\\Events\\Index@welcomeAction');
 
 Routes::get('/view', 'Welcome\\Events\\Index@viewAction');
+Routes::get('/di', 'Welcome\\Events\\Index@diAction');
+Routes::get('/db', 'Welcome\\Events\\Index@dbAction');
