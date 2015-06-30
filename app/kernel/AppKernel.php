@@ -257,6 +257,8 @@ abstract class AppKernel implements TerminalInterface
      */
     public function handleHttpRequest(Request $request)
     {
+        $this->container->set('kernel.request', $request);
+
         $route = $this->detachRoute($request);
 
         $callback = $route->getCallback();

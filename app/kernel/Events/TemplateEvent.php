@@ -14,8 +14,18 @@
 
 namespace Kernel\Events;
 
+use FastD\Template\Template;
+
+/**
+ * Class TemplateEvent
+ *
+ * @package Kernel\Events
+ */
 class TemplateEvent extends EventAbstract
 {
+    /**
+     * @var Template
+     */
     protected $template;
 
     /**
@@ -36,10 +46,64 @@ class TemplateEvent extends EventAbstract
                     'debug' => $isDebug,
                 ];
             }
+            $self = $this;
             $this->template = $this->container->get('kernel.template', [$paths, $options]);
+            $this->template->addGlobal('request', $this->getRequest());
+            $this->template->addFunction('url', function ($name, $parameters, $suffix) use ($self) {
+                return $self->url($name, $parameters, $suffix);
+            });
+            $this->template->addFunction('asset', function ($name, $host = null, $path = null) use ($self) {
+                return $self->asset($name, $host, $path);
+            });
             unset($paths, $options);
         }
 
         return $this->template->render($template, $parameters);
+    }
+
+    /**
+     * @param $name
+     * @param $parameters
+     * @param $suffix
+     * @return string
+     */
+    protected function url($name, $parameters, $suffix)
+    {
+        $url = $this->generateUrl($name, $parameters, $suffix);
+        if ('http' !== substr($url, 0, 4)) {
+            $url = $this->getRequest()->getBaseUrl() . $url;
+        }
+        return $url;
+    }
+
+    /**
+     * @param      $name
+     * @param null $host
+     * @param null $path
+     * @return string
+     */
+    protected function asset($name, $host = null, $path = null)
+    {
+        if (null === $host) {
+            try {
+                $host = $this->getParameters('assets.host');
+            } catch (\InvalidArgumentException $e) {
+                $host = '//' . $this->getRequest()->getDomain();
+            }
+        }
+
+        if (null === $path) {
+            try {
+                $path = $this->getParameters('assets.path');
+            } catch (\InvalidArgumentException $e) {
+                $path = $this->getRequest()->getBaseUrl();
+
+                if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
+                    $path = pathinfo($path, PATHINFO_DIRNAME);
+                }
+            }
+        }
+
+        return $host . str_replace('//', '/', $path . '/' . $name);
     }
 }

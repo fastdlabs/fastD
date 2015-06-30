@@ -19,6 +19,7 @@ use FastD\Database\Connection\ConnectionInterface;
 use FastD\Database\Database;
 use FastD\Logger\Logger;
 use FastD\Protocol\Http\RedirectResponse;
+use FastD\Protocol\Http\Request;
 use FastD\Routing\Router;
 use FastD\Storage\StorageManager;
 
@@ -111,6 +112,14 @@ abstract class EventAbstract
     }
 
     /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->get('kernel.request');
+    }
+
+    /**
      * get database connection driver
      *
      * @param string $connection
@@ -119,7 +128,7 @@ abstract class EventAbstract
     public function getConnection($connection = null)
     {
         if (null === $this->database) {
-            $this->database = $this->container->get('kernel.database');
+            $this->database = $this->get('kernel.database');
         }
 
         return $this->database->getConnection($connection);
@@ -132,7 +141,7 @@ abstract class EventAbstract
     public function getStorage($connection)
     {
         if (null === $this->storage) {
-            $this->storage = $this->container->get('kernel.storage');
+            $this->storage = $this->get('kernel.storage');
         }
 
         return $this->storage->getConnection($connection);
@@ -147,10 +156,19 @@ abstract class EventAbstract
     public function getParameters($name = null)
     {
         if (null === $this->config) {
-            $this->config = $this->container->get('kernel.config');
+            $this->config = $this->get('kernel.config');
         }
 
         return $this->config->get($name);
+    }
+
+    public function getRouting()
+    {
+        if (null === $this->routing) {
+            $this->routing = $this->get('kernel.routing');
+        }
+
+        return $this->routing;
     }
 
     /**
@@ -161,11 +179,7 @@ abstract class EventAbstract
      */
     public function generateUrl($name, array $parameters = array(), $suffix = false)
     {
-        if (null === $this->routing) {
-            $this->routing = $this->container->get('kernel.routing');
-        }
-
-        return $this->routing->generateUrl($name, $parameters, $suffix);
+        return $this->getRouting()->generateUrl($name, $parameters, $suffix);
     }
 
     /**
