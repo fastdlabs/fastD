@@ -26,6 +26,11 @@ use FastD\Protocol\Http\Response;
  */
 abstract class AppKernel extends Terminal
 {
+    /**
+     * The FastD application version.
+     *
+     * @const string
+     */
     const VERSION = 'v0.1.x';
 
     /**
@@ -281,7 +286,11 @@ abstract class AppKernel extends Terminal
             ;
         }
         if ($this->isDebug()) {
-            Debug::showDebugBar(dirname($request->getBaseUrl()) . '/debugbar', $context);
+            $path = $request->getBaseUrl();
+            if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
+                $path = pathinfo($path, PATHINFO_DIRNAME);
+            }
+            Debug::showDebugBar($path . '/debugbar', $context);
         }
         unset($context);
     }
