@@ -26,6 +26,8 @@ $env = $argvInput->hasParameterOption(['--env', '-e']) ? $argvInput->getParamete
 
 $app = new Application($env);
 
+$app->boot();
+
 $console = new \FastD\Console\Console($app);
 
 $console->run($argvInput);

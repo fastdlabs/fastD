@@ -13,9 +13,9 @@
 
 namespace Kernel\Commands;
 
-use FastD\Console\Commands\Command;
-use FastD\Console\Format\Input;
-use FastD\Console\Format\Output;
+use FastD\Console\Command;
+use FastD\Console\IO\Input;
+use FastD\Console\IO\Output;
 use Kernel\AppKernel;
 
 class Version extends Command
@@ -33,7 +33,7 @@ class Version extends Command
      */
     public function configure()
     {
-        $this->setDescription('App current version: ');
+
     }
 
     /**
@@ -43,7 +43,7 @@ class Version extends Command
      */
     public function execute(Input $input, Output $output)
     {
-        $output->writeln('Doboee application version: ', Output::STYLE_SUCCESS);
-        $output->writeln(AppKernel::VERSION, Output::STYLE_BG_SUCCESS);
+        $output->write('Doboee application version: ');
+        $output->writeln(AppKernel::VERSION, Output::STYLE_SUCCESS);
     }
 }

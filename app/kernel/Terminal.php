@@ -20,7 +20,8 @@ abstract class Terminal extends BaseEnvironment implements TerminalInterface, Ap
 {
     public function register()
     {
-        foreach ($this->getBundles() as $bundle) {
+        $bundles = array_merge($this->getBundles(), [new Bundle()]);
+        foreach ($bundles as $bundle) {
             if ($dh = opendir($bundle->getRootPath() . '/Commands')) {
                 while (($file = readdir($dh)) !== false) {
                     if (in_array($file, ['.', '..'])) {

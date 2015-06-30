@@ -13,9 +13,9 @@
 
 namespace Kernel\Commands;
 
-use FastD\Console\Commands\Command;
-use FastD\Console\Format\Input;
-use FastD\Console\Format\Output;
+use FastD\Console\Command;
+use FastD\Console\IO\Input;
+use FastD\Console\IO\Output;
 use FastD\Routing\Router;
 
 class RouteDump extends Command
@@ -34,7 +34,7 @@ class RouteDump extends Command
     public function configure()
     {
         $this
-            ->setArguments('route', null)
+            ->setArgument('route', null)
             ->setDescription('Thank for you use routing dump tool.')
         ;
     }
@@ -50,12 +50,12 @@ class RouteDump extends Command
 
         $output->writeln('');
 
-        if ('' == $input->get('route')) {
+        if ('' == $input->getParameterOption('route')) {
             $this->showRouteCollections($router, $output);
         } else {
-            $route = $router->getRoute($input->get('route'));
+            $route = $router->getRoute($input->getParameterOption('route'));
             $output->write('Route [');
-            $output->write('"' . $input->get('route') . '"', Output::STYLE_SUCCESS);
+            $output->write('"' . $input->getParameterOption('route') . '"', Output::STYLE_SUCCESS);
             $output->writeln(']');
             $output->writeln("Name:\t\t" . $route->getName());
             $output->writeln("Group:\t\t" . str_replace('//', '/', $route->getGroup()));

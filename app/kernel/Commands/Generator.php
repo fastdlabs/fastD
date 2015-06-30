@@ -13,9 +13,9 @@
 
 namespace Kernel\Commands;
 
-use FastD\Console\Commands\Command;
-use FastD\Console\Format\Input;
-use FastD\Console\Format\Output;
+use FastD\Console\Command;
+use FastD\Console\IO\Input;
+use FastD\Console\IO\Output;
 
 class Generator extends Command
 {
@@ -44,7 +44,7 @@ class Generator extends Command
     public function execute(Input $input, Output $output)
     {
         try {
-            $bundle = $input->get('bundle');
+            $bundle = $input->getParameterOption('bundle');
         } catch(\Exception $e) {
             $output->writeln('Bundle name is empty or null. Please you try again.');
             exit;
