@@ -49,12 +49,12 @@ class TemplateEvent extends EventAbstract
             $self = $this;
             $this->template = $this->container->get('kernel.template', [$paths, $options]);
             $this->template->addGlobal('request', $this->getRequest());
-            $this->template->addFunction('url', function ($name, $parameters, $suffix) use ($self) {
+            $this->template->addFunction('url', new \Twig_SimpleFunction('url', function ($name, $parameters, $suffix) use ($self) {
                 return $self->url($name, $parameters, $suffix);
-            });
-            $this->template->addFunction('asset', function ($name, $host = null, $path = null) use ($self) {
+            }));
+            $this->template->addFunction('asset', new \Twig_SimpleFunction('asset', function ($name, $host = null, $path = null) use ($self) {
                 return $self->asset($name, $host, $path);
-            });
+            }));
             unset($paths, $options);
         }
 

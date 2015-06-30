@@ -179,10 +179,6 @@ abstract class AppKernel implements TerminalInterface
         $this->container = new Container($this->components);
 
         $this->container->set('kernel', $this);
-
-        if (!class_exists('\\Make')) {
-            include __DIR__ . '/../make.php';
-        }
     }
 
     /**
