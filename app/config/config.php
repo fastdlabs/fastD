@@ -13,18 +13,11 @@
 return [
     // 模板引擎
     'template' => [
-        'engine' => 'twig',
         'paths' => [
             __DIR__ . '/../views',
             __DIR__ . '/../../src',
         ],
-        'debug' => true,
         'cache' => __DIR__ . '/../storage/templates',
-        // twig 扩展函数
-        'global' => [
-            'app'       => Make::app(),
-            'make'      => Make::getMakeTool(),
-        ],
     ],
 
     // 日志对象

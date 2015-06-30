@@ -13,22 +13,69 @@
 
 namespace Kernel\Events;
 
+use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Database\Connection\ConnectionInterface;
+use FastD\Database\Database;
+use FastD\Logger\Logger;
+use FastD\Protocol\Http\RedirectResponse;
+use FastD\Routing\Router;
+use FastD\Storage\StorageManager;
 
 /**
- * Class Controller
+ * Class EventAbstract
  *
  * @package FastD\Framework\Controller
  */
 abstract class EventAbstract
 {
     /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * @var Database
+     */
+    protected $database;
+
+    /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @var StorageManager
+     */
+    protected $storage;
+
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @var Router
+     */
+    protected $routing;
+
+    /**
+     * @param Container $container
+     * @return $this
+     */
+    public function setContainer(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
      * @return Container
      */
     public function getContainer()
     {
-        return \Make::container();
+        return $this->container;
     }
 
     /**
@@ -39,7 +86,11 @@ abstract class EventAbstract
      */
     public function call($event, $handle, array $parameters = [])
     {
-        return \Make::callEvent($event, $handle, $parameters);
+        if (is_string($event)) {
+            $event = $this->container->get($event, [], true);
+        }
+
+        return $this->container->getProvider()->callServiceMethod($event, $handle, $parameters);
     }
 
     /**
@@ -56,7 +107,7 @@ abstract class EventAbstract
             $parameters = $this->getParameters($parameters);
         }
 
-        return \Make::container()->get($helper, $parameters, $newInstance);
+        return $this->container->get($helper, $parameters, $newInstance);
     }
 
     /**
@@ -67,7 +118,11 @@ abstract class EventAbstract
      */
     public function getConnection($connection = null)
     {
-        return \Make::db($connection);
+        if (null === $this->database) {
+            $this->database = $this->container->get('kernel.database');
+        }
+
+        return $this->database->getConnection($connection);
     }
 
     /**
@@ -76,7 +131,11 @@ abstract class EventAbstract
      */
     public function getStorage($connection)
     {
-        return \Make::storage($connection);
+        if (null === $this->storage) {
+            $this->storage = $this->container->get('kernel.storage');
+        }
+
+        return $this->storage->getConnection($connection);
     }
 
     /**
@@ -87,7 +146,11 @@ abstract class EventAbstract
      */
     public function getParameters($name = null)
     {
-        return \Make::config($name);
+        if (null === $this->config) {
+            $this->config = $this->container->get('kernel.config');
+        }
+
+        return $this->config->get($name);
     }
 
     /**
@@ -98,19 +161,11 @@ abstract class EventAbstract
      */
     public function generateUrl($name, array $parameters = array(), $suffix = false)
     {
-        return \Make::url($name, $parameters, $suffix);
-    }
+        if (null === $this->routing) {
+            $this->routing = $this->container->get('kernel.routing');
+        }
 
-    /**
-     * render template show page.
-     *
-     * @param string $template template content string or template file path.
-     * @param array $parameters
-     * @return string
-     */
-    public function render($template, array $parameters = array())
-    {
-        return \Make::render($template, $parameters);
+        return $this->routing->generateUrl($name, $parameters, $suffix);
     }
 
     /**
@@ -121,6 +176,6 @@ abstract class EventAbstract
      */
     public function redirect($url, $statusCode = 302, array $headers = [])
     {
-        return \Make::redirect($url, $statusCode, $headers);
+        return new RedirectResponse($url, $statusCode, $headers);
     }
 }

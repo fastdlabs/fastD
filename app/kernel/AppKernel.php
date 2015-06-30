@@ -14,10 +14,8 @@
 namespace Kernel;
 
 use FastD\Config\Config;
-use FastD\Console\Console;
 use FastD\Container\Container;
 use FastD\Debug\Debug;
-use FastD\Finder\Finder;
 use FastD\Logger\Logger;
 use FastD\Protocol\Http\Request;
 use FastD\Protocol\Http\Response;
@@ -48,9 +46,9 @@ abstract class AppKernel implements TerminalInterface
      * @var array
      */
     protected $components = array(
-        'kernel.template'   => 'FastD\\Template\\TemplateManager',
+        'kernel.template'   => 'FastD\\Template\\Template',
         'kernel.logger'     => 'FastD\\Logger\\Logger',
-        'kernel.database'   => 'FastD\\Database\\DriverManager',
+        'kernel.database'   => 'FastD\\Database\\Database',
         'kernel.storage'    => 'FastD\\Storage\\StorageManager',
         'kernel.request'    => 'FastD\\Protocol\\Http\\Request::createRequestHandle',
     );
@@ -74,14 +72,6 @@ abstract class AppKernel implements TerminalInterface
      * @var static
      */
     protected static $app;
-
-    /**
-     * @return static
-     */
-    final public function __clone()
-    {
-        return static::$app;
-    }
 
     /**
      * Constructor. Initialize framework components.
@@ -113,7 +103,7 @@ abstract class AppKernel implements TerminalInterface
     /**
      * @return bool
      */
-    public function getDebug()
+    public function isDebug()
     {
         return $this->debug;
     }
@@ -174,7 +164,7 @@ abstract class AppKernel implements TerminalInterface
 
         $this->initializeConfigure();
 
-        $this->initializeException();
+        Debug::enable();
 
         $this->initializeRouting();
     }
@@ -204,12 +194,11 @@ abstract class AppKernel implements TerminalInterface
     {
         $config = new Config();
 
-        $this->container->set('kernel.config', $config);
-
         $variables = array_merge($this->registerConfigVariable(), array(
             'root.path' => $this->getRootPath(),
             'env'       => $this->getEnvironment(),
-            'debug'     => $this->getDebug(),
+            'debug'     => $this->isDebug(),
+            'version'   => AppKernel::VERSION,
         ));
 
         $config->setVariable($variables);
@@ -217,14 +206,8 @@ abstract class AppKernel implements TerminalInterface
         $config->load($this->getRootPath() . '/config/config.php');
 
         $this->registerConfiguration($config);
-    }
 
-    /**
-     * initialize framework error.
-     */
-    public function initializeException()
-    {
-        Debug::enable(Logger::createLogger($this->container->get('kernel.config')->get('logger.error')));
+        $this->container->set('kernel.config', $config);
     }
 
     /**
@@ -235,13 +218,13 @@ abstract class AppKernel implements TerminalInterface
     public function initializeRouting()
     {
         if (!class_exists('\\Routes')) {
-            include $this->getRootPath() . '/../vendor/fastd/routing/src/FastD/Routing/Routes.php';
+            include __DIR__ . '/../../vendor/fastd/routing/src/FastD/Routing/Routes.php';
         }
 
-        include $this->getRootPath() . '/routes.php';
+        include __DIR__ . '/../routes.php';
 
         foreach ($this->getBundles() as $bundle) {
-            if (file_exists($routes = $bundle->getConfigurationPath() . '/routes.php')) {
+            if (file_exists($routes = $bundle->getRootPath() . '/Resources/config/routes.php')) {
                 include $routes;
             }
         }
@@ -278,21 +261,18 @@ abstract class AppKernel implements TerminalInterface
 
         $callback = $route->getCallback();
 
-        switch (gettype($callback)) {
-            case 'array':
-                $event = $this->container->set('callback', $callback[0])->get('callback');
-                $response = $this->container->getProvider()->callServiceMethod($event, $callback[1], $route->getParameters());
-                break;
-            case 'string':
-                list ($event, $handle) = explode('@', $callback);
-                $event = $this->container->set('callback', $event)->get('callback');
-                $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
-                break;
-            // ObjectClosure.  Cannot support closure parameter injection.
-            default:
-                $response = $callback();
-
+        if (is_array($callback)) {
+            $event = $callback[0];
+            $handle = $callback[1];
+        } else {
+            list ($event, $handle) = explode('@', $callback);
         }
+
+        $event = $this->container->set('callback', $event)->get('callback');
+        if (method_exists($event, 'setContainer')) {
+            $event->setContainer($this->container);
+        }
+        $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
 
         if ($response instanceof Response) {
             return $response;
@@ -311,9 +291,9 @@ abstract class AppKernel implements TerminalInterface
      */
     public function terminate(Request $request, Response $response)
     {
-        if (!$this->getDebug()) {
+        if (!$this->isDebug()) {
             $context = [
-                'request_date'  =>date('Y-m-d H:i:s', $request->getRequestTime()),
+                'request_date'  => date('Y-m-d H:i:s', $request->getRequestTime()),
                 'response_date' => date('Y-m-d H:i:s', microtime(true)),
                 'ip'            => $request->getClientIp(),
                 'format'        => $request->getFormat(),
@@ -351,46 +331,5 @@ abstract class AppKernel implements TerminalInterface
         }
 
         return static::$app;
-    }
-
-    /**
-     * @return \FastD\Console\Console
-     */
-    public function getConsole()
-    {
-        $this->boot();
-
-        $console = new Console($this);
-
-        $finder = new Finder();
-
-        $bundles = array_merge($this->getBundles(), array(new Bundle()));
-
-        foreach ($bundles as $bundle) {
-
-            $path = $bundle->getRootPath() . '/Commands';
-
-            if (!is_dir($path)) {
-                continue;
-            }
-            $commands = $finder->in($path)->files();
-
-            if ($commands) {
-                foreach ($commands as $name => $command) {
-                    $command = $bundle->getNamespace() . '\\Commands\\' . pathinfo($command->getName(), PATHINFO_FILENAME);
-
-                    if (!class_exists($command)) {
-                        continue;
-                    }
-
-                    $command = new $command();
-                    if ($command instanceof \FastD\Console\Commands\Command) {
-                        $console->addCommand($command);
-                    }
-                }
-            }
-        }
-
-        return $console;
     }
 }

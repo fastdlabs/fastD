@@ -15,15 +15,25 @@ namespace Welcome\Events;
 
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
-use Kernel\Events\EventAbstract;
+use Kernel\Events\TemplateEvent;
 
 /**
  * Class IndexController
  *
  * @package Welcome\Controllers
  */
-class Index extends EventAbstract
+class Index extends TemplateEvent
 {
+    public function welcomeAction()
+    {
+        return 'welcome';
+    }
+
+    public function viewAction()
+    {
+        return $this->render('welcome/welcome.html.twig');
+    }
+
     public function oneAction(Request $request)
     {
         return new JsonResponse($request->header->all());
