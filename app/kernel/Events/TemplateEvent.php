@@ -49,7 +49,7 @@ class TemplateEvent extends EventAbstract
             $self = $this;
             $this->template = $this->container->get('kernel.template', [$paths, $options]);
             $this->template->addGlobal('request', $this->getRequest());
-            $this->template->addFunction('url', new \Twig_SimpleFunction('url', function ($name, $parameters, $suffix) use ($self) {
+            $this->template->addFunction('url', new \Twig_SimpleFunction('url', function ($name, array $parameters = [], $suffix = false) use ($self) {
                 return $self->url($name, $parameters, $suffix);
             }));
             $this->template->addFunction('asset', new \Twig_SimpleFunction('asset', function ($name, $host = null, $path = null) use ($self) {
@@ -67,7 +67,7 @@ class TemplateEvent extends EventAbstract
      * @param $suffix
      * @return string
      */
-    protected function url($name, $parameters, $suffix)
+    protected function url($name, array $parameters = null, $suffix = false)
     {
         $url = $this->generateUrl($name, $parameters, $suffix);
         if ('http' !== substr($url, 0, 4)) {
