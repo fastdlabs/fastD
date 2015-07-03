@@ -16,6 +16,7 @@ namespace Welcome\Events;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
 use Kernel\Events\TemplateEvent;
+use Kernel\Events\EventAbstract;
 
 /**
  * Class IndexController
@@ -26,6 +27,12 @@ class Index extends TemplateEvent
 {
     public function welcomeAction()
     {
+        $read = $this->getConnection('read');
+
+        $write = $this->getConnection('write');
+
+        // some query code...
+
         return 'welcome';
     }
 

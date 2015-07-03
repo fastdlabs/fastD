@@ -48,7 +48,7 @@ class Application extends Kernel\AppKernel
     public function registerConfigVariable()
     {
         return array(
-            'date'       => date('Ymd'),
+
         );
     }
 

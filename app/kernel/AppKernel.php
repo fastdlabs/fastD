@@ -172,6 +172,7 @@ abstract class AppKernel extends Terminal
             'env'       => $this->getEnvironment(),
             'debug'     => $this->isDebug(),
             'version'   => AppKernel::VERSION,
+            'date'      => date('Ymd'),
         ));
 
         $config->setVariable($variables);
