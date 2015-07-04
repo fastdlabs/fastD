@@ -141,7 +141,11 @@ abstract class AppKernel extends Terminal
 
         $this->initializeConfigure();
 
-        Debug::enable();
+        $config = $this->container->get('kernel.config');
+
+        Debug::enable($this->container->get('kernel.logger')->createLogger($config->get('logger.error')), $config->get('error.page'));
+
+        unset($config);
 
         $this->initializeRouting();
     }
@@ -182,6 +186,8 @@ abstract class AppKernel extends Terminal
         $this->registerConfiguration($config);
 
         $this->container->set('kernel.config', $config);
+
+        unset($config);
     }
 
     /**
@@ -283,7 +289,7 @@ abstract class AppKernel extends Terminal
                 ->container
                 ->get('kernel.logger')
                 ->createLogger($this->container->get('kernel.config')->get('logger.access'))
-                ->addInfo('request,', $context)
+                ->addInfo($request->getPathInfo(), $context)
             ;
         }
         if ($this->isDebug()) {

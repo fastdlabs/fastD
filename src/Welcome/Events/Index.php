@@ -13,6 +13,7 @@
 
 namespace Welcome\Events;
 
+use FastD\Debug\Exceptions\BaseException;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
 use Kernel\Events\TemplateEvent;
@@ -27,13 +28,8 @@ class Index extends TemplateEvent
 {
     public function welcomeAction()
     {
-        $read = $this->getConnection('read');
-
-        $write = $this->getConnection('write');
-
-        // some query code...
-
-        return 'welcome';
+        throw new BaseException('Not found', 404);
+        return $this->render('welcome/welcome.twig');
     }
 
     public function viewAction()

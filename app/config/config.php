@@ -20,9 +20,15 @@ return [
         'cache' => __DIR__ . '/../storage/templates',
     ],
 
+    'error' => [
+        'page' => [
+            404 => __DIR__ . '/../views/errors/404.html'
+        ],
+    ],
+
     // 日志对象
     'logger' => [
-        'access' => '%root.path%/storage/logs/%date%/fastd.log',
+        'access' => '%root.path%/storage/logs/%date%/access.log',
         'error' => '%root.path%/storage/logs/%date%/error.log',
     ],
 ];
