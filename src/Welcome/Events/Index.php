@@ -28,7 +28,6 @@ class Index extends TemplateEvent
 {
     public function welcomeAction()
     {
-        throw new BaseException('Not found', 404);
         return $this->render('welcome/welcome.twig');
     }
 

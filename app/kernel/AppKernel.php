@@ -291,8 +291,7 @@ abstract class AppKernel extends Terminal
                 ->createLogger($this->container->get('kernel.config')->get('logger.access'))
                 ->addInfo($request->getPathInfo(), $context)
             ;
-        }
-        if ($this->isDebug()) {
+        } else {
             $path = $request->getBaseUrl();
             if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
                 $path = pathinfo($path, PATHINFO_DIRNAME);
@@ -302,6 +301,7 @@ abstract class AppKernel extends Terminal
             }
             Debug::showDebugBar($path . '/debugbar', $context);
         }
+
         unset($context);
     }
 
