@@ -18,7 +18,8 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "fastd/debug": "dev-dev"
     },
     "require-dev": {
         "fastd/protocol": "dev-dev",
@@ -30,7 +31,6 @@
         "fastd/logger": "dev-dev",
         "fastd/console": "dev-dev",
         "fastd/finder": "dev-dev",
-        "fastd/debug": "dev-dev",
         "fastd/template": "dev-dev"
     },
     "config": {

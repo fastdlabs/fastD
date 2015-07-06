@@ -28,6 +28,7 @@ class Index extends TemplateEvent
 {
     public function welcomeAction()
     {
+        $this->dump(['a' => 'jan']);
         return $this->render('welcome/welcome.twig');
     }
 

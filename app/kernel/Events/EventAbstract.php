@@ -17,6 +17,7 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Database\Connection\ConnectionInterface;
 use FastD\Database\Database;
+use FastD\Debug\Debug;
 use FastD\Logger\Logger;
 use FastD\Protocol\Http\RedirectResponse;
 use FastD\Protocol\Http\Request;
@@ -132,6 +133,14 @@ abstract class EventAbstract
         }
 
         return $this->database->getConnection($connection);
+    }
+
+    /**
+     * @param $vars
+     */
+    public function dump($vars)
+    {
+        return Debug::dump($vars);
     }
 
     /**
