@@ -4,6 +4,8 @@
   
 - 优化 `url()` 模板方法和 `generateUrl()` 方法的显示方式，更加优雅地显示URL地址信息
   
+- 修复 `generateUrl()` 方法重复产生 `requestUri` 的bug
+  
 - 修复 `http` 组件获取 `base url` bug
   
   ​

@@ -194,6 +194,7 @@ class BaseEvent
         $url = $this->getRouting()->generateUrl($name, $parameters, $suffix);
         if ('http' !== substr($url, 0, 4)) {
             $url = ('/' === ($path = $this->getRequest()->getBaseUrl()) ? '' : $path) . $url;
+            $url = str_replace('//', '/', $url);
         }
         return $url;
     }
