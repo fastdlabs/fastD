@@ -191,7 +191,11 @@ class BaseEvent
      */
     public function generateUrl($name, array $parameters = array(), $suffix = false)
     {
-        return $this->getRouting()->generateUrl($name, $parameters, $suffix);
+        $url = $this->getRouting()->generateUrl($name, $parameters, $suffix);
+        if ('http' !== substr($url, 0, 4)) {
+            $url = $this->getRequest()->getBaseUrl() . $url;
+        }
+        return $url;
     }
 
     /**

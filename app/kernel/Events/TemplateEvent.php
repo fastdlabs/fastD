@@ -69,11 +69,7 @@ class TemplateEvent extends BaseEvent
      */
     protected function url($name, array $parameters = null, $suffix = false)
     {
-        $url = $this->generateUrl($name, $parameters, $suffix);
-        if ('http' !== substr($url, 0, 4)) {
-            $url = $this->getRequest()->getBaseUrl() . $url;
-        }
-        return $url;
+        return $this->generateUrl($name, $parameters, $suffix);
     }
 
     /**

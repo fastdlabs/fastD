@@ -13,11 +13,9 @@
 
 namespace Welcome\Events;
 
-use FastD\Debug\Exceptions\BaseException;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
 use Kernel\Events\TemplateEvent;
-use Kernel\Events\EventAbstract;
 
 /**
  * Class IndexController
@@ -26,15 +24,17 @@ use Kernel\Events\EventAbstract;
  */
 class Index extends TemplateEvent
 {
-    public function welcomeAction()
+    public function welcomeAction(Request $request)
     {
+        echo '<pre>';
+        print_r($request->server);
         $this->dump(['a' => 'jan']);
         return $this->render('welcome/welcome.twig');
     }
 
     public function viewAction()
     {
-        return $this->render('welcome/welcome.html.twig');
+        return 'demo';
     }
 
     public function diAction(Request $request)
