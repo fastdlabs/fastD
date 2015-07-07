@@ -6,6 +6,8 @@
   
 - 修复 `generateUrl()` 方法重复产生 `requestUri` 的bug
   
+- 优化debug status code 非法时处理方式，统一无法识别的status code均为500错误码
+  
 - 修复 `http` 组件获取 `base url` bug
   
   ​
