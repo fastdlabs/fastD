@@ -29,7 +29,7 @@ use FastD\Storage\StorageManager;
  *
  * @package FastD\Framework\Controller
  */
-abstract class EventAbstract
+class BaseEvent
 {
     /**
      * @var Container

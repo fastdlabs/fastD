@@ -12,7 +12,7 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace Kernel\Extensions;
+namespace Kernel\Events;
 
 use FastD\Protocol\Http\Response;
 use FastD\Protocol\Http\JsonResponse;
@@ -22,7 +22,7 @@ use FastD\Protocol\Http\JsonResponse;
  *
  * @package Kernel\Extensions
  */
-trait REST
+class REST extends BaseEvent
 {
     /**
      * @var string

@@ -21,7 +21,7 @@ use FastD\Template\Template;
  *
  * @package Kernel\Events
  */
-class TemplateEvent extends EventAbstract
+class TemplateEvent extends BaseEvent
 {
     /**
      * @var Template

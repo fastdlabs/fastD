@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>Typora</title><link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic' rel='stylesheet' type='text/css'><link href='http://fonts.googleapis.com/css?family=Raleway:600,400&subset=latin,latin-ext' rel='stylesheet' type='text/css'><style type='text/css'>html, body {overflow-x: initial !important;}html { font-size: 14px; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857143; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); overflow-x: hidden; }
+a:active, a:hover { outline: 0px; }
+::selection { background-color: rgb(181, 214, 252); text-shadow: none; background-position: initial initial; background-repeat: initial initial; }
+#write { max-width: 854px; margin: 0px auto 70px; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: pre-wrap; text-align: justify; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export #write { margin: 0px auto; }
+#write > p:first-child, #write > ul:first-child, #write > pre:first-child, #write > blockquote:first-child, #write > div:first-child { margin-top: 30px; }
+img { max-width: 100%; }
+input, button, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+::before, ::after, * { box-sizing: border-box; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write div, #write pre { width: inherit; }
+h1 { font-size: 2rem; }
+p, .mathjax-block { display: block; -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: bold; font-style: italic; }
+a { cursor: pointer; }
+li span { min-width: 10px; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; margin: 4px 0px 0px; }
+tr { page-break-inside: avoid; page-break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; page-break-inside: auto; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror-code pre { padding: 0px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+.md-fences, pre.md-fences { font-size: 0.9rem; display: block; page-break-inside: avoid; text-align: left; overflow: visible; white-space: normal; position: relative !important; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.footnotes { color: rgb(136, 136, 136); font-size: 0.9rem; padding-top: 1em; padding-bottom: 1em; }
+.footnotes + .footnotes { margin-top: -1em; }
+sub, sup { line-height: inherit; position: inherit; top: inherit; vertical-align: super; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background-color: transparent; text-decoration: none; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: normal; text-align: left; box-sizing: content-box; direction: ltr; background-position: initial initial; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li p, li .mathjax-block { margin: 0.5rem 0px; }
+li { margin: 0px; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; }
+@media print { 
+  html, body { height: 100%; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+#write pre.md-meta-block { font-size: 0.8rem; min-height: 2.86rem; white-space: pre; background-color: rgb(204, 204, 204); display: block; background-position: initial initial; background-repeat: initial initial; }
+p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; padding-bottom: 0.65rem; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+.mathjax-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: none; box-shadow: none; }
+:focus { outline: none; box-shadow: rgb(79, 172, 249) 0px 0px 2px 3px, rgb(120, 174, 218) 0px 0px 2px inset; }
+.task-list { list-style-type: none; }
+.task-list-item { position: relative; padding-left: 1em; }
+.task-list-item input { position: absolute; top: 0px; left: 0px; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc::after, .md-toc-content::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: bold; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+.md-toc-h6 { margin-left: 12em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 8em; }
+  .md-toc-h6 { margin-left: 9.5em; }
+}
+a.md-toc-inner { color: inherit; font-size: inherit; font-style: inherit; font-weight: inherit; text-decoration: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: '.'; }
+
+
+@font-face { font-family: Ubuntu; font-style: normal; font-weight: normal; src: local(Ubuntu Regular), local(Ubuntu-Regular), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Ubuntu-Regular.ttf); }
+@font-face { font-family: Ubuntu; font-style: normal; font-weight: bold; src: local(Ubuntu Bold), local(Ubuntu-Bold), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Ubuntu-Bold.ttf); }
+@font-face { font-family: Ubuntu; font-style: italic; font-weight: normal; src: local(Ubuntu Italic), local(Ubuntu-Italic), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Ubuntu-Italic.ttf); }
+@font-face { font-family: Ubuntu; font-style: italic; font-weight: bold; src: local(Ubuntu BoldItalic), local(Ubuntu-BoldItalic), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Ubuntu-BoldItalic.ttf); }
+@font-face { font-family: Raleway; font-style: normal; font-weight: 400; src: local(Raleway), local(Raleway-Regular), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Raleway-Regular.ttf); }
+@font-face { font-family: Raleway; font-style: normal; font-weight: bold; src: local(Raleway SemiBold), local(Raleway-SemiBold), url(file:///Users/janhuang/Library/Application%20Support/abnerworks.Typora/themes/gothic/Raleway-SemiBold.ttf); }
+html, body, #write { background-color: rgb(252, 252, 252); font-family: 'Century Gothic', Raleway, STHeiti, sans-serif; font-weight: 400; background-position: initial initial; background-repeat: initial initial; }
+h1, h2, h3, h4, h5, h6 { color: rgb(17, 17, 17); font-family: 'Century Gothic', Ubuntu, STHeiti, sans-serif; }
+html { font-size: 16px; }
+#write { padding-top: 20px; }
+#write > h1:first-child { margin-top: 2.75rem; }
+#write > h2:first-child { margin-top: 1.75rem; }
+#write > h3:first-child { margin-top: 1rem; }
+#write > h4:first-child { margin-top: 0.5rem; }
+h1 { font-weight: normal; line-height: 4rem; margin: 4rem 0px 1.75rem; padding: 20px 30px; text-align: center; text-transform: uppercase; }
+h2 { font-weight: normal; line-height: 3rem; margin: 3rem 0px 1.9375rem; padding: 0px 30px; text-align: center; text-transform: uppercase; }
+h3 { font-weight: normal; }
+h4 { font-weight: normal; }
+h5 { font-size: 1.125rem; font-weight: normal; }
+h6 { font-size: 1rem; font-weight: bold; }
+p { color: rgb(17, 17, 17); font-size: 1rem; line-height: 1.75rem; margin: 0px 0px 1.25rem; }
+#write > h3.md-focus::before { left: -1.875rem; top: 0.5rem; padding: 2px; }
+#write > h4.md-focus::before { left: -1.875rem; top: 0.3125rem; padding: 2px; }
+#write > h5.md-focus::before { left: -1.875rem; top: 0.25rem; padding: 2px; }
+#write > h6.md-focus::before { left: -1.875rem; top: 0.125rem; padding: 2px; }
+@media screen and (min-width: 48em) { 
+  .h1, h1 { font-size: 3.25rem; }
+  .h2, h2 { font-size: 2.298rem; }
+  .h3, h3 { font-size: 1.625rem; }
+  .h4, h4 { font-size: 1.25rem; }
+  .h5, h5 { font-size: 1.15rem; }
+  .h6, h6 { font-size: 1rem; }
+  #write > h4.md-focus::before, #write > h5.md-focus::before, #write > h6.md-focus::before { top: 1px; }
+  p { font-size: 1.25rem; line-height: 1.8; }
+  table { font-size: 1.25rem; }
+}
+@media screen and (max-width: 48em) { 
+  blockquote { margin-left: 1rem; margin-right: 0px; padding: 0.5em; }
+  .h1, h1 { font-size: 2.827rem; }
+  .h2, h2 { font-size: 1.999rem; }
+  .h3, h3 { font-size: 1.413rem; }
+  .h4, h4 { font-size: 1.25rem; }
+  .h5, h5 { font-size: 1.15rem; }
+  .h6, h6 { font-size: 1rem; }
+}
+a, .md-def-url { color: rgb(153, 0, 0); text-decoration: none; }
+a:hover { text-decoration: underline; }
+table { margin-bottom: 20px; }
+table th, table td { padding: 8px; line-height: 1.25rem; vertical-align: top; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); }
+table th { font-weight: bold; }
+table thead th { vertical-align: bottom; }
+table caption + thead tr:first-child th, table caption + thead tr:first-child td, table colgroup + thead tr:first-child th, table colgroup + thead tr:first-child td, table thead:first-child tr:first-child th, table thead:first-child tr:first-child td { border-top-width: 0px; }
+table tbody + tbody { border-top-width: 2px; border-top-style: solid; border-top-color: rgb(221, 221, 221); }
+code, pre.md-fences, .md-fences { border: 1px solid rgb(204, 204, 204); padding: 0.1em; font-size: 0.9em; margin-left: 0.2em; margin-right: 0.2em; }
+pre.md-fences { margin: 0px 0px 20px; font-size: 1em; padding: 0.4em 1em 0.3em; }
+.task-list { padding-left: 0px; }
+.task-list-item { padding-left: 2.125rem; }
+.task-list-item input { top: 3px; }
+.task-list-item input::before { content: ''; display: inline-block; width: 1rem; height: 1rem; vertical-align: middle; text-align: center; border: 1px solid gray; background-color: rgb(253, 253, 253); margin-left: 0px; margin-top: -0.5rem; }
+.task-list-item input:checked::before, .task-list-item input[checked]::before { content: '◼'; font-size: 0.8125rem; line-height: 0.9375rem; }
+blockquote { margin: 0px 0px 1.11111rem; padding: 0.5rem 1.11111rem 0px 1.05556rem; border-left-width: 1px; border-left-style: solid; border-left-color: gray; }
+blockquote, blockquote p { line-height: 1.6; color: rgb(111, 111, 111); }
+#write pre.md-meta-block { min-height: 30px; background-color: rgb(248, 248, 248); padding: 1.5em; font-size: 1em; margin: -40px -1000px 2em; color: rgb(153, 153, 153); border-left-width: 1000px; border-left-color: rgb(248, 248, 248); border-left-style: solid; border-right-width: 1000px; border-right-color: rgb(248, 248, 248); border-right-style: solid; background-position: initial initial; background-repeat: initial initial; }
+.MathJax_Display { font-size: 0.9em; margin-top: 0.5em; margin-bottom: 0px; }
+p.mathjax-block, .mathjax-block { padding-bottom: 0px; }
+.mathjax-block > .code-tooltip { bottom: 5px; box-shadow: none; }
+.md-image > .md-meta { padding-left: 0.5em; padding-right: 0.5em; }
+.md-image > img { margin-top: 2px; }
+.md-image > .md-meta:first-of-type::before { padding-left: 4px; }
+
+
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'><h3 ><a name='header-c1' class='md-header-anchor'></a>Fast-D dev 07/06/2015</h3><ul><li>新增dump调试方法</li><li>修复命令行convert bug</li></ul></div>
+</body>
+</html>
