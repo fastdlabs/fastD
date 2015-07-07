@@ -195,7 +195,7 @@ class BaseEvent
         if ('http' !== substr($url, 0, 4)) {
             $url = $this->getRequest()->getBaseUrl() . $url;
         }
-        return $url;
+        return $this->getRequest()->getHttpAndDomain() . $url;
     }
 
     /**
