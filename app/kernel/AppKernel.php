@@ -291,7 +291,7 @@ abstract class AppKernel extends Terminal
                 ->createLogger($this->container->get('kernel.config')->get('logger.access'))
                 ->addInfo($request->getPathInfo(), $context)
             ;
-        } else {
+        } else if(false === strpos($response->header->get('Content-Type'), 'application')) {
             $path = $request->getBaseUrl();
             if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
                 $path = pathinfo($path, PATHINFO_DIRNAME);

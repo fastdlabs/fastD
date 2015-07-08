@@ -56,7 +56,7 @@ class RestEvent extends BaseEvent
     {
         $this->headers = [
             'Version'   => $this->getVersion(),
-            'X-' . $this->getTitle() . '-Media-Type' => strtolower($this->getTitle() . '.' . $this->getVersion()),
+            'X-' . strtoupper($this->getTitle()) . '-Media-Type' => strtolower($this->getTitle() . '.' . $this->getVersion()),
         ];
     }
 

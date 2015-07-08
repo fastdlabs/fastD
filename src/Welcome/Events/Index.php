@@ -16,6 +16,7 @@ namespace Welcome\Events;
 use FastD\Debug\Exceptions\RedirectException;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
+use Kernel\Events\RestEvent;
 use Kernel\Events\TemplateEvent;
 
 /**
@@ -23,12 +24,11 @@ use Kernel\Events\TemplateEvent;
  *
  * @package Welcome\Controllers
  */
-class Index extends TemplateEvent
+class Index extends RestEvent
 {
     public function welcomeAction(Request $request)
     {
-        throw new RedirectException('shit', 'http://www.baidu.com');
-        return $this->render('welcome/welcome.twig');
+        return $this->responseJson(['a' => 'janhuang']);
     }
 
     public function viewAction()
