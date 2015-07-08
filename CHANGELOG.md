@@ -10,6 +10,8 @@
   
 - 修复 `http` 组件获取 `base url` bug
   
+- 修复 `RestEvent::responseJson` 方法输出html的问题
+  
 - 修复 `RedirectException` 不能跳转问题
   
   ​
