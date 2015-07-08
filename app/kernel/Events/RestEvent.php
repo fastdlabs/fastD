@@ -22,7 +22,7 @@ use FastD\Protocol\Http\JsonResponse;
  *
  * @package Kernel\Extensions
  */
-class REST extends BaseEvent
+class RestEvent extends BaseEvent
 {
     /**
      * @var string
@@ -32,7 +32,7 @@ class REST extends BaseEvent
     /**
      * @var string
      */
-    protected $title = '';
+    protected $title = 'fast-d';
 
     /**
      * @var string
@@ -55,9 +55,8 @@ class REST extends BaseEvent
     public function __construct()
     {
         $this->headers = [
-            'Accept'    => sprintf($this->getAccept(), $this->getTitle(), $this->getVersion()),
             'Version'   => $this->getVersion(),
-            'X-' . $this->getTitle() . '-Media-Type' => $this->getTitle() . '.' . $this->getVersion(),
+            'X-' . $this->getTitle() . '-Media-Type' => strtolower($this->getTitle() . '.' . $this->getVersion()),
         ];
     }
 
@@ -107,11 +106,11 @@ class REST extends BaseEvent
      */
     public function responseJson(array $responseData, $status  = Response::HTTP_OK, array $headers = array())
     {
-        if (null !== $this->getAllowOrigin()) {
-            $headers = array_merge($headers, [
-                'Access-Control-Allow-Origin' => $this->getAllowOrigin(),
-            ]);
-        }
+        $headers['Status'] = sprintf('%s %s', $status, Response::$statusTexts[$status]);
+        $headers['Access-Control-Allow-Origin'] = null === ($allowOrigin = $this->getAllowOrigin()) ? '*' : $allowOrigin;
+        $headers['Access-Control-Allow-Credentials'] = true;
+        $headers['Access-Control-Expose-Headers'] = 'ETag, Link';
+
         return new JsonResponse($responseData, $status, array_merge(
             $this->headers,
             $headers

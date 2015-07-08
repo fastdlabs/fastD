@@ -10,4 +10,6 @@
   
 - 修复 `http` 组件获取 `base url` bug
   
+- 修复 `RedirectException` 不能跳转问题
+  
   ​

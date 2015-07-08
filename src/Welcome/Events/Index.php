@@ -13,6 +13,7 @@
 
 namespace Welcome\Events;
 
+use FastD\Debug\Exceptions\RedirectException;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
 use Kernel\Events\TemplateEvent;
@@ -26,6 +27,7 @@ class Index extends TemplateEvent
 {
     public function welcomeAction(Request $request)
     {
+        throw new RedirectException('shit', 'http://www.baidu.com');
         return $this->render('welcome/welcome.twig');
     }
 
