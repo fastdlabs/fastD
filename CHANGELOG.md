@@ -13,3 +13,4 @@
 - 修复命令行 `Undefined setEnv|getEnv` 方法的bug
 - 修复 `Kernel\Commands\Generator` 和 `Kernel\Commands\RouteDump` 命令工具
 - 修复项目模块 `Commands` 目录找不到的bug
+- 新增 `Protocol\Http\Attribute::hasGet` 方法，包含四个参数. `name, default, raw, filter` 用于获取不存在的属性的时候，默认返回 `default` 参数
