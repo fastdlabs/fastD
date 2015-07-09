@@ -50,12 +50,14 @@ class RouteDump extends Command
 
         $output->writeln('');
 
-        if ('' == $input->getParameterOption('route')) {
+        $name = $input->getParameterArgument(0);
+
+        if ('' == $name) {
             $this->showRouteCollections($router, $output);
         } else {
-            $route = $router->getRoute($input->getParameterOption('route'));
+            $route = $router->getRoute($name);
             $output->write('Route [');
-            $output->write('"' . $input->getParameterOption('route') . '"', Output::STYLE_SUCCESS);
+            $output->write('"' . $name . '"', Output::STYLE_SUCCESS);
             $output->writeln(']');
             $output->writeln("Name:\t\t" . $route->getName());
             $output->writeln("Group:\t\t" . str_replace('//', '/', $route->getGroup()));

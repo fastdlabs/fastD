@@ -22,13 +22,19 @@ abstract class Terminal extends BaseEnvironment implements TerminalInterface, Ap
     {
         $bundles = array_merge($this->getBundles(), [new Bundle()]);
         foreach ($bundles as $bundle) {
-            if ($dh = opendir($bundle->getRootPath() . '/Commands')) {
+            $dir = $bundle->getRootPath() . '/Commands';
+            if (!is_dir($dir)) {
+                continue;
+            }
+            if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
                     if (in_array($file, ['.', '..'])) {
                         continue;
                     }
                     $fileName = $bundle->getNamespace() . '\\Commands\\' . pathinfo($file, PATHINFO_FILENAME);
-                    $this->setCommand(new $fileName);
+                    $command = new $fileName();
+                    $command->setEnv($this);
+                    $this->setCommand($command);
                 }
                 closedir($dh);
             }

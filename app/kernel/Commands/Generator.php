@@ -33,7 +33,6 @@ class Generator extends Command
     public function configure()
     {
         $this->setDescription('Thank for you use bundle generator tool.');
-        $this->setArguments('bundle', null, Command::ARG_REQUIRED);
     }
 
     /**
@@ -44,7 +43,7 @@ class Generator extends Command
     public function execute(Input $input, Output $output)
     {
         try {
-            $bundle = $input->getParameterOption('bundle');
+            $bundle = $input->getParameterArgument(0);
         } catch(\Exception $e) {
             $output->writeln('Bundle name is empty or null. Please you try again.');
             exit;
@@ -57,7 +56,7 @@ class Generator extends Command
 
         $bundle = str_replace(':', DIRECTORY_SEPARATOR, $bundle);
 
-        $source = $this->getProvider()->getRootPath() . '/../src';
+        $source = $this->getEnv()->getRootPath() . '/../src';
 
         $this->builderStructure($source, $bundle);
     }
@@ -74,6 +73,7 @@ class Generator extends Command
             'Repository',
             'Exceptions',
             'Commands',
+            'Services',
             'Resources/views',
             'Resources/config',
         ) as $dir) {
