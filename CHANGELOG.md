@@ -14,3 +14,10 @@
 - 修复 `Kernel\Commands\Generator` 和 `Kernel\Commands\RouteDump` 命令工具
 - 修复项目模块 `Commands` 目录找不到的bug
 - 新增 `Protocol\Http\Attribute::hasGet` 方法，包含四个参数. `name, default, raw, filter` 用于获取不存在的属性的时候，默认返回 `default` 参数
+
+
+### 07/10/2015
+
+- 修复 `FastD\Protocol\Http\File\Uploaded\Uploaded::upload` 获取文件失败的bug
+- 优化 `FastD\Protocol\Http\File\Uploaded\Uploaded::upload` 重复上传为空的问题
+- 增加 `FastD\Protocol\Http\File\File::getHash` 获取文件哈希值方法
