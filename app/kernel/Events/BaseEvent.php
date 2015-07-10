@@ -17,6 +17,7 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Database\Connection\ConnectionInterface;
 use FastD\Database\Database;
+use FastD\Database\Driver\Driver;
 use FastD\Debug\Debug;
 use FastD\Logger\Logger;
 use FastD\Protocol\Http\RedirectResponse;
@@ -124,7 +125,7 @@ class BaseEvent
      * get database connection driver
      *
      * @param string $connection
-     * @return ConnectionInterface
+     * @return Driver
      */
     public function getConnection($connection = null)
     {
