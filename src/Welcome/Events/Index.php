@@ -20,14 +20,15 @@ use Kernel\Events\RestEvent;
 use Kernel\Events\TemplateEvent;
 
 /**
- * Class IndexController
+ * Class Index
  *
- * @package Welcome\Controllers
+ * @package Welcome\Events
  */
 class Index extends RestEvent
 {
     public function welcomeAction(Request $request)
     {
+        echo $request->getRootPath();
         return $this->responseJson(['a' => 'janhuang']);
     }
 

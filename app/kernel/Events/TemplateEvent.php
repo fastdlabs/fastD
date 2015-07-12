@@ -84,7 +84,7 @@ class TemplateEvent extends BaseEvent
             try {
                 $host = $this->getParameters('assets.host');
             } catch (\InvalidArgumentException $e) {
-                $host = '//' . $this->getRequest()->getRootPath();
+                $host = '//' . $this->getRequest()->getDomain();
             }
         }
 
@@ -92,7 +92,7 @@ class TemplateEvent extends BaseEvent
             try {
                 $path = $this->getParameters('assets.path');
             } catch (\InvalidArgumentException $e) {
-                $path = $this->getRequest()->getBaseUrl();
+                $path = $this->getRequest()->getRootPath();
 
                 if ('' != pathinfo($path, PATHINFO_EXTENSION)) {
                     $path = pathinfo($path, PATHINFO_DIRNAME);

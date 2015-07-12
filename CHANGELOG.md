@@ -21,3 +21,9 @@
 - 修复 `FastD\Protocol\Http\File\Uploaded\Uploaded::upload` 获取文件失败的bug
 - 优化 `FastD\Protocol\Http\File\Uploaded\Uploaded::upload` 重复上传为空的问题
 - 增加 `FastD\Protocol\Http\File\File::getHash` 获取文件哈希值方法
+
+
+### 07/12/2015
+
+- 添加 `FastD\Protocol\Http\Attribute\ServerAttribute::getRootPath` 方法，获取 `baseUrl` 的目录
+- 修复 `Kernel\Events\TemplateEvent::asset` 模板函数
