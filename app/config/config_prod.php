@@ -49,8 +49,10 @@ return [
         'path' => 'public'*/
     ],
 
-    // 错误提示
-    'errors' => [
-        '404' => 'errors/404.html.twig',
+    // 错误页面配置
+    'error' => [
+        'page' => [
+            404 => __DIR__ . '/../views/errors/404.html'
+        ],
     ],
 ];

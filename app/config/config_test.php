@@ -48,4 +48,10 @@ return [
         /*'host' => 'http://baidu.com',
         'path' => 'public'*/
     ],
+    // 错误页面配置
+    'error' => [
+        'page' => [
+            404 => null,
+        ],
+    ],
 ];

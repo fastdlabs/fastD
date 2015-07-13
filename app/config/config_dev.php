@@ -12,9 +12,6 @@
  */
 
 return [
-    'demo' => [
-        'name' => '%date%'
-    ],
     // 数据库配置
     'database' => [
         'write' => [
@@ -50,5 +47,11 @@ return [
     'assets' => [
         /*'host' => 'http://baidu.com',
         'path' => 'public'*/
+    ],
+    // 错误页面配置
+    'error' => [
+        'page' => [
+            404 => null
+        ],
     ],
 ];
