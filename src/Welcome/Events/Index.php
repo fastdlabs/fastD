@@ -13,11 +13,9 @@
 
 namespace Welcome\Events;
 
-use FastD\Debug\Exceptions\RedirectException;
 use FastD\Protocol\Http\JsonResponse;
 use FastD\Protocol\Http\Request;
 use Kernel\Events\RestEvent;
-use Kernel\Events\TemplateEvent;
 
 /**
  * Class Index
@@ -28,7 +26,6 @@ class Index extends RestEvent
 {
     public function welcomeAction(Request $request)
     {
-        echo $request->getRootPath();
         return $this->responseJson(['a' => 'janhuang']);
     }
 

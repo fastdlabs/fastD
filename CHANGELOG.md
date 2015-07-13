@@ -27,3 +27,10 @@
 
 - 添加 `FastD\Protocol\Http\Attribute\ServerAttribute::getRootPath` 方法，获取 `baseUrl` 的目录
 - 修复 `Kernel\Events\TemplateEvent::asset` 模板函数
+
+
+### 07/13/2015
+
+- 优化 `FastD\Protocol\Http\Attribute\ServerAttribute::getBaseUrl` 方法。
+- 修复 `debug bar javascript resources conflict` 的问题
+- 修复 `FastD\Routing\Matcher\RouteMatcher::match` 迭代器bug
