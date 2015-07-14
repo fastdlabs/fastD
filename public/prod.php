@@ -22,7 +22,7 @@ $app = new Application('prod');
 
 $app->boot();
 
-$request = \FastD\Protocol\Http\Request::createRequestHandle();
+$request = \FastD\Http\Request::createRequestHandle();
 
 $response = $app->handleHttpRequest($request);
 

@@ -13,8 +13,8 @@
 
 namespace Kernel;
 
-use FastD\Protocol\Http\Request;
-use FastD\Protocol\Http\Response;
+use FastD\Http\Request;
+use FastD\Http\Response;
 
 /**
  * Interface TerminalInterface

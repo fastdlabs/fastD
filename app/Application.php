@@ -21,7 +21,6 @@ class Application extends Kernel\AppKernel
     {
         return array(
             new \Welcome\Boot(),
-            new \Api\V1\Boot(),
         );
     }
 

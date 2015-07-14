@@ -34,3 +34,10 @@
 - 优化 `FastD\Protocol\Http\Attribute\ServerAttribute::getBaseUrl` 方法。
 - 修复 `debug bar javascript resources conflict` 的问题
 - 修复 `FastD\Routing\Matcher\RouteMatcher::match` 迭代器bug
+- `Protocol` 组件正式更名为 `Http` 组件
+
+
+### 07/14/2015
+
+- 修复并优化 `FastD\Database\Pagination\QueryPagination` 分页对象 `showPage && showList` 参数冲突。
+- 添加 `FastD\Database\Repository\Repository::pagination($page, $showList, $showPage, $lastId)`  方法，用于查询分页。

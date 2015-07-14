@@ -14,8 +14,8 @@
 
 namespace Kernel\Events;
 
-use FastD\Protocol\Http\Response;
-use FastD\Protocol\Http\JsonResponse;
+use FastD\Http\Response;
+use FastD\Http\JsonResponse;
 
 /**
  * Class REST

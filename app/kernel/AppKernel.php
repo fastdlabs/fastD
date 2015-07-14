@@ -16,8 +16,8 @@ namespace Kernel;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Debug\Debug;
-use FastD\Protocol\Http\Request;
-use FastD\Protocol\Http\Response;
+use FastD\Http\Request;
+use FastD\Http\Response;
 
 /**
  * Class AppKernel
@@ -54,7 +54,7 @@ abstract class AppKernel extends Terminal
         'kernel.logger'     => 'FastD\\Logger\\Logger',
         'kernel.database'   => 'FastD\\Database\\Database',
         'kernel.storage'    => 'FastD\\Storage\\StorageManager',
-        'kernel.request'    => 'FastD\\Protocol\\Http\\Request::createRequestHandle',
+        'kernel.request'    => 'FastD\\Http\\Request::createRequestHandle',
     );
 
     /**

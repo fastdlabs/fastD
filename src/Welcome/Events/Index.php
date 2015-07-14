@@ -13,8 +13,8 @@
 
 namespace Welcome\Events;
 
-use FastD\Protocol\Http\JsonResponse;
-use FastD\Protocol\Http\Request;
+use FastD\Http\JsonResponse;
+use FastD\Http\Request;
 use Kernel\Events\RestEvent;
 
 /**

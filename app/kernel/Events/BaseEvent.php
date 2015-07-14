@@ -15,13 +15,12 @@ namespace Kernel\Events;
 
 use FastD\Config\Config;
 use FastD\Container\Container;
-use FastD\Database\Connection\ConnectionInterface;
 use FastD\Database\Database;
 use FastD\Database\Driver\Driver;
 use FastD\Debug\Debug;
 use FastD\Logger\Logger;
-use FastD\Protocol\Http\RedirectResponse;
-use FastD\Protocol\Http\Request;
+use FastD\Http\RedirectResponse;
+use FastD\Http\Request;
 use FastD\Routing\Router;
 use FastD\Storage\StorageManager;
 
