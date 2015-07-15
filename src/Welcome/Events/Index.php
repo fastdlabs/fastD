@@ -26,7 +26,7 @@ class Index extends RestEvent
 {
     public function __initialize()
     {
-        
+
     }
 
     public function welcomeAction(Request $request)
