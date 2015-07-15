@@ -18,6 +18,7 @@ use FastD\Container\Container;
 use FastD\Debug\Debug;
 use FastD\Http\Request;
 use FastD\Http\Response;
+use Kernel\Events\BaseEvent;
 
 /**
  * Class AppKernel
@@ -251,9 +252,14 @@ abstract class AppKernel extends Terminal
         }
 
         $event = $this->container->set('callback', $event)->get('callback');
-        if (method_exists($event, 'setContainer')) {
+        if ($event instanceof BaseEvent) {
             $event->setContainer($this->container);
         }
+
+        if (method_exists($event, '__initialize')) {
+            $this->container->getProvider()->callServiceMethod($event, '__initialize');
+        }
+
         $response = $this->container->getProvider()->callServiceMethod($event, $handle, $route->getParameters());
 
         if ($response instanceof Response) {
