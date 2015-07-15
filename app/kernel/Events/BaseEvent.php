@@ -196,7 +196,7 @@ class BaseEvent
             $url = ('/' === ($path = $this->getRequest()->getBaseUrl()) ? '' : $path) . $url;
             $url = str_replace('//', '/', $url);
         }
-        return $url;
+        return $this->getRequest()->getSchemeAndHttpAndHost() . $url;
     }
 
     /**

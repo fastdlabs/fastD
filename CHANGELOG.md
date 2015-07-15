@@ -34,12 +34,17 @@
 - 优化 `FastD\Protocol\Http\Attribute\ServerAttribute::getBaseUrl` 方法。
 - 修复 `debug bar javascript resources conflict` 的问题
 - 修复 `FastD\Routing\Matcher\RouteMatcher::match` 迭代器bug
-- `Protocol` 组件正式更名为 `Http` 组件，原 `Protocol` 即将废弃 
+- `Protocol` 组件正式更名为 `Http` 组件，原 `Protocol` 即将废弃
 
 
 ### 07/14/2015
 
 - 修复并优化 `FastD\Database\Pagination\QueryPagination` 分页对象 `showPage && showList` 参数冲突。
 - 添加 `FastD\Database\Repository\Repository::pagination($page, $showList, $showPage, $lastId)`  方法，用于查询分页。
--  修复 `FastD\Database\Pagination\QueryPagination::getResult->offset= 0` 的bug
+- 修复 `FastD\Database\Pagination\QueryPagination::getResult->offset= 0` 的bug
 - 调整 `FastD\Debug\Exceptions\JsonException::__construct(array $message, int $code)` 构造参数
+
+
+### 07/15/2015
+
+- 新增 `__initialize` 方法，用于事件初始化后操作.
