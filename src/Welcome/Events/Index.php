@@ -14,25 +14,27 @@
 namespace Welcome\Events;
 
 use FastD\Framework\Events\RestEvent;
+use FastD\Framework\Events\TemplateEvent;
 use FastD\Http\JsonResponse;
 use FastD\Http\Request;
 use Helpers\Demo\Test;
+use Welcome\Helpers\Demo;
 
 /**
  * Class Index
  *
  * @package Welcome\Events
  */
-class Index extends RestEvent
+class Index extends TemplateEvent
 {
     public function __initialize()
     {
 
     }
 
-    public function welcomeAction(Test $test)
+    public function welcomeAction(Request $request, Demo $demo)
     {
-        return $this->responseJson(['a' => $test]);
+        return $this->render('welcome/welcome.twig');
     }
 
     public function viewAction()

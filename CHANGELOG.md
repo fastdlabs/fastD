@@ -52,3 +52,12 @@
 
 ### 07/18/2015
 
+- 新增 `fastd/framework` 组件包，用于整合框架常用资源，方便快速创建的自己的框架和模块
+- 优化 `FastD\Http\Attribute\ServerAttribute::getBaseUrl` 地址显示
+- 调整 `composer.json` 加载选项
+- 修复 `FastD\Container\ServiceProvider::getServiceName` `Class not found`  bug
+- 整合 `fastd/framework` 到 `fastd/fastd` 中，并为原来框架和目录结构瘦身。优化目录结构和自动加载选项
+- 优化路由自动加载选项
+- 调整全局配置 `app/config/config` => `app/config/global.php`
+- 新增模块配置选项 `[ModuleName]/Resources/config/config.php`， 可以为不同模块配置不同信息
+- 修复路由映射控制器对象参数依赖注入问题

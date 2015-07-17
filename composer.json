@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "fastd/framework": "dev-dev",
+        "fastd/framework": "~0.1.0, 0.1.*",
         "fastd/swoole": "dev-dev"
     },
     "config": {
