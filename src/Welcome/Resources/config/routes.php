@@ -16,3 +16,9 @@ Routes::get('/welcome', 'Welcome\\Events\\Index@welcomeAction');
 Routes::get('/view', 'Welcome\\Events\\Index@viewAction');
 Routes::get('/di', 'Welcome\\Events\\Index@diAction');
 Routes::get('/db', 'Welcome\\Events\\Index@dbAction');
+Routes::group('/api', function() {
+    Routes::group('/v1', function () {
+        Routes::get('/db', 'Welcome\\Events\\Index@dbAction');
+    });
+    Routes::get('/di', 'Welcome\\Events\\Index@diAction');
+});

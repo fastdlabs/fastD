@@ -28,7 +28,7 @@ abstract class Terminal extends BaseEnvironment implements TerminalInterface, Ap
             }
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
-                    if (in_array($file, ['.', '..'])) {
+                    if (in_array($file, ['.', '..']) || is_dir($dir. DIRECTORY_SEPARATOR . $file)) {
                         continue;
                     }
                     $fileName = $bundle->getNamespace() . '\\Commands\\' . pathinfo($file, PATHINFO_FILENAME);
