@@ -39,6 +39,9 @@
     "extra": {
         "web": "public"
     },
+    "bin": [
+        "app/console"
+    ],
     "autoload": {
         "psr-4": {
             "": "src",

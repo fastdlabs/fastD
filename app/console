@@ -18,7 +18,14 @@ date_default_timezone_set('PRC');
 
 $loader = include __DIR__ . '/../vendor/autoload.php';
 
-include __DIR__ . '/Application.php';
+foreach ([
+             __DIR__ . '/Application.php',
+             __DIR__ . '/../app/Application.php',
+         ] as $app) {
+    if (file_exists($app)) {
+        include $app; break;
+    }
+}
 
 $argvInput = new \FastD\Console\ArgvInput();
 
