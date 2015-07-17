@@ -186,6 +186,13 @@ abstract class AppKernel extends Terminal
 
         $this->registerConfiguration($config);
 
+        foreach ($this->getBundles() as $bundle) {
+            $file = $bundle->getRootPath() . '/Resources/config/config.php';
+            if (file_exists($file)) {
+                $config->load($file);
+            }
+        }
+
         $this->container->set('kernel.config', $config);
 
         unset($config);
