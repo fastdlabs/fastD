@@ -18,9 +18,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
+        "php": ">=5.4.0",
         "fastd/http": "dev-dev",
         "fastd/routing": "dev-dev",
         "fastd/database": "dev-dev",
