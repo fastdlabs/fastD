@@ -61,3 +61,4 @@
 - 调整全局配置 `app/config/config` => `app/config/global.php`
 - 新增模块配置选项 `[ModuleName]/Resources/config/config.php`， 可以为不同模块配置不同信息
 - 修复路由映射控制器对象参数依赖注入问题
+- 修复命令行扫描bug
