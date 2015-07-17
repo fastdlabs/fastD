@@ -18,20 +18,8 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
-        "fastd/http": "dev-dev",
-        "fastd/routing": "dev-dev",
-        "fastd/database": "dev-dev",
-        "fastd/container": "dev-dev",
-        "fastd/config": "dev-dev",
-        "fastd/storage": "dev-dev",
-        "fastd/logger": "dev-dev",
-        "fastd/console": "dev-dev",
-        "fastd/finder": "dev-dev",
-        "fastd/debug": "dev-dev",
-        "fastd/template": "dev-dev"
+        "php": ">=5.4.0",
+        "fastd/framework": "dev-dev"
     },
     "config": {
         "bin-dir": "bin"
@@ -41,12 +29,5 @@
     },
     "bin": [
         "app/console"
-    ],
-    "autoload": {
-        "psr-4": {
-            "": "src",
-            "Kernel\\": "app/kernel",
-            "Helpers\\": "app/helpers"
-        }
-    }
+    ]
 }
