@@ -14,9 +14,7 @@
 /**
  * The local develop environment index.
  */
-$loader = include __DIR__ . '/../vendor/autoload.php';
-
-include __DIR__ . '/../app/Application.php';
+include __DIR__ . '/../vendor/autoload.php';
 
 $app = new Application('dev');
 

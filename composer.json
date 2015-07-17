@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "fastd/framework": "dev-dev"
+        "fastd/framework": "dev-dev",
+        "fastd/swoole": "dev-dev"
     },
     "config": {
         "bin-dir": "bin"
@@ -29,5 +30,13 @@
     },
     "bin": [
         "app/console"
-    ]
+    ],
+    "autoload": {
+        "files": [
+            "app/Application.php"
+        ],
+        "psr-4": {
+            "": "src"
+        }
+    }
 }

@@ -13,9 +13,10 @@
 
 namespace Welcome\Events;
 
+use FastD\Framework\Events\RestEvent;
 use FastD\Http\JsonResponse;
 use FastD\Http\Request;
-use Kernel\Events\RestEvent;
+use Helpers\Demo\Test;
 
 /**
  * Class Index
@@ -29,9 +30,9 @@ class Index extends RestEvent
 
     }
 
-    public function welcomeAction(Request $request)
+    public function welcomeAction(Test $test)
     {
-        return $this->responseJson(['a' => 'janhuang']);
+        return $this->responseJson(['a' => $test]);
     }
 
     public function viewAction()
