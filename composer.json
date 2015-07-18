@@ -26,7 +26,10 @@
         "bin-dir": "bin"
     },
     "extra": {
-        "web": "public"
+        "web": "public",
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
     },
     "bin": [
         "app/console"
