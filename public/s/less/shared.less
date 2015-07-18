@@ -1,0 +1,170 @@
+
+// Body modifications
+body {
+	overflow-x: hidden;
+	.body-font;
+}
+
+// Container Modifications
+@media (max-width: 768px) {
+	.container {
+		width: 95%;
+	}
+}
+
+// @media (min-width: 1200px) {
+// 	.container {
+// 		width: 1050px;
+// 	}
+// }
+
+// Global Components
+.text-muted {
+	color: @gray;
+}
+
+.text-primary {
+	color: @brand-primary;
+}
+
+.text-danger {
+	color: @brand-danger;
+}
+
+p {
+	font-size: 14px;
+	line-height: 1.75;
+}
+
+p.large {
+	font-size: 16px;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+	outline: none;
+}
+
+a {
+	color: @brand-primary;
+}
+
+a:hover,
+a:focus,
+a:active,
+a.active {
+	color: darken(@brand-primary, 10%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	.body-font;
+	font-weight: 400;
+}
+
+// img utility
+.img-centered {
+	margin: 0 auto;
+}
+
+// BGs 
+.bg-white {
+	background-color: #FFF;
+}
+.bg-light {
+	background-color: #fafafa;
+}
+.bg-dark {
+	background-color: @gray-darkest;
+}
+
+.btn {
+	color: #FFF;
+}
+
+// Buttons
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn:active:focus {
+	outline: none;
+}
+
+// Restyled Button
+.btn-primary {
+	.button-variant(white; @brand-primary; @brand-primary);
+}
+
+// transparent button
+.btn-tp {
+	background: rgba(80, 162, 229, 1);
+}
+// wire button (no bg white 2px border)
+.btn-wire {
+	background: none;
+	border: 2px solid #FFF;
+	padding: 15px 47px;
+	&:hover,
+	&:focus {
+		color: #FFF;
+		background: rgba(255,255,255,0.1);
+	}
+}
+
+// Button Size
+.btn-xl {
+	font-weight: 600;
+	border-radius: 3px;
+	font-size: 18px;
+	padding: 20px 40px;
+}
+
+// Social Buttons
+ul.social-buttons {
+	margin-bottom: 0;
+	li {
+		a {
+			display: block;
+			height: 30px;
+			width: 25px;
+			font-size: 20px;
+			line-height: 30px;
+			color: #888;
+			outline: none;
+	        -webkit-transition: all 0.3s;
+	        -moz-transition: all 0.3s;
+	        transition: all 0.3s;
+	        &:hover,
+	        &:focus,
+	        &:active {
+				// background-color: @brand-primary;
+	        }
+		}
+	}
+}
+
+// Highlight Color Customization
+
+::-moz-selection {
+    text-shadow: none;
+    background: @brand-primary;
+}
+
+::selection {
+    text-shadow: none;
+    background: @brand-primary;
+}
+
+img::selection {
+    background: transparent;
+}
+
+img::-moz-selection {
+    background: transparent;
+}
+
+body {
+    webkit-tap-highlight-color: @brand-primary;
+}

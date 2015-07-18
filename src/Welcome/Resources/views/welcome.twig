@@ -1,0 +1,316 @@
+{% extends 'layout/simple.twig' %}
+{% block content %}
+
+    <section id="hero">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in"><img src="{{ asset('s/img/logo.jpg') }}" style="width: 250px;" alt="logo"/></div>
+                <div class="intro-heading"><h1 class="section-heading mt50"><span>Simple & Flexible</span> PHP Framework</h1></div>
+                <a href="http://www.fast-d.cn/#services" class="page-scroll btn mr30 btn-wire">快速开始</a>
+                <a href="http://www.fast-d.cn/documentation.html" class="page-scroll btn btn-wire">文档</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="services" class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="section-heading">快速上手</h2>
+                    <h3 class="section-subheading text-muted">简单配置即可轻松上手</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">路由&事件绑定</h4>
+                    <h5 class="section-subheading text-muted">配置最简单的路由并绑定事件处理对象</h5>
+                    <pre class="bg-white">
+                        <code class="php ">
+                            &lt;?php
+
+                            Routes::get(&#x27;/&#x27;, &#x27;Welcome\\Events\\Index@welcomeAction&#x27;);
+                        </code>
+                    </pre>
+
+                </div>
+
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">事件响应</h4>
+                    <h5 class="section-subheading text-muted">事件处理对象，必须返回一个字符串或者 <code>FastD\Protocol\Http\Response</code> 对象</h5>
+                       <pre class="bg-white">
+                    <code class="php ">
+                        &lt;?php
+
+                        namespace Welcome\Events;
+
+                        use Kernel\Events\EventAbstract;
+
+                        /**
+                        * Class Index
+                        *
+                        * @package Welcome\Events
+                        */
+                        class Index extends TemplateEvent
+                        {
+                        public function welcomeAction()
+                        {
+                        return &#x27;welcome&#x27;;
+                        }
+                        }
+                    </code>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="routes">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="section-heading mt70">路由操作</h2>
+                    <h3 class="section-subheading text-muted mb30">为每个访问都配置一个指定的地址</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">基础路由</h4>
+                    <h5 class="section-subheading text-muted">基础的 GET, POST, PUT, DELETE 路由</h5>
+                        <pre class="bg-light">
+                    <code class="php ">
+                        &lt;?php
+
+                        Routes::get(&#x27;/&#x27;, &#x27;事件绑定&#x27;);
+
+                        Routes::post(&#x27;/&#x27;, &#x27;事件绑定&#x27;);
+
+                        Routes::put(&#x27;/&#x27;, &#x27;事件绑定&#x27;);
+
+                        Routes::delete(&#x27;/&#x27;, &#x27;事件绑定&#x27;);
+                    </code>
+                </pre>
+                </div>
+
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">路由组</h4>
+                    <h5 class="section-subheading text-muted">给不同的路由归纳给同一个路由组</h5>
+                       <pre class="bg-light">
+                    <code class="php ">
+                        &lt;?php
+
+                        Routes::group(&#x27;/api&#x27;, function () {
+                        Routes::get(&#x27;/v1&#x27;, &#x27;事件绑定&#x27;); // /api/v1
+                        });
+
+                        // 多层嵌套
+                        Routes::group(&#x27;/api&#x27;, function () {
+                        Routes::group(&#x27;/v1&#x27;, function () {
+                        Routes::get(&#x27;/welcome&#x27;, &#x27;事件绑定&#x27;);
+                        });
+                        });
+                    </code>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="template" class="bg-light">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="section-heading mt70">视图操作</h2>
+                    <h3 class="section-subheading text-muted mb30">让界面更加多姿多彩</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">事件响应视图</h4>
+                    <h5 class="section-subheading text-muted">视图目录在 <code>app/views</code> 和每个子项目下的 <code>Module/Resources/views</code></h5>
+                        <pre class="bg-white">
+                    <code class="php">
+                        &lt;?php
+
+                        namespace Welcome\Events;
+
+                        use Kernel\Events\TemplateEvent;
+
+                        // 视图操作针对响应事件里面操作
+
+                        /**
+                        * Class Index
+                        *
+                        * @package Welcome\Events
+                        */
+                        class Index extends TemplateEvent
+                        {
+                        public function welcomeAction()
+                        {
+                        return $this-&gt;render(&#x27;welcome/welcome.html.twig&#x27;);
+                        }
+                        }
+                    </code>
+                </pre>
+                </div>
+
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">以json返回方式响应请求</h4>
+                    <h5 class="section-subheading text-muted">不需要依赖视图，仅需要通过 <code>json</code> 信息响应，多用于 <code>api</code> 接口</h5>
+                       <pre class="bg-white">
+                    <code class="php ">
+                        &lt;?php
+
+                        namespace Welcome\Events;
+
+                        use Kernel\Events\EventAbstract;
+                        use FastD\Protocol\Http\JsonResponse;
+
+                        /**
+                        * Class Index
+                        *
+                        * @package Welcome\Events
+                        */
+                        class Index extends EventAbstract
+                        {
+                        public function welcomeAction()
+                        {
+                        return new JsonResponse([&#x27;message&#x27; =&gt; &#x27;hello world;&#x27;]);
+                        }
+                        }
+                    </code>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="database">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading mt20">数据库管理</h2>
+                    <h3 class="section-subheading text-muted">操作数据库更加灵活</h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">数据库配置</h4>
+                    <h5 class="section-subheading text-muted">数据库仅支持多库配置。如下配置了 <code>read, write</code> 两个库</h5>
+                        <pre class="bg-light">
+                    <code class="php ">
+                        &lt;?php
+
+                        return [
+                        // 数据库配置
+                        &#x27;database&#x27; =&gt; [
+                        &#x27;write&#x27; =&gt; [
+                        &#x27;database_type&#x27;     =&gt; &#x27;mysql&#x27;,
+                        &#x27;database_host&#x27;     =&gt; &#x27;localhost&#x27;,
+                        &#x27;database_port&#x27;     =&gt; 3306,
+                        &#x27;database_user&#x27;     =&gt; &#x27;root&#x27;,
+                        &#x27;database_pwd&#x27;      =&gt; &#x27;&#x27;,
+                        &#x27;database_charset&#x27;  =&gt; &#x27;utf8&#x27;,
+                        &#x27;database_name&#x27;     =&gt; &#x27;test&#x27;,
+                        &#x27;database_prefix&#x27;   =&gt; &#x27;&#x27;
+                        ],
+                        &#x27;read&#x27; =&gt; [
+                        &#x27;database_type&#x27;     =&gt; &#x27;mysql&#x27;,
+                        &#x27;database_host&#x27;     =&gt; &#x27;localhost&#x27;,
+                        &#x27;database_port&#x27;     =&gt; 3306,
+                        &#x27;database_user&#x27;     =&gt; &#x27;root&#x27;,
+                        &#x27;database_pwd&#x27;      =&gt; &#x27;&#x27;,
+                        &#x27;database_charset&#x27;  =&gt; &#x27;utf8&#x27;,
+                        &#x27;database_name&#x27;     =&gt; &#x27;&#x27;,
+                        &#x27;database_prefix&#x27;   =&gt; &#x27;&#x27;
+                        ],
+                        ],
+                        ];
+                    </code>
+                </pre>
+                </div>
+
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x hidden">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">获取数据库</h4>
+                    <h5 class="section-subheading text-muted">通过数据库对象获取不同连接的数据库</h5>
+                    <p class="text-muted">
+                       <pre class="bg-light">
+                    <code class="php ">
+                        &lt;?php
+
+                        namespace Welcome\Events;
+
+                        use Kernel\Events\EventAbstract;
+
+                        /**
+                        * Class Index
+                        *
+                        * @package Welcome\Events
+                        */
+                        class Index extends EventAbstract
+                        {
+                        public function welcomeAction()
+                        {
+                        $read = $this-&gt;getConnection(&#x27;read&#x27;);
+
+                        $write = $this-&gt;getConnection(&#x27;write&#x27;);
+
+                        // some query code...
+
+                        return &#x27;welcome&#x27;;
+                        }
+                        }
+                    </code>
+                </pre>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="clients" class="bg-light">
+        <div class="container mw1000">
+            <div class="row">
+                <div class="client-logo">
+                    <a href="https://github.com/JanHuang/fastD">
+                        <img src="{{ asset('s/img/external/2.png') }}" class="img-responsive img-centered mw100" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

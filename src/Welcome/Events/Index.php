@@ -13,12 +13,7 @@
 
 namespace Welcome\Events;
 
-use FastD\Framework\Events\RestEvent;
 use FastD\Framework\Events\TemplateEvent;
-use FastD\Http\JsonResponse;
-use FastD\Http\Request;
-use Helpers\Demo\Test;
-use Welcome\Helpers\Demo;
 
 /**
  * Class Index
@@ -27,53 +22,8 @@ use Welcome\Helpers\Demo;
  */
 class Index extends TemplateEvent
 {
-    public function __initialize()
+    public function welcomeAction()
     {
-
-    }
-
-    public function welcomeAction(Request $request, Demo $demo)
-    {
-        return $this->render('welcome/welcome.twig');
-    }
-
-    public function viewAction()
-    {
-        return 'demo';
-    }
-
-    public function diAction(Request $request)
-    {
-        return new JsonResponse($request->query->all());
-    }
-
-    public function dbAction()
-    {
-        $read = $this->getConnection('read');
-
-        return $read->getConnectionInfo();
-    }
-
-    public function oneAction(Request $request)
-    {
-        return new JsonResponse($request->header->all());
-    }
-
-    public function twoAction(Request $request)
-    {
-        return $request->createRequest($this->generateUrl('/one'))->delete();
-    }
-
-    public function uploadAction(Request $request)
-    {
-        $files = $request
-            ->getUploader([
-                'save.path' => $this->get('kernel')->getRootPath().'/storage/cache',
-                'max.size' => '10M',
-            ])
-            ->uploading()
-            ->getUploadFiles();
-
-        return new JsonResponse($files);
+        return $this->render('Welcome/Resources/views/welcome.twig');
     }
 }

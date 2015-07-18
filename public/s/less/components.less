@@ -1,0 +1,241 @@
+
+// Topbar Menu 
+.topbar-nav {
+	display: none;
+	width: 100%;
+	height: 35px;
+	padding: 8px 0;
+	background: #f9f9f9;
+	border-bottom: 1px solid #EEE;
+	margin-bottom: 14px;
+	font-size: 12px;
+	color: #AAA;
+
+	// topbar links
+	li > a {
+		color: #AAA;
+	}
+	// left topbar
+	.topbar-left {
+		float: left;
+		li {
+			margin-right: 5px;
+			margin-top: 1px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		li span {
+			padding-right: 5px;
+		}
+	}
+	// right topbar
+	.topbar-right {
+		float: right;
+		li {
+			margin-right: 10px;
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		li a {
+			font-size: 15px;
+		}
+	}
+
+}
+
+// Custom Navigation Bar
+.navbar-default {
+	background-color: #FFF;
+	border-color: transparent;
+	margin-bottom: 0;
+
+	// Branding
+	.navbar-brand {
+		color: #555;
+		font-size: 20px;
+		font-weight: 600;
+		letter-spacing: 1.4px;
+		line-height: 26px;
+		padding: 10px 15px;
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+        	color: #555;
+        	text-decoration: underline;
+        }
+	}
+
+	// Collapse
+	.navbar-collapse {
+		border-color: fade(white, 2%);
+	}
+
+	// Collapsed Toggle
+	.navbar-toggle {
+		background-color: @brand-primary;
+		border-color: @brand-primary;
+		.icon-bar {
+			background-color: white;
+		}
+		&:hover,
+		&:focus {
+			background-color: @brand-primary;
+		}
+	}
+
+	// Menu items
+    .nav {
+    	li a {
+			.nav-font;
+			color: #666;
+			font-weight: 500;
+			font-size: 14px;
+			letter-spacing: 1.2px;
+			text-transform: uppercase;
+			padding: 12px 15px;
+
+			&:hover,
+			&:focus {
+				color: #666;
+				outline: none;
+			}
+    	}
+    }
+
+    // Menu Item States
+	.navbar-nav > .active > a {
+		border-radius: 0;
+		color: #666;
+		background-color: transparent;
+	}
+
+	// Menu Item :hover:focus
+	.navbar-nav > .active > a:hover,
+	.navbar-nav > .active > a:focus {
+		color: white;
+		background-color: darken(@brand-primary, 10%);
+	}
+}
+
+@media(min-width:768px) {
+    .navbar-default {
+		z-index: 150;
+		position: absolute;
+	    width: 100%;
+    	background-color: transparent;
+        padding: 25px 0 25px;
+        border: none;
+    	transition: top ease 0.2s; 
+	    .navbar-brand {
+	    	color: #FFF;
+	        font-size: 2em;
+	        line-height: 20px;
+			&:hover,
+			&:focus {
+				color: #FFF;
+				outline: none;
+			}
+	    }
+		// Menu items
+	    .nav {
+	    	li a {
+				.nav-font;
+				color: #FFF;
+				font-weight: 500;
+				font-size: 14px;
+				letter-spacing: 1.2px;
+				text-transform: uppercase;
+				padding: 12px 15px;
+
+				&:hover,
+				&:focus {
+					color: #FFF;
+					outline: none;
+				}
+	    	}
+	    }
+	    .navbar-right {
+	    	margin-top: 8px;
+	    }
+		.navbar-nav > .active > a {
+			border-radius: 3px;
+		}
+    }
+    // Convert to fixed menu with white bg
+    .navbar-default.navbar-shrink {
+    	position: fixed;
+    	top: -100px;
+    	background-color: #fff;
+        padding: 22px 0;
+    	border-radius: 0; 
+    	background: #fcfcfc;
+    	border-bottom: 1px solid #EEE;
+		.navbar-brand {
+			height: 40px;
+			color: #555;
+	        font-size: 1.5em;
+	        line-height: 18px;
+	    } 
+	    .navbar-right {
+	    	margin-top: 3px;
+	    }
+	    .nav {
+	    	li {
+	    		a {
+	    			color: #999;
+	    			padding: 8px 12px;
+	    			margin-left: 7px;
+	    			text-transform: none;
+	    			&:hover,
+	    			&:focus {
+	    				color: #333;
+	    				background: transparent;
+	    			}
+	    		}
+	    	}
+	    }
+	    .navbar-nav > .active > a {
+	    	position: relative;
+			color: #555;
+			&:hover,
+			&:focus {
+				color: #333;
+				background: transparent;
+			}
+			&:after {
+				content: "";
+				position: absolute;
+				top: -25px;
+				left: 0;
+				width: 100%;
+				height: 3px;
+				background: @brand-primary;
+			}
+		}
+	}
+	// Show menu
+    .navbar-default.navbar-shrink-scroll {
+    	top: 0;
+	}
+
+}
+
+
+// Footer
+footer {
+	color: #FFF;
+	background: #2f3740;
+	padding: 15px 0;
+	span.copyright {
+		line-height: 30px;
+		text-transform: none;
+	}
+	ul.quicklinks {
+		margin-bottom: 0;
+		line-height: 30px;
+		text-transform: none;
+	}
+}

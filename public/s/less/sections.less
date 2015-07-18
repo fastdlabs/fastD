@@ -1,0 +1,411 @@
+
+
+// Content Hero
+#hero {
+	position: relative;
+	text-align: center;
+	color: white;
+	// height: 100vh;
+	height: 70vh;
+	min-height: 550px;
+
+	// img background
+	&:before {
+		z-index: -2;
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		// background-image: url('../img/patterns/polygon/6.png');
+		background-image: url('../img/hero_low-res.jpg');
+		background-repeat: none;
+		background-attachment: scroll;
+		background-position: center center;
+		.background-cover;
+	}
+	// darken overlay
+	&:after {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		// background-color: rgba(0,0,0, 0.5);
+		background-color: rgba(60,83,111, 0.85);
+	}
+
+	.intro-text {
+			padding-top: 200px;
+			padding-bottom: 225px;
+		.intro-lead-in {
+				.serif-font;
+				font-style: italic;
+				font-size: 26px;
+				line-height: 26px;
+				margin-bottom: 22px;
+		}
+		.intro-heading {
+			max-width: 900px;
+			text-align: center;
+			letter-spacing: 1.2px;
+			font-weight: 200;
+			font-size: 40px;
+			line-height: 58px;
+			margin-bottom: 60px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		// btn links
+		a {
+			border-radius: 30px;
+			padding: 16px 48px;
+			text-transform: uppercase;
+		}
+
+		@media (max-width: 992px) {
+			.intro-heading {
+				letter-spacing: 1.1px;
+				font-weight: 200;
+				font-size: 26px;
+				line-height: 40px;
+				margin-bottom: 40px;
+			}
+			// btn links
+			a {
+				border-radius: 30px;
+				padding: 9px 26px;
+				text-transform: uppercase;
+			}
+		}
+
+	}
+
+}
+
+
+// Global Section Styles
+section {
+    padding: 50px 0;
+    border-bottom: 1px solid #EEE;
+    h2.section-heading {
+    	color: #555;
+		font-size: 40px;
+		margin-top: 0;
+		margin-bottom: 15px;
+    }
+    h3.section-subheading {
+		font-size: 16px;
+		text-transform: none;
+		font-style: italic;
+		font-weight: 400;
+		margin-bottom: 75px;
+    }
+}
+@media(min-width:768px) {
+	section {
+		padding: 70px 0;
+	}
+}
+
+
+// Services Section
+#services {
+	position: relative;
+}
+#services:before {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 0;
+	width: 100%;
+	height: 14px;
+	background: @brand-primary;
+	background: rgba(0,0,0, 0.12);
+}
+.service-icon {
+	margin-bottom: 22px
+}
+.service-heading {
+	margin: 15px 0;
+	text-transform: none;
+}
+
+
+// Features Section
+#features {
+	background: url('../img/features/feature1.png') no-repeat center 200px #f9f9f9;
+	min-height: 750px;
+	overflow: hidden;
+}
+
+
+// Features Section
+#features-flat {
+	padding: 50px 0;
+	min-height: 610px;
+	overflow: hidden;
+
+	img {
+		max-width: 400px;
+	}
+
+	@media(max-width:992px) {
+		padding: 60px 0;
+		min-height: 380px;
+	    h2.section-heading {
+	    	margin-top: 0 !important;
+	    	// font-size: 30px;
+	    }
+		.btn {
+			padding: 8px 30px !important;
+		}
+	}
+
+}
+
+
+// Call to Action
+#call-to-action {
+	margin-top: -1px;
+	color: #FFF;
+	position: relative;
+	border: 0;
+	max-height: 240px;
+	overflow: hidden;
+
+	.section-heading {
+		color: #FFF;
+	}
+	.section-subheading {
+		color: #EEE;
+	}
+
+	// img background
+	&:before {
+		z-index: -2;
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		// background-image: url('../img/stock/18.jpg');
+		background-image: url('../img/patterns/polygon/6.png');
+		background-repeat: none;
+		background-attachment: scroll;
+		background-position: center center;
+		.background-cover;
+	}
+	// darken overlay
+	&:after {
+		z-index: -1;
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background-color: rgba(0,0,0, 0.4);
+	}
+
+}
+
+
+// Portfolio Section
+#portfolio {
+    .portfolio-item {
+        margin: 0 0 15px;
+        right: 0;
+        .portfolio-link {
+            display: block;
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+            .portfolio-hover {
+                background: fade(@brand-primary, 90%);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                transition: all ease 0.5s;
+                -webkit-transition: all ease 0.5s;
+                -moz-transition: all ease 0.5s;
+                &:hover {
+                    opacity: 1;
+                }
+                .portfolio-hover-content {
+                    position: absolute;
+                    width: 100%;
+                    height: 20px;
+                    font-size: 20px;
+                    text-align: center;
+                    top: 50%;
+                    margin-top: -12px;
+                    color: white;
+                    i {
+                        margin-top: -12px;
+                    }
+                    h3,
+                    h4 {
+                        margin: 0;
+                    }
+                }                
+            }            
+        }
+        .portfolio-caption {
+        	max-width: 400px;
+        	margin: 0 auto;
+        	background-color: white;
+        	text-align: center;
+        	padding: 25px;
+        	h4 {
+        		text-transform: none;
+        		margin: 0;
+        	}
+        	p {
+        		font-style: italic;
+        		font-size: 16px;
+        		margin: 0;
+        	}
+        }
+    }
+    * {
+        z-index: 2;
+    }
+}
+
+@media(min-width:767px) {
+    #portfolio {
+        .portfolio-item {
+            margin: 0 0 30px;
+        }
+    }
+}
+
+
+// Team Section
+.team-member {
+	margin-bottom: 50px;
+	text-align: center;
+	img {
+		border-top: 3px solid @brand-primary;
+		// padding: 10px;
+		padding-bottom: 0;
+		margin: 0 auto;
+		// border: 2px solid white;
+	}
+	h4 {
+		margin-left: 12px;
+		margin-top: 30px;
+		margin-bottom: 0;
+		text-transform: none;
+	}
+	p {
+		margin-left: 12px;
+		margin-top: 0;
+	}
+	.social-buttons {
+		display: none;
+		margin-right: 6px;
+		margin-top: 10px;
+		text-align: center;
+		float: right;
+	}
+}
+
+// Clients Section
+section#clients {
+	padding: 0;
+	img {
+		margin: 50px auto;
+	}
+
+	.client-logo {
+		float: left;
+		width: 20%;
+	}
+
+	@media (max-width: 992px) {
+		.client-logo {
+			width: 25%;
+		}
+	}
+	@media (max-width: 768px) {
+		.client-logo {
+			width: 33%;
+		}
+	}
+}
+
+// Contact Section
+section#contact {
+	background: #f9b24f;
+	position: relative;
+	padding: 50px 0;
+	border-bottom: 1px solid #2d363f;
+
+	// contact heading
+	.section-heading {
+		color: white;
+		font-weight: 200;
+		font-size: 36px;
+		margin-bottom: 40px;
+	}
+
+	// Create 3 fixed width containers
+	// Form contains 2 text areas, 1 submit btn
+	.form-group {
+		text-align: center;
+		float: left;
+		width: 37%;
+		margin-right: 2%;
+	}
+	.form-group:last-child {
+		width: 22%;
+		margin-right: 0;
+	}
+	// form text inputs
+	.form-control {
+		height: 54px;
+		border-radius: 2px;
+		border: 0;
+	}
+	// form submit btn
+	.btn {
+		height: 54px;
+		padding: 13px 10px 14px;
+	}
+
+	// TOS disclaimer (p)
+	p {
+		margin-top: 15px;
+		color: #FFF;
+		text-align: center;
+		font-size: 12px;
+	}
+
+	// form placeholders
+	::-webkit-input-placeholder {
+	   font-weight: 600;
+	   color: @placeholder-text;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+	   font-weight: 600;
+	   color: @placeholder-text;
+	}
+	::-moz-placeholder {  /* Firefox 19+ */
+	   font-weight: 600;
+	   color: @placeholder-text;
+	}
+	:-ms-input-placeholder {  
+	   font-weight: 600;
+	   color: @placeholder-text;
+	}
+
+}
+
+
