@@ -4,4 +4,5 @@ composer.lock
 /app/storage/*
 /bin/phpunit
 public/assets
+*.orig
 
