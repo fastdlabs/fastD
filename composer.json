@@ -2,7 +2,7 @@
     "name": "fastd/fastd",
     "type": "project",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "description": "FastD php simple framework",
     "keyword": [
         "fastd ",
