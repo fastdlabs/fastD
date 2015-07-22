@@ -14,6 +14,7 @@
 namespace Welcome\Events;
 
 use FastD\Framework\Events\TemplateEvent;
+use FastD\Http\Request;
 
 /**
  * Class Index
@@ -22,8 +23,8 @@ use FastD\Framework\Events\TemplateEvent;
  */
 class Index extends TemplateEvent
 {
-    public function welcomeAction()
+    public function welcomeAction(Request $request)
     {
-        return $this->render('Welcome/Resources/views/welcome.twig');
+        return $request->createRequest('http://www.fast-d.cn/')->get();
     }
 }
