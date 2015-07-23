@@ -21,6 +21,14 @@
         "php": ">=5.4.0",
         "fastd/framework": "0.1.x-dev"
     },
+    "autoload": {
+        "files": [
+            "app/Application.php"
+        ],
+        "psr-4": {
+            "": "src"
+        }
+    },
     "config": {
         "bin-dir": "bin"
     },
@@ -28,17 +36,6 @@
         "web": "public",
         "branch-alias": {
             "dev-master": "0.1.x-dev"
-        }
-    },
-    "bin": [
-        "app/console"
-    ],
-    "autoload": {
-        "files": [
-            "app/Application.php"
-        ],
-        "psr-4": {
-            "": "src"
         }
     }
 }
