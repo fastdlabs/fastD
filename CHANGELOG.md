@@ -62,3 +62,9 @@
 - 新增模块配置选项 `[ModuleName]/Resources/config/config.php`， 可以为不同模块配置不同信息
 - 修复路由映射控制器对象参数依赖注入问题
 - 修复命令行扫描bug
+
+
+### 07/23/2015
+
+- 优化`fastd/framework` : `FastD\Framework\Events\TemplateEvent` 扩展函数
+- ​

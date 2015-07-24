@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "fastd/framework": "0.1.x-dev"
+        "fastd/framework": "1.0.x-dev"
     },
     "autoload": {
         "files": [
@@ -35,7 +35,7 @@
     "extra": {
         "web": "public",
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }
