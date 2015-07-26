@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "fastd/framework": "1.0.x-dev"
+        "fastd/framework": "~1.0.0"
     },
     "autoload": {
         "files": [
