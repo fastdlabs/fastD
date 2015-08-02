@@ -34,7 +34,7 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      *
      * @return array
      */
-    public function registerHelpers()
+    public function registerService()
     {
         return array(
             'demo' => 'Helpers\\Demo\\Demo'
