@@ -12,4 +12,5 @@
  */
 
 Routes::get('/', 'Welcome\\Events\\Index@welcomeAction');
+Routes::get('/repository', 'Welcome\\Events\\Index@repositoryAction');
 

@@ -14,6 +14,7 @@
 namespace Welcome\Events;
 
 use FastD\Framework\Events\TemplateEvent;
+use FastD\Http\JsonResponse;
 use FastD\Http\Request;
 
 /**
@@ -26,5 +27,12 @@ class Index extends TemplateEvent
     public function welcomeAction(Request $request)
     {
         return $request->createRequest('http://www.fast-d.cn/')->get();
+    }
+
+    public function repositoryAction()
+    {
+        $connection = $this->getConnection('read')->getRepository('Welcome:Repository:Demo');
+        $result = $connection->findAll();
+        return new JsonResponse($result);
     }
 }
