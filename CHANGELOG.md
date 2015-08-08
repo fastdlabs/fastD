@@ -67,4 +67,24 @@
 ### 07/23/2015
 
 - 优化`fastd/framework` : `FastD\Framework\Events\TemplateEvent` 扩展函数
-- ​
+
+
+### 07/30/2015
+
+- 优化路由调试命令行 `route:dump` 支持模块包调试
+- 添加数个模块包，优化模块包组件
+
+
+### 08/02/2015
+
+- 添加 `FastD\Database\Repository\Repository::get|setFields` 方法。
+  
+- 添加 `FastD\Database\Repository\Repository::buildTableFieldsData parseTableFieldsData` 等方法，详情见代码文档。
+  
+- 优化数据库获取数据自动转换数据格式
+  
+- 优化 `FastD\Config\Config` 组件，优化配置参数合并
+  
+- 添加 `config:cache` 命令行
+  
+  ​
