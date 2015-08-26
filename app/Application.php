@@ -21,6 +21,7 @@ class Application extends \FastD\Framework\Kernel\AppKernel
     {
         return array(
             new \Welcome\Boot(),
+            new \Swoole\SwooleServerBundle(),
         );
     }
 

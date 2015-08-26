@@ -16,7 +16,7 @@ return [
     'database' => [
         'write' => [
             'database_type'     => 'mysql',
-            'database_host'     => 'localhost',
+            'database_host'     => '127.0.0.1',
             'database_port'     => 3306,
             'database_user'     => 'root',
             'database_pwd'      => '',
@@ -26,7 +26,7 @@ return [
         ],
         'read' => [
             'database_type'     => 'mysql',
-            'database_host'     => 'localhost',
+            'database_host'     => '127.0.0.1',
             'database_port'     => 3306,
             'database_user'     => 'root',
             'database_pwd'      => '',
