@@ -13,6 +13,7 @@
 
 namespace Welcome\Events;
 
+use FastD\Debug\Exceptions\ServerInternalErrorException;
 use FastD\Framework\Events\TemplateEvent;
 use FastD\Http\JsonResponse;
 use FastD\Http\Request;
@@ -24,6 +25,11 @@ use FastD\Http\Request;
  */
 class Index extends TemplateEvent
 {
+    public function __initialize()
+    {
+
+    }
+
     public function welcomeAction(Request $request)
     {
         return $request->createRequest('http://www.fast-d.cn/')->get();
@@ -34,5 +40,10 @@ class Index extends TemplateEvent
         $connection = $this->getConnection('read')->getRepository('Welcome:Repository:Demo');
         $result = $connection->findAll();
         return new JsonResponse($result);
+    }
+
+    public function forwardAction()
+    {
+        return $this->forward('/repository');
     }
 }
