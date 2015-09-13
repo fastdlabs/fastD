@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "fastd/framework": "~1.3.0"
+        "fastd/framework": "1.4.*@BETA",
+        "fastd/http": "1.0.*@BETA"
     },
     "require-dev": {
         "fastd/swoole": "1.0.x-dev",
