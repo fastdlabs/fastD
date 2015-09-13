@@ -13,6 +13,7 @@
 
 namespace Welcome\Events;
 
+use FastD\Debug\Exceptions\NotFoundHttpException;
 use FastD\Debug\Exceptions\ServerInternalErrorException;
 use FastD\Framework\Events\TemplateEvent;
 use FastD\Http\JsonResponse;
@@ -32,7 +33,7 @@ class Index extends TemplateEvent
 
     public function welcomeAction(Request $request)
     {
-        return $request->createRequest('http://www.fast-d.cn/')->get();
+        return 'hello world';
     }
 
     public function repositoryAction()
