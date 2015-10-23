@@ -9,7 +9,9 @@
         "fastd php",
         "simple framework",
         "php simple framework",
-        "simple php framework"
+        "simple php framework",
+        "fd",
+        "swoole fd"
     ],
     "authors": [
         {
