@@ -18,12 +18,5 @@ use FastD\Database\Repository\Repository;
 
 class DemoRepository extends Repository
 {
-    public function getFields()
-    {
-        return [
-            'id' => 'int',
-            'name' => 'string',
-            'extra' => 'json',
-        ];
-    }
+    
 }

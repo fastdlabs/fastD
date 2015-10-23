@@ -33,12 +33,12 @@ class Index extends TemplateEvent
 
     public function welcomeAction(Request $request)
     {
-        return 'hello world';
+        return $this->render('p3.twig');
     }
 
     public function repositoryAction()
     {
-        $connection = $this->getConnection('read')->getRepository('Welcome:Repository:Demo');
+        $connection = $this->getConnection('read')->getRepository('Welcome:Repository:Demo')->createQuery()->getQuery()->getAffectedRow();
         $result = $connection->findAll();
         return new JsonResponse($result);
     }
