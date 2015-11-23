@@ -17,14 +17,7 @@
 include __DIR__ . '/../vendor/autoload.php';
 
 $app = new Application('dev');
-
 $app->boot();
-
-$request = \FastD\Http\Request::createRequestHandle();
-
-$response = $app->handleHttpRequest($request);
-
+$response = $app->createHttpRequestHandler();
 $response->send();
-
-$app->terminate($request, $response);
-
+$app->shutdown($app);

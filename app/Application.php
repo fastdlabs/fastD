@@ -19,10 +19,13 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      */
     public function registerBundles()
     {
-        return array(
-            new \Welcome\Boot(),
-            new \Swoole\SwooleServerBundle(),
-        );
+        $bundles = [];
+
+        if ($this->isDebug()) {
+            $bundles[] = new \Welcome\WelcomeBundle();
+        }
+
+        return $bundles;
     }
 
     /**
@@ -35,21 +38,19 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      *
      * @return array
      */
-    public function registerService()
+    public function registerService(\FastD\Container\Container $container)
     {
-        return array(
-            'demo' => 'Helpers\\Demo\\Demo'
-        );
+        //$container->set('name', 'class');
+        // static
+        // $container->set('name', 'class::method');
     }
 
     /**
      * @return array
      */
-    public function registerConfigVariable()
+    public function registerConfigurationVariable(\FastD\Config\Config $config)
     {
-        return array(
-
-        );
+//        $config->setVariable('%name%', 'value');
     }
 
     /**
@@ -60,6 +61,7 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      */
     public function registerConfiguration(\FastD\Config\Config $config)
     {
+        $config->load(__DIR__ . '/config/global.php');
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
     }
 }

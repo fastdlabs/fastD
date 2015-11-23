@@ -13,9 +13,9 @@
 
 namespace Welcome;
 
-use FastD\Framework\Bundle;
+use FastD\Framework\Bundle\Bundle;
 
-class Boot extends Bundle
+class WelcomeBundle extends Bundle
 {
 
 }

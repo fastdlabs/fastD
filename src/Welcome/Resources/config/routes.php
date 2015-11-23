@@ -11,7 +11,5 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-Routes::get('/', 'Welcome\\Events\\Index@welcomeAction');
-Routes::get('/repository', 'Welcome\\Events\\Index@repositoryAction');
-Routes::get('/forward', 'Welcome\\Events\\Index@forwardAction');
+Routes::get('/', 'Welcome:Events:Http:Index@welcomeAction');
 
