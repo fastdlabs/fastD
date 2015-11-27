@@ -22,10 +22,18 @@
     "require": {
         "php": ">=5.4.0",
         "fastd/framework": "2.0.x-dev",
-        "fastd/database": "1.0.*@alpha",
-        "fastd/routing": "1.0.x-dev"
-    },
-    "require-dev": {
+        "fastd/http": "2.0.x-dev",
+        "fastd/template": "2.0.x-dev",
+        "fastd/routing": "2.0.x-dev",
+        "fastd/container": "2.0.x-dev",
+        "fastd/database": "2.0.x-dev",
+        "fastd/annotation": "2.0.x-dev",
+        "fastd/debug": "2.0.x-dev",
+        "fastd/finder": "2.0.x-dev",
+        "fastd/config": "2.0.x-dev",
+        "fastd/console": "2.0.x-dev",
+        "fastd/logger": "2.0.x-dev",
+        "fastd/storage": "2.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
         "fastd/swoole-bundle": "1.0.x-dev"
     },

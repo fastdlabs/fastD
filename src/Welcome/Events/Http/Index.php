@@ -26,6 +26,6 @@ class Index extends Event
 {
     public function welcomeAction()
     {
-        return new Response('hello fd');
+        return new Response('<h1 style="text-align: center; padding-top:20px;">Hello FastD</h1>');
     }
 }
