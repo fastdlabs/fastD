@@ -14,8 +14,15 @@
 namespace Welcome;
 
 use FastD\Framework\Bundle\Bundle;
+use Welcome\Extensions\DemoExtension;
 
 class WelcomeBundle extends Bundle
 {
+    public function registerExtensions()
+    {
+        return [
+            new DemoExtension()
+        ];
+    }
 
 }

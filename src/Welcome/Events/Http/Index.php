@@ -25,6 +25,6 @@ class Index extends Event
 {
     public function welcomeAction()
     {
-        return new Response('<h1 style="text-align: center; padding-top:20px;">Hello FastD <br />v2.0</h1>');
+        return $this->render('Welcome/Resources/views/welcome.twig');
     }
 }
