@@ -14,7 +14,6 @@
 namespace Welcome\Events\Http;
 
 use FastD\Framework\Bundle\Events\Http\Event;
-use FastD\Http\Request;
 use FastD\Http\Response;
 
 /**
@@ -26,6 +25,6 @@ class Index extends Event
 {
     public function welcomeAction()
     {
-        return new Response('<h1 style="text-align: center; padding-top:20px;">Hello FastD</h1>');
+        return new Response('<h1 style="text-align: center; padding-top:20px;">Hello FastD <br />v2.0</h1>');
     }
 }

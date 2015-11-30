@@ -1,6 +1,6 @@
 ### v2.0.0 (2016-xx-xx)
 
-- 调整bundle结构
+- 调整 bundle 结构
 - 优化 framework 执行流程
 - 优化 event 基础方法
 
