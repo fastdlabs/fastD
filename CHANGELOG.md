@@ -18,6 +18,7 @@
 - 移除 Event::dump 方法
 - 集成 Swoole 服务组件
 - 增加 Twig 扩展, `FastD\Framework\Extensions\TplExtension`
+- 增加注释路由定义方式
 
 
 ### v1.0.* (07/09/2015)

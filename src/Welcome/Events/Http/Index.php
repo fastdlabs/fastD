@@ -23,8 +23,13 @@ use FastD\Http\Response;
  */
 class Index extends Event
 {
+    /**
+     * @Route("/", name="welcome")
+     *
+     * @return Response|string
+     */
     public function welcomeAction()
     {
-        return $this->render('Welcome/Resources/views/welcome.twig');
+        return $this->response('hello fastd');
     }
 }
