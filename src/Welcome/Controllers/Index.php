@@ -11,9 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace Welcome\Events\Http;
+namespace Welcome\Controllers;
 
-use FastD\Framework\Bundle\Events\Http\Event;
+use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Response;
 
 /**
@@ -21,7 +21,7 @@ use FastD\Http\Response;
  *
  * @package Welcome\Events\Http
  */
-class Index extends Event
+class Index extends Controller
 {
     /**
      * @Route("/", name="welcome")
