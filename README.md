@@ -1,16 +1,8 @@
-#FastD-PHP-Simple-Framework
-
-##发起人
-* JanHuang / bboyjanhuang@gmail.com
-
-##维护者
-
-* JanHuang / bboyjanhuang@gmail.com* 
-- [Homepage](http://www.fast-d.cn)
+#FastD PHP Simple Framework
 
 ##Requirement
 
-* PHP 5.4+
+* PHP 5.5+
 
 ##Install
 
