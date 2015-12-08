@@ -14,6 +14,7 @@
 namespace Welcome\Controllers;
 
 use FastD\Framework\Bundle\Controllers\Controller;
+use FastD\Http\Request;
 use FastD\Http\Response;
 
 /**
@@ -26,9 +27,10 @@ class Index extends Controller
     /**
      * @Route("/", name="welcome")
      *
+     * @param Request $request
      * @return Response|string
      */
-    public function welcomeAction()
+    public function welcomeAction(Request $request)
     {
         return $this->response('hello fastd');
     }

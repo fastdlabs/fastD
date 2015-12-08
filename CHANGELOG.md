@@ -20,6 +20,8 @@
 - 增加 Twig 扩展, `FastD\Framework\Extensions\TplExtension`
 - 增加注释路由定义方式
 - 调整 FastD\Framework\Bundle\Events\Http\Event -> FastD\Framework\Bundle\Controllers\Controller
+- 调整 app/console
+- 支持 SwooleHttpServer
 
 
 ### v1.0.* (07/09/2015)

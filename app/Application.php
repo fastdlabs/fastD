@@ -61,7 +61,6 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      */
     public function registerConfiguration(\FastD\Config\Config $config)
     {
-        $config->load(__DIR__ . '/config/global.php');
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
     }
 }

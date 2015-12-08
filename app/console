@@ -5,7 +5,7 @@
  * User: janhuang
  * Date: 15/3/19
  * Time: 下午8:03
- * Github: https://www.github.com/janhuang 
+ * Github: https://www.github.com/janhuang
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
  * Blog: http://segmentfault.com/blog/janhuang
@@ -13,7 +13,6 @@
  */
 
 set_time_limit(0);
-
 date_default_timezone_set('PRC');
 
 $loader = include __DIR__ . '/../vendor/autoload.php';
@@ -24,9 +23,5 @@ $env = $argvInput->hasParameterOption(['--env', '-e']) ? $argvInput->getParamete
 
 $app = new Application($env);
 
-$app->boot();
-
-$console = new \FastD\Console\Console($app);
-
-$console->run($argvInput);
+$app->run($argvInput);
 
