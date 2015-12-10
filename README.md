@@ -31,6 +31,16 @@ composer -vvv install
 
 ##Rewrite rules
 
+###Swoole Http Server
+
+configuration: `app/config/server.php`
+
+```
+php app/console http:server start
+```
+
+`host:port/pathinfo`
+
 ###Nginx
 
 ```
