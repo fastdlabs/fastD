@@ -13,7 +13,7 @@
 
 namespace Welcome\Commands;
 
-use FastD\Console\Command;
+use FastD\Console\Command\Command;
 use FastD\Console\IO\Input;
 use FastD\Console\IO\Output;
 

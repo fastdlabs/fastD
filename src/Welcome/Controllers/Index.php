@@ -32,6 +32,6 @@ class Index extends Controller
      */
     public function welcomeAction(Request $request)
     {
-        return $this->response('hello fastd');
+        return $this->response('hello fd');
     }
 }

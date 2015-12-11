@@ -17,11 +17,14 @@ date_default_timezone_set('PRC');
 
 $loader = include __DIR__ . '/../vendor/autoload.php';
 
-$argvInput = new \FastD\Console\ArgvInput();
+use FastD\Console\ArgvInput;
+use FastD\Framework\Kernel\AppConsole;
 
-$env = $argvInput->hasParameterOption(['--env', '-e']) ? $argvInput->getParameterOption(['--env', '-e']) : 'dev';
+$argvInput = new ArgvInput();
 
-$app = new Application($env);
+$env = $argvInput->has(['--env', '-e']) ? $argvInput->get(['--env', '-e']) : 'dev';
 
-$app->run($argvInput);
+$console = new AppConsole(new Application($env));
+
+$console->run($argvInput);
 
