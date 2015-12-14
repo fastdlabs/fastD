@@ -38,7 +38,7 @@
     },
     "autoload": {
         "files": [
-            "app/Application.php"
+            "app/application.php"
         ],
         "psr-4": {
             "": "src"
