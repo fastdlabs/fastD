@@ -10,7 +10,16 @@
  * Blog: http://segmentfault.com/blog/janhuang
  * Gmail: bboyjanhuang@gmail.com
  */
-class Application extends \FastD\Framework\Kernel\AppKernel
+
+use FastD\Framework\Kernel\AppKernel;
+use \FastD\Container\Container;
+use \FastD\Config\Config;
+
+/**
+ * Class Application
+ *
+ */
+class Application extends AppKernel
 {
     /**
      * Register project bundles into the kernel.
@@ -29,26 +38,20 @@ class Application extends \FastD\Framework\Kernel\AppKernel
     }
 
     /**
-     * Register custom kernel plugins.
-     * Must return array.
-     * examples:
-     *  return array(
-     *      "Monolog\\Logger"
-     *  )
-     *
-     * @return array
+     * @param Container $container
      */
-    public function registerService(\FastD\Container\Container $container)
+    public function registerService(Container $container)
     {
         //$container->set('name', 'class');
         // static
         // $container->set('name', 'class::method');
     }
 
+
     /**
-     * @return array
+     * @param Config $config
      */
-    public function registerConfigurationVariable(\FastD\Config\Config $config)
+    public function registerConfigurationVariable(Config $config)
     {
 //        $config->setVariable('%name%', 'value');
     }
@@ -59,7 +62,7 @@ class Application extends \FastD\Framework\Kernel\AppKernel
      * @param \FastD\Config\Config
      * @return void
      */
-    public function registerConfiguration(\FastD\Config\Config $config)
+    public function registerConfiguration(Config $config)
     {
         $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
     }

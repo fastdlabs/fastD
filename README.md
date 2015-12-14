@@ -4,24 +4,13 @@
 
 * PHP 5.5+
 
+##Optional
+
+* [php-ext-swoole 1.7.20+](https://github.com/swoole/swoole-src)
+
 ##Install
 
-###1. Install composer.json
-
-[Composer](https://getcomposer.org/download/)
-
-
-###2. Clone FastD repository
-
-```
-git clone git@github.com:JanHuang/fastD.git
-```
-
-###3. Composer install
-
-```
-composer -vvv install
-```
+`composer -vvv create-project path fastd/fastd`
 
 #Tutorial
 
@@ -57,12 +46,6 @@ server {
     }
 }
 ```
-
-###Apache
-
-Nothing
-
-
 
 #License MIT
 
