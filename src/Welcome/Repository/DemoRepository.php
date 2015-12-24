@@ -14,7 +14,7 @@
 
 namespace Welcome\Repository;
 
-use FastD\Database\Repository\Repository;
+use FastD\Database\ORM\Repository;
 
 class DemoRepository extends Repository
 {

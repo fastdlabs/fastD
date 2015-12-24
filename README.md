@@ -1,24 +1,38 @@
-#FastD PHP Simple Framework
+#FastD 简单灵活的PHP开发框架
 
-##Requirement
+##环境要求
 
 * PHP 5.5+
 
-##Optional
+##可选项
 
 * [php-ext-swoole 1.7.20+](https://github.com/swoole/swoole-src)
 
-##Install
+####安装 Swoole 扩展
+
+```
+pecl install swoole
+```
+
+##安装框架
 
 `composer -vvv create-project path fastd/fastd`
 
-#Tutorial
+##使用
 
-##Documentation
+框架访问目录: `public/(dev|test|prod).php`
 
-[Documentation](http://www.fast-d.cn/docs/index.html)
+根据不同环境加载不同配置.
 
-##Rewrite rules
+开发环境和测试环境可以使用注释来定义路由,生产环境路由需要由命令: `php app/console route:cache` 生成,节省解析时间
+
+##文档
+
+[文档v1.4](http://www.fast-d.cn/docs/index.html)
+
+文档v2.0-dev 编写中......
+
+##重写规则
 
 ###Swoole Http Server
 
@@ -28,7 +42,20 @@ configuration: `app/config/server.php`
 php app/console http:server start
 ```
 
-`host:port/pathinfo`
+访问: `host:port/pathinfo`
+
+服务配置: `app/config/server.php`
+
+###Nginx + Swoole Http Server 
+
+```
+server {
+        location / {
+            fastcgi_index index.php;
+            proxy_pass http://127.0.0.1:9600;
+        }
+    }
+```
 
 ###Nginx
 

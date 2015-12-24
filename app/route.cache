@@ -1,0 +1,2 @@
+<?php
+Routes::match(['ANY'], ['/', 'name' => 'welcome'], 'Welcome\Controllers\Index@welcomeAction');

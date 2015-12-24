@@ -22,6 +22,8 @@
 - 调整 FastD\Framework\Bundle\Events\Http\Event -> FastD\Framework\Bundle\Controllers\Controller
 - 调整 app/console
 - 支持 SwooleHttpServer
+- 增加 ORM 映射操作
+- 增加 db:update, route:cache 命令
 
 
 ### v1.0.* (07/09/2015)
