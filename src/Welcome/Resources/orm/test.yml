@@ -1,0 +1,24 @@
+table: test
+engine: innodb
+charset: utf8
+fields:
+    id:
+        name: id
+        type: int
+        length: 10
+        comment: 主键
+        unsigned: true
+        key: primary
+    trueName:
+        name: true_name
+        type: varchar
+        length: 10
+        notnull: true
+    tel:
+        name: tel_number
+        type: char
+        length: 20
+        notnull: true
+        default:
+        comment: 手机号
+        key: unique
