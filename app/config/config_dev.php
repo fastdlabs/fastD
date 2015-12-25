@@ -26,7 +26,7 @@ return [
         ],
         'read' => [
             'database_type'     => 'mysql',
-            'database_host'     => '192.168.0.102',
+            'database_host'     => '127.0.0.1',
             'database_port'     => 3306,
             'database_user'     => 'root',
             'database_pwd'      => '123456',
