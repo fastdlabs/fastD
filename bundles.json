@@ -1,0 +1,11 @@
+[
+    {
+        "name": "welcome",
+        "path": "src/Welcome/Resources",
+        "origin": "./resources/views",
+        "dest": "./public/html",
+        "data": {
+            "title": "test title"
+        }
+    }
+]
