@@ -25,13 +25,14 @@ use FastD\Http\Response;
 class Index extends Controller
 {
     /**
-     * @Route("/", name="welcome")
+     * @Route("/{name}", name="welcome", defaults={"name":"janhuang"})
      *
      * @param Request $request
      * @return Response|string
      */
-    public function welcomeAction(Request $request)
+    public function welcomeAction(Request $request, $name)
     {
-        return $this->response($this->generateUrl('welcome', ['name' => 'janhuang'], 'html'));
+        echo $name;
+        return $this->response($this->generateUrl('welcome'));
     }
 }
