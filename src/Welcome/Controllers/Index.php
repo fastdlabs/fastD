@@ -13,14 +13,16 @@
 
 namespace Welcome\Controllers;
 
+use FastD\Database\Drivers\Query\MySQLQueryBuilder;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
+use Welcome\Orm\Entity\Test;
 
 /**
  * Class Index
  *
- * @package Welcome\Events\Http
+ * @package Welcome\Controller
  */
 class Index extends Controller
 {
@@ -32,7 +34,51 @@ class Index extends Controller
      */
     public function welcomeAction(Request $request, $name)
     {
-        echo $name;
-        return $this->response($this->generateUrl('welcome'));
+        try {
+            $driver = $this->getDriver('read');
+        } catch (\Exception $e) {
+            return $this->response('fail');
+        }
+
+        return $this->response('ok');
+    }
+
+    /**
+     * @Route("/orm/save", name="orm")
+     *
+     * @return Response|string
+     */
+    public function saveOrmAction()
+    {
+        try {
+            $driver = $this->getDriver('read');
+        } catch (\Exception $e) {
+            return $this->response('fail');
+        }
+
+        $test = new Test(null, $driver);
+        $test->setTrueName('aaa');
+        $test->setTel(mt_rand(0, 9999));
+
+        return $this->response('new id: ' . $test->save());
+    }
+
+    /**
+     * @Route("/orm/find/{id}", name="orm_find")
+     *
+     * @param int $id
+     * @return Response|string
+     */
+    public function findOrmAction($id)
+    {
+        try {
+            $driver = $this->getDriver('read');
+        } catch (\Exception $e) {
+            return $this->response('fail');
+        }
+
+        $test = new Test($id, $driver);
+
+        return $this->response('name:' . $test->getTrueName());
     }
 }

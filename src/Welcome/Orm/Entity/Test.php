@@ -46,22 +46,7 @@ class Test extends Entity
     /**
      * @var string
      */
-    protected $telNumber;
-
-    /**
-     * @var string
-     */
-    protected $nickName;
-
-    /**
-     * @var int
-     */
-    protected $age;
-
-    /**
-     * @var int
-     */
-    protected $gender;
+    protected $tel;
     /**
      * getId
      *
@@ -109,93 +94,24 @@ class Test extends Entity
     }
 
     /**
-     * getTelNumber
+     * getTel
      *
      * @return string
      */
-    public function getTelNumber()
+    public function getTel()
     {
-        return $this->telNumber;
+        return $this->tel;
     }
 
     /**
-     * setTelNumber
+     * setTel
      *
-     * @param string $telNumber
+     * @param string $tel
      * @return $this
      */
-    public function setTelNumber($telNumber)
+    public function setTel($tel)
     {
-        $this->telNumber = $telNumber;
-
-        return $this;
-    }
-
-    /**
-     * getNickName
-     *
-     * @return string
-     */
-    public function getNickName()
-    {
-        return $this->nickName;
-    }
-
-    /**
-     * setNickName
-     *
-     * @param string $nickName
-     * @return $this
-     */
-    public function setNickName($nickName)
-    {
-        $this->nickName = $nickName;
-
-        return $this;
-    }
-
-    /**
-     * getAge
-     *
-     * @return int
-     */
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    /**
-     * setAge
-     *
-     * @param int $age
-     * @return $this
-     */
-    public function setAge($age)
-    {
-        $this->age = $age;
-
-        return $this;
-    }
-
-    /**
-     * getGender
-     *
-     * @return int
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    /**
-     * setGender
-     *
-     * @param int $gender
-     * @return $this
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
+        $this->tel = $tel;
 
         return $this;
     }
