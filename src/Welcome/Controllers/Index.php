@@ -18,6 +18,7 @@ use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
 use Welcome\Orm\Entity\Test;
+use Welcome\Orm\Repository\TestRepository;
 
 /**
  * Class Index
@@ -80,5 +81,30 @@ class Index extends Controller
         $test = new Test($id, $driver);
 
         return $this->response('name:' . $test->getTrueName());
+    }
+
+    /**
+     * @Route("/orm/repository/{id}", name="welcome_repository", defaults={"id": "0"})
+     *
+     * @param int $id
+     * @return Response|string
+     */
+    public function repositoryAction($id)
+    {
+        try {
+            $driver = $this->getDriver('read');
+        } catch (\Exception $e) {
+            return $this->response('fail');
+        }
+
+        $repository = new TestRepository($driver);
+
+        if (empty($id)) {
+            $result = $repository->findAll();
+        } else {
+            $result = $repository->find(['id' => $id]);
+        }
+
+        return $this->response(json_encode($result));
     }
 }
