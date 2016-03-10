@@ -28,10 +28,12 @@ class Application extends AppKernel
      */
     public function registerBundles()
     {
-        $bundles = [];
+        $bundles = [
+            new \BoardBundle\BoardBundle(),
+        ];
 
         if ($this->isDebug()) {
-            $bundles[] = new \Welcome\WelcomeBundle();
+//            $bundles[] = new \Welcome\WelcomeBundle();
         }
 
         return $bundles;

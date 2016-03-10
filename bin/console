@@ -1,1 +1,30 @@
-../vendor/fastd/console/bin/console
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: janhuang
+ * Date: 15/3/19
+ * Time: 下午8:03
+ * Github: https://www.github.com/janhuang
+ * Coding: https://www.coding.net/janhuang
+ * SegmentFault: http://segmentfault.com/u/janhuang
+ * Blog: http://segmentfault.com/blog/janhuang
+ * Gmail: bboyjanhuang@gmail.com
+ */
+
+set_time_limit(0);
+date_default_timezone_set('PRC');
+
+$loader = include __DIR__ . '/../vendor/autoload.php';
+
+use FastD\Console\ArgvInput;
+use FastD\Framework\Kernel\AppConsole;
+
+$argvInput = new ArgvInput();
+
+$env = $argvInput->has(['--env', '-e']) ? $argvInput->get(['--env', '-e']) : 'dev';
+
+$console = new AppConsole(new Application($env));
+
+$console->run($argvInput);
+

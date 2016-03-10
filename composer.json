@@ -34,7 +34,8 @@
         "fastd/console": "2.0.x-dev",
         "fastd/logger": "2.0.x-dev",
         "fastd/storage": "2.0.x-dev",
-        "fastd/swoole": "2.0.x-dev"
+        "fastd/swoole": "2.0.x-dev",
+        "fastd/generator": "1.0.x-dev"
     },
     "autoload": {
         "files": [

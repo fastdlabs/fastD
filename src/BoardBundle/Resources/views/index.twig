@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Appboard - Admin Template with Angularjs">
+    <meta name="keywords" content="appboard, webapp, admin, dashboard, template, ui">
+    <meta name="author" content="solutionportal">
+    <!-- <base href="/"> -->
+
+    <title>Appboard - Admin Template</title>
+
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ asset('boardbundle/fonts/font-awesome/font-awesome.css') }}">
+
+
+    <!-- Set this in dist folder in index.html file -->
+    <link rel="stylesheet" href="{{ asset('boardbundle/styles/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('boardbundle/styles/main.min.css') }}">
+
+    <!-- Match Media polyfill for IE9 -->
+    <!--[if IE 9]><!-->
+    <script src="{{ asset('boardbundle/scripts/ie/matchMedia.js') }}"></script>
+    <!--<![endif]-->
+
+</head>
+
+<body ng-app="app" id="app" class="app ng-animate theme-four" custom-page ng-controller="AppCtrl">
+    <header class="site-head clearfix" id="site-head" ng-controller="HeadCtrl" ng-include=" '{{ url("board_header") }}' ">
+        <!-- linked header (static) view -->
+    </header>
+
+    <div class="main-container clearfix">
+        <aside class="nav-wrap" id="site-nav" ng-controller="NavCtrl" ng-include=" '{{ url("board_nav") }}' " custom-scrollbar>
+
+        </aside>
+
+        <div class="content-container" id="content" ng-view>
+            <!-- content using routing -->
+        </div>
+
+        <footer id="site-foot" class="site-foot clearfix">
+            <p class="left">&copy; Copyright 2014 <strong>APPBOARD</strong>, All rights reserved.</p>
+            <p class="right">v1.1</p>
+        </footer>
+
+    </div>
+
+    <!-- Set this in dist index.html -->
+    <script src="{{ asset('boardbundle/scripts/vendors.js') }}"></script>
+    <script src="{{ asset('boardbundle/scripts/plugins.js') }}"></script>
+    <script src="{{ asset('boardbundle/scripts/app.js') }}"></script>
+
+    <!-- !End -->
+</body>
+
+</html>
