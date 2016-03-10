@@ -3,12 +3,17 @@
 namespace BoardBundle\Controllers;
 
 use BoardBundle\Controllers\Auth\AuthController;
-use FastD\Framework\Bundle\Controllers\Controller;
 
-class Layout extends Controller
+/**
+ * Class Layout
+ *
+ * @Route("/board")
+ * @package BoardBundle\Controllers
+ */
+class Layout extends AuthController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="board_index")
      */
     public function indexAction()
     {
@@ -20,7 +25,7 @@ class Layout extends Controller
      */
     public function headerAction()
     {
-        return $this->render('components/header.html');
+        return $this->render('components/header.twig');
     }
 
     /**
@@ -28,6 +33,6 @@ class Layout extends Controller
      */
     public function navAction()
     {
-        return $this->render('components/nav.html');
+        return $this->render('components/nav.twig');
     }
 }

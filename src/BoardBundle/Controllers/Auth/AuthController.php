@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: janhuang
  * Date: 16/3/10
- * Time: 下午6:30
+ * Time: 下午6:54
  * Github: https://www.github.com/janhuang
  * Coding: https://www.coding.net/janhuang
  * SegmentFault: http://segmentfault.com/u/janhuang
@@ -12,9 +12,9 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace BoardBundle\Controllers;
+namespace BoardBundle\Controllers\Auth;
 
-use BoardBundle\Controllers\Auth\AuthController;
+use FastD\Framework\Bundle\Controllers\Controller;
 
 /**
  * Class Layout
@@ -22,13 +22,7 @@ use BoardBundle\Controllers\Auth\AuthController;
  * @Route("/board")
  * @package BoardBundle\Controllers
  */
-class Index extends AuthController
+class AuthController extends Controller
 {
-    /**
-     * @Route("/dashboard", name="board_index")
-     */
-    public function dashboardAction()
-    {
-        return $this->render('dashboard.twig');
-    }
+
 }
