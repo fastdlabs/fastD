@@ -1,0 +1,123 @@
+<div class="page page-misc clearfix">
+
+
+    <ol class="breadcrumb breadcrumb-small">
+        <li>UI Elements</li>
+        <li class="active"><a href="#/ui/misc">Miscellaneous</a>
+        </li>
+    </ol>
+
+    <div class="page-wrap">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Tooltips Demo -->
+                <div ng-controller="TooltipDemoCtrl" class="mb30 panel panel-lined">
+                    <div class="panel-heading"><i>Tooltips Demo</i>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Dynamic Tooltip Text</label>
+                            <input type="text" ng-model="dynamicTooltipText" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Dynamic Tooltip Popup Text</label>
+                            <input type="text" ng-model="dynamicTooltip" class="form-control">
+                        </div>
+                        <p>
+                            Pellentesque <a href="#" tooltip="{{dynamicTooltip}}">{{dynamicTooltipText}}</a>, sit amet urna cursus eget nunc scelerisque viverra mauris, in aliquam. Tincidunt
+                            <a href="j:;" tooltip-placement="left" tooltip="On the Left!">left</a> eget lorem. Vitae elementum curabitur
+                            <a href="j:;" tooltip-placement="right" tooltip="On the Right!">right</a> nunc sed velit dignissim sodales ut eu sem integer vitae. Turpis egestas
+                            <a href="j:;" tooltip-placement="bottom" tooltip="On the Bottom!">bottom</a> pharetra convallis posuere morbi leo urna,
+                            <a href="j:;" tooltip-animation="false" tooltip="I don't fade. :-(">fading</a> at elementum eu
+                            <a href="j:;" tooltip-popup-delay='1000' tooltip='appears with delay'>delayed</a> turpis massa tincidunt dui ut.
+                        </p>
+
+                        <p>
+                            I can even contain HTML. <a href="#" tooltip-html-unsafe="{{htmlTooltip}}">Check me out!</a>
+                        </p>
+
+                        <form role="form">
+                            <div class="form-group">
+                                <label>Or use custom triggers, like focus: </label>
+                                <input type="text" value="Click me!" tooltip="See? Now click away..." tooltip-trigger="focus" tooltip-placement="top" class="form-control" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- #end-tooltip -->
+
+                <!-- Progress bars -->
+                <div ng-controller="ProgressDemoCtrl" class="mb30 panel panel-lined">
+                    <div class="panel-heading"><i>Progress Bars</i>
+                    </div>
+                    <div class="panel-body">
+                        <progressbar value="55" class="progress-xxs" type="info"></progressbar>
+                        <progressbar value="55" class="progress-xs" type="success"></progressbar>
+                        <progressbar class="progress-striped active progress-sm" max="200" value="166" type="danger"></progressbar>
+                        <hr/>
+                        <progressbar class="progress-striped" value="22" type="warning">22%</progressbar>
+                        <progressbar class="progress-striped active" value="dynamic" type="{{type}}">
+                            {{type}} <i ng-show="showWarning">!!! Watch out !!!</i>
+                        </progressbar>
+                        <progress>
+                            <bar ng-repeat="bar in stacked track by $index" value="bar.value" type="{{bar.type}}">
+                                <span ng-hide="bar.value < 5">{{bar.value}}%</span>
+                            </bar>
+                        </progress>
+                        <hr/>
+                        <button class="btn btn-sm btn-default" type="button" ng-click="random()">Randomize</button>
+                        <button class="btn btn-sm btn-default" type="button" ng-click="randomStacked()">Stacked</button>
+                    </div>
+                </div>
+                <!-- #end-progress bars -->
+
+            </div>
+            <!-- #end col -->
+
+
+            <div class="col-lg-6">
+                <!-- Pagination -->
+                <div ng-controller="PaginationDemoCtrl" class="mb30 panel panel-lined">
+                    <div class="panel-heading"><i>Pagination</i>
+                    </div>
+                    <div class="panel-body">
+                        <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"></pagination>
+                        <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-xs" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                        <pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm"></pagination>
+                        <pagination direction-links="false" total-items="totalItems" ng-model="currentPage" num-pages="smallnumPages" class="pagination-sm"></pagination>
+                        <pre>The selected page no: {{currentPage}}</pre>
+                        <button class="btn btn-info btn-sm" ng-click="setPage(3)">Set current page to: 3</button>
+
+                        <hr/>
+                        <h6>Pager</h6>
+                        <pager total-items="totalItems" ng-model="currentPage"></pager>
+                        <hr/>
+                        <h6>Limit the maximum visible buttons</h6>
+                        <pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                        <pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                        <pre>Page: {{bigCurrentPage}} / {{numPages}}</pre>
+                    </div>
+                </div>
+                <!-- #end-pagination -->
+
+                <!-- Ratings -->
+                <div ng-controller="RatingDemoCtrl" class="mb30 panel panel-lined">
+                    <div class="panel-heading"><i>Rating</i>
+                    </div>
+                    <div class="panel-body">
+                        <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null" state-on="'fa fa-star'" state-off="'fa fa-star-o'"></rating>
+                        <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
+                        <pre style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
+                    </div>
+                </div>
+                <!-- #end-ratings -->
+
+            </div>
+            <!-- #end col -->
+
+        </div>
+        <!-- #end row -->
+    </div>
+    <!-- #end page-wrap -->
+</div>

@@ -1,0 +1,104 @@
+<div class="page page-notification clearfix">
+
+	<ol class="breadcrumb breadcrumb-small">
+		<li>UI Elements</li>
+		<li class="active"><a href="#/ui/toasts">Alerts &amp; Toasts</a></li>
+	</ol>
+
+	<div class="page-wrap">
+
+		<div class="row">
+			<div class="col-lg-6">
+				<!-- Toast -->
+				<div class="panel panel-lined mb30" ng-controller="ToastDemoCtrl">
+					<div class="panel-heading"><i>Toasts</i></div>
+					<div class="panel-body">
+						<div>
+							<p class="small text-muted text-uppercase">Select Animation Style</p>
+							<button type="button" class="btn btn-default" ng-model="animModel" btn-radio=" 'fade' ">Fade</button>
+							<button type="button" class="btn btn-default" ng-model="animModel" btn-radio=" 'scale' ">Scale</button>
+							<button type="button" class="btn btn-default" ng-model="animModel" btn-radio=" 'flash' ">Flash</button>
+							<button type="button" class="btn btn-default" ng-model="animModel" btn-radio=" 'bouncyflip' ">Bouncy Flip</button>
+							<button type="button" class="btn btn-default" ng-model="animModel" btn-radio=" 'genie' ">Genie</button>
+						</div>
+						<br/>
+						<div>
+							<p class="small text-muted text-uppercase">Select Position</p>
+							<button type="button" class="btn btn-default" ng-model="positionModel" btn-radio=" 'topLeft' ">TopLeft</button>
+							<button type="button" class="btn btn-default" ng-model="positionModel" btn-radio=" 'bottomLeft' ">BottomLeft</button>
+							<button type="button" class="btn btn-default" ng-model="positionModel" btn-radio=" 'topRight' ">TopRight</button>
+							<button type="button" class="btn btn-default" ng-model="positionModel" btn-radio=" 'bottomRight' ">BottomRight</button>
+						</div>
+						<br/>
+						<div class="clearfix">
+							<ui-select ng-model="noti.selected" search-enabled="true" style="width: 35%" class="left">
+								<ui-select-match>{{$select.selected}}</ui-select-match>
+								<ui-select-choices repeat="noti in notifications track by $index">
+									<div ng-bind-html="noti | highlight: $select.search"></div>
+								</ui-select-choices>
+							</ui-select> 
+							<button class="btn btn-primary btn-lg ml10" type="button" ng-click="createToast()">Create</button>
+						</div>
+
+						<div class="toast toast-{{positionModel}}">
+							<alert ng-repeat="toast in toasts" type="{{toast.type}}" close="closeAlert($index)" class="toast-{{toast.anim}}">
+								<div ng-bind-html="toast.msg"></div>
+							</alert>
+						</div>
+					</div> <!-- #end panel-body -->
+				</div>
+				<!-- #end toast -->
+			</div>
+			<!-- #end col -->
+
+
+			<div class="col-lg-6">
+				<div class="panel panel-lined mb30" ng-controller="AlertDemoCtrl">
+					<div class="panel-heading"><i>Alerts</i></div>
+					<div class="panel-body">
+						<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">
+							<div ng-bind-html="alert.msg"></div>
+						</alert>
+  						<button class='btn btn-primary' ng-click="addAlert()">Add Alert</button>
+					</div>
+				</div>
+			</div>
+			<!-- #end col -->
+		</div>
+		<!-- #end row -->
+
+
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="panel panel-lined mb30">
+					<div class="panel-heading"><i>Badges and Labels</i></div>
+					<div class="panel-body">
+						<div class="clearfix mb15">
+							<p class="small">Add the <code>label</code> class with optional color class to create a label.</p>
+							<label class="label label-default">Default</label>
+							<label class="label label-primary">Primary</label>
+							<label class="label label-success">Success</label>
+							<label class="label label-info">Info</label>
+							<label class="label label-warning">Warning</label>
+							<label class="label label-danger">Danger</label>
+						</div>
+						<div class="clearfix">
+							<p class="small">Add the <code>badge</code> class on inline element with optional color class to create a badge.</p>
+							<span class="badge badge-primary badge-xs">new</span>
+							<span class="badge badge-danger badge-xs circle">3</span>
+							<span class="badge badge-info badge-xs flat">flat</span>
+							<span class="badge badge-warning badge-xs">5</span>
+							<span class="badge badge-success badge-xs">10</span>
+							<span class="badge badge-primary">size</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- #end row -->
+
+	</div>
+	<!-- #end page-wrap -->
+
+
+</div>
