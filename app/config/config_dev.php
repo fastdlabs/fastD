@@ -15,16 +15,6 @@ return [
     // 数据库配置
     'database' => [
         'write' => [
-<<<<<<< HEAD
-            'database_type'     => 'mysql',
-            'database_host'     => '127.0.0.1',
-            'database_port'     => 3306,
-            'database_user'     => 'root',
-            'database_pwd'      => '123456',
-            'database_charset'  => 'utf8',
-            'database_name'     => 'test',
-            'database_prefix'   => ''
-=======
             'type'     => 'mysql',
             'host'     => '127.0.0.1',
             'port'     => 3306,
@@ -33,7 +23,6 @@ return [
             'charset'  => 'utf8',
             'dbname'     => 'typecho',
             'prefix'   => 'tp_'
->>>>>>> 2.0
         ],
         'read' => [
             'type'     => 'mysql',
