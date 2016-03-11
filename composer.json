@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7",
         "fastd/framework": "2.0.x-dev",
         "fastd/http": "2.0.x-dev",
         "fastd/template": "2.0.x-dev",
