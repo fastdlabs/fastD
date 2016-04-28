@@ -13,7 +13,6 @@
 
 namespace Welcome\Controllers;
 
-use FastD\Database\Drivers\Query\MySQLQueryBuilder;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
@@ -35,7 +34,6 @@ class Index extends Controller
      */
     public function welcomeAction(Request $request, $name)
     {
-<<<<<<< HEAD
         try {
             $driver = $this->getDriver('read');
         } catch (\Exception $e) {
@@ -107,8 +105,5 @@ class Index extends Controller
         }
 
         return $this->response(json_encode($result));
-=======
-        return $this->response('hello world');
->>>>>>> 2.0
     }
 }

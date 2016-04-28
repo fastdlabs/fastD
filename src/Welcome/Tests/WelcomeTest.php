@@ -20,7 +20,7 @@ class WelcomeTest extends WebTestCase
 {
     public function testIndex()
     {
-        $client = self::createClient();
+        $client = self::createClient();// 模拟请求
         $response = $client->testResponse('GET', '/');
         $this->assertEquals('hello fastd', $response->getContent());
     }
