@@ -5,4 +5,5 @@ composer.lock
 /bin/phpunit
 public/bundles
 *.orig
+*.cache
 
