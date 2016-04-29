@@ -1,0 +1,5 @@
+<?php
+Routes::get('welcome', '/{name}', 'Welcome\Controllers\Index@welcomeAction', ['name' => 'janhuang'], [])->setScheme('http')->setFormats(['php']);
+Routes::get('orm', '/orm/save', 'Welcome\Controllers\Index@saveOrmAction', [], [])->setScheme('http')->setFormats(['php']);
+Routes::get('orm_find', '/orm/find/{id}', 'Welcome\Controllers\Index@findOrmAction', [], [])->setScheme('http')->setFormats(['php']);
+Routes::get('welcome_repository', '/orm/repository/{id}', 'Welcome\Controllers\Index@repositoryAction', ['id' => '0'], [])->setScheme('http')->setFormats(['php']);

@@ -28,12 +28,10 @@ class Application extends AppKernel
      */
     public function registerBundles()
     {
-        $bundles = [
-            new \BoardBundle\BoardBundle(),
-        ];
+        $bundles = [];
 
         if ($this->isDebug()) {
-//            $bundles[] = new \Welcome\WelcomeBundle();
+            $bundles[] = new \WelcomeBundle\WelcomeBundle();
         }
 
         return $bundles;
@@ -47,6 +45,7 @@ class Application extends AppKernel
         //$container->set('name', 'class');
         // static
         // $container->set('name', 'class::method');
+
     }
 
 
@@ -66,6 +65,10 @@ class Application extends AppKernel
      */
     public function registerConfiguration(Config $config)
     {
-        $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
+        if ($this->isDebug()) {
+            $config->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.php');
+        } else {
+            $config->load(__DIR__ . '/config.cache');
+        }
     }
 }
