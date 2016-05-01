@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-use FastD\Framework\Kernel\AppKernel;
+use \FastD\Framework\Kernel\AppKernel;
 use \FastD\Container\Container;
 use \FastD\Config\Config;
 
@@ -42,10 +42,6 @@ class Application extends AppKernel
      */
     public function registerService(Container $container)
     {
-        //$container->set('name', 'class');
-        // static
-        // $container->set('name', 'class::method');
-
     }
 
 
@@ -54,7 +50,6 @@ class Application extends AppKernel
      */
     public function registerConfigurationVariable(Config $config)
     {
-//        $config->setVariable('%name%', 'value');
     }
 
     /**
