@@ -15,7 +15,12 @@
 set_time_limit(0);
 date_default_timezone_set('PRC');
 
-$loader = include __DIR__ . '/../vendor/autoload.php';
+foreach ([__DIR__ . '/../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $value) {
+    if (file_exists($value)) {
+        include $value;
+        break;
+    }
+}
 
 use FastD\Console\ArgvInput;
 use FastD\Framework\Kernel\AppConsole;
