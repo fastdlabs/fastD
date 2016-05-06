@@ -43,15 +43,8 @@ return [
             'port' => 6379
         ],
     ],
-    // 资源管理
-    'assets' => [
-        /*'host' => 'http://baidu.com',
-        'path' => 'public'*/
-    ],
-    // 错误页面配置
-    'error' => [
-        'page' => [
-            404 => null
-        ],
+    'dynamic' => [
+        'path' => '%root.path%',
+        'custom' => '%name%'
     ],
 ];

@@ -1,0 +1,45 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <p>执行的代码: </p>
+<pre class="language-php"><code lang="php">namespace WelcomeBundle\Controllers;
+
+use FastD\Framework\Bundle\Controllers\Controller;
+
+/**
+ * Class Demo
+ *
+ * @Route("/demo")
+ * @package WelcomeBundle\Controllers
+ */
+class Demo extends Controller
+{
+    // some code ...
+    /**
+     * @Route("/config", name="config")
+     *
+     * @return \FastD\Http\Response|string
+     */
+    public function configAction()
+    {
+        $db = $this->getParameters('database');
+
+        return $this->render('base/config.twig', [
+            'config' => var_export($db, true),
+            'path' => $this->getParameters('dynamic.path')
+        ]);
+    }
+}</code></pre>
+    <p>读取的文件: <pre class="language-php"><code>app/config/config_dev.php</code></pre></p>
+    <p>配置获取: <pre class="language-php"><code>$db = $this->getParameters('database');</code></pre></p>
+    <p>输出</p>
+    <pre class="language-php"><code lang="php">{{ config | raw }}</code></pre>
+    动态配置: <pre class="language-php"><code>$this->getParameters('dynamic.path')</code></pre>
+    <p>输出</p>
+    <pre class="language-php"><code lang="php">{{ path | raw }}</code></pre>
+
+    自定义动态配置: <pre class="language-php"><code>$this->getParameters('dynamic.name')</code></pre>
+    <p>输出</p>
+    <pre class="language-php"><code lang="php">{{ name | raw }}</code></pre>
+
+    <p><a href="{{ url('control') }}">下一章: 数据库</a></p>
+{% endblock %}

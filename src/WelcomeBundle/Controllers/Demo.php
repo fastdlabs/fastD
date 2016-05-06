@@ -43,4 +43,20 @@ class Demo extends Controller
     {
         return $this->render('base/control.twig');
     }
+
+    /**
+     * @Route("/config", name="config")
+     *
+     * @return \FastD\Http\Response|string
+     */
+    public function configAction()
+    {
+        $db = $this->getParameters('database');
+
+        return $this->render('base/config.twig', [
+            'config' => var_export($db, true),
+            'path' => $this->getParameters('dynamic.path'),
+            'name' => $this->getParameters('dynamic.custom'),
+        ]);
+    }
 }

@@ -50,6 +50,7 @@ class Application extends AppKernel
      */
     public function registerConfigurationVariable(Config $config)
     {
+        $config->setVariable('name', 'janhuang');
     }
 
     /**
