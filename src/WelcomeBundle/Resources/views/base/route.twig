@@ -1,0 +1,36 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <p>执行的代码: </p>
+<pre class="language-php">
+    <code lang="php">
+namespace WelcomeBundle\Controllers;
+
+use FastD\Framework\Bundle\Controllers\Controller;
+
+/**
+ * Class Demo
+ *
+ * @Route("/demo")
+ * @package WelcomeBundle\Controllers
+ */
+class Demo extends Controller
+{
+    /**
+     * @Route("/", name="demo")
+     *
+     * @return \FastD\Http\Response
+     */
+    public function indexAction()
+    {
+        return $this->render('base/route.twig');
+    }
+}
+    </code>
+</pre>
+<p>
+    此处通过路由注释定义了一组路由，路由前缀是以类名注释进行定义，仅需要一个前缀即可，而方法中定义的路由，则就是具体路由地址接受请求的地方。
+
+    当请求进入路由 `/demo` 下，就会执行对应的 `indexAction` 方法并返回相关响应信息
+</p>
+    <p><a href="{{ url('control') }}">下一章: 控制器</a></p>
+{% endblock %}
