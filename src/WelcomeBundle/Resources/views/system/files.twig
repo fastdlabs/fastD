@@ -1,0 +1,49 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <p>执行的代码: </p>
+<pre class="language-php">
+    <code lang="php">
+namespace WelcomeBundle\Controllers;
+
+use FastD\Framework\Bundle\Controllers\Controller;
+
+/**
+ * Class System
+ *
+ * @Route("/system")
+ * @package WelcomeBundle\Controllers
+ */
+class System extends Controller
+{
+    // some code ...
+    /**
+     * @Route("/upload", name="system.upload")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function uploadAction(Request $request)
+    {
+        $uploader = $request->getUploader();
+        $files = [];
+        if ($uploader->uploadTo($this->get('kernel')->getRootPath() . '/storage/files')) {
+            $files = $uploader->getUploadedFiles();
+        }
+
+        return $this->render('system/files.twig', [
+            'files' => $files
+        ]);
+    }
+}
+    </code>
+</pre>
+<p>
+    当进入路由，系统就会调度对应的方法，我们称之为"控制器"。而控制器中，就是我们平时实现逻辑代码的地方。具体控制器文档请看: <a href="">控制器</a>
+</p>
+    <div>
+    {% for file in files %}
+        <p><pre class="language-php"><code>{{ file.name }}</code></pre></p>
+    {% endfor %}
+    </div>
+    <p><a href="{{ url('config') }}">下一章: 配置</a></p>
+{% endblock %}

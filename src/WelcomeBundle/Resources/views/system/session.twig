@@ -1,0 +1,39 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <p>执行的代码: </p>
+<pre class="language-php">
+    <code lang="php">
+namespace WelcomeBundle\Controllers;
+
+use FastD\Framework\Bundle\Controllers\Controller;
+
+/**
+ * Class Demo
+ *
+ * @Route("/demo")
+ * @package WelcomeBundle\Controllers
+ */
+class Demo extends Controller
+{
+    // some code ...
+    /**
+     * @Route("/control", name="control")
+     *
+     * @return \FastD\Http\Response|string
+     */
+    public function controlAction()
+    {
+        return $this->render('base/control.twig');
+    }
+}
+    </code>
+</pre>
+<p>
+    当进入路由，系统就会调度对应的方法，我们称之为"控制器"。而控制器中，就是我们平时实现逻辑代码的地方。具体控制器文档请看: <a href="">控制器</a>
+</p>
+    <p><pre class="language-php"><code>session: {{ name }}</code></pre></p>
+    <p><pre class="language-php"><code>cookie: {{ age }}</code></pre></p>
+    <p>
+    <form action="{{ url("system.upload") }}" method="post" enctype="multipart/form-data"><input type="file" name="file"><input type="submit"></form></p>
+    <p><a href="{{ url('config') }}">下一章: 配置</a></p>
+{% endblock %}

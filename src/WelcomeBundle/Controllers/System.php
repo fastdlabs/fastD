@@ -16,6 +16,7 @@ namespace WelcomeBundle\Controllers;
 
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
+use FastD\Http\Response;
 
 /**
  * Class System
@@ -41,6 +42,51 @@ class System extends Controller
         return $this->render('system/services.twig', [
             'name' => $name,
             'agent' => $agent,
+        ]);
+    }
+
+    /**
+     * @Route("/session", name="base.session")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sessionAction(Request $request)
+    {
+        if (!$request->hasSession('name')) {
+            $request->setSession('name', 'jan');
+        }
+
+        $name = $request->getSession('name');
+
+        if (!$request->hasCookie('age')) {
+            $request->setCookie('age', 18);
+        }
+
+        $age = $request->getCookie('age');
+
+        return $this->render('system/session.twig', [
+            'name' => $name,
+            'age' => $age,
+        ]);
+    }
+
+    /**
+     * @Route("/upload", name="system.upload")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function uploadAction(Request $request)
+    {
+        $uploader = $request->getUploader();
+        $files = [];
+        if ($uploader->uploadTo($this->get('kernel')->getRootPath() . '/storage/files')) {
+            $files = $uploader->getUploadedFiles();
+        }
+
+        return $this->render('system/files.twig', [
+            'files' => $files
         ]);
     }
 }

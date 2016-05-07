@@ -24,7 +24,6 @@
         "fastd/http": "2.0.x-dev",
         "fastd/debug": "2.0.x-dev",
         "fastd/config": "2.0.x-dev",
-        "fastd/swoole": "2.0.x-dev",
         "fastd/console": "2.0.x-dev",
         "fastd/routing": "2.0.x-dev",
         "fastd/storage": "2.0.x-dev",
