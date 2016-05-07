@@ -49,6 +49,18 @@ class Demo extends Controller
     }
 
     /**
+     * @Route("/view", name="base.view")
+     *
+     * @return Response|string
+     */
+    public function viewAction()
+    {
+        return $this->render('base/view.twig', [
+            'name' => 'janhuang'
+        ]);
+    }
+
+    /**
      * @Route("/request", name="request")
      *
      * @param Request $request
