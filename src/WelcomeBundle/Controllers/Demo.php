@@ -14,7 +14,11 @@
 
 namespace WelcomeBundle\Controllers;
 
+use FastD\Debug\Exceptions\Http\NotFoundHttpException;
 use FastD\Framework\Bundle\Controllers\Controller;
+use FastD\Http\Request;
+use FastD\Http\Response;
+use WelcomeBundle\Exceptions\NotFoundException;
 
 /**
  * Class Demo
@@ -45,6 +49,45 @@ class Demo extends Controller
     }
 
     /**
+     * @Route("/request", name="request")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function requestAction(Request $request)
+    {
+        if (!$request->hasSession('name')) {
+            $request->setSession('name', 'jan');
+        }
+
+        $name = $request->getSession('name');
+
+        if (!$request->hasCookie('age')) {
+            $request->setCookie('age', 18);
+        }
+
+        $age = $request->getCookie('age');
+
+        return $this->render('base/request.twig', [
+            'name' => $name,
+            'age' => $age,
+        ]);
+    }
+
+    /**
+     * @Route("/session", name="session.handler")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sessionHandlerAction(Request $request)
+    {
+        $request->getSessionHandle();
+
+        return $this->render('base/session.twig');
+    }
+
+    /**
      * @Route("/config", name="config")
      *
      * @return \FastD\Http\Response|string
@@ -58,5 +101,15 @@ class Demo extends Controller
             'path' => $this->getParameters('dynamic.path'),
             'name' => $this->getParameters('dynamic.custom'),
         ]);
+    }
+
+    /**
+     * @Route("/exception", name="base.exception")
+     *
+     * @throws NotFoundException
+     */
+    public function exceptionAction()
+    {
+        throw new NotFoundException(404);
     }
 }

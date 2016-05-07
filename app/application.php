@@ -42,6 +42,8 @@ class Application extends AppKernel
      */
     public function registerService(Container $container)
     {
+        $container->set('name', WelcomeBundle\Services\Name::class);
+        $container->set('agent', WelcomeBundle\Services\Agent::class);
     }
 
 
