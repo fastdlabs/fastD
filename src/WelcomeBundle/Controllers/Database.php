@@ -14,9 +14,11 @@
 
 namespace WelcomeBundle\Controllers;
 
+use FastD\Database\Query\Mysql;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
+use WelcomeBundle\Repository\TestRepository;
 
 /**
  * Class Database
@@ -39,8 +41,25 @@ class Database extends Controller
 
         $result = $write->query('show tables')->execute()->getAll();
 
+        $repository = new TestRepository($write);
+
         return $this->render('database/drivers.twig', [
-            'result' => $result
+            'result' => $result,
+            'all' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/builder", name="database.builder")
+     *
+     * @return Response|string
+     */
+    public function queryBuilderAction()
+    {
+        $this->getDriver('read')->createQueryBuilder();
+
+        return $this->render('database/drivers.twig', [
+            'sql' => $sql,
         ]);
     }
 }
