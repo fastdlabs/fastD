@@ -56,10 +56,23 @@ class Database extends Controller
      */
     public function queryBuilderAction()
     {
-        $this->getDriver('read')->createQueryBuilder();
+        $queryBuilder = $this->getDriver('read')->createQueryBuilder();
 
-        return $this->render('database/drivers.twig', [
-            'sql' => $sql,
+        return $this->render('database/query.twig', [
+            'from' => $queryBuilder->from('test', 't')->select(),
+            'field' => $queryBuilder->fields(['id', 'name'])->from('test', 't')->select(),
+            'where' => $queryBuilder->from('test')->where(['id' => 1])->select(),
+            'limit' => $queryBuilder->from('test')->limit(5)->select(),
         ]);
+    }
+
+    /**
+     * @Route("/orm", name="database.orm")
+     *
+     * @return Response
+     */
+    public function ormAction()
+    {
+
     }
 }

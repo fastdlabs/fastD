@@ -6,10 +6,6 @@
 
 * PHP 7+
 
-## 可选项
-
-* [php-ext-swoole 1.8+](https://github.com/swoole/swoole-src)
-
 #### 安装 Swoole 扩展
 
 ```
@@ -32,48 +28,34 @@ pecl install swoole
 
 ## 文档
 
-[文档v1.4](http://www.fast-d.cn/docs/index.html)
+[文档v1.x](http://www.fast-d.cn/docs/index.html)
 
 文档v2.0-dev 编写中......
 
-## 重写规则
-
-### Swoole Http Server
-
-configuration: `app/config/server.php`
-
-```
-php app/console http:server start
-```
-
-访问: `host:port/pathinfo`
-
-服务配置: `app/config/server.php`
-
-### Nginx + Swoole Http Server
-
-```
-server {
-        location / {
-            fastcgi_index index.php;
-            proxy_pass http://127.0.0.1:9600;
-        }
-    }
-```
+## 服务器配置
 
 ### Nginx
 
 ```
-server {
-    listen 80;
-    server_name [server_name];
-    root [document_root];
-    index (dev|test|prod).php;
+server
+{
+    listen       80;
+    server_name  {server_name};
+    index {(dev|test|prod)}.php;
+    root {document_root};
+    location / {
+        try_files $uri @rewriteapp;
+    }
+    location @rewriteapp {
+        rewrite ^(.*)$ /{(dev|test|prod)}.php$1 last;
+    }
     location ~ \.php {
-            fastcgi_split_path_info ^(.+.php)(/.*)$;
-            fastcgi_param   PATH_INFO $fastcgi_path_info;
-            fastcgi_pass 127.0.0.1:9000;
-            include fastcgi.conf;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_split_path_info ^(.+.php)(/.*)$;
+        include       fastcgi_params;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTPS              off;
     }
 }
 ```

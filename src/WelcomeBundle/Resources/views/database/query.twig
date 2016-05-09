@@ -1,0 +1,8 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <p>from: <pre class="language-php"><code>$queryBuilder->from('test', 't'); : {{ from }}</code></pre></p>
+    <p>from fields: <pre class="language-php"><code>$queryBuilder->fields(['id', 'name'])->from('test', 't')->select() : {{ field }}</code></pre></p>
+    <p>where: <pre class="language-php"><code>$queryBuilder->from('test')->where(['id' => 1])->select() : {{ where }}</code></pre></p>
+    <p>limit: <pre class="language-php"><code>$queryBuilder->from('test')->limit(5)->select() : {{ limit }}</code></pre></p>
+    <p><a href="{{ url('database.orm') }}">下一章: ORM</a></p>
+{% endblock %}
