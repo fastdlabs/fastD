@@ -1,0 +1,61 @@
+table: test
+prefix: null
+suffix: null
+cache: ''
+engine: InnoDB
+charset: utf8
+fields:
+    id:
+        name: id
+        type: int
+        length: '10) unsigne'
+        default: 0
+        comment: 主键
+        unsigned: false
+        key: PRIMARY
+        nullable: false
+    trueName:
+        name: true_name
+        type: varchar
+        length: '10'
+        default: ''
+        comment: ''
+        unsigned: false
+        key: ''
+        nullable: false
+    telNumber:
+        name: tel_number
+        type: char
+        length: '20'
+        default: ''
+        comment: 手机号
+        unsigned: false
+        key: ''
+        nullable: false
+    username:
+        name: username
+        type: varchar
+        length: '32'
+        default: ''
+        comment: ''
+        unsigned: false
+        key: ''
+        nullable: false
+    password:
+        name: password
+        type: varchar
+        length: '32'
+        default: ''
+        comment: ''
+        unsigned: false
+        key: ''
+        nullable: false
+    email:
+        name: email
+        type: varchar
+        length: '32'
+        default: ''
+        comment: ''
+        unsigned: false
+        key: ''
+        nullable: false

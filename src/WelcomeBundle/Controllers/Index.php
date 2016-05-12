@@ -3,7 +3,6 @@
 namespace WelcomeBundle\Controllers;
 
 use FastD\Framework\Bundle\Controllers\Controller;
-use FastD\Http\Request;
 
 /**
  * @Route("/welcomebundle")

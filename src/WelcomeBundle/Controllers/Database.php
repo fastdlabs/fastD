@@ -14,6 +14,7 @@
 
 namespace WelcomeBundle\Controllers;
 
+use WelcomeBundle\Orm\Test\Entity\Demo;
 use FastD\Database\Query\Mysql;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
@@ -69,10 +70,19 @@ class Database extends Controller
     /**
      * @Route("/orm", name="database.orm")
      *
+     * @param Request $request
      * @return Response
      */
-    public function ormAction()
+    public function ormAction(Request $request)
     {
+        $demo = new Demo(null, $this->getDriver('write'));
 
+        $demo->setId('1');
+
+        $demo->bindRequest();
+
+        return $this->render('database/orm.twig', [
+            'id' => $demo->save(),
+        ]);
     }
 }
