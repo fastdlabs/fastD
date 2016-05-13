@@ -94,9 +94,13 @@ class Demo extends Controller
      */
     public function sessionHandlerAction(Request $request)
     {
-        $request->getSessionHandle();
+        $session = $request->getSessionHandle($this->getDefaultSessionStorage('session'));
 
-        return $this->render('base/session.twig');
+        $session->set('name', 'janhuang'); // $request->setSession('name', 'janhuang');
+
+        return $this->render('base/session.twig', [
+            'session' => $session->get('name') // $request->getSession('name');
+        ]);
     }
 
     /**

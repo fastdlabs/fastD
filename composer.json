@@ -32,6 +32,9 @@
         "fastd/annotation": "~2.0@beta",
         "fastd/framework": "~2.0@beta"
     },
+    "require-dev": {
+        "phpunit/phpunit": "5.0"
+    },
     "autoload": {
         "files": [
             "app/application.php"

@@ -14,11 +14,11 @@
 
 namespace WelcomeBundle\Commands;
 
-use FastD\Console\Command\Command;
 use FastD\Console\IO\Input;
 use FastD\Console\IO\Output;
+use FastD\Framework\Bundle\Commands\CommandAware;
 
-class DemoCommand extends Command
+class DemoCommand extends CommandAware
 {
     /**
      * @return string
