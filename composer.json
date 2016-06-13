@@ -30,7 +30,8 @@
         "fastd/routing": "~2.0@beta",
         "fastd/container": "~2.0@beta",
         "fastd/annotation": "~2.0@beta",
-        "fastd/framework": "~2.0@beta"
+        "fastd/framework": "~2.0@beta",
+        "fastd/packet": "~1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "5.0"

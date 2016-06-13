@@ -14,8 +14,8 @@
 
 namespace WelcomeBundle\Commands;
 
-use FastD\Console\IO\Input;
-use FastD\Console\IO\Output;
+use FastD\Console\Input\Input;
+use FastD\Console\Output\Output;
 use FastD\Framework\Bundle\Commands\CommandAware;
 
 class DemoCommand extends CommandAware
@@ -47,5 +47,13 @@ class DemoCommand extends CommandAware
     public function execute(Input $input, Output $output)
     {
         $output->write('welcome fastd. Argument = ' . $input->get('name') . ' Options = ' . $input->get('age'));
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        // TODO: Implement getDescription() method.
     }
 }
