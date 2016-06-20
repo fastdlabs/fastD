@@ -1,8 +1,8 @@
 <?php
 
-namespace WelcomeBundle\Orm\Test\Field;
+namespace WelcomeBundle\ORM\Test\Fields;
 
-class Demo
+class Test
 {
     /**
      * @const mixed
@@ -12,11 +12,21 @@ class Demo
   array (
     'alias' => 'id',
     'name' => 'id',
-    'length' => 10,
+    'length' => 11,
     'type' => 'int',
     'notnull' => false,
     'unsigned' => false,
     'default' => 0,
+  ),
+  'name' => 
+  array (
+    'alias' => 'name',
+    'name' => 'name',
+    'length' => 20,
+    'type' => 'varchar',
+    'notnull' => false,
+    'unsigned' => false,
+    'default' => '',
   ),
 );
 
@@ -25,16 +35,12 @@ class Demo
      */
     const ALIAS = array (
   'id' => 'id',
+  'name' => 'name',
 );
 
     /**
      * @const mixed
      */
-    const PRIMARY = null;
-
-    /**
-     * @const mixed
-     */
-    const TABLE = 'fd_demo';
+    const TABLE = 'test';
 
 }

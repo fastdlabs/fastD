@@ -14,11 +14,9 @@
 
 namespace WelcomeBundle\Controllers;
 
-use FastD\Debug\Exceptions\Http\NotFoundHttpException;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
-use WelcomeBundle\Exceptions\NotFoundException;
 
 /**
  * Class Demo
@@ -117,15 +115,5 @@ class Demo extends Controller
             'path' => $this->getParameters('dynamic.path'),
             'name' => $this->getParameters('dynamic.custom'),
         ]);
-    }
-
-    /**
-     * @Route("/exception", name="base.exception")
-     *
-     * @throws NotFoundException
-     */
-    public function exceptionAction()
-    {
-        throw new NotFoundException(404);
     }
 }

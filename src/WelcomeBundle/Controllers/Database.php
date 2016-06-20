@@ -14,12 +14,11 @@
 
 namespace WelcomeBundle\Controllers;
 
-use WelcomeBundle\Orm\Test\Entity\Demo;
-use FastD\Database\Query\Mysql;
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;
 use FastD\Http\Response;
-use WelcomeBundle\Repository\TestRepository;
+use WelcomeBundle\ORM\Test\Entities\TestEntity;
+use WelcomeBundle\ORM\Test\Models\TestModel;
 
 /**
  * Class Database
@@ -42,7 +41,7 @@ class Database extends Controller
 
         $result = $write->query('show tables')->execute()->getAll();
 
-        $repository = new TestRepository($write);
+        $repository = new TestModel($write);
 
         return $this->render('database/drivers.twig', [
             'result' => $result,
@@ -57,7 +56,7 @@ class Database extends Controller
      */
     public function queryBuilderAction()
     {
-        $queryBuilder = $this->getDriver('read')->createQueryBuilder();
+        $queryBuilder = $this->getDriver('read')->getQueryBuilder();
 
         return $this->render('database/query.twig', [
             'from' => $queryBuilder->from('test', 't')->select(),
@@ -75,11 +74,11 @@ class Database extends Controller
      */
     public function ormAction(Request $request)
     {
-        $demo = new Demo(null, $this->getDriver('write'));
+        $demo = new TestEntity($this->getDriver('write'));
 
         $demo->setId('1');
 
-        $demo->bindRequest();
+        $demo->bindRequest($request);
 
         return $this->render('database/orm.twig', [
             'id' => $demo->save(),
