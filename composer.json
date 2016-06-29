@@ -20,13 +20,10 @@
         }
     ],
     "require": {
-        "php": ">=7",
-        "fastd/http": "~2.0.0@beta",
-        "fastd/database": "~2.0.0@beta",
-        "fastd/config": "~2.0.0",
-        "fastd/storage": "~2.0.0@beta",
-        "fastd/console": "~2.0.0@beta",
-        "fastd/framework": "~2.0@beta"
+        "php": ">=7.0",
+        "fastd/framework": "~2.0.0",
+        "fastd/http-server-bundle": "2.0.x-dev",
+        "fastd/swoole": "2.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "5.0"

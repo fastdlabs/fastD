@@ -32,6 +32,7 @@ class Application extends AppKernel
 
         if ($this->isDebug()) {
             $bundles[] = new \WelcomeBundle\WelcomeBundle();
+            $bundles[] = new \HttpServerBundle\HttpServerBundle();
         }
 
         return $bundles;

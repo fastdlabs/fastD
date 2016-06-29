@@ -5,7 +5,7 @@ namespace WelcomeBundle\Controllers;
 use FastD\Framework\Bundle\Controllers\Controller;
 
 /**
- * @Route("/welcomebundle")
+ * @Route("/")
  */
 class Index extends Controller
 {
@@ -14,6 +14,7 @@ class Index extends Controller
      */
     public function indexAction()
     {
+        return $this->response('hello world');
         return $this->render('welcome.twig');
     }
 }
