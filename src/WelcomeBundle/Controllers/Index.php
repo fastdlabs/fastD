@@ -14,7 +14,6 @@ class Index extends Controller
      */
     public function indexAction()
     {
-        return $this->response('hello world');
         return $this->render('welcome.twig');
     }
 }
