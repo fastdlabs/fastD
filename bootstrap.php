@@ -35,6 +35,6 @@ return [
      * 需要实例化组件引导对象。 如: new WelcomeBundle
      */
     'bundles' => [
-
+        new \FastD\Tests\App\WelcomeBundle\WelcomeBundle(),
     ],
 ];

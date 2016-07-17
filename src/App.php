@@ -11,8 +11,6 @@
 namespace FastD;
 
 use FastD\Container\ContainerInterface;
-use Symfony\Component\Finder\Finder;
-use FastD\Core\AppKernelInterface;
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
 use FastD\Standard\Bundle;
@@ -26,7 +24,12 @@ use FastD\Event\Event;
 use FastD\Debug\Debug;
 use Routes;
 
-class App implements AppKernelInterface
+/**
+ * Class App
+ *
+ * @package FastD
+ */
+class App
 {
     /**
      * The FastD application version.
@@ -167,12 +170,12 @@ class App implements AppKernelInterface
     public function initializeContainer()
     {
         $this->container = new Container([
-            'kernel.database'   => Fdb::class,
-            'kernel.config'     => Config::class,
-            'kernel.storage'    => Storage::class,
-            'kernel.routing'    => Routes::getRouter(),
-            'kernel.debug'      => Debug::enable($this->isDebug()),
-            'kernel.event'      => Event::class,
+            'kernel.database' => Fdb::class,
+            'kernel.config' => Config::class,
+            'kernel.storage' => Storage::class,
+            'kernel.routing' => Routes::getRouter(),
+            'kernel.debug' => Debug::enable($this->isDebug()),
+            'kernel.event' => Event::class,
         ]);
 
         $this->container->set('kernel.container', $this->container);
@@ -203,7 +206,7 @@ class App implements AppKernelInterface
     public function initializeRouting()
     {
         $this->container->singleton('kernel.event');
-        
+
         if ($this->isDebug()) {
             $this->scanRoutes();
         } else {
@@ -236,7 +239,8 @@ class App implements AppKernelInterface
 
         try {
             $service->__initialize();
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return call_user_func_array([$service, $action], $route->getParameters());
     }
@@ -251,18 +255,16 @@ class App implements AppKernelInterface
         $routes = [];
 
         $scan = function (Bundle $bundle) {
-            $path = $bundle->getRootPath() . '/Controllers';
-            if (!is_dir($path)) {
+            $path = $bundle->getPath() . '/Controllers';
+            if (!is_dir($path) || false === ($files = glob($path . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
                 return [];
             }
 
             $baseNamespace = $bundle->getNamespace() . '\\Controllers\\';
-            $finder = new Finder();
-            $files = $finder->name('*.php')->in($path)->files();
 
             $routes = [];
             foreach ($files as $file) {
-                $className = $baseNamespace . pathinfo($file->getFileName(), PATHINFO_FILENAME);
+                $className = $baseNamespace . pathinfo($file, PATHINFO_FILENAME);
                 if (!class_exists($className)) {
                     continue;
                 }
