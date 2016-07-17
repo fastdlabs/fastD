@@ -131,18 +131,7 @@ class App implements AppKernelInterface
     {
         return $this->webPath;
     }
-
-    /**
-     * @param ContainerInterface $containerInterface
-     * @return $this
-     */
-    public function setContainer(ContainerInterface $containerInterface)
-    {
-        $this->container = $containerInterface;
-
-        return $this;
-    }
-
+    
     /**
      * @return ContainerInterface
      */

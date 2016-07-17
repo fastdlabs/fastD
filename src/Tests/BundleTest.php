@@ -8,7 +8,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Tests;
+namespace FastD\Tests;
 
 use FastD\Standard\Bundle;
 
@@ -16,10 +16,5 @@ class BundleTest extends \PHPUnit_Framework_TestCase
 {
     public function testBundle()
     {
-        $bundle = new Bundle();
-
-        $this->assertEquals(Bundle::class, $bundle->getName());
-
-        $this->assertEquals(realpath(__DIR__ . '/Framework'), $bundle->getRootPath());
     }
 }

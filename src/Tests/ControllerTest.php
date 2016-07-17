@@ -8,7 +8,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Tests;
+namespace FastD\Tests;
 
 use FastD\Config\Config;
 use FastD\Container\Container;
@@ -118,18 +118,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testRender()
     {
-        $controller = new Controller();
-
-        Routes::get('root', '/', function () {
-            return 'hello world';
-        });
-
-        $controller->setContainer(new Container([
-            'kernel.request' => Request::createRequestHandle(),
-            'kernel.storage' => Storage::class,
-            'kernel.routing' => Routes::getRouter(),
-        ]));
-
-        $controller->render('views/test.twig');
+        
     }
 }

@@ -12,24 +12,21 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Framework\Tests\Framework;
+namespace FastD\Tests;
 
-use FastD\Framework\App;
-use FastD\Framework\Tests\WebTestCase;
+use FastD\App;
 
 /**
  * Class BootstrapTest
  *
  * @package FastD\Framework\Tests\KernelTesting
  */
-class BootstrapTest extends WebTestCase
+class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
     public function testKernel()
     {
-        $app = new App([]);
+        $app = new App(include __DIR__ . '/../../bootstrap.php');
 
-        $app->bootstrap();
-
-        $this->assertEquals('dev', $app->getEnvironment());
+        print_r($app);
     }
 }
