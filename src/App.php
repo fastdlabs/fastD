@@ -10,13 +10,11 @@
 
 namespace FastD;
 
-use FastD\Standard\Commands\CommandAware;
 use FastD\Container\ContainerInterface;
 use Symfony\Component\Finder\Finder;
 use FastD\Core\AppKernelInterface;
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
-use FastD\Console\Console;
 use FastD\Standard\Bundle;
 use FastD\Storage\Storage;
 use FastD\Routing\Router;
@@ -47,7 +45,11 @@ class App implements AppKernelInterface
      */
     protected $rootPath;
 
+    /**
+     * @var string
+     */
     protected $webPath;
+
     /**
      * @var bool
      */
@@ -131,7 +133,7 @@ class App implements AppKernelInterface
     {
         return $this->webPath;
     }
-    
+
     /**
      * @return ContainerInterface
      */
@@ -303,30 +305,6 @@ class App implements AppKernelInterface
         }
 
         unset($routes, $scan);
-    }
-
-    /**
-     * Scan commands.
-     *
-     * @param Console $console
-     * @return void
-     */
-    public function scanCommands(Console $console)
-    {
-        foreach ($this->getBundles() as $bundle) {
-            $dir = $bundle->getRootPath() . '/Commands';
-            if (!is_dir($dir)) {
-                continue;
-            }
-            $finder = new Finder();
-            foreach ($finder->in($dir)->name('*Command.php')->files() as $file) {
-                $class = $bundle->getNamespace() . '\\Commands\\' . pathinfo($file, PATHINFO_FILENAME);
-                $command = new $class();
-                if ($command instanceof CommandAware) {
-                    $console->addCommand($command);
-                }
-            }
-        }
     }
 
     /**

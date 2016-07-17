@@ -12,10 +12,10 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Core;
+namespace FastD;
 
-use FastD\Standard\Commands\AssetInstallCommand;
 use FastD\Standard\Commands\BundleGeneratorCommand;
+use FastD\Standard\Commands\AssetInstallCommand;
 use FastD\Standard\Commands\ConfigCacheCommand;
 use FastD\Standard\Commands\FdbDataSetCommand;
 use FastD\Standard\Commands\RouteCacheCommand;
@@ -24,41 +24,40 @@ use FastD\Standard\Commands\FdbSchemaCommand;
 use FastD\Standard\Commands\RouteDumpCommand;
 use FastD\Standard\Commands\SwooleCommand;
 use FastD\Standard\Commands\ProdCommand;
-use FastD\Console\Console as Application;
-use FastD\App;
+use FastD\Console\Console;
 
 /**
  * Class AppConsole
  *
  * @package FastD\Framework\Kernel
  */
-class Console extends Application
+class AppConsole extends Console
 {
     /**
-     * @var AppKernelInterface
+     * @var App
      */
     protected $application;
 
     /**
      * AppConsole constructor.
      *
-     * @param App $app
+     * @param array $bootstrap
      */
-    public function __construct(App $app)
+    public function __construct(array $bootstrap)
     {
-        $this->application = $app;
+        $this->application = new App($bootstrap);
 
         $this->application->bootstrap();
 
         parent::__construct();
 
-        $app->scanCommands($this);
+        $this->application->scanCommands($this);
     }
 
     /**
-     * @return AppKernelInterface
+     * @return App
      */
-    public function getKernel()
+    public function getApplication()
     {
         return $this->application;
     }
@@ -98,5 +97,30 @@ class Console extends Application
     public function getDefaultCommandName()
     {
         return 'list';
+    }
+
+    /**
+     * Scan commands.
+     *
+     * @param Console $console
+     * @return void
+     */
+    public function scanCommands(Console $console)
+    {
+        foreach ($this->getApplication()->getBundles() as $bundle) {
+            $dir = $bundle->getRootPath() . '/Commands';
+            if (!is_dir($dir)) {
+                continue;
+            }
+            $finder = new Finder();
+            foreach ($finder->in($dir)->name('*Command.php')->files() as $file) {
+                $class = $bundle->getNamespace() . '\\Commands\\' . pathinfo($file, PATHINFO_FILENAME);
+                $command = new $class();
+                if ($command instanceof CommandAware) {
+                    $command->setContainer($this->getContainer());
+                    $console->addCommand($command);
+                }
+            }
+        }
     }
 }

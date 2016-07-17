@@ -56,9 +56,8 @@ foreach ([
 }
 
 use FastD\Console\Input\ArgvInput;
-use FastD\Core\AppConsole;
-use FastD\App;
 use FastD\Console\Input\InputDefinition;
+use FastD\AppConsole;
 
 $argvInput = new ArgvInput(null, new InputDefinition);
 
@@ -66,6 +65,6 @@ $env = $argvInput->hasOption(['env', 'e']) ? $argvInput->getOption(['env', 'e'])
 
 $bootstrap['env'] = $env;
 
-$console = new AppConsole(new App($bootstrap));
+$console = new AppConsole($bootstrap);
 
 $console->run($argvInput);

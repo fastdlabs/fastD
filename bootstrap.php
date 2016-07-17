@@ -25,9 +25,9 @@ return [
     'web.path' => __DIR__ . '/web',
 
     /**
-     * Swoole 配置信息。
+     * Server 配置信息。
      */
-    'swoole' => [],
+    'server' => [],
 
     /**
      * App 需要注册的业务应用组件

@@ -19,14 +19,14 @@ use FastD\Config\Config;
 /**
  * Class Bundle
  *
- * @package FastD\Framework\Bundle
+ * @package FastD\Standard
  */
-class Bundle extends ContainerAware
+class Bundle
 {
     /**
      * @var string
      */
-    protected $rootPath;
+    protected $path;
 
     /**
      * @var string
@@ -39,7 +39,7 @@ class Bundle extends ContainerAware
     protected $name;
 
     /**
-     * @var
+     * @var string
      */
     protected $shortName;
 
@@ -53,7 +53,7 @@ class Bundle extends ContainerAware
     {
         $reflection = new ReflectionClass($this);
 
-        $this->rootPath = dirname($reflection->getFileName());
+        $this->path = dirname($reflection->getFileName());
 
         $this->namespace = $reflection->getNamespaceName();
 
@@ -67,9 +67,9 @@ class Bundle extends ContainerAware
     /**
      * @return string
      */
-    public function getRootPath()
+    public function getPath()
     {
-        return $this->rootPath;
+        return $this->path;
     }
 
     /**
@@ -91,22 +91,10 @@ class Bundle extends ContainerAware
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getShortName()
     {
         return $this->shortName;
-    }
-
-    /**
-     * Register bundle configuration.
-     *
-     * @param Config $config
-     * @param string $env
-     * @return void
-     */
-    public function registerConfiguration(Config $config, $env)
-    {
-        $config->load($this->getRootPath() . '/Resources/config/config_' . $env . '.php');
     }
 }
