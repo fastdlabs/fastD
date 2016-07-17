@@ -25,6 +25,7 @@ use FastD\Standard\Commands\RouteDumpCommand;
 use FastD\Standard\Commands\SwooleCommand;
 use FastD\Standard\Commands\ProdCommand;
 use FastD\Console\Console as Application;
+use FastD\App;
 
 /**
  * Class AppConsole
@@ -41,17 +42,17 @@ class Console extends Application
     /**
      * AppConsole constructor.
      *
-     * @param AppKernel $appKernel
+     * @param App $app
      */
-    public function __construct(AppKernel $appKernel)
+    public function __construct(App $app)
     {
-        $this->application = $appKernel;
+        $this->application = $app;
 
         $this->application->bootstrap();
 
         parent::__construct();
 
-        $appKernel->scanCommands($this);
+        $app->scanCommands($this);
     }
 
     /**

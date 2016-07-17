@@ -10,10 +10,10 @@
 
 namespace FastD;
 
-use FastD\Core\AppKernelInterface;
 use FastD\Standard\Commands\CommandAware;
 use FastD\Container\ContainerInterface;
 use Symfony\Component\Finder\Finder;
+use FastD\Core\AppKernelInterface;
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
 use FastD\Console\Console;
@@ -122,6 +122,14 @@ class App implements AppKernelInterface
     public function getRootPath()
     {
         return $this->rootPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->webPath;
     }
 
     /**
@@ -338,14 +346,6 @@ class App implements AppKernelInterface
     public function shutdown()
     {
         // TODO: Implement shutdown() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getWebPath()
-    {
-        return $this->webPath;
     }
 
     /**
