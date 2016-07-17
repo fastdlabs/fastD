@@ -25,6 +25,21 @@ use FastD\Container\Container;
 interface AppKernelInterface
 {
     /**
+     * @return bool
+     */
+    public function isDebug();
+
+    /**
+     * @return string
+     */
+    public function getRootPath();
+
+    /**
+     * @return string
+     */
+    public function getWebPath();
+
+    /**
      * @return Bundle[]
      */
     public function getBundles();
@@ -40,4 +55,16 @@ interface AppKernelInterface
      * @return void
      */
     public function bootstrap();
+
+    /**
+     * Start Application.
+     *
+     * @return void
+     */
+    public function start();
+
+    /**
+     * @return void
+     */
+    public function shutdown();
 }

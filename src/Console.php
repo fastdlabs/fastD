@@ -24,14 +24,14 @@ use FastD\Standard\Commands\FdbSchemaCommand;
 use FastD\Standard\Commands\RouteDumpCommand;
 use FastD\Standard\Commands\SwooleCommand;
 use FastD\Standard\Commands\ProdCommand;
-use FastD\Console\Console;
+use FastD\Console\Console as Application;
 
 /**
  * Class AppConsole
  *
  * @package FastD\Framework\Kernel
  */
-class AppConsole extends Console
+class Console extends Application
 {
     /**
      * @var AppKernelInterface

@@ -30,7 +30,6 @@
         "fastd/packet": "~1.1.0",
         "fastd/event": "dev-master",
         "fastd/swoole": "dev-master",
-        "symfony/finder": "~3.0.0",
         "twig/twig": "~1.0"
     },
     "require-dev": {
