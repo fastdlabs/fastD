@@ -1,10 +1,10 @@
 {
-    "name": "fastd/framework",
+    "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "The fastd framework library.",
+    "description": "The FastD Core library.",
     "minimum-stability": "stable",
-    "keywords": ["FastD Framework Kernel"],
+    "keywords": ["FastD"],
     "authors": [
         {
             "name": "janhuang",
@@ -14,11 +14,6 @@
     "autoload": {
         "psr-4": {
             "FastD\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "": "app/src/Bundles"
         }
     },
     "require": {
@@ -36,7 +31,8 @@
         "fastd/event": "dev-master",
         "fastd/swoole": "dev-master",
         "fastd/standard": "dev-master",
-        "symfony/finder": "~3.0.0"
+        "symfony/finder": "~3.0.0",
+        "twig/twig": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "5.0"

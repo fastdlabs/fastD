@@ -4,6 +4,12 @@
 
 FastD 是一个开源，面向对象的开发框架。其模式类似 Symfony 框架，良好的编码规范，灵活的开发模式，而且入门门槛不高，适合初中高不同阶段的开发者和乐于学习的 PHP 开发者。
 
+里程碑:
+
+* 1.x
+* 2.0 (修复 1.x 错误的设计)
+* 3.0 (简化并修改 2.0 的设计及组件, 内置 Swoole 2.0 扩展, 简化引导配置)
+
 ## 环境要求
 
 FastD 对运行环境是有一定要求的，在安装框架前需要确认一下扩展正常运行:
@@ -17,20 +23,16 @@ FastD 对运行环境是有一定要求的，在安装框架前需要确认一�
 FastD 利用 [Composer](http://getcomposer.org) 来管理其自身的依赖包。因此，在使用 FastD 之前，请务必确保在你的机器上已经安装了 `Composer `。
 
 ```
-git clone https://github.com/JanHuang/fastD.git
-cd fastD
-composer install -vvv
+composer create-project "fastd/fastd.standard:3.0.x-dev" fastd
 ```
 
 ## 文档
 
-[Documentation](http://www.fast-d.cn/doc-introduction)
+[中文文档](http://www.fast-d.cn/doc-introduction)
 
 ##### ＃环境配置
 
 保证目录在当前进程的读写权限，特别是 `app/storage` 的读写权限，因为此目录是用于数据缓存读写的。
-
-其次要配置好 `php.ini` 时区。
 
 ##### ＃Apache
 
