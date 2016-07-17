@@ -37,7 +37,7 @@ if (!defined('FASTD_COMPOSER_INSTALL')) {
 
 include FASTD_COMPOSER_INSTALL;
 
-$bootstrap = [];
+$bootstrap = null;
 
 foreach ([
              __DIR__ . '/bootstrap.php',
@@ -56,8 +56,8 @@ foreach ([
 }
 
 use FastD\Console\Input\ArgvInput;
-use FastD\Framework\Kernel\AppConsole;
-use FastD\Framework\App;
+use FastD\Core\AppConsole;
+use FastD\App;
 use FastD\Console\Input\InputDefinition;
 
 $argvInput = new ArgvInput(null, new InputDefinition);

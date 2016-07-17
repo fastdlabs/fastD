@@ -11,9 +11,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace FastD\Framework;
+namespace FastD;
 
-use FastD\Framework\Kernel\AppKernel;
+use FastD\Core\AppKernel;
 
 /**
  * Class AppKernel

@@ -12,7 +12,7 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Framework\Kernel;
+namespace FastD\Core;
 
 use FastD\Standard\Bundle;
 use FastD\Container\Container;

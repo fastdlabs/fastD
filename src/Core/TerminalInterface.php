@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace FastD\Framework\Kernel;
+namespace FastD\Core;
 
 /**
  * Interface TerminalInterface

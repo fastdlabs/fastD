@@ -12,7 +12,7 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Framework\Kernel;
+namespace FastD\Core;
 
 use FastD\Framework\Bundle\Controllers\Controller;
 use FastD\Http\Request;

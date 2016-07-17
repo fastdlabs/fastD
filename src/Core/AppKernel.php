@@ -8,7 +8,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Framework\Kernel;
+namespace FastD\Core;
 
 use FastD\Standard\Commands\CommandAware;
 use FastD\Container\ContainerInterface;

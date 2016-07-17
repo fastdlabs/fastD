@@ -16,6 +16,6 @@
  */
 $loader = include __DIR__ . '/../vendor/autoload.php';
 
-use FastD\Framework\App;
+use FastD\App;
 
 App::run(include __DIR__ . '/../bootstrap.php');
