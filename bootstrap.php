@@ -10,6 +10,15 @@
 
 return [
     /**
+     * App 需要注册的业务应用组件
+     *
+     * 需要实例化组件引导对象。 如: new WelcomeBundle
+     */
+    'bundles' => [
+        new \FastD\Tests\App\WelcomeBundle\WelcomeBundle(),
+    ],
+
+    /**
      * App 运行环境
      */
     'env' => 'dev',
@@ -28,13 +37,4 @@ return [
      * Server 配置信息。
      */
     'server' => [],
-
-    /**
-     * App 需要注册的业务应用组件
-     *
-     * 需要实例化组件引导对象。 如: new WelcomeBundle
-     */
-    'bundles' => [
-        new \FastD\Tests\App\WelcomeBundle\WelcomeBundle(),
-    ],
 ];

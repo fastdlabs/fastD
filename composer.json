@@ -27,8 +27,6 @@
         "fastd/annotation": "~1.0.0",
         "fastd/container": "~2.0.0",
         "fastd/debug": "~2.0.0",
-        "fastd/packet": "~1.1.0",
-        "fastd/event": "dev-master",
         "fastd/swoole": "dev-master",
         "twig/twig": "~1.0"
     },

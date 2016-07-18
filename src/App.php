@@ -330,7 +330,7 @@ class App
     /**
      * Run framework into bootstrap file.
      *
-     * @param $bootstrap
+     * @param array $bootstrap
      * @return void
      */
     public static function run($bootstrap)
