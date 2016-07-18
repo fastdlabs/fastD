@@ -10,7 +10,6 @@
 
 namespace FastD;
 
-use FastD\Container\ContainerInterface;
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
 use FastD\Standard\Bundle;
@@ -69,7 +68,7 @@ class App
     protected $booted = false;
 
     /**
-     * @var ContainerInterface
+     * @var Container
      */
     protected $container;
 
@@ -138,7 +137,7 @@ class App
     }
 
     /**
-     * @return ContainerInterface
+     * @return Container
      */
     public function getContainer()
     {

@@ -17,6 +17,7 @@ namespace FastD\Commands;
 use FastD\Console\Input\Input;
 use FastD\Console\Input\InputArgument;
 use FastD\Console\Output\Output;
+use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class AssetInstall
