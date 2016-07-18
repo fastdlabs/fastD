@@ -15,6 +15,7 @@
 namespace FastD\Standard\Commands;
 
 use FastD\Console\Command\Command;
+use FastD\Container\Aware;
 use FastD\Container\Container;
 
 /**
@@ -24,10 +25,7 @@ use FastD\Container\Container;
  */
 abstract class CommandAware extends Command
 {
-    /**
-     * @var Container
-     */
-    protected $container;
+    use Aware;
 
     /**
      * CommandAware constructor.
@@ -37,24 +35,5 @@ abstract class CommandAware extends Command
     public function __construct(Container $container = null)
     {
         $this->setContainer($container);
-    }
-
-    /**
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
-     * @param Container $container
-     * @return $this
-     */
-    public function setContainer(Container $container = null)
-    {
-        $this->container = $container;
-
-        return $this;
     }
 }
