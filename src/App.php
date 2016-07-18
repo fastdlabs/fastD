@@ -19,7 +19,6 @@ use FastD\Http\Response;
 use FastD\Config\Config;
 use FastD\Database\Fdb;
 use FastD\Http\Request;
-use FastD\Event\Event;
 use FastD\Debug\Debug;
 use Routes;
 
@@ -169,12 +168,11 @@ class App
     public function initializeContainer()
     {
         $this->container = new Container([
-            'kernel.database' => Fdb::class,
-            'kernel.config' => Config::class,
-            'kernel.storage' => Storage::class,
-            'kernel.routing' => Routes::getRouter(),
-            'kernel.debug' => Debug::enable($this->isDebug()),
-            'kernel.event' => Event::class,
+            'kernel.database'   => Fdb::class,
+            'kernel.config'     => Config::class,
+            'kernel.storage'    => Storage::class,
+            'kernel.routing'    => Routes::getRouter(),
+            'kernel.debug'      => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
@@ -204,8 +202,6 @@ class App
      */
     public function initializeRouting()
     {
-        $this->container->singleton('kernel.event');
-
         if ($this->isDebug()) {
             $this->scanRoutes();
         } else {

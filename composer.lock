@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "997760969b2c895dd3509680afe0b254",
-    "content-hash": "2a18c55ce4533f6d402f1077008d2e81",
+    "hash": "ab96906362ae6c74a07478cdf9b86ba0",
+    "content-hash": "8d0da52ea374b22585d0d14e31d63657",
     "packages": [
         {
             "name": "fastd/annotation",
@@ -152,16 +152,16 @@
         },
         {
             "name": "fastd/container",
-            "version": "v2.0.0",
+            "version": "3.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/container.git",
-                "reference": "e7a0f4f2aafb6eae71d654d420df59b828fecc7f"
+                "reference": "9f7a8dc3ab0cc8602dc57496d9c80f2ec560e4cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/container/zipball/e7a0f4f2aafb6eae71d654d420df59b828fecc7f",
-                "reference": "e7a0f4f2aafb6eae71d654d420df59b828fecc7f",
+                "url": "https://api.github.com/repos/JanHuang/container/zipball/9f7a8dc3ab0cc8602dc57496d9c80f2ec560e4cf",
+                "reference": "9f7a8dc3ab0cc8602dc57496d9c80f2ec560e4cf",
                 "shasum": ""
             },
             "require": {
@@ -171,11 +171,6 @@
                 "phpunit/phpunit": "5.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "FastD\\": "src"
@@ -191,12 +186,12 @@
                     "email": "bboyjanhuang@gmail.com"
                 }
             ],
-            "description": "FastD container component",
+            "description": "FastD Container",
             "keywords": [
                 "FastD",
                 "container"
             ],
-            "time": "2016-05-11 14:35:16"
+            "time": "2016-07-18 04:37:34"
         },
         {
             "name": "fastd/database",
@@ -302,45 +297,6 @@
                 "exception"
             ],
             "time": "2016-06-13 10:31:30"
-        },
-        {
-            "name": "fastd/event",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JanHuang/event.git",
-                "reference": "a60238f2ad1af754a26e46bb3a011ef6178cf688"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/event/zipball/a60238f2ad1af754a26e46bb3a011ef6178cf688",
-                "reference": "a60238f2ad1af754a26e46bb3a011ef6178cf688",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "FastD\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "janhuang",
-                    "email": "bboyjanhuang@gmail.com"
-                }
-            ],
-            "description": "FastD Event",
-            "time": "2016-07-13 08:49:11"
         },
         {
             "name": "fastd/generator",
@@ -838,16 +794,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.0.8",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "3eb4e64c6145ef8b92adefb618a74ebdde9e3fe9"
+                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/3eb4e64c6145ef8b92adefb618a74ebdde9e3fe9",
-                "reference": "3eb4e64c6145ef8b92adefb618a74ebdde9e3fe9",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8201978de88a9fa0923e18601bb17f1df9c721e7",
+                "reference": "8201978de88a9fa0923e18601bb17f1df9c721e7",
                 "shasum": ""
             },
             "require": {
@@ -856,7 +812,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -883,7 +839,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-29 05:40:00"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2309,7 +2265,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fastd/event": 20,
+        "fastd/container": 20,
         "fastd/swoole": 20
     },
     "prefer-stable": false,

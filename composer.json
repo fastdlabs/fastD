@@ -25,7 +25,7 @@
         "fastd/console": "~2.0.0",
         "fastd/routing": "~2.0.0",
         "fastd/annotation": "~1.0.0",
-        "fastd/container": "~2.0.0",
+        "fastd/container": "3.0.x-dev",
         "fastd/debug": "~2.0.0",
         "fastd/swoole": "dev-master",
         "twig/twig": "~1.0"

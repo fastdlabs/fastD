@@ -13,6 +13,7 @@
 
 namespace FastD\Standard\Controllers;
 
+use FastD\Container\ContainerAware;
 use FastD\Database\Drivers\DriverInterface;
 use FastD\Database\Cache\CacheInterface;
 use FastD\Storage\StorageInterface;
@@ -21,7 +22,6 @@ use FastD\Http\JsonResponse;
 use FastD\Storage\Storage;
 use FastD\Http\Response;
 use FastD\Database\Fdb;
-use FastD\Container\Aware;
 
 /**
  * Class Controller
@@ -30,7 +30,7 @@ use FastD\Container\Aware;
  */
 class Controller
 {
-    use  Aware;
+    use ContainerAware;
 
     /**
      * @var Fdb

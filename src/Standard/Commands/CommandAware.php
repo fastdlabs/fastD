@@ -15,8 +15,8 @@
 namespace FastD\Standard\Commands;
 
 use FastD\Console\Command\Command;
-use FastD\Container\Aware;
 use FastD\Container\Container;
+use FastD\Container\ContainerAware;
 
 /**
  * Class CommandAware
@@ -25,7 +25,7 @@ use FastD\Container\Container;
  */
 abstract class CommandAware extends Command
 {
-    use Aware;
+    use ContainerAware;
 
     /**
      * CommandAware constructor.
