@@ -12,12 +12,13 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Commands;
 
 use FastD\Config\Config;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
 use FastD\Framework\Kernel\AppKernel;
+use FastD\Standard\Commands\CommandAware;
 
 class ConfigCacheCommand extends CommandAware
 {

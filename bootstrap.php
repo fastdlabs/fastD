@@ -13,6 +13,8 @@ return [
      * App 需要注册的业务应用组件
      *
      * 需要实例化组件引导对象。 如: new WelcomeBundle
+     *
+     * Bundle 引导文件主要声明, 声明路径, 控制器, 独立配置等信息路径
      */
     'bundles' => [
         new \FastD\Tests\App\WelcomeBundle\WelcomeBundle(),

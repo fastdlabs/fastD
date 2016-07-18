@@ -11,7 +11,7 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Commands;
 
 use FastD\Console\Input\Input;
 use FastD\Console\Input\InputOption;
@@ -19,6 +19,7 @@ use FastD\Console\Output\Output;
 use FastD\Routing\Route;
 use FastD\Routing\Router;
 use Routes;
+use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class RouteDump

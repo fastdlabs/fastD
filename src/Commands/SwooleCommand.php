@@ -8,10 +8,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Commands;
 
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
+use FastD\Standard\Commands\CommandAware;
 
 class SwooleCommand extends CommandAware
 {

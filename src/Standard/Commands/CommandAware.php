@@ -30,6 +30,16 @@ abstract class CommandAware extends Command
     protected $container;
 
     /**
+     * CommandAware constructor.
+     *
+     * @param Container|null $container
+     */
+    public function __construct(Container $container = null)
+    {
+        $this->setContainer($container);
+    }
+
+    /**
      * @return Container
      */
     public function getContainer()
@@ -41,7 +51,7 @@ abstract class CommandAware extends Command
      * @param Container $container
      * @return $this
      */
-    public function setContainer(Container $container)
+    public function setContainer(Container $container = null)
     {
         $this->container = $container;
 

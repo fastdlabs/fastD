@@ -12,13 +12,14 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Commands;
 
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
 use FastD\Database\Fixtures\FixtureInterface;
 use FastD\Database\Fixtures\FixtureLoader;
 use Symfony\Component\Finder\Finder;
+use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class OrmUpdateCommand

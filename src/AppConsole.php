@@ -14,16 +14,16 @@
 
 namespace FastD;
 
-use FastD\Standard\Commands\BundleGeneratorCommand;
-use FastD\Standard\Commands\AssetInstallCommand;
-use FastD\Standard\Commands\ConfigCacheCommand;
-use FastD\Standard\Commands\FdbDataSetCommand;
-use FastD\Standard\Commands\RouteCacheCommand;
-use FastD\Standard\Commands\FdbReflexCommand;
-use FastD\Standard\Commands\FdbSchemaCommand;
-use FastD\Standard\Commands\RouteDumpCommand;
-use FastD\Standard\Commands\SwooleCommand;
-use FastD\Standard\Commands\ProdCommand;
+use FastD\Commands\BundleGeneratorCommand;
+use FastD\Commands\AssetInstallCommand;
+use FastD\Commands\ConfigCacheCommand;
+use FastD\Commands\FdbDataSetCommand;
+use FastD\Commands\RouteCacheCommand;
+use FastD\Commands\FdbReflexCommand;
+use FastD\Commands\FdbSchemaCommand;
+use FastD\Commands\RouteDumpCommand;
+use FastD\Commands\SwooleCommand;
+use FastD\Commands\ProdCommand;
 use FastD\Console\Console;
 
 /**

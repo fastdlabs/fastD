@@ -12,7 +12,7 @@
  * WebSite: http://www.janhuang.me
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Commands;
 
 use FastD\Console\Input\Input;
 use FastD\Console\Input\InputArgument;
