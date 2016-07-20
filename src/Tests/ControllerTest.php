@@ -65,26 +65,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testStorage()
     {
-        $controller = new Controller();
 
-        $config = new Config();
-
-        $config->set('storage', [
-            'local' => [
-                'type' => 'redis',
-                'host'      => '11.11.11.22',
-                'port' => 6379
-            ]
-        ]);
-
-        $controller->setContainer(new Container([
-            'kernel.config' => $config,
-            'kernel.storage' => Storage::class
-        ]));
-
-        $storage = $controller->getStorage('local');
-
-        $this->assertInstanceOf(Redis::class, $storage);
     }
 
     public function testAsset()
@@ -101,19 +82,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testUrl()
     {
-        $controller = new Controller();
 
-        Routes::get('root', '/', function () {
-            return 'hello world';
-        });
-
-        $controller->setContainer(new Container([
-            'kernel.request' => Request::createRequestHandle(),
-            'kernel.storage' => Storage::class,
-            'kernel.routing' => Routes::getRouter(),
-        ]));
-
-        $this->assertEquals('//localhost/usr/local/bin/phpunit/', $controller->generateUrl('root'));
     }
 
     public function testRender()

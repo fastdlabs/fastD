@@ -2,7 +2,7 @@
     "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "The FastD Core library.",
+    "description": "FastD Core.",
     "minimum-stability": "stable",
     "keywords": ["FastD"],
     "authors": [
@@ -23,7 +23,7 @@
         "fastd/config": "~2.0.0",
         "fastd/storage": "~2.0.0",
         "fastd/console": "~2.0.0",
-        "fastd/routing": "~2.0.0",
+        "fastd/routing": "3.0.x-dev",
         "fastd/annotation": "~1.0.0",
         "fastd/container": "3.0.x-dev",
         "fastd/debug": "~2.0.0",

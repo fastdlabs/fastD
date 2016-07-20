@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab96906362ae6c74a07478cdf9b86ba0",
-    "content-hash": "8d0da52ea374b22585d0d14e31d63657",
+    "hash": "1ce88e516f37346cdf7d48d570992ad8",
+    "content-hash": "ed4008fc7805d735d636b275823ad49e",
     "packages": [
         {
             "name": "fastd/annotation",
@@ -476,37 +476,29 @@
         },
         {
             "name": "fastd/routing",
-            "version": "v2.0.0",
+            "version": "3.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/routing.git",
-                "reference": "176fbe2bdbc872f34e6899065219a546ef0269d4"
+                "reference": "ac007dc90f5278bee1d86ce09a70de807a797d4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/routing/zipball/176fbe2bdbc872f34e6899065219a546ef0269d4",
-                "reference": "176fbe2bdbc872f34e6899065219a546ef0269d4",
+                "url": "https://api.github.com/repos/JanHuang/routing/zipball/ac007dc90f5278bee1d86ce09a70de807a797d4c",
+                "reference": "ac007dc90f5278bee1d86ce09a70de807a797d4c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.0"
+                "phpunit/phpunit": "^5.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "FastD\\": "src"
-                },
-                "files": [
-                    "src/Routing/Routes.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -522,7 +514,7 @@
             "keywords": [
                 "routing"
             ],
-            "time": "2016-06-19 09:35:27"
+            "time": "2016-07-20 03:19:24"
         },
         {
             "name": "fastd/storage",
@@ -2265,6 +2257,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "fastd/routing": 20,
         "fastd/container": 20,
         "fastd/swoole": 20
     },

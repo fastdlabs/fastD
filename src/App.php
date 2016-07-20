@@ -12,15 +12,14 @@ namespace FastD;
 
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
+use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
 use FastD\Storage\Storage;
-use FastD\Routing\Router;
 use FastD\Http\Response;
 use FastD\Config\Config;
 use FastD\Database\Fdb;
 use FastD\Http\Request;
 use FastD\Debug\Debug;
-use Routes;
 
 /**
  * Class App
@@ -168,11 +167,11 @@ class App
     public function initializeContainer()
     {
         $this->container = new Container([
-            'kernel.database'   => Fdb::class,
-            'kernel.config'     => Config::class,
-            'kernel.storage'    => Storage::class,
-            'kernel.routing'    => Routes::getRouter(),
-            'kernel.debug'      => Debug::enable($this->isDebug()),
+            'kernel.database' => Fdb::class,
+            'kernel.config' => Config::class,
+            'kernel.storage' => Storage::class,
+            'kernel.routing' => RouteCollection::class,
+            'kernel.debug' => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
@@ -222,18 +221,18 @@ class App
 
         $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
 
-        $callback = $route->getCallback();
+        list($controller, $action) = $route->getCallback();
 
-        list($controller, $action) = explode('@', $callback);
-
-        $service = $this->getContainer()->set('request.callback', $controller)->get('request.callback');
+        $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
 
         if (method_exists($service->singleton(), 'setContainer')) {
             $service->singleton()->setContainer($this->getContainer());
         }
 
         try {
-            $service->__initialize();
+            if (($response = $service->__initialize()) instanceof Response) {
+                return $response;
+            }
         } catch (\Exception $e) {
         }
 
@@ -247,17 +246,16 @@ class App
      */
     public function scanRoutes()
     {
-        $routes = [];
+        $routing = $this->getContainer()->get('kernel.routing');
 
-        $scan = function (Bundle $bundle) {
+        foreach ($this->getBundles() as $bundle) {
             $path = $bundle->getPath() . '/Controllers';
             if (!is_dir($path) || false === ($files = glob($path . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
-                return [];
+                continue;
             }
 
             $baseNamespace = $bundle->getNamespace() . '\\Controllers\\';
 
-            $routes = [];
             foreach ($files as $file) {
                 $className = $baseNamespace . pathinfo($file, PATHINFO_FILENAME);
                 if (!class_exists($className)) {
@@ -272,36 +270,21 @@ class App
                     if (!isset($route['name'])) {
                         $route['name'] = $route[0];
                     }
-                    $parameters = [
+
+                    $method = $annotator->getParameter('Method');
+
+                    $routing->addRoute(
                         $route['name'],
-                        str_replace('//', '/', $route[0]),
-                        $annotator->getClassName() . '@' . $annotator->getName(),
-                        isset($route['defaults']) ? $route['defaults'] : [],
-                        isset($route['requirements']) ? $route['requirements'] : [],
-                    ];
-                    $method = null === $annotator->getParameter('Method') ? 'any' : strtolower($annotator->getParameter('Method')[0]);
-                    $routes[$bundle->getName()][] = [
-                        'method' => $method,
-                        'parameters' => $parameters
-                    ];
-                    unset($route, $method, $parameters, $parent);
+                        $method[0] ?? 'ANY',
+                        str_replace('//', '/', $route[0]), [
+                            $annotator->getClassName(),
+                            $annotator->getName()
+                        ],
+                        $route['defaults'] ?? []
+                    );
                 }
-                unset($annotation);
-            }
-            return $routes;
-        };
-
-        foreach ($this->getBundles() as $bundle) {
-            $routes = array_merge($routes, $scan($bundle));
-        }
-
-        foreach ($routes as $prefix => $collection) {
-            foreach ($collection as $route) {
-                call_user_func_array("\\Routes::{$route['method']}", $route['parameters']);
             }
         }
-
-        unset($routes, $scan);
     }
 
     /**
