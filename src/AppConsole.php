@@ -24,7 +24,6 @@ use FastD\Commands\FdbReflexCommand;
 use FastD\Commands\FdbSchemaCommand;
 use FastD\Commands\RouteDumpCommand;
 use FastD\Commands\SwooleCommand;
-use FastD\Commands\ProdCommand;
 use FastD\Container\Container;
 use FastD\Console\Console;
 
@@ -89,7 +88,6 @@ class AppConsole extends Console
             new BundleGeneratorCommand($this->getContainer()),
             new SwooleCommand($this->getContainer()),
             new ConfigCacheCommand($this->getContainer()),
-            new ProdCommand($this->getContainer()),
         ]);
     }
 

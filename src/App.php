@@ -86,6 +86,16 @@ class App
         $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
 
         $this->bundles = $bootstrap['bundles'] ?? [];
+
+        $this->initializeContainer();
+
+        $config = new Config();
+
+        foreach ($bootstrap as $key => $value) {
+            $config->set($key, $value);
+        }
+
+        $this->container->set('kernel.config', $config);
     }
 
     /**
@@ -150,10 +160,8 @@ class App
     public function bootstrap()
     {
         if (!$this->booted) {
-
-            $this->initializeContainer();
+            
             $this->initializeRouting();
-            $this->initializeConfigure();
 
             $this->booted = true;
         }
@@ -167,29 +175,15 @@ class App
     public function initializeContainer()
     {
         $this->container = new Container([
-            'kernel.database' => Fdb::class,
-            'kernel.config' => Config::class,
-            'kernel.storage' => Storage::class,
-            'kernel.routing' => RouteCollection::class,
-            'kernel.debug' => Debug::enable($this->isDebug()),
+            'kernel.database'   => Fdb::class,
+            'kernel.config'     => Config::class,
+            'kernel.storage'    => Storage::class,
+            'kernel.routing'    => RouteCollection::class,
+            'kernel.debug'      => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
         $this->container->set('kernel', $this);
-    }
-
-    /**
-     * Initialize application configuration.
-     *
-     * @return void
-     */
-    public function initializeConfigure()
-    {
-        $config = $this->container->singleton('kernel.config');
-
-        if (!$this->isDebug()) {
-            $config->load($this->getRootPath() . '/config.cache');
-        }
     }
 
     /**
@@ -211,11 +205,14 @@ class App
     /**
      * Handle request.
      *
+     * @param Request $request
      * @return Response
      */
-    public function createHttpRequestHandler()
+    public function createHttpRequestHandler(Request $request = null)
     {
-        $request = Request::createRequestHandle();
+        if (null === $request) {
+            $request = Request::createRequestHandle();
+        }
 
         $this->container->set('kernel.request', $request);
 
@@ -296,16 +293,6 @@ class App
     }
 
     /**
-     * Start Application.
-     *
-     * @return void
-     */
-    public function start()
-    {
-        // TODO: Implement start() method.
-    }
-
-    /**
      * Run framework into bootstrap file.
      *
      * @param array $bootstrap
@@ -321,6 +308,6 @@ class App
 
         $response->send();
 
-        $app->shutdown($app);
+        $app->shutdown();
     }
 }

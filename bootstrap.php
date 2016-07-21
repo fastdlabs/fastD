@@ -36,7 +36,7 @@ return [
     'web.path' => __DIR__ . '/web',
 
     /**
-     * Server 配置信息。
+     * Swoole Server 配置信息。
      */
     'server' => [],
 ];

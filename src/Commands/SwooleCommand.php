@@ -10,9 +10,14 @@
 
 namespace FastD\Commands;
 
+use FastD\App;
+use FastD\AppServer;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
 use FastD\Standard\Commands\CommandAware;
+use FastD\Console\Input\InputOption;
+use FastD\Console\Input\InputArgument;
+use FastD\Swoole\Console\Service;
 
 class SwooleCommand extends CommandAware
 {
@@ -21,7 +26,10 @@ class SwooleCommand extends CommandAware
      */
     public function getDescription()
     {
-        // TODO: Implement getDescription() method.
+        return <<<EOF
+Swoole Server.
+EOF;
+
     }
 
     /**
@@ -29,7 +37,7 @@ class SwooleCommand extends CommandAware
      */
     public function getName()
     {
-        // TODO: Implement getName() method.
+        return 'swoole:server';
     }
 
     /**
@@ -37,7 +45,13 @@ class SwooleCommand extends CommandAware
      */
     public function configure()
     {
-        // TODO: Implement configure() method.
+        $this
+            ->setArgument('action', InputArgument::REQUIRED)
+            ->setOption('host', '-h')
+            ->setOption('port', '-p')
+            ->setOption('conf', '-c')
+            ->setOption('daemon', '-d', InputOption::VALUE_NONE)
+        ;
     }
 
     /**
@@ -47,6 +61,53 @@ class SwooleCommand extends CommandAware
      */
     public function execute(Input $input, Output $output)
     {
-        // TODO: Implement execute() method.
+        $config = [];
+
+        if (null !== $input->getOption('conf')) {
+            $conf = $input->getOption('conf');
+            switch (pathinfo($conf, PATHINFO_EXTENSION)) {
+                case 'ini':
+                    $config = parse_ini_file($conf, true);
+                    break;
+                default:
+                    $config = include $conf;
+            }
+        }
+
+        if ($input->hasOption('daemon')) {
+            $config['daemonize'] = true;
+        }
+
+        if ($input->hasOption('host')) {
+            $config['host'] = $input->getOption('host');
+        }
+
+        if ($input->hasOption('port')) {
+            $config['port'] = $input->getOption('port');
+        }
+
+        $server = new AppServer(new App($config));
+
+        $service = Service::server($server);
+
+        switch ($input->getArgument('action')) {
+            case 'status':
+                $service->status();
+                break;
+            case 'start':
+                $service->start();
+                break;
+            case 'stop':
+                $service->shutdown();
+                break;
+            case 'reload':
+                $service->reload();
+                break;
+            case 'watch':
+                $service->watch(['.']);
+                break;
+            default:
+                echo "php server {start|stop|status|reload|watch}";
+        }
     }
 }
