@@ -160,7 +160,7 @@ class App
     public function bootstrap()
     {
         if (!$this->booted) {
-            
+
             $this->initializeRouting();
 
             $this->booted = true;

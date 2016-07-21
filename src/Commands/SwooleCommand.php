@@ -75,15 +75,15 @@ EOF;
         }
 
         if ($input->hasOption('daemon')) {
-            $config['daemonize'] = true;
+            $config['server']['daemonize'] = true;
         }
 
         if ($input->hasOption('host')) {
-            $config['host'] = $input->getOption('host');
+            $config['server']['host'] = $input->getOption('host');
         }
 
         if ($input->hasOption('port')) {
-            $config['port'] = $input->getOption('port');
+            $config['server']['port'] = $input->getOption('port');
         }
 
         $server = new AppServer(new App($config));
