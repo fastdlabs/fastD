@@ -195,11 +195,7 @@ class App
      */
     public function initializeRouting()
     {
-        if ($this->isDebug()) {
-            $this->scanRoutes();
-        } else {
-            include $this->getRootPath() . '/routes.cache';
-        }
+        $this->scanRoutes();
     }
 
     /**
