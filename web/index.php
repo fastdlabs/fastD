@@ -18,4 +18,13 @@ $loader = include __DIR__ . '/../vendor/autoload.php';
 
 use FastD\App;
 
-App::run(include __DIR__ . '/../bootstrap.php');
+$app = new App(include __DIR__ . '/../bootstrap.php');
+
+$app->bootstrap();
+
+$response = $app->createHttpRequestHandler();
+
+$response->send();
+
+$app->shutdown();
+

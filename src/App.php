@@ -226,8 +226,7 @@ class App
             if (($response = $service->__initialize()) instanceof Response) {
                 return $response;
             }
-        } catch (\Exception $e) {
-        }
+        } catch (\Exception $e) {}
 
         return call_user_func_array([$service, $action], $route->getParameters());
     }
@@ -286,24 +285,5 @@ class App
     public function shutdown()
     {
         // TODO: Implement shutdown() method.
-    }
-
-    /**
-     * Run framework into bootstrap file.
-     *
-     * @param array $bootstrap
-     * @return void
-     */
-    public static function run($bootstrap)
-    {
-        $app = new static($bootstrap);
-
-        $app->bootstrap();
-
-        $response = $app->createHttpRequestHandler();
-
-        $response->send();
-
-        $app->shutdown();
     }
 }
