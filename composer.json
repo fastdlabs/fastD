@@ -21,9 +21,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "fastd/framework": "~2.0.0",
-        "fastd/http-server-bundle": "dev-master",
-        "fastd/swoole": "dev-master"
+        "fastd/framework": "~2.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "5.0"
