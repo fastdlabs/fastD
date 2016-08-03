@@ -8,7 +8,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Tests\App\WelcomeBundle\Controllers;
+namespace Tests\App\WelcomeBundle\Controllers;
 
 use FastD\Http\Response;
 

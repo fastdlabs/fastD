@@ -16,6 +16,11 @@
             "FastD\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
     "require": {
         "php": ">=7.0",
         "fastd/http": "dev-master",

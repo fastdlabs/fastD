@@ -25,7 +25,7 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
     public function testKernel()
     {
-        $app = new App(include __DIR__ . '/../../bootstrap.php');
+        $app = new App(include __DIR__ . '/../bootstrap.php');
 
         $app->bootstrap();
 

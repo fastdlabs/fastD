@@ -47,7 +47,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
             'local' => [
                 'database_host'      => '127.0.0.1',
                 'database_port'      => '3306',
-                'database_name'      => 'dbunit',
+                'database_name'      => 'test',
                 'database_user'      => 'root',
                 'database_pwd'       => '123456'
             ]
@@ -76,8 +76,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
             'kernel.request' => Request::createRequestHandle(),
             'kernel.storage' => Storage::class
         ]));
-
-        $this->assertEquals('//localhost/usr/local/bin/phpunit/bundles/test.js', $controller->asset('test.js'));
     }
 
     public function testUrl()
