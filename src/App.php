@@ -111,7 +111,7 @@ class App
     /**
      * @return bool
      */
-    public function isDebug()
+    public function isDebug(): bool
     {
         return $this->debug;
     }
@@ -121,7 +121,7 @@ class App
      *
      * @return string
      */
-    public function getEnvironment()
+    public function getEnvironment(): string
     {
         return $this->environment;
     }
@@ -229,6 +229,11 @@ class App
         } catch (\Exception $e) {}
 
         return call_user_func_array([$service, $action], $route->getParameters());
+    }
+
+    public function handleRequest(Request $request)
+    {
+
     }
 
     /**
