@@ -33,7 +33,7 @@
         "fastd/container": "3.0.x-dev",
         "fastd/data-middleware": "1.0.x-dev",
         "fastd/debug": "~2.0.0",
-        "fastd/swoole": "dev-master",
+        "fastd/swoole": "1.0.x-dev",
         "twig/twig": "~1.0"
     },
     "require-dev": {
