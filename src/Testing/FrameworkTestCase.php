@@ -14,7 +14,7 @@
 
 namespace FastD\Framework\Tests;
 
-use FastD\Framework\Kernel\AppKernel;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -22,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @package FastD\Framework\Tests
  */
-abstract class FrameworkTestCase extends \PHPUnit_Framework_TestCase
+abstract class FrameworkTestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \Application

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3f957158e405a807a4a0be77f00414e7",
-    "content-hash": "0bb8e338a3249473bde659859b7a9ce0",
+    "hash": "32aa313c9393be842535a05c6c3c96e3",
+    "content-hash": "5b78bcf330031e4389e7722e14352c61",
     "packages": [
         {
             "name": "fastd/annotation",
@@ -192,6 +192,43 @@
                 "container"
             ],
             "time": "2016-07-18 04:37:34"
+        },
+        {
+            "name": "fastd/data-middleware",
+            "version": "1.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JanHuang/data.middleware.git",
+                "reference": "7d775b797cd5676099a01c82f46916d899429679"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JanHuang/data.middleware/zipball/7d775b797cd5676099a01c82f46916d899429679",
+                "reference": "7d775b797cd5676099a01c82f46916d899429679",
+                "shasum": ""
+            },
+            "require": {
+                "fastd/storage": "2.1.x-dev",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "fastd/database": "~2.0.0",
+                "phpunit/phpunit": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FastD\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "janhuang",
+                    "email": "bboyjanhuang@gmail.com"
+                }
+            ],
+            "time": "2016-08-03 05:44:51"
         },
         {
             "name": "fastd/database",
@@ -514,16 +551,16 @@
         },
         {
             "name": "fastd/storage",
-            "version": "v2.0.0",
+            "version": "2.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/storage.git",
-                "reference": "fb73f52449c199b7d6cda86247e551c6aacbeb7b"
+                "reference": "4c0f169b07260075b605c79bfa871aaf773da851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/storage/zipball/fb73f52449c199b7d6cda86247e551c6aacbeb7b",
-                "reference": "fb73f52449c199b7d6cda86247e551c6aacbeb7b",
+                "url": "https://api.github.com/repos/JanHuang/storage/zipball/4c0f169b07260075b605c79bfa871aaf773da851",
+                "reference": "4c0f169b07260075b605c79bfa871aaf773da851",
                 "shasum": ""
             },
             "require": {
@@ -558,7 +595,7 @@
                 "FastD",
                 "storage"
             ],
-            "time": "2016-06-21 03:37:55"
+            "time": "2016-08-02 15:22:24"
         },
         {
             "name": "fastd/swoole",
@@ -566,12 +603,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/swoole.git",
-                "reference": "c5d48b56040eedb0d2ae7c4ceb8af1b73b620e0c"
+                "reference": "cfdfb3d688f920c1dd5bc20d3711ecdad8dc7c0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/c5d48b56040eedb0d2ae7c4ceb8af1b73b620e0c",
-                "reference": "c5d48b56040eedb0d2ae7c4ceb8af1b73b620e0c",
+                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/cfdfb3d688f920c1dd5bc20d3711ecdad8dc7c0a",
+                "reference": "cfdfb3d688f920c1dd5bc20d3711ecdad8dc7c0a",
                 "shasum": ""
             },
             "require": {
@@ -599,7 +636,7 @@
                 }
             ],
             "description": "FastD swoole.",
-            "time": "2016-08-03 03:04:01"
+            "time": "2016-08-03 05:55:26"
         },
         {
             "name": "maximebf/debugbar",
@@ -2313,8 +2350,10 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "fastd/http": 20,
+        "fastd/storage": 20,
         "fastd/routing": 20,
         "fastd/container": 20,
+        "fastd/data-middleware": 20,
         "fastd/swoole": 20
     },
     "prefer-stable": false,

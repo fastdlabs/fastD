@@ -26,11 +26,12 @@
         "fastd/http": "dev-master",
         "fastd/database": "~2.0.0",
         "fastd/config": "~2.0.0",
-        "fastd/storage": "~2.0.0",
+        "fastd/storage": "2.1.x-dev",
         "fastd/console": "~2.0.0",
         "fastd/routing": "3.0.x-dev",
         "fastd/annotation": "~1.0.0",
         "fastd/container": "3.0.x-dev",
+        "fastd/data-middleware": "1.0.x-dev",
         "fastd/debug": "~2.0.0",
         "fastd/swoole": "dev-master",
         "twig/twig": "~1.0"
