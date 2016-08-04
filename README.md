@@ -6,9 +6,9 @@ FastD 是一个开源，面向对象的开发框架，灵活的开发模式，�
 
 里程碑:
 
-* 1.x
+* 1.x (初稿版本发布, 流程设计等)
 * 2.0 (修复 1.x 错误的设计)
-* 3.0 (简化并修改 2.0 的设计及组件, 内置 Swoole 2.0 扩展, 简化引导配置)
+* 3.0 (简化并修改 2.0 的设计及组件, 内置 Swoole 扩展, 简化引导配置)
 
 ## 环境要求
 
@@ -34,9 +34,13 @@ composer create-project "fastd/fastd.standard:3.0.x-dev" fastd
 
 保证目录在当前进程的读写权限，特别是 `app/storage` 的读写权限，因为此目录是用于数据缓存读写的。
 
+**推荐使用 Nginx 进行代理, Swoole 代替fpm**
+
 ##### ＃Apache
 
 项目的 `public` 目录下已经存在了 `.htaccess` 文件了，所以 `apache` 只需要开启 `rewrite_mod` 模块即可
+
+**Apache 环境下没有配置代理,因此代理需要自己去研究配置.**
 
 ##### ＃Nginx
 

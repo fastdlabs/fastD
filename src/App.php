@@ -10,9 +10,11 @@
 
 namespace FastD;
 
+use FastD\Routing\Route;
+use FastD\Swoole\Http\HttpRequest;
+use FastD\Routing\RouteCollection;
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
-use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
 use FastD\Storage\Storage;
 use FastD\Http\Response;
@@ -103,7 +105,7 @@ class App
      *
      * @return Bundle[]
      */
-    public function getBundles()
+    public function getBundles(): array
     {
         return $this->bundles;
     }
@@ -131,7 +133,7 @@ class App
      *
      * @return string
      */
-    public function getRootPath()
+    public function getRootPath(): string
     {
         return $this->rootPath;
     }
@@ -139,7 +141,7 @@ class App
     /**
      * @return string
      */
-    public function getWebPath()
+    public function getWebPath(): string
     {
         return $this->webPath;
     }
@@ -147,7 +149,7 @@ class App
     /**
      * @return Container
      */
-    public function getContainer()
+    public function getContainer(): Container
     {
         return $this->container;
     }
@@ -191,7 +193,7 @@ class App
      *
      * Loaded register bundle routes configuration.
      *
-     * @return Router
+     * @return void
      */
     public function initializeRouting()
     {
@@ -204,16 +206,34 @@ class App
      * @param Request $request
      * @return Response
      */
-    public function createHttpRequestHandler(Request $request = null)
+    public function createHttpRequest(Request $request): Response
     {
-        if (null === $request) {
-            $request = Request::createRequestHandle();
-        }
-
         $this->container->set('kernel.request', $request);
 
         $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
 
+        return $this->handleHttpRequestRoute($route);
+    }
+
+    /**
+     * @param HttpRequest $request
+     * @return Response
+     */
+    public function createSwooleHttpRequest(HttpRequest $request): Response
+    {
+        $this->container->set('kernel.request', $request);
+
+        $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
+
+        return $this->handleHttpRequestRoute($route);
+    }
+
+    /**
+     * @param Route $route
+     * @return Response
+     */
+    public function handleHttpRequestRoute(Route $route): Response
+    {
         list($controller, $action) = $route->getCallback();
 
         $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
@@ -229,11 +249,6 @@ class App
         } catch (\Exception $e) {}
 
         return call_user_func_array([$service, $action], $route->getParameters());
-    }
-
-    public function handleRequest(Request $request)
-    {
-
     }
 
     /**

@@ -63,8 +63,7 @@ EOF;
     {
         $config = [];
 
-        if (null !== $input->getOption('conf')) {
-            $conf = $input->getOption('conf');
+        if (null !== ($conf = $input->getOption('conf'))) {
             switch (pathinfo($conf, PATHINFO_EXTENSION)) {
                 case 'ini':
                     $config = parse_ini_file($conf, true);
