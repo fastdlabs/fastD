@@ -17,6 +17,8 @@ class IndexController
     /**
      * @Route("/")
      * @Method("GET")
+     *
+     * @Middleware("", 50, true)
      */
     public function welcomeAction()
     {
