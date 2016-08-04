@@ -40,14 +40,14 @@ include FASTD_COMPOSER_INSTALL;
 $bootstrap = null;
 
 foreach ([
-             __DIR__ . '/bootstrap.php',
-             __DIR__ . '/app/bootstrap.php',
-             __DIR__ . '/../bootstrap.php',
-             __DIR__ . '/../app/bootstrap.php',
-             __DIR__ . '/../../bootstrap.php',
-             __DIR__ . '/../../app/bootstrap.php',
-             __DIR__ . '/../../../bootstrap.php',
              __DIR__ . '/../../../app/bootstrap.php',
+             __DIR__ . '/../../../bootstrap.php',
+             __DIR__ . '/../../app/bootstrap.php',
+             __DIR__ . '/../../bootstrap.php',
+             __DIR__ . '/../app/bootstrap.php',
+             __DIR__ . '/../bootstrap.php',
+             __DIR__ . '/app/bootstrap.php',
+             __DIR__ . '/bootstrap.php',
          ] as $value) {
     if (file_exists($value)) {
         $bootstrap = include $value;

@@ -58,7 +58,7 @@ class RouteDumpCommand extends CommandAware
      */
     public function execute(Input $input, Output $output)
     {
-        $router = Routes::getRouter();
+        $router = $this->getContainer()->singleton('kernel.routing');
 
         $name = $input->getArgument('route');
         $bundle = $input->getOption('bundle');

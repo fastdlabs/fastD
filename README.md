@@ -32,9 +32,24 @@ composer create-project "fastd/fastd.standard:3.0.x-dev" fastd
 
 ##### ＃环境配置
 
-保证目录在当前进程的读写权限，特别是 `app/storage` 的读写权限，因为此目录是用于数据缓存读写的。
+保证目录在当前进程的读写权限，特别是 `storage` 的读写权限，因为此目录是用于数据缓存读写的。
 
 **推荐使用 Nginx 进行代理, Swoole 代替fpm**
+
+```
+server {
+    listen     80;
+    server_name server;
+    index index.php;
+    root /home/runner/Code/fastd/fastd.standard/web;
+    location / {
+        try_files $uri /$uri @rewriteapp;
+    }
+    location @rewriteapp {
+        proxy_pass http://127.0.0.1:9527;
+    }
+}
+```
 
 ##### ＃Apache
 
