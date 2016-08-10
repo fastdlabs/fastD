@@ -17,8 +17,7 @@ use FastD\Console\Input\Input;
 use FastD\Console\Input\InputOption;
 use FastD\Console\Output\Output;
 use FastD\Routing\Route;
-use FastD\Routing\Router;
-use Routes;
+use FastD\Routing\RouteCollection;
 use FastD\Standard\Commands\CommandAware;
 
 /**
@@ -58,7 +57,7 @@ class RouteDumpCommand extends CommandAware
      */
     public function execute(Input $input, Output $output)
     {
-        $router = Routes::getRouter();
+        $router = $this->getContainer()->singleton('kernel.routing');
 
         $name = $input->getArgument('route');
         $bundle = $input->getOption('bundle');
@@ -95,19 +94,19 @@ class RouteDumpCommand extends CommandAware
     }
 
     /**
-     * @param Router $router
+     * @param RouteCollection $collection
      * @param Output $output
      * @param null $bundleName
      * @param int $style
      * @return int
      */
-    public function showRouteCollections(Router $router, Output $output, $bundleName = null, $style = self::STYLE_DETAIL)
+    public function showRouteCollections(RouteCollection $collection, Output $output, $bundleName = null, $style = self::STYLE_DETAIL)
     {
         $allRoutes = [];
 
         $bundles = $this->getContainer()->singleton('kernel')->getBundles();
         foreach ($bundles as $bundle) {
-            foreach ($router as $name => $route) {
+            foreach ($collection as $name => $route) {
                 $callback = $route->getCallback();
                 if ($bundle->getNamespace() === substr($callback, 0, strlen($bundle->getNamespace()))) {
                     $allRoutes[$bundle->getName()][] = $route;

@@ -11,14 +11,16 @@
 namespace Tests\App\WelcomeBundle\Controllers;
 
 use FastD\Http\Response;
+use FastD\Middleware\Middleware;
 
 class IndexController
 {
     /**
      * @Route("/")
      * @Method("GET")
+     * @middleware(IndexController -> test)
      */
-    public function welcomeAction()
+    public function welcomeAction(Middleware $test)
     {
         return new Response('hello world');
     }
