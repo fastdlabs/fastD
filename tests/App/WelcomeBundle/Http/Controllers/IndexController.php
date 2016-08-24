@@ -8,19 +8,18 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Tests\App\WelcomeBundle\Controllers;
+namespace Tests\App\WelcomeBundle\Http\Controllers;
 
 use FastD\Http\Response;
-use FastD\Middleware\Middleware;
+use FastD\Standard\Controllers\Controller;
 
-class IndexController
+class IndexController extends Controller
 {
     /**
      * @Route("/")
      * @Method("GET")
-     * @middleware(IndexController -> test)
      */
-    public function welcomeAction(Middleware $test)
+    public function welcomeAction()
     {
         return new Response('hello world');
     }

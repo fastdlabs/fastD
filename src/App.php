@@ -11,6 +11,7 @@
 namespace FastD;
 
 use FastD\Annotation\Annotation;
+use FastD\Annotation\Reader;
 use FastD\Container\Container;
 use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
@@ -204,12 +205,8 @@ class App
      * @param Request $request
      * @return Response
      */
-    public function createHttpRequestHandler(Request $request = null)
+    public function handleHttpRequest(Request $request)
     {
-        if (null === $request) {
-            $request = Request::createRequestHandle();
-        }
-
         $this->container->set('kernel.request', $request);
 
         $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
@@ -218,22 +215,9 @@ class App
 
         $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
 
-        if (method_exists($service->singleton(), 'setContainer')) {
-            $service->singleton()->setContainer($this->getContainer());
-        }
-
-        try {
-            if (($response = $service->__initialize()) instanceof Response) {
-                return $response;
-            }
-        } catch (\Exception $e) {}
+        $service->singleton()->setContainer($this->getContainer());
 
         return call_user_func_array([$service, $action], $route->getParameters());
-    }
-
-    public function handleRequest(Request $request)
-    {
-
     }
 
     /**
@@ -243,15 +227,15 @@ class App
      */
     public function scanRoutes()
     {
-        $routing = $this->getContainer()->get('kernel.routing');
+        $routing = $this->getContainer()->singleton('kernel.routing');
 
         foreach ($this->getBundles() as $bundle) {
-            $path = $bundle->getPath() . '/Controllers';
+            $path = $bundle->getPath() . '/Http/Controllers';
             if (!is_dir($path) || false === ($files = glob($path . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
                 continue;
             }
 
-            $baseNamespace = $bundle->getNamespace() . '\\Controllers\\';
+            $baseNamespace = $bundle->getNamespace() . '\\Http\\Controllers\\';
 
             foreach ($files as $file) {
                 $className = $baseNamespace . pathinfo($file, PATHINFO_FILENAME);
@@ -259,7 +243,7 @@ class App
                     continue;
                 }
 
-                $annotation = new Annotation($className, 'Action');
+                $annotation = new Reader($className, 'Action');
                 foreach ($annotation as $annotator) {
                     if (null === ($route = $annotator->getParameter('Route'))) {
                         continue;
@@ -282,6 +266,9 @@ class App
                 }
             }
         }
+        echo '<pre>';
+        print_r($routing);
+        die;
     }
 
     /**
