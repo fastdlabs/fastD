@@ -73,7 +73,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
         $controller = new Controller();
 
         $controller->setContainer(new Container([
-            'kernel.request' => Request::createRequestHandle(),
+//            'kernel.request' => Request::createRequestHandle(),
             'kernel.storage' => Storage::class
         ]));
     }

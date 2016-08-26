@@ -547,12 +547,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/routing.git",
-                "reference": "4fcaa624a095487e41faee8f69de3ef7ecb8d357"
+                "reference": "c729435b9e619194c61680c995da42f1768a9d0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/routing/zipball/4fcaa624a095487e41faee8f69de3ef7ecb8d357",
-                "reference": "4fcaa624a095487e41faee8f69de3ef7ecb8d357",
+                "url": "https://api.github.com/repos/JanHuang/routing/zipball/c729435b9e619194c61680c995da42f1768a9d0f",
+                "reference": "c729435b9e619194c61680c995da42f1768a9d0f",
                 "shasum": ""
             },
             "require": {
@@ -564,7 +564,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "FastD\\": "src"
+                    "FastD\\Routing\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -581,7 +581,7 @@
             "keywords": [
                 "routing"
             ],
-            "time": "2016-08-24 03:47:19"
+            "time": "2016-08-25 02:45:18"
         },
         {
             "name": "fastd/storage",

@@ -243,32 +243,15 @@ class App
                     continue;
                 }
 
-                $annotation = new Reader($className, 'Action');
-                foreach ($annotation as $annotator) {
-                    if (null === ($route = $annotator->getParameter('Route'))) {
-                        continue;
-                    }
-                    if (!isset($route['name'])) {
-                        $route['name'] = $route[0];
-                    }
+                $annotation = new Reader([]);
+                $methods = $annotation->getAnnotations($className)->getMethod('');
+                foreach ($methods as $method) {
 
-                    $method = $annotator->getParameter('Method');
-
-                    $routing->addRoute(
-                        $route['name'],
-                        $method[0] ?? 'ANY',
-                        str_replace('//', '/', $route[0]), [
-                            $annotator->getClassName(),
-                            $annotator->getName()
-                        ],
-                        $route['defaults'] ?? []
-                    );
+                    print_r($method);
+                    die;
                 }
             }
         }
-        echo '<pre>';
-        print_r($routing);
-        die;
     }
 
     /**
