@@ -46,7 +46,9 @@ class AppServer extends HttpServer
      */
     public function doRequest(HttpRequest $request)
     {
-        return $this->app->createHttpRequestHandler($request);
+        $response = $this->app->createSwooleHttpRequest($request);
+
+        return $response->getContent();
     }
 
     /**
