@@ -25,14 +25,13 @@ use FastD\Commands\FdbSchemaCommand;
 use FastD\Commands\RouteDumpCommand;
 use FastD\Commands\SwooleCommand;
 use FastD\Container\Container;
-use FastD\Console\Console;
 
 /**
  * Class AppConsole
  *
  * @package FastD\Framework\Kernel
  */
-class AppConsole extends Console
+class Console extends \FastD\Console\Console
 {
     /**
      * @var App

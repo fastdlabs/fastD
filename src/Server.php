@@ -19,7 +19,7 @@ use FastD\Swoole\Http\HttpServer;
  *
  * @package FastD
  */
-class AppServer extends HttpServer
+class Server extends HttpServer
 {
     /**
      * @var App
