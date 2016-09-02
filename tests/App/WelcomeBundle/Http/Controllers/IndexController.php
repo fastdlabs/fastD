@@ -16,8 +16,8 @@ use FastD\Standard\Controllers\Controller;
 class IndexController extends Controller
 {
     /**
-     * @Route("/")
-     * @Method("GET")
+     * @route("/", name="tet")
+     * @method("GET")
      *
      * @Middleware("", 50, true)
      */

@@ -112,7 +112,7 @@ class App
     /**
      * @return bool
      */
-    public function isDebug(): bool
+    public function isDebug()
     {
         return $this->debug;
     }
@@ -122,7 +122,7 @@ class App
      *
      * @return string
      */
-    public function getEnvironment(): string
+    public function getEnvironment()
     {
         return $this->environment;
     }
@@ -192,40 +192,9 @@ class App
      *
      * Loaded register bundle routes configuration.
      *
-     * @return Router
-     */
-    public function initializeRouting()
-    {
-        $this->scanRoutes();
-    }
-
-    /**
-     * Handle request.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function handleHttpRequest(Request $request)
-    {
-        $this->container->set('kernel.request', $request);
-
-        $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
-
-        list($controller, $action) = $route->getCallback();
-
-        $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
-
-        $service->singleton()->setContainer($this->getContainer());
-
-        return call_user_func_array([$service, $action], $route->getParameters());
-    }
-
-    /**
-     * Scan all controller routes.
-     *
      * @return void
      */
-    public function scanRoutes()
+    public function initializeRouting()
     {
         $routing = $this->getContainer()->singleton('kernel.routing');
 
@@ -243,14 +212,46 @@ class App
                     continue;
                 }
 
-                $annotation = new Reader([]);
-                $methods = $annotation->getAnnotations($className)->getMethod('');
+                $reader = new Reader([
+                    'route' => function () use ($routing) {
+
+                    }
+                ]);
+                $methods = $reader->getAnnotations($className)->getMethodAnnotations();
                 foreach ($methods as $method) {
 
-                    print_r($method);
-                    die;
                 }
             }
+        }
+    }
+
+    /**
+     * Handle request.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function handleHttpRequest(Request $request)
+    {
+        try {
+            $this->container->set('kernel.request', $request);
+
+            $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
+
+            list($controller, $action) = $route->getCallback();
+
+            $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
+
+            $service->singleton()->setContainer($this->getContainer());
+
+            return call_user_func_array([$service, $action], $route->getParameters());
+        } catch (\RuntimeException $e) {
+            $msg = 'server interval error.';
+            if ($this->isDebug()) {
+                $msg = $e->getMessage();
+            }
+
+            return new Response($msg);
         }
     }
 

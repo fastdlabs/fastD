@@ -4,38 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "719881a5b8a7ccce024ec38f1c5689ef",
-    "content-hash": "687d440ce54ef9804c362d861fb1868b",
+    "hash": "ee538035a56f6e62966c6352767b8898",
+    "content-hash": "12b527d3bcb5cb6cc0222ab92761e53b",
     "packages": [
         {
             "name": "fastd/annotation",
-            "version": "dev-master",
+            "version": "2.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/annotation.git",
-                "reference": "443b54597a67b4b0adc3eee2331f895efbad33bb"
+                "reference": "36d7128dd90be1c6874d3c6a0f4bdb50cf141a76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/annotation/zipball/443b54597a67b4b0adc3eee2331f895efbad33bb",
-                "reference": "443b54597a67b4b0adc3eee2331f895efbad33bb",
+                "url": "https://api.github.com/repos/JanHuang/annotation/zipball/36d7128dd90be1c6874d3c6a0f4bdb50cf141a76",
+                "reference": "36d7128dd90be1c6874d3c6a0f4bdb50cf141a76",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "php": ">=5.6"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "FastD\\": "src"
+                    "FastD\\Annotation\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -48,8 +43,8 @@
                     "email": "bboyjanhuang@gmail.com"
                 }
             ],
-            "description": "Fastd php simple framework Annotation Component",
-            "time": "2016-08-05 16:25:37"
+            "description": "Fastd Annotation",
+            "time": "2016-09-01 16:02:18"
         },
         {
             "name": "fastd/config",
@@ -194,12 +189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/database.git",
-                "reference": "4e02a454271f1a2d58c74c622b2fd7d8abc88172"
+                "reference": "f28c110506a5a31f7f09eda1a19ce0a8606ed2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/database/zipball/4e02a454271f1a2d58c74c622b2fd7d8abc88172",
-                "reference": "4e02a454271f1a2d58c74c622b2fd7d8abc88172",
+                "url": "https://api.github.com/repos/JanHuang/database/zipball/f28c110506a5a31f7f09eda1a19ce0a8606ed2e0",
+                "reference": "f28c110506a5a31f7f09eda1a19ce0a8606ed2e0",
                 "shasum": ""
             },
             "require": {
@@ -238,7 +233,7 @@
                 "FastD",
                 "fdb"
             ],
-            "time": "2016-08-10 14:46:28"
+            "time": "2016-08-29 06:40:43"
         },
         {
             "name": "fastd/debug",
@@ -1121,16 +1116,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.1",
+            "version": "v1.24.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
                 "shasum": ""
             },
             "require": {
@@ -1178,7 +1173,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-05-30 09:11:59"
+            "time": "2016-09-01 17:50:53"
         }
     ],
     "packages-dev": [
@@ -1732,16 +1727,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.2",
+            "version": "5.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "46ec2d1522ae8c9a12aca6b7650e0be78bbb0502"
+                "reference": "3e6e88e56c912133de6e99b87728cca7ed70c5f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/46ec2d1522ae8c9a12aca6b7650e0be78bbb0502",
-                "reference": "46ec2d1522ae8c9a12aca6b7650e0be78bbb0502",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3e6e88e56c912133de6e99b87728cca7ed70c5f5",
+                "reference": "3e6e88e56c912133de6e99b87728cca7ed70c5f5",
                 "shasum": ""
             },
             "require": {
@@ -1806,20 +1801,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-08-18 11:10:44"
+            "time": "2016-08-26 07:11:44"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.2.4",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "4e83390f64e7ce04fcaec2ce95cd72823b431d19"
+                "reference": "46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/4e83390f64e7ce04fcaec2ce95cd72823b431d19",
-                "reference": "4e83390f64e7ce04fcaec2ce95cd72823b431d19",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49",
+                "reference": "46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49",
                 "shasum": ""
             },
             "require": {
@@ -1865,7 +1860,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-08-17 09:33:51"
+            "time": "2016-08-26 05:51:59"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
