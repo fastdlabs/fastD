@@ -27,7 +27,7 @@
         "fastd/debug": "~2.0.0",
         "fastd/http": "3.0.x-dev",
         "fastd/database": "3.0.x-dev",
-        "fastd/config": "2.1.x-dev",
+        "fastd/config": "~3.0.0@beta",
         "fastd/storage": "2.1.x-dev",
         "fastd/routing": "3.0.x-dev",
         "fastd/annotation": "2.0.x-dev",

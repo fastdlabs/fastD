@@ -243,13 +243,17 @@ class App
                     continue;
                 }
 
-                $annotation = new Reader([]);
-                $methods = $annotation->getAnnotations($className)->getMethod('');
-                foreach ($methods as $method) {
+                $annotation = new Annotation($className, [
+                    'route' => function ($name) use ($routing) {
+//                        $routing->addRoute($name, $method, $path, $callback, $defaults);
+                    },
+                    'method' => function ($method) {
+                        echo $method;
+                    },
+                    'middleware' => function () {},
+                ]);
 
-                    print_r($method);
-                    die;
-                }
+                unset($annotation);
             }
         }
     }

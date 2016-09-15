@@ -16,10 +16,8 @@ use FastD\Standard\Controllers\Controller;
 class IndexController extends Controller
 {
     /**
-     * @Route("/")
-     * @Method("GET")
-     *
-     * @Middleware("", 50, true)
+     * @route("GET", "/")
+     * @middleware("", 50, true)
      */
     public function welcomeAction()
     {
