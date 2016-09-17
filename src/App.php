@@ -11,15 +11,14 @@
 namespace FastD;
 
 use FastD\Annotation\Annotation;
-use FastD\Annotation\Reader;
 use FastD\Container\Container;
+use FastD\Http\ServerRequest;
 use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
 use FastD\Storage\Storage;
 use FastD\Http\Response;
 use FastD\Config\Config;
 use FastD\Database\Fdb;
-use FastD\Http\Request;
 use FastD\Debug\Debug;
 
 /**
@@ -176,11 +175,10 @@ class App
     public function initializeContainer()
     {
         $this->container = new Container([
-            'kernel.database'   => Fdb::class,
-            'kernel.config'     => Config::class,
-            'kernel.storage'    => Storage::class,
-            'kernel.routing'    => RouteCollection::class,
-            'kernel.debug'      => Debug::enable($this->isDebug()),
+            'kernel.database' => Fdb::class,
+            'kernel.config' => Config::class,
+            'kernel.storage' => Storage::class,
+            'kernel.debug' => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
@@ -192,42 +190,11 @@ class App
      *
      * Loaded register bundle routes configuration.
      *
-     * @return Router
+     * @return void
      */
     public function initializeRouting()
     {
-        $this->scanRoutes();
-    }
-
-    /**
-     * Handle request.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function handleHttpRequest(Request $request)
-    {
-        $this->container->set('kernel.request', $request);
-
-        $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->getPathInfo());
-
-        list($controller, $action) = $route->getCallback();
-
-        $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
-
-        $service->singleton()->setContainer($this->getContainer());
-
-        return call_user_func_array([$service, $action], $route->getParameters());
-    }
-
-    /**
-     * Scan all controller routes.
-     *
-     * @return void
-     */
-    public function scanRoutes()
-    {
-        $routing = $this->getContainer()->singleton('kernel.routing');
+        $routing = new RouteCollection();
 
         foreach ($this->getBundles() as $bundle) {
             $path = $bundle->getPath() . '/Http/Controllers';
@@ -243,19 +210,46 @@ class App
                     continue;
                 }
 
-                $annotation = new Annotation($className, [
-                    'route' => function ($name) use ($routing) {
-//                        $routing->addRoute($name, $method, $path, $callback, $defaults);
+                $annotation = new Annotation($className);
+
+                $annotation->execute([
+                    'route' => function ($class, $method, $args) use ($routing) {
+                        $routing->addRoute(
+                            isset($args['name']) ? $args['name'] : $args[0],
+                            isset($args['method']) ? $args['method'] : 'ANY',
+                            $args[0],
+                            [$class, $method],
+                            isset($args['defaults']) ? $args['defaults'] : []
+                        );
                     },
-                    'method' => function ($method) {
-                        echo $method;
-                    },
-                    'middleware' => function () {},
                 ]);
 
                 unset($annotation);
             }
         }
+
+        $this->container->set('kernel.routing', $routing);
+    }
+
+    /**
+     * Handle request.
+     *
+     * @param ServerRequest $request
+     * @return Response
+     */
+    public function handleHttpRequest(ServerRequest $request)
+    {
+        $this->container->set('kernel.request', $request);
+
+        $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->server->getPathInfo());
+
+        list($controller, $action) = $route->getCallback();
+
+        $service = $this->getContainer()->set('request.handle', $controller)->get('request.handle');
+
+        $service->singleton()->setContainer($this->getContainer());
+
+        return call_user_func_array([$service, $action], $route->getParameters());
     }
 
     /**
