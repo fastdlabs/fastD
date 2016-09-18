@@ -48,16 +48,16 @@
         },
         {
             "name": "fastd/config",
-            "version": "v3.0.0-beta1",
+            "version": "v3.0.0-beta4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/config.git",
-                "reference": "6538288994d9d21ccee2a9edf3bb79f2006096e1"
+                "reference": "92a5368ae4685f99c706f8d7f4403458a4e7009a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/config/zipball/6538288994d9d21ccee2a9edf3bb79f2006096e1",
-                "reference": "6538288994d9d21ccee2a9edf3bb79f2006096e1",
+                "url": "https://api.github.com/repos/JanHuang/config/zipball/92a5368ae4685f99c706f8d7f4403458a4e7009a",
+                "reference": "92a5368ae4685f99c706f8d7f4403458a4e7009a",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
             "keywords": [
                 "config"
             ],
-            "time": "2016-09-15 02:59:24"
+            "time": "2016-09-18 16:43:45"
         },
         {
             "name": "fastd/console",
@@ -371,12 +371,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/http.git",
-                "reference": "c67425fa95c2d96f92b705ffc1b149083cb7e70e"
+                "reference": "4de54444d36c687e753cacc64e74e6c031a2177e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/http/zipball/c67425fa95c2d96f92b705ffc1b149083cb7e70e",
-                "reference": "c67425fa95c2d96f92b705ffc1b149083cb7e70e",
+                "url": "https://api.github.com/repos/JanHuang/http/zipball/4de54444d36c687e753cacc64e74e6c031a2177e",
+                "reference": "4de54444d36c687e753cacc64e74e6c031a2177e",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +407,7 @@
                 "FastD",
                 "http"
             ],
-            "time": "2016-08-23 13:13:55"
+            "time": "2016-09-17 13:15:45"
         },
         {
             "name": "fastd/packet",

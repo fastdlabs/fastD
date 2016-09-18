@@ -27,8 +27,6 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
     {
         $app = new App(include __DIR__ . '/../bootstrap.php');
 
-        $app->bootstrap();
-
         print_r($app);
     }
 }

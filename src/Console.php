@@ -47,8 +47,6 @@ class Console extends \FastD\Console\Console
     {
         $this->application = new App($bootstrap);
 
-        $this->application->bootstrap();
-
         parent::__construct();
 
         $this->scanCommands();

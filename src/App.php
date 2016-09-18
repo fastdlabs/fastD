@@ -77,30 +77,10 @@ class App
      */
     public function __construct(array $bootstrap)
     {
-        $this->rootPath = $bootstrap['root.path'];
-
-        $this->webPath = $bootstrap['web.path'];
-
-        $this->environment = $bootstrap['env'] ?? 'dev';
-
-        $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
-
-        $this->bundles = $bootstrap['bundles'] ?? [];
-
-        $this->initializeContainer();
-
-        $config = new Config();
-
-        foreach ($bootstrap as $key => $value) {
-            $config->set($key, $value);
-        }
-
-        $this->container->set('kernel.config', $config);
+        $this->bootstrap($bootstrap);
     }
 
     /**
-     * Get custom bundles method.
-     *
      * @return Bundle[]
      */
     public function getBundles()
@@ -117,8 +97,6 @@ class App
     }
 
     /**
-     * Get application running environment.
-     *
      * @return string
      */
     public function getEnvironment()
@@ -127,11 +105,9 @@ class App
     }
 
     /**
-     * Get application work space directory.
-     *
      * @return string
      */
-    public function getRootPath()
+    public function getRootDir()
     {
         return $this->rootPath;
     }
@@ -139,7 +115,7 @@ class App
     /**
      * @return string
      */
-    public function getWebPath()
+    public function getWebDir()
     {
         return $this->webPath;
     }
@@ -153,15 +129,28 @@ class App
     }
 
     /**
-     * Bootstrap application.
-     *
+     * @param array $bootstrap
      * @return void
      */
-    public function bootstrap()
+    public function bootstrap(array $bootstrap)
     {
         if (!$this->booted) {
 
-            $this->initializeRouting();
+            $this->setupContainer();
+
+            $this->rootPath = $bootstrap['root.path'];
+
+            $this->webPath = $bootstrap['web.path'];
+
+            $this->environment = isset($bootstrap['env']) ? $bootstrap['env'] : 'dev';
+
+            $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
+
+            $this->bundles = $bootstrap['bundles']; unset($bootstrap['bundles']);
+
+            $this->container->set('kernel.config', new Config($bootstrap));
+
+            $this->setupRouting();
 
             $this->booted = true;
         }
@@ -172,13 +161,13 @@ class App
      *
      * @return void
      */
-    public function initializeContainer()
+    public function setupContainer()
     {
         $this->container = new Container([
-            'kernel.database' => Fdb::class,
-            'kernel.config' => Config::class,
-            'kernel.storage' => Storage::class,
-            'kernel.debug' => Debug::enable($this->isDebug()),
+            'kernel.database'   => Fdb::class,
+            'kernel.config'     => Config::class,
+            'kernel.storage'    => Storage::class,
+            'kernel.debug'      => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
@@ -186,15 +175,11 @@ class App
     }
 
     /**
-     * Loaded application routing.
-     *
-     * Loaded register bundle routes configuration.
-     *
      * @return void
      */
-    public function initializeRouting()
+    public function setupRouting()
     {
-        $routing = new RouteCollection();
+        $routing = new RouteCollection($this->getRootDir());
 
         foreach ($this->getBundles() as $bundle) {
             $path = $bundle->getPath() . '/Http/Controllers';
@@ -234,11 +219,12 @@ class App
     /**
      * Handle request.
      *
-     * @param ServerRequest $request
      * @return Response
      */
-    public function handleHttpRequest(ServerRequest $request)
+    public function handleHttpRequest()
     {
+        $request = ServerRequest::createFromGlobals();
+
         $this->container->set('kernel.request', $request);
 
         $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->server->getPathInfo());
@@ -253,10 +239,11 @@ class App
     }
 
     /**
+     * @param Response $response
      * @return void
      */
-    public function shutdown()
+    public function shutdown(Response $response)
     {
-        // TODO: Implement shutdown() method.
+
     }
 }

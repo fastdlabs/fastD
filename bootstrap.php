@@ -35,6 +35,10 @@ return [
      */
     'web.path' => __DIR__ . '/web',
 
+    'config' => [
+
+    ],
+
     /**
      * Swoole Server 配置信息。
      */
