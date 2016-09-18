@@ -44,10 +44,7 @@ class Bundle
     protected $shortName;
 
     /**
-     * Constructs a ReflectionClass
-     *
-     * @link  http://php.net/manual/en/reflectionclass.construct.php
-     * @since 5.0
+     * Bundle constructor.
      */
     public function __construct()
     {

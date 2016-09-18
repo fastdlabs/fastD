@@ -111,7 +111,7 @@ class App
     /**
      * @return bool
      */
-    public function isDebug(): bool
+    public function isDebug()
     {
         return $this->debug;
     }
@@ -121,7 +121,7 @@ class App
      *
      * @return string
      */
-    public function getEnvironment(): string
+    public function getEnvironment()
     {
         return $this->environment;
     }
@@ -202,10 +202,10 @@ class App
                 continue;
             }
 
-            $baseNamespace = $bundle->getNamespace() . '\\Http\\Controllers\\';
+            $namespace = $bundle->getNamespace() . '\\Http\\Controllers\\';
 
             foreach ($files as $file) {
-                $className = $baseNamespace . pathinfo($file, PATHINFO_FILENAME);
+                $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
                 if (!class_exists($className)) {
                     continue;
                 }
