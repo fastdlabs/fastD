@@ -84,7 +84,8 @@ class App
 
         $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
 
-        $this->bundles = $bootstrap['bundles']; unset($bootstrap['bundles']);
+        $this->bundles = $bootstrap['bundles'];
+        unset($bootstrap['bundles']);
 
         $this->bootstrap($bootstrap);
     }
@@ -103,6 +104,14 @@ class App
     public function isDebug()
     {
         return $this->debug;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBooted()
+    {
+        return $this->booted;
     }
 
     /**
@@ -147,21 +156,28 @@ class App
 
             $this->setupContainer();
 
-            $config = new Config($bootstrap, $this->isDebug() ? null : $this->getWebDir());
+            $this->container->set('kernel.config', new Config($bootstrap, $this->isDebug() ? null : $this->getWebDir()));
+
+            $this->container->set('kernel.routing', new RouteCollection());
 
             foreach ($this->getBundles() as $bundle) {
-                if (file_exists($file = $bundle->getDir() . '/Resources/config/config_' . $this->getEnvironment() . '.php')) {
-                    $config->load($file);
-                    unset($file);
-                }
+                $this->registeredBundle($bundle);
             }
-
-            $this->container->set('kernel.config', $config);
-
-            $this->setupRouting();
 
             $this->booted = true;
         }
+    }
+
+    /**
+     * @param Bundle $bundle
+     */
+    public function registeredBundle(Bundle $bundle)
+    {
+        $bundle->setContainer($this->container);
+
+        $bundle->setUp();
+
+        $this->bundles[] = $bundle;
     }
 
     /**
@@ -172,56 +188,14 @@ class App
     public function setupContainer()
     {
         $this->container = new Container([
-            'kernel.database'   => Fdb::class,
-            'kernel.config'     => Config::class,
-            'kernel.storage'    => Storage::class,
-            'kernel.debug'      => Debug::enable($this->isDebug()),
+            'kernel.database' => Fdb::class,
+            'kernel.config' => Config::class,
+            'kernel.storage' => Storage::class,
+            'kernel.debug' => Debug::enable($this->isDebug()),
         ]);
 
         $this->container->set('kernel.container', $this->container);
         $this->container->set('kernel', $this);
-    }
-
-    /**
-     * @return void
-     */
-    public function setupRouting()
-    {
-        $routing = new RouteCollection();
-
-        foreach ($this->getBundles() as $bundle) {
-            $path = $bundle->getDir() . '/Http/Controllers';
-            if (!is_dir($path) || false === ($files = glob($path . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
-                continue;
-            }
-
-            $namespace = $bundle->getNamespace() . '\\Http\\Controllers\\';
-
-            foreach ($files as $file) {
-                $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
-                if (!class_exists($className)) {
-                    continue;
-                }
-
-                $annotation = new Annotation($className);
-
-                $annotation->execute([
-                    'route' => function ($class, $method, $args) use ($routing) {
-                        $routing->addRoute(
-                            isset($args['name']) ? $args['name'] : $args[0],
-                            isset($args['method']) ? $args['method'] : 'ANY',
-                            $args[0],
-                            [$class, $method],
-                            isset($args['defaults']) ? $args['defaults'] : []
-                        );
-                    },
-                ]);
-
-                unset($annotation);
-            }
-        }
-
-        $this->container->set('kernel.routing', $routing);
     }
 
     /**

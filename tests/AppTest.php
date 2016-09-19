@@ -34,22 +34,18 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $this->app = new App(include __DIR__ . '/../bootstrap.php');
     }
 
-    public function testKernelConfig()
+    public function testAppBootstrap()
+    {
+        $this->assertTrue($this->app->isBooted());
+    }
+
+    public function testKernelEnvironment()
     {
         $this->assertEquals('dev', $this->app->getContainer()->singleton('kernel.config')->get('env'));
 
         $this->assertEquals('dev', $this->app->getEnvironment());
 
         $this->assertTrue($this->app->isDebug());
-    }
-
-    public function testAppBundles()
-    {
-        $bundles = $this->app->getBundles();
-
-        $this->assertEquals([
-            new WelcomeBundle(),
-        ], $bundles);
     }
 
     public function testAppConfiguration()
@@ -61,5 +57,14 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('zh_CN.UTF-8', $config['lang']);
 
         $this->assertEquals($this->app->getContainer()->singleton('kernel.config')->get('lang'), 'zh_CN.UTF-8');
+    }
+
+    public function testAppBundles()
+    {
+        $bundles = $this->app->getBundles();
+
+        $this->assertEquals([
+            new WelcomeBundle(),
+        ], $bundles);
     }
 }

@@ -9,6 +9,8 @@
 
 namespace FastD\Standard;
 
+use FastD\Annotation\Annotation;
+use FastD\Container\ContainerAware;
 use ReflectionClass;
 
 /**
@@ -16,8 +18,10 @@ use ReflectionClass;
  *
  * @package FastD\Standard
  */
-class Bundle
+abstract class Bundle
 {
+    use ContainerAware;
+
     /**
      * @var string
      */
@@ -88,5 +92,58 @@ class Bundle
     public function getShortName()
     {
         return $this->shortName;
+    }
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        $this->setUpConfiguration();
+        $this->setUpRoutes();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpRoutes()
+    {
+        $routing = $this->container->singleton('kernel.routing');
+
+        if (false !== ($files = glob($this->getDir() . '/Http/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
+            $namespace = $this->getNamespace() . '\\Http\\Controllers\\';
+
+            foreach ($files as $file) {
+                $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
+                if (class_exists($className)) {
+                    $annotation = new Annotation($className);
+                    $annotation->execute([
+                        'route' => function ($class, $method, $args) use ($routing) {
+                            $routing->addRoute(
+                                isset($args['name']) ? $args['name'] : $args[0],
+                                isset($args['method']) ? $args['method'] : 'ANY',
+                                $args[0],
+                                [$class, $method],
+                                isset($args['defaults']) ? $args['defaults'] : []
+                            );
+                        },
+                    ]);
+                    unset($annotation);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpConfiguration()
+    {
+        $env = $this->container->singleton('kernel')->getEnvironment();
+
+        if (file_exists($file = $this->getDir() . '/Resources/config/config_' . $env . '.php')) {
+            $this->container->singleton('kernel.config')->load($file);
+            unset($file);
+        }
     }
 }
