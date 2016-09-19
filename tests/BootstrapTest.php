@@ -23,10 +23,54 @@ use FastD\App;
  */
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
-    public function testKernel()
-    {
-        $app = new App(include __DIR__ . '/../bootstrap.php');
+    /**
+     * @var App
+     */
+    protected $app;
 
-        print_r($app);
+    public function setUp()
+    {
+        $this->app = new App(include __DIR__ . '/../bootstrap.php');
+    }
+
+    public function testKernelConfig()
+    {
+        $this->assertEquals('dev', $this->app->getContainer()->singleton('kernel.config')->get('env'));
+
+        $this->assertEquals([
+            /**
+             * App 运行环境
+             */
+            'env' => 'dev',
+
+            /**
+             * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
+             */
+            'root.path' => __DIR__ . '/App',
+
+            /**
+             * 入口目录
+             */
+            'web.path' => realpath(__DIR__ . '/../web'),
+
+            /**
+             * 项目公共配置
+             */
+            'config' => [
+
+            ],
+
+            /**
+             * Swoole Server 配置信息。
+             */
+            'server' => [],
+        ], $this->app->getContainer()->singleton('kernel.config')->all());
+    }
+
+    public function testKernelEnv()
+    {
+        $this->assertEquals('dev', $this->app->getEnvironment());
+
+        $this->assertTrue($this->app->isDebug());
     }
 }

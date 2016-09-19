@@ -35,6 +35,9 @@ return [
      */
     'web.path' => __DIR__ . '/web',
 
+    /**
+     * 项目公共配置
+     */
     'config' => [
 
     ],

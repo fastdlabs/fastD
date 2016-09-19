@@ -10,6 +10,7 @@
 
 namespace FastD;
 
+use FastD\Console\Input\ArgvInput;
 use FastD\Http\Response;
 use FastD\Swoole\Http\HttpRequest;
 use FastD\Swoole\Http\HttpServer;
@@ -44,16 +45,6 @@ class Server extends HttpServer
      */
     public function doRequest(HttpRequest $request)
     {
-        $response = $this->app->createSwooleHttpRequest($request);
-
-        return $response->getContent();
-    }
-
-    /**
-     * @return Server
-     */
-    public function bootstrap()
-    {
-        return parent::bootstrap();
+        return $this->html('hello');
     }
 }

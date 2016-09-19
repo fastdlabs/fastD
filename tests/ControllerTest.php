@@ -63,28 +63,12 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DriverInterface::class, $driver);
     }
 
-    public function testStorage()
-    {
-
-    }
-
     public function testAsset()
     {
         $controller = new Controller();
 
         $controller->setContainer(new Container([
-//            'kernel.request' => Request::createRequestHandle(),
             'kernel.storage' => Storage::class
         ]));
-    }
-
-    public function testUrl()
-    {
-
-    }
-
-    public function testRender()
-    {
-        
     }
 }

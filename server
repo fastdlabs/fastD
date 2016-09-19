@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
+ */
+set_time_limit(0);
+date_default_timezone_set('PRC');
+
+// autoload composer
+foreach ([
+             __DIR__ . '/../../autoload.php',
+             __DIR__ . '/../vendor/autoload.php',
+             __DIR__ . '/vendor/autoload.php'
+         ] as $value) {
+    if (file_exists($value)) {
+        define('FASTD_COMPOSER_INSTALL', $value);
+        break;
+    }
+}
+
+if (!defined('FASTD_COMPOSER_INSTALL')) {
+    fwrite(STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
+
+include FASTD_COMPOSER_INSTALL;
+
+$bootstrap = null;
+
+foreach ([
+             __DIR__ . '/../../../app/bootstrap.php',
+             __DIR__ . '/../../../bootstrap.php',
+             __DIR__ . '/../../app/bootstrap.php',
+             __DIR__ . '/../../bootstrap.php',
+             __DIR__ . '/../app/bootstrap.php',
+             __DIR__ . '/../bootstrap.php',
+             __DIR__ . '/app/bootstrap.php',
+             __DIR__ . '/bootstrap.php',
+         ] as $value) {
+    if (file_exists($value)) {
+        $bootstrap = include $value;
+        break;
+    }
+}
+
+use FastD\App;
+use FastD\Console\Input\ArgvInput;
+use FastD\Console\Input\InputDefinition;
+use FastD\Server;
+
+$argvInput = new ArgvInput(null, new InputDefinition);
+
+$env = $argvInput->hasOption(['env', 'e']) ? $argvInput->getOption(['env', 'e']) : 'dev';
+
+$bootstrap['env'] = $env;
+
+$server = new Server(new App($bootstrap));
+
+$server->start();
