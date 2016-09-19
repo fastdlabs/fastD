@@ -36,11 +36,11 @@ class Console extends \FastD\Console\Console
     /**
      * AppConsole constructor.
      *
-     * @param array $bootstrap
+     * @param App $app
      */
-    public function __construct(array $bootstrap)
+    public function __construct(App $app)
     {
-        $this->application = new App($bootstrap);
+        $this->application = $app;
 
         parent::__construct();
 
@@ -99,7 +99,7 @@ class Console extends \FastD\Console\Console
     public function scanCommands()
     {
         foreach ($this->getApplication()->getBundles() as $bundle) {
-            $dir = $bundle->getPath() . '/Commands';
+            $dir = $bundle->getDir() . '/Commands';
             if (!is_dir($dir)) {
                 continue;
             }

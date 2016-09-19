@@ -50,10 +50,10 @@ foreach ([
     }
 }
 
-use FastD\App;
-use FastD\Console\Input\ArgvInput;
 use FastD\Console\Input\InputDefinition;
+use FastD\Console\Input\ArgvInput;
 use FastD\Server;
+use FastD\App;
 
 $argvInput = new ArgvInput(null, new InputDefinition);
 

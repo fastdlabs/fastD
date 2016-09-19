@@ -34,7 +34,7 @@ class Server extends HttpServer
     {
         $this->app = $app;
 
-        parent::__construct($app->getContainer()->get('kernel.config')->get('server'));
+        parent::__construct($app->getContainer()->singleton('kernel.config')->get('server'));
     }
 
     /**
