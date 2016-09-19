@@ -43,6 +43,8 @@ class Server extends HttpServer
      */
     public function doRequest(HttpRequest $request)
     {
-        return $this->html('hello');
+        // TODO
+        return $this->html('wait server');
+//        $this->app->handleHttpRequest();
     }
 }
