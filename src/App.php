@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -12,7 +11,6 @@ namespace FastD;
 
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
-use FastD\Exceptions\BootstrapException;
 use FastD\Http\ServerRequest;
 use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;

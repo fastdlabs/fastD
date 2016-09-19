@@ -1,20 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: janhuang
- * Date: 15/1/26
- * Time: 下午11:16
- * Github: https://www.github.com/janhuang
- * Coding: https://www.coding.net/janhuang
- * sf: http://segmentfault.com/u/janhuang
- * Blog: http://segmentfault.com/blog/janhuang
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
  */
 
 namespace FastD\Standard;
 
-use FastD\Container\ContainerAware;
 use ReflectionClass;
-use FastD\Config\Config;
 
 /**
  * Class Bundle

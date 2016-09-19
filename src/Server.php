@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -10,7 +9,6 @@
 
 namespace FastD;
 
-use FastD\Console\Input\ArgvInput;
 use FastD\Http\Response;
 use FastD\Swoole\Http\HttpRequest;
 use FastD\Swoole\Http\HttpServer;

@@ -1,17 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: janhuang
- * Date: 15/7/22
- * Time: 上午10:07
- * Github: https://www.github.com/janhuang
- * Coding: https://www.coding.net/janhuang
- * SegmentFault: http://segmentfault.com/u/janhuang
- * Blog: http://segmentfault.com/blog/janhuang
- * Gmail: bboyjanhuang@gmail.com
- * WebSite: http://www.janhuang.me
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
  */
-
 namespace FastD\Commands;
 
 use FastD\Console\Input\Input;
