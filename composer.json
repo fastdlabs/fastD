@@ -40,6 +40,7 @@
         "phpunit/phpunit": "^5.0"
     },
     "bin": [
-        "console"
+        "console",
+        "server"
     ]
 }
