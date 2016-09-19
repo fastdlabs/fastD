@@ -150,7 +150,7 @@ class App
             $config = new Config($bootstrap, $this->isDebug() ? null : $this->getWebDir());
 
             foreach ($this->getBundles() as $bundle) {
-                if (file_exists($file = $bundle->getDir() . '/config_' . $this->getEnvironment() . '.php')) {
+                if (file_exists($file = $bundle->getDir() . '/Resources/config/config_' . $this->getEnvironment() . '.php')) {
                     $config->load($file);
                     unset($file);
                 }
@@ -187,7 +187,7 @@ class App
      */
     public function setupRouting()
     {
-        $routing = new RouteCollection($this->getRootDir());
+        $routing = new RouteCollection();
 
         foreach ($this->getBundles() as $bundle) {
             $path = $bundle->getDir() . '/Http/Controllers';
