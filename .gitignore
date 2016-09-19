@@ -1,9 +1,4 @@
-.idea
-/vendor/
-composer.lock
-/app/storage/*
-/bin/phpunit
-public/bundles
-*.orig
-*.cache
-
+/vendor
+/.idea
+/web
+/run

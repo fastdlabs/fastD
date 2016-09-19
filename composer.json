@@ -1,46 +1,45 @@
 {
     "name": "fastd/fastd",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
+    "description": "FastD Core.",
     "minimum-stability": "stable",
-    "description": "FastD php simple framework",
-    "keyword": [
-        "fastd ",
-        "fastd php",
-        "simple framework",
-        "php simple framework",
-        "simple php framework",
-        "fd",
-        "swoole fd"
-    ],
+    "keywords": ["FastD"],
     "authors": [
         {
             "name": "janhuang",
             "email": "bboyjanhuang@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "FastD\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
     "require": {
-        "php": ">=7.0",
-        "fastd/framework": "~2.0.0"
+        "php": ">=5.6",
+        "fastd/console": "~2.0.0",
+        "fastd/debug": "~2.0.0",
+        "fastd/http": "3.0.x-dev",
+        "fastd/database": "3.0.x-dev",
+        "fastd/config": "~3.0.0@beta",
+        "fastd/storage": "2.1.x-dev",
+        "fastd/routing": "3.0.x-dev",
+        "fastd/annotation": "2.0.x-dev",
+        "fastd/container": "3.0.x-dev",
+        "fastd/event": "1.0.x-dev",
+        "fastd/swoole": "1.0.x-dev",
+        "twig/twig": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.0"
+        "phpunit/phpunit": "^5.0"
     },
-    "autoload": {
-        "files": [
-            "app/application.php"
-        ],
-        "psr-4": {
-            "": "src"
-        }
-    },
-    "config": {
-        "bin-dir": "bin"
-    },
-    "extra": {
-        "web": "public",
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
-        }
-    }
+    "bin": [
+        "console"
+    ]
 }
