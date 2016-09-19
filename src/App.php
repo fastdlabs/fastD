@@ -12,6 +12,7 @@ namespace FastD;
 
 use FastD\Annotation\Annotation;
 use FastD\Container\Container;
+use FastD\Exceptions\BootstrapException;
 use FastD\Http\ServerRequest;
 use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
@@ -77,6 +78,16 @@ class App
      */
     public function __construct(array $bootstrap)
     {
+        $this->rootPath = $bootstrap['root.path'];
+
+        $this->webPath = $bootstrap['web.path'];
+
+        $this->environment = isset($bootstrap['env']) ? $bootstrap['env'] : 'dev';
+
+        $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
+
+        $this->bundles = $bootstrap['bundles']; unset($bootstrap['bundles']);
+
         $this->bootstrap($bootstrap);
     }
 
@@ -129,26 +140,25 @@ class App
     }
 
     /**
-     * @param array $bootstrap
+     * @param $bootstrap
      * @return void
      */
-    public function bootstrap(array $bootstrap)
+    public function bootstrap(array $bootstrap = [])
     {
         if (!$this->booted) {
 
             $this->setupContainer();
 
-            $this->rootPath = $bootstrap['root.path'];
+            $config = new Config($bootstrap, $this->isDebug() ? null : $this->getWebDir());
 
-            $this->webPath = $bootstrap['web.path'];
+            foreach ($this->getBundles() as $bundle) {
+                if (file_exists($file = $bundle->getDir() . '/config_' . $this->getEnvironment() . '.php')) {
+                    $config->load($file);
+                    unset($file);
+                }
+            }
 
-            $this->environment = isset($bootstrap['env']) ? $bootstrap['env'] : 'dev';
-
-            $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
-
-            $this->bundles = $bootstrap['bundles']; unset($bootstrap['bundles']);
-
-            $this->container->set('kernel.config', new Config($bootstrap));
+            $this->container->set('kernel.config', $config);
 
             $this->setupRouting();
 
@@ -182,7 +192,7 @@ class App
         $routing = new RouteCollection($this->getRootDir());
 
         foreach ($this->getBundles() as $bundle) {
-            $path = $bundle->getPath() . '/Http/Controllers';
+            $path = $bundle->getDir() . '/Http/Controllers';
             if (!is_dir($path) || false === ($files = glob($path . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
                 continue;
             }

@@ -64,7 +64,7 @@ class Bundle
     /**
      * @return string
      */
-    public function getPath()
+    public function getDir()
     {
         return $this->path;
     }
