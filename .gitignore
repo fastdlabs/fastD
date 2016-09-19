@@ -1,3 +1,4 @@
-/vendor/
-.idea
-web
+/vendor
+/.idea
+/web
+/run
