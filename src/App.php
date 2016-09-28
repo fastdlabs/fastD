@@ -9,7 +9,6 @@
 
 namespace FastD;
 
-use FastD\Annotation\Annotation;
 use FastD\Container\Container;
 use FastD\Http\ServerRequest;
 use FastD\Routing\RouteCollection;

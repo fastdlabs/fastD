@@ -28,6 +28,8 @@ composer create-project "fastd/fastd.standard:3.0.x-dev" fastd
 
 ## 文档
 
+[中文文档](docs/readme.md)
+
 ##### ＃环境配置
 
 保证目录在当前进程的读写权限，特别是 `storage` 的读写权限，因为此目录是用于数据缓存读写的。
