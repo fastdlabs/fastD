@@ -10,7 +10,7 @@
 namespace FastD;
 
 use FastD\Http\Response;
-use FastD\Swoole\Http\HttpRequest;
+use FastD\Http\SwooleServerRequest;
 use FastD\Swoole\Http\HttpServer;
 
 /**
@@ -38,13 +38,11 @@ class Server extends HttpServer
     }
 
     /**
-     * @param HttpRequest $request
+     * @param SwooleServerRequest $serverRequest
      * @return Response
      */
-    public function doRequest(HttpRequest $request)
+    public function doRequest(SwooleServerRequest $serverRequest)
     {
-        // TODO
-        return $this->html('wait server');
-//        $this->app->handleHttpRequest();
+        return $this->app->handleHttpRequest($serverRequest);
     }
 }

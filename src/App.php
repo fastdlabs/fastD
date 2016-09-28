@@ -199,17 +199,14 @@ class App
     }
 
     /**
-     * Handle request.
-     *
-     * @return Response
+     * @param ServerRequest $serverRequest
+     * @return mixed
      */
-    public function handleHttpRequest()
+    public function handleHttpRequest(ServerRequest $serverRequest)
     {
-        $request = ServerRequest::createFromGlobals();
+        $this->container->set('kernel.request', $serverRequest);
 
-        $this->container->set('kernel.request', $request);
-
-        $route = $this->getContainer()->singleton('kernel.routing')->match($request->getMethod(), $request->server->getPathInfo());
+        $route = $this->getContainer()->singleton('kernel.routing')->match($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
 
         list($controller, $action) = $route->getCallback();
 
@@ -226,6 +223,6 @@ class App
      */
     public function shutdown(Response $response)
     {
-
+        unset($this);
     }
 }

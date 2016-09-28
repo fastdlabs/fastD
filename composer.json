@@ -34,6 +34,7 @@
         "fastd/container": "3.0.x-dev",
         "fastd/event": "1.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
+        "fastd/session": "1.0.x-dev",
         "twig/twig": "~1.0"
     },
     "require-dev": {
