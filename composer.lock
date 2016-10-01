@@ -371,16 +371,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/http.git",
-                "reference": "6a0a569690fd75ef1435123b3fb38bf2e06f72cc"
+                "reference": "7b0f3981503842d50c3cb1668d0eef8be5179bb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/http/zipball/6a0a569690fd75ef1435123b3fb38bf2e06f72cc",
-                "reference": "6a0a569690fd75ef1435123b3fb38bf2e06f72cc",
+                "url": "https://api.github.com/repos/JanHuang/http/zipball/7b0f3981503842d50c3cb1668d0eef8be5179bb2",
+                "reference": "7b0f3981503842d50c3cb1668d0eef8be5179bb2",
                 "shasum": ""
             },
             "require": {
                 "fastd/session": "1.0.x-dev",
+                "fastd/storage": "2.1.x-dev",
                 "php": ">=5.6",
                 "psr/http-message": "~1.0"
             },
@@ -408,7 +409,7 @@
                 "FastD",
                 "http"
             ],
-            "time": "2016-09-28 01:36:45"
+            "time": "2016-09-29 14:15:45"
         },
         {
             "name": "fastd/packet",
@@ -585,12 +586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/session.git",
-                "reference": "4f0b54d9f952a0cd41639ed6ee21fb7d0ed3fc16"
+                "reference": "52d7c45f59185260e2ee5ff1f3a3f47fa404bd7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/session/zipball/4f0b54d9f952a0cd41639ed6ee21fb7d0ed3fc16",
-                "reference": "4f0b54d9f952a0cd41639ed6ee21fb7d0ed3fc16",
+                "url": "https://api.github.com/repos/JanHuang/session/zipball/52d7c45f59185260e2ee5ff1f3a3f47fa404bd7f",
+                "reference": "52d7c45f59185260e2ee5ff1f3a3f47fa404bd7f",
                 "shasum": ""
             },
             "require": {
@@ -613,7 +614,7 @@
                     "email": "bboyjanhuang@gmail.com"
                 }
             ],
-            "time": "2016-09-27 01:49:45"
+            "time": "2016-10-01 14:25:49"
         },
         {
             "name": "fastd/storage",
@@ -669,12 +670,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/swoole.git",
-                "reference": "8573d37c31c8be7d3eba8fc23cadbb50fe884437"
+                "reference": "d48da7371613d0c56c6ba5536f7da4c8530aaf8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/8573d37c31c8be7d3eba8fc23cadbb50fe884437",
-                "reference": "8573d37c31c8be7d3eba8fc23cadbb50fe884437",
+                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/d48da7371613d0c56c6ba5536f7da4c8530aaf8b",
+                "reference": "d48da7371613d0c56c6ba5536f7da4c8530aaf8b",
                 "shasum": ""
             },
             "require": {
@@ -704,7 +705,7 @@
                 }
             ],
             "description": "FastD swoole.",
-            "time": "2016-09-28 01:40:42"
+            "time": "2016-10-01 13:01:02"
         },
         {
             "name": "maximebf/debugbar",
@@ -1377,16 +1378,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd"
+                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/9270140b940ff02e58ec577c237274e92cd40cdd",
-                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/8331b5efe816ae05461b7ca1e721c01b46bafb3e",
+                "reference": "8331b5efe816ae05461b7ca1e721c01b46bafb3e",
                 "shasum": ""
             },
             "require": {
@@ -1418,7 +1419,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-06-10 09:48:41"
+            "time": "2016-09-30 07:12:33"
         },
         {
             "name": "phpdocumentor/type-resolver",

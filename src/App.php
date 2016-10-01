@@ -199,7 +199,7 @@ class App
 
     /**
      * @param ServerRequest $serverRequest
-     * @return mixed
+     * @return Response
      */
     public function handleHttpRequest(ServerRequest $serverRequest)
     {
@@ -217,10 +217,9 @@ class App
     }
 
     /**
-     * @param Response $response
      * @return void
      */
-    public function shutdown(Response $response)
+    public function shutdown()
     {
         unset($this);
     }

@@ -104,6 +104,7 @@ class RouteDumpCommand extends CommandAware
         foreach ($bundles as $bundle) {
             foreach ($collection as $name => $route) {
                 $callback = $route->getCallback();
+                echo substr($callback, 0, strlen($bundle->getNamespace())) . PHP_EOL;
                 if ($bundle->getNamespace() === substr($callback, 0, strlen($bundle->getNamespace()))) {
                     $allRoutes[$bundle->getName()][] = $route;
                 }

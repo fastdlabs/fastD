@@ -22,4 +22,12 @@ class IndexController extends Controller
     {
         return new Response('hello world');
     }
+
+    /**
+     * @route("/demo", method="GET")
+     */
+    public function demoAction()
+    {
+        return $this->responseHtml('demo');
+    }
 }
