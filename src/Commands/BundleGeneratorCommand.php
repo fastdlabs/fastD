@@ -61,7 +61,7 @@ class BundleGeneratorCommand extends CommandAware
             return ucfirst($v);
         }, explode(DIRECTORY_SEPARATOR, $bundle)));
 
-        $source = $this->getContainer()->singleton('kernel')->getRootPath() . '/../src';
+        $source = $this->getContainer()->singleton('kernel')->getRootDir() . '/../src';
 
         $this->builderStructure($source, $bundle, str_replace(DIRECTORY_SEPARATOR, '', $bundle));
 
@@ -76,11 +76,9 @@ class BundleGeneratorCommand extends CommandAware
         ));
 
         foreach ([
-                     'Controllers',
-                     'Extensions',
+                     'Http/Controllers',
                      'Exceptions',
                      'Commands',
-                     'Services',
                      'Fixtures',
                      'Resources/views',
                      'Resources/config',
