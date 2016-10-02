@@ -543,16 +543,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/routing.git",
-                "reference": "959cf84edb5a6312d80036be095684947caa8966"
+                "reference": "5c61545748c9b885b39eb05e5b3266e85cd33546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/routing/zipball/959cf84edb5a6312d80036be095684947caa8966",
-                "reference": "959cf84edb5a6312d80036be095684947caa8966",
+                "url": "https://api.github.com/repos/JanHuang/routing/zipball/5c61545748c9b885b39eb05e5b3266e85cd33546",
+                "reference": "5c61545748c9b885b39eb05e5b3266e85cd33546",
                 "shasum": ""
             },
             "require": {
-                "fastd/generator": "~1.1.0",
                 "php": ">=5.6"
             },
             "require-dev": {
@@ -578,7 +577,7 @@
             "keywords": [
                 "routing"
             ],
-            "time": "2016-09-22 13:08:54"
+            "time": "2016-10-02 03:53:28"
         },
         {
             "name": "fastd/session",
@@ -670,12 +669,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JanHuang/swoole.git",
-                "reference": "d48da7371613d0c56c6ba5536f7da4c8530aaf8b"
+                "reference": "89302c43d431fa859a74b47783c284857636621e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/d48da7371613d0c56c6ba5536f7da4c8530aaf8b",
-                "reference": "d48da7371613d0c56c6ba5536f7da4c8530aaf8b",
+                "url": "https://api.github.com/repos/JanHuang/swoole/zipball/89302c43d431fa859a74b47783c284857636621e",
+                "reference": "89302c43d431fa859a74b47783c284857636621e",
                 "shasum": ""
             },
             "require": {
@@ -705,7 +704,7 @@
                 }
             ],
             "description": "FastD swoole.",
-            "time": "2016-10-01 13:01:02"
+            "time": "2016-10-01 15:10:08"
         },
         {
             "name": "maximebf/debugbar",

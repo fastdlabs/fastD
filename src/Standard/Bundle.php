@@ -110,9 +110,9 @@ abstract class Bundle
     {
         $routing = $this->container->singleton('kernel.routing');
 
-        if (false !== ($files = glob($this->getDir() . '/Http/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
-            $namespace = $this->getNamespace() . '\\Http\\Controllers\\';
+        $namespace = $this->getNamespace() . '\\Http\\Controllers\\';
 
+        if (false !== ($files = glob($this->getDir() . '/Http/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
                 if (class_exists($className)) {
@@ -120,10 +120,10 @@ abstract class Bundle
                     $annotation->execute([
                         'route' => function ($class, $method, $args) use ($routing) {
                             $routing->addRoute(
-                                isset($args['name']) ? $args['name'] : $args[0],
                                 isset($args['method']) ? $args['method'] : 'ANY',
                                 $args[0],
                                 [$class, $method],
+                                isset($args['name']) ? $args['name'] : $args[0],
                                 isset($args['defaults']) ? $args['defaults'] : []
                             );
                         },

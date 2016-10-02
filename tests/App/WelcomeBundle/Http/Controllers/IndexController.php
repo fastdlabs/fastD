@@ -24,7 +24,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @route("/demo", method="GET")
+     * @route("/demo")
      */
     public function demoAction()
     {
