@@ -2,3 +2,4 @@
 /.idea
 /web
 /run
+composer.lock
