@@ -78,7 +78,6 @@ class Console extends \FastD\Console\Console
             new FdbDataSetCommand($this->getContainer()),
             new FdbSchemaCommand($this->getContainer()),
             new BundleGeneratorCommand($this->getContainer()),
-            new SwooleCommand($this->getContainer()),
             new ConfigCacheCommand($this->getContainer()),
         ]);
     }
