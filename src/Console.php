@@ -18,7 +18,6 @@ use FastD\Commands\RouteCacheCommand;
 use FastD\Commands\FdbReflexCommand;
 use FastD\Commands\FdbSchemaCommand;
 use FastD\Commands\RouteDumpCommand;
-use FastD\Commands\SwooleCommand;
 use FastD\Container\Container;
 
 /**
