@@ -201,4 +201,14 @@ class Controller
     {
         return new JsonResponse($data, $status, $headers);
     }
+
+    /**
+     * @param array $data
+     * @param $status
+     * @return Response
+     */
+    public function responseBinary(array $data, $status)
+    {
+
+    }
 }

@@ -7,11 +7,12 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Listener;
+namespace FastD\Standard\Server;
 
 use FastD\Container\ContainerAware;
+use FastD\Swoole\Server;
 
-abstract class ListenerAware
+abstract class ListenerAware extends Server
 {
     use ContainerAware;
 }
