@@ -8,7 +8,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Tests\App\WelcomeBundle;
+namespace WelcomeBundle;
 
 use FastD\Standard\Bundle;
 

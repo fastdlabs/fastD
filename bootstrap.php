@@ -17,7 +17,7 @@ return [
      * Bundle 引导文件主要声明, 声明路径, 控制器, 独立配置等信息路径
      */
     'bundles' => [
-        new Tests\App\WelcomeBundle\WelcomeBundle(),
+        new \WelcomeBundle\WelcomeBundle(),
     ],
 
     /**
@@ -28,7 +28,7 @@ return [
     /**
      * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
      */
-    'root.path' => __DIR__ . '/tests/App',
+    'root.path' => __DIR__ . '/tests/app',
 
     /**
      * 入口目录

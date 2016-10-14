@@ -110,9 +110,9 @@ abstract class Bundle
     {
         $routing = $this->container->singleton('kernel.routing');
 
-        $namespace = $this->getNamespace() . '\\Http\\Controllers\\';
+        $namespace = $this->getNamespace() . '\\Controllers\\';
 
-        if (false !== ($files = glob($this->getDir() . '/Http/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
+        if (false !== ($files = glob($this->getDir() . '/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
                 if (class_exists($className)) {
