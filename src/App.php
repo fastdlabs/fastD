@@ -41,7 +41,7 @@ class App
     /**
      * @var string
      */
-    protected $rootPath;
+    protected $srcPath;
 
     /**
      * @var string
@@ -75,7 +75,7 @@ class App
      */
     public function __construct(array $bootstrap)
     {
-        $this->rootPath = $bootstrap['root.path'];
+        $this->srcPath = $bootstrap['src.path'];
 
         $this->webPath = $bootstrap['web.path'];
 
@@ -124,9 +124,9 @@ class App
     /**
      * @return string
      */
-    public function getRootDir()
+    public function getSrcDir()
     {
-        return $this->rootPath;
+        return $this->srcPath;
     }
 
     /**

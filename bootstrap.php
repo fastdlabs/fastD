@@ -28,7 +28,7 @@ return [
     /**
      * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
      */
-    'root.path' => __DIR__ . '/tests/app',
+    'src.path' => __DIR__ . '/tests/app',
 
     /**
      * 入口目录
