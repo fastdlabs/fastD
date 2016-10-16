@@ -61,11 +61,11 @@ class BundleGeneratorCommand extends CommandAware
             return ucfirst($v);
         }, explode(DIRECTORY_SEPARATOR, $bundle)));
 
-        $source = $this->getContainer()->singleton('kernel')->getRootDir() . '/../src';
+        $dir = $this->getContainer()->singleton('kernel')->getSrcDir();
 
-        $this->builderStructure($source, $bundle, str_replace(DIRECTORY_SEPARATOR, '', $bundle));
+        $this->builderStructure($dir, $bundle, str_replace(DIRECTORY_SEPARATOR, '', $bundle));
 
-        $output->writeln('Building in ' . $source . '  <success>[OK]</success>');
+        $output->writeln('Building in ' . $dir . '  <success>[OK]</success>');
     }
 
     public function builderStructure($path, $bundle, $fullName)
@@ -76,12 +76,14 @@ class BundleGeneratorCommand extends CommandAware
         ));
 
         foreach ([
-                     'Http/Controllers',
+                     'Controllers',
                      'Exceptions',
-                     'Commands',
-                     'Fixtures',
+                     'Middleware',
+                     'Command',
                      'Resources/views',
                      'Resources/config',
+                     'Server',
+                     'Task',
                      'Testing'
                  ] as $dir) {
             $directory = implode(DIRECTORY_SEPARATOR, array(
@@ -122,17 +124,12 @@ class BundleGeneratorCommand extends CommandAware
             file_put_contents($bootstrapFile, $bootstrap);
         }
 
-        $routes = $bundlePath . DIRECTORY_SEPARATOR . 'Resources/config/routes.php';
-        if (!file_exists($routes)) {
-            file_put_contents($routes, '<?php ' . PHP_EOL);
-        }
-
         $configPath = $bundlePath . DIRECTORY_SEPARATOR . 'Resources/config';
 
         foreach ([
-            '/config_dev.php',
-            '/config_test.php',
-            '/config_prod.php',
+                     '/config_dev.php',
+                     '/config_test.php',
+                     '/config_prod.php',
                  ] as $value) {
             $config = $configPath . $value;
             if (!file_exists($config)) {
@@ -148,7 +145,7 @@ class BundleGeneratorCommand extends CommandAware
 
 namespace %s\Controllers;
 
-use FastD\Framework\Bundle\Controllers\Controller;
+use FastD\Standard\Controllers\Controller;
 
 /**
  * @Route("/%s")
@@ -160,7 +157,7 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return \$this->response('hello world');
+        return \$this->responseHtml('hello world');
     }
 }
 CONTROLLER;
@@ -173,7 +170,7 @@ CONTROLLER;
 
 namespace %s;
 
-use FastD\Framework\Bundle\Bundle;
+use FastD\Standard\Bundle;
 
 class %s extends Bundle
 {

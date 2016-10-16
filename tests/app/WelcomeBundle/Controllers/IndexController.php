@@ -10,7 +10,6 @@
 
 namespace WelcomeBundle\Controllers;
 
-use FastD\Http\Response;
 use FastD\Standard\Controllers\Controller;
 
 class IndexController extends Controller
@@ -20,7 +19,7 @@ class IndexController extends Controller
      */
     public function welcomeAction()
     {
-        return new Response('hello world');
+        return $this->responseHtml('hello world');
     }
 
     /**
