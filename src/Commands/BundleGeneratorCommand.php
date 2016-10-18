@@ -148,12 +148,12 @@ namespace %s\Controllers;
 use FastD\Standard\Controllers\Controller;
 
 /**
- * @Route("/%s")
+ * @route("/%s")
  */
 class IndexController extends Controller
 {
     /**
-     * @Route("/")
+     * @route("/")
      */
     public function indexAction()
     {
