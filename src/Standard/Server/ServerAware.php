@@ -12,7 +12,7 @@ namespace FastD\Standard\Server;
 use FastD\Container\ContainerAware;
 use FastD\Swoole\Server;
 
-abstract class ListenerAware extends Server
+abstract class ServerAware extends Server
 {
     use ContainerAware;
 }
