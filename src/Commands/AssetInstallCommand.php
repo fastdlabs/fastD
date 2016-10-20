@@ -55,7 +55,7 @@ class AssetInstallCommand extends CommandAware
         $output->writeln('Trying to install assets as symbolic links.');
 
         foreach ($bundles as $bundle) {
-            $originDir = $bundle->getRootDir() . DIRECTORY_SEPARATOR . 'Resources/assets';
+            $originDir = $bundle->getDir() . DIRECTORY_SEPARATOR . 'Resources/assets';
             if (!file_exists($originDir)) {
                 continue;
             }
