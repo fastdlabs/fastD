@@ -41,7 +41,7 @@ class RouteDumpCommand extends CommandAware
     {
         $this
             ->setOption('bundle')
-            ->setOption('show', InputOption::VALUE_OPTIONAL, '显示方法代码内容')
+            ->setOption('detail', InputOption::VALUE_OPTIONAL, '显示方法代码内容')
             ->setArgument('route')
         ;
     }
