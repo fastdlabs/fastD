@@ -88,9 +88,24 @@ abstract class Controller
         return $this->get('kernel.config')->get($name);
     }
 
-    public function middleware($name)
+    /**
+     * @param $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function middleware($name, array $arguments = [])
     {
+        return $this->get('kernel.stack')->run(null, $arguments);
+    }
 
+    /**
+     * @param $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function trigger($name, array $arguments = [])
+    {
+        return $this->get('kernel.event')->trigger($name, $arguments);
     }
 
     /**

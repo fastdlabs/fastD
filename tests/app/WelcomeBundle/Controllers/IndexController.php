@@ -11,6 +11,7 @@
 namespace WelcomeBundle\Controllers;
 
 use FastD\Standard\Controllers\Controller;
+use WelcomeBundle\Middleware\DemoMiddleware;
 
 class IndexController extends Controller
 {
@@ -19,6 +20,8 @@ class IndexController extends Controller
      */
     public function welcomeAction()
     {
+        $result = $this->middleware(DemoMiddleware::class);
+
         return $this->responseHtml('hello world');
     }
 

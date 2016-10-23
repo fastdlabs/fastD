@@ -10,13 +10,14 @@
 namespace FastD\Standard\Middleware;
 
 use FastD\Container\ContainerAware;
+use FastD\Middleware\Middleware;
 
 /**
  * Class MiddlewareAware
  *
  * @package FastD\Standard\Middleware
  */
-abstract class MiddlewareAware
+abstract class MiddlewareAware extends Middleware
 {
     use ContainerAware;
 }

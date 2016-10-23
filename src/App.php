@@ -10,6 +10,7 @@
 namespace FastD;
 
 use FastD\Container\Container;
+use FastD\Event\EventDispatcher;
 use FastD\Http\ServerRequest;
 use FastD\Middleware\Stack;
 use FastD\Routing\RouteCollection;
@@ -193,6 +194,7 @@ class App
             'kernel.storage' => Storage::class,
             'kernel.debug' => Debug::enable($this->isDebug()),
             'kernel.stack' => Stack::class,
+            'kernel.event' => EventDispatcher::class,
         ]);
 
         $this->container->set('kernel.container', $this->container);
