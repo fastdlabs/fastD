@@ -24,7 +24,7 @@ use FastD\Database\Fdb;
  *
  * @package FastD\Standard\Controllers
  */
-class Controller
+abstract class Controller
 {
     use ContainerAware;
 
@@ -65,7 +65,7 @@ class Controller
     }
 
     /**
-     * @param       $connection
+     * @param $connection
      * @return StorageInterface|CacheInterface
      */
     public function getStorage($connection)
@@ -86,6 +86,11 @@ class Controller
     public function getParameters($name)
     {
         return $this->get('kernel.config')->get($name);
+    }
+
+    public function middleware($name)
+    {
+
     }
 
     /**

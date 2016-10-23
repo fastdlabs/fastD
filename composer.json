@@ -25,7 +25,7 @@
     "require": {
         "php": ">=5.6",
         "fastd/console": "~2.0.0",
-        "fastd/debug": "~2.0.0",
+        "fastd/debug": "3.0.x-dev",
         "fastd/database": "3.0.x-dev",
         "fastd/storage": "2.1.x-dev",
         "fastd/container": "3.0.x-dev",
@@ -34,6 +34,7 @@
         "fastd/routing": "3.0.x-dev",
         "fastd/annotation": "2.0.x-dev",
         "fastd/event": "1.0.x-dev",
+        "fastd/middleware": "1.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
         "fastd/session": "1.0.x-dev",
         "twig/twig": "~1.0"

@@ -7,11 +7,16 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Task;
+namespace FastD\Standard\Middleware;
 
 use FastD\Container\ContainerAware;
 
-abstract class TaskAware
+/**
+ * Class MiddlewareAware
+ *
+ * @package FastD\Standard\Middleware
+ */
+abstract class MiddlewareAware
 {
     use ContainerAware;
 }

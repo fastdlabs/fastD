@@ -11,6 +11,7 @@ namespace FastD;
 
 use FastD\Container\Container;
 use FastD\Http\ServerRequest;
+use FastD\Middleware\Stack;
 use FastD\Routing\RouteCollection;
 use FastD\Standard\Bundle;
 use FastD\Storage\Storage;
@@ -191,6 +192,7 @@ class App
             'kernel.config' => Config::class,
             'kernel.storage' => Storage::class,
             'kernel.debug' => Debug::enable($this->isDebug()),
+            'kernel.stack' => Stack::class,
         ]);
 
         $this->container->set('kernel.container', $this->container);
