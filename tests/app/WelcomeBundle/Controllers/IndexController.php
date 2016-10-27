@@ -20,7 +20,7 @@ class IndexController extends Controller
      */
     public function welcomeAction()
     {
-        $result = $this->middleware(DemoMiddleware::class);
+//        $result = $this->middleware(DemoMiddleware::class);
 
         return $this->responseHtml('hello world');
     }
