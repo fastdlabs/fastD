@@ -12,6 +12,7 @@ namespace FastD\Standard\Controllers;
 use FastD\Container\ContainerAware;
 use FastD\Database\Drivers\DriverInterface;
 use FastD\Database\Cache\CacheInterface;
+use FastD\Packet\Binary;
 use FastD\Storage\StorageInterface;
 use FastD\Http\RedirectResponse;
 use FastD\Http\JsonResponse;
@@ -95,7 +96,7 @@ abstract class Controller
      */
     public function middleware($name, array $arguments = [])
     {
-        return $this->get('kernel.stack')->run(null, $arguments);
+        return $this->get('kernel.stack')->run($name, $arguments);
     }
 
     /**
@@ -147,7 +148,7 @@ abstract class Controller
     }
 
     /**
-     * @param       $name
+     * @param $name
      * @param array $parameters
      * @return  Response
      */
@@ -230,6 +231,6 @@ abstract class Controller
      */
     public function responseBinary(array $data, $status)
     {
-
+        return $this->responseHtml(Binary::encode($data), $status);
     }
 }

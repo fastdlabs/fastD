@@ -7,12 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Server;
+namespace FastD\Standard\Events;
 
 use FastD\Container\ContainerAware;
-use FastD\Swoole\Server;
 
-class ServerAware extends Server
+class EventAware
 {
     use ContainerAware;
 }

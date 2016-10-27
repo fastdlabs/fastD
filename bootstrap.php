@@ -8,6 +8,9 @@
  * @link      http://www.fast-d.cn/
  */
 
+/**
+ * 应用引导文件
+ */
 return [
     /**
      * App 需要注册的业务应用组件

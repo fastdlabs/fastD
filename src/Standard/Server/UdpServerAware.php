@@ -9,10 +9,7 @@
 
 namespace FastD\Standard\Server;
 
-use FastD\Container\ContainerAware;
-use FastD\Swoole\Server;
-
-class ServerAware extends Server
+class UdpServerAware
 {
-    use ContainerAware;
+
 }
