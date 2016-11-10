@@ -30,7 +30,7 @@
         "fastd/storage": "2.1.x-dev",
         "fastd/container": "3.0.x-dev",
         "fastd/http": "3.0.x-dev",
-        "fastd/config": "~3.0.0@beta",
+        "fastd/config": "3.0.x-dev",
         "fastd/routing": "3.0.x-dev",
         "fastd/annotation": "2.0.x-dev",
         "fastd/event": "1.0.x-dev",

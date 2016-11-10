@@ -2,15 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/fastd/fastd/v/stable)](https://packagist.org/packages/fastd/fastd) [![Total Downloads](https://poser.pugx.org/fastd/fastd/downloads)](https://packagist.org/packages/fastd/fastd) [![Latest Unstable Version](https://poser.pugx.org/fastd/fastd/v/unstable)](https://packagist.org/packages/fastd/fastd) [![License](https://poser.pugx.org/fastd/fastd/license)](https://packagist.org/packages/fastd/fastd)
 
-FastD 是一个开源，面向对象的开发框架，灵活的开发模式，而且入门门槛不高，适合初中高不同阶段的开发者和乐于学习的 PHP 开发者。
-
-里程碑:
-
-* 1.x (初稿版本发布, 流程设计等)
-* 2.0 (修复 1.x 错误的设计)
-* 3.0 (简化并修改 2.0 的设计及组件, 内置 Swoole 扩展, 简化引导配置)
-
-## 环境要求
+### 环境要求
 
 FastD 对运行环境是有一定要求的，在安装框架前需要确认一下扩展正常运行:
 
@@ -18,17 +10,17 @@ FastD 对运行环境是有一定要求的，在安装框架前需要确认一�
 * ext-curl
 * ext-pdo
 
-### ＃Composer
+#### Composer
 
 ```
 composer create-project "fastd/fastd.standard:3.0.x-dev" fastd
 ```
 
-## 文档
+#### 文档
 
-[中文文档](docs/readme.md)
+* [中文文档](docs/readme.md)
 
-##### ＃环境配置
+#### Swoole Http Server
 
 保证目录在当前进程的读写权限，特别是 `storage` 的读写权限，因为此目录是用于数据缓存读写的。
 
@@ -49,7 +41,7 @@ server {
 }
 ```
 
-##### ＃Nginx
+#### Nginx Server
 
 ```
 server
@@ -70,11 +62,8 @@ server
       include       fastcgi_params;
       fastcgi_param PATH_INFO $fastcgi_path_info;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      fastcgi_param HTTPS              off;
   }
 }
 ```
-
-注意 `{}` 里面使用与配置你该有的域名及入口文件的，请对应修改自己服务器的配置。
 
 # License MIT

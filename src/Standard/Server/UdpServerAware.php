@@ -9,7 +9,7 @@
 
 namespace FastD\Standard\Server;
 
-class UdpServerAware
+abstract class UdpServerAware extends ServerAware
 {
 
 }
