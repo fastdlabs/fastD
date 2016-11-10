@@ -26,7 +26,7 @@ return [
     /**
      * App 运行环境
      */
-    'env' => 'dev',
+    'env' => 'prod',
 
     /**
      * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
@@ -48,5 +48,7 @@ return [
     /**
      * Swoole Server 配置信息。
      */
-    'server' => [],
+    'server' => [
+        'listen' => 'http://0.0.0.0:9527',
+    ],
 ];

@@ -11,7 +11,7 @@ namespace FastD;
 
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
-use FastD\Swoole\Http\HttpServer;
+use FastD\Swoole\Server\Http;
 use swoole_http_request;
 use swoole_http_response;
 
@@ -20,12 +20,17 @@ use swoole_http_response;
  *
  * @package FastD
  */
-class Server extends HttpServer
+class Server extends Http
 {
     /**
      * @var App
      */
     protected $app;
+
+    /**
+     * @var array
+     */
+    protected $config = [];
 
     /**
      * AppServer constructor.
@@ -36,7 +41,9 @@ class Server extends HttpServer
     {
         $this->app = $app;
 
-        parent::__construct($app->getContainer()->singleton('kernel.config')->get('server'));
+        $this->config = $app->getContainer()->singleton('kernel.config')->get('server');
+
+        parent::__construct($this->config['listen'], $this->config);
     }
 
     /**
