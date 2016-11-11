@@ -10,7 +10,7 @@
 
 namespace WelcomeBundle;
 
-use FastD\Standard\Bundle;
+use FastD\Bundle\Bundle;
 
 class WelcomeBundle extends Bundle
 {

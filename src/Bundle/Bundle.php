@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard;
+namespace FastD\Bundle;
 
 use FastD\Annotation\Annotation;
 use FastD\Container\ContainerAware;
@@ -110,9 +110,9 @@ abstract class Bundle
     {
         $routing = $this->container->singleton('kernel.routing');
 
-        $namespace = $this->getNamespace() . '\\Controllers\\';
+        $namespace = $this->getNamespace() . '\\Controller\\';
 
-        if (false !== ($files = glob($this->getDir() . '/Controllers/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
+        if (false !== ($files = glob($this->getDir() . '/Controller/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $className = $namespace . pathinfo($file, PATHINFO_FILENAME);
                 if (class_exists($className)) {

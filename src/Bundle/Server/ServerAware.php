@@ -7,17 +7,17 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Middleware;
+namespace FastD\Bundle\Server;
 
 use FastD\Container\ContainerAware;
-use FastD\Middleware\Middleware;
+use FastD\Swoole\Server;
 
 /**
- * Class MiddlewareAware
+ * Class ServerAware
  *
- * @package FastD\Standard\Middleware
+ * @package FastD\Bundle\Server
  */
-abstract class MiddlewareAware extends Middleware
+abstract class ServerAware extends Server
 {
     use ContainerAware;
 }

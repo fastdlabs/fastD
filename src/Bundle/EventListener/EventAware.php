@@ -7,9 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Server;
+namespace FastD\Bundle\Events;
 
-abstract class TcpServerAware extends ServerAware
+use FastD\Container\ContainerAware;
+
+class EventAware
 {
-
+    use ContainerAware;
 }

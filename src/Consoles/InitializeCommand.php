@@ -9,11 +9,11 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
-use FastD\Standard\Commands\CommandAware;
 
-class InitializeCommand extends CommandAware
+class InitializeCommand extends ConsoleAware
 {
     /**
      * @return string

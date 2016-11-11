@@ -7,11 +7,17 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Events;
+namespace FastD\Bundle\Middleware;
 
 use FastD\Container\ContainerAware;
+use FastD\Middleware\Middleware;
 
-class EventAware
+/**
+ * Class MiddlewareAware
+ *
+ * @package FastD\Standard\Middleware
+ */
+abstract class MiddlewareAware extends Middleware
 {
     use ContainerAware;
 }

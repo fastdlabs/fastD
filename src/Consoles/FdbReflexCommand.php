@@ -9,18 +9,18 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
 use FastD\Database\Schema\SchemaParser;
 use FastD\Database\Schema\Structure\Rename;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class OrmRevertCommand
  *
  * @package FastD\Framework\Bundle\Commands
  */
-class FdbReflexCommand extends CommandAware
+class FdbReflexCommand extends ConsoleAware
 {
     use Rename;
 

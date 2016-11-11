@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Commands;
+namespace FastD\Bundle\Console;
 
 use FastD\Console\Command\Command;
 use FastD\Container\Container;
@@ -18,7 +18,7 @@ use FastD\Container\ContainerAware;
  *
  * @package FastD\Standard\Commands
  */
-abstract class CommandAware extends Command
+abstract class ConsoleAware extends Command
 {
     use ContainerAware;
 

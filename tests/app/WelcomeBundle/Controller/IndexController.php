@@ -8,10 +8,9 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace WelcomeBundle\Controllers;
+namespace WelcomeBundle\Controller;
 
-use FastD\Standard\Controllers\Controller;
-use WelcomeBundle\Middleware\DemoMiddleware;
+use FastD\Bundle\Controller\Controller;
 
 class IndexController extends Controller
 {
@@ -20,8 +19,6 @@ class IndexController extends Controller
      */
     public function welcomeAction()
     {
-//        $result = $this->middleware(DemoMiddleware::class);
-
         return $this->responseHtml('hello world');
     }
 

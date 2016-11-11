@@ -9,16 +9,16 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class Generator
  *
  * @package FastD\Framework\Commands
  */
-class BundleGeneratorCommand extends CommandAware
+class BundleGeneratorCommand extends ConsoleAware
 {
     /**
      * @return string

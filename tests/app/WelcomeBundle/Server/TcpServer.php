@@ -9,7 +9,7 @@
 
 namespace WelcomeBundle\Server;
 
-use FastD\Standard\Server\ServerAware;
+use FastD\Bundle\Server\ServerAware;
 use swoole_server;
 
 class TcpServer extends ServerAware

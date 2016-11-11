@@ -9,8 +9,8 @@
 
 namespace WelcomeBundle\Middleware;
 
+use FastD\Bundle\Middleware\MiddlewareAware;
 use FastD\Middleware\MiddlewareInterface;
-use FastD\Standard\Middleware\MiddlewareAware;
 
 class DemoMiddleware extends MiddlewareAware
 {

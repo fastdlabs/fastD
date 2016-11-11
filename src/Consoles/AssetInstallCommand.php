@@ -6,19 +6,20 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
+
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Input\InputArgument;
 use FastD\Console\Output\Output;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class AssetInstall
  *
  * @package FastD\Framework\Commands
  */
-class AssetInstallCommand extends CommandAware
+class AssetInstallCommand extends ConsoleAware
 {
     /**
      * @return string

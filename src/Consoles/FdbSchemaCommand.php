@@ -9,19 +9,19 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
 use FastD\Database\Fixtures\FixtureInterface;
 use FastD\Database\Fixtures\FixtureLoader;
 use Symfony\Component\Finder\Finder;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class OrmUpdateCommand
  *
  * @package FastD\Framework\Bundle\Commands
  */
-class FdbSchemaCommand extends CommandAware
+class FdbSchemaCommand extends ConsoleAware
 {
     /**
      * @return string

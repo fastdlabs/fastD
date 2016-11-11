@@ -14,7 +14,7 @@ use FastD\Event\EventDispatcher;
 use FastD\Http\ServerRequest;
 use FastD\Middleware\Stack;
 use FastD\Routing\RouteCollection;
-use FastD\Standard\Bundle;
+use FastD\Bundle\Bundle;
 use FastD\Storage\Storage;
 use FastD\Http\Response;
 use FastD\Config\Config;

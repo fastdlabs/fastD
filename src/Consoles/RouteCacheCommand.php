@@ -9,16 +9,16 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Output\Output;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class RouteCacheCommand
  *
  * @package FastD\Framework\Bundle\Commands
  */
-class RouteCacheCommand extends CommandAware
+class RouteCacheCommand extends ConsoleAware
 {
     const CACHE_NAME = 'routes.cache';
 

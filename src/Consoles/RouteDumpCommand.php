@@ -9,19 +9,19 @@
 
 namespace FastD\Commands;
 
+use FastD\Bundle\Console\ConsoleAware;
 use FastD\Console\Input\Input;
 use FastD\Console\Input\InputOption;
 use FastD\Console\Output\Output;
 use FastD\Routing\Route;
 use FastD\Routing\RouteCollection;
-use FastD\Standard\Commands\CommandAware;
 
 /**
  * Class RouteDump
  *
  * @package FastD\Framework\Commands
  */
-class RouteDumpCommand extends CommandAware
+class RouteDumpCommand extends ConsoleAware
 {
     const STYLE_LIST = 1;
     const STYLE_DETAIL = 2;

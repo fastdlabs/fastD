@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Standard\Controllers;
+namespace FastD\Bundle\Controller;
 
 use FastD\Container\ContainerAware;
 use FastD\Database\Drivers\DriverInterface;
