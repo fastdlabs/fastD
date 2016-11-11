@@ -205,8 +205,12 @@ class App
      * @param ServerRequest $serverRequest
      * @return Response
      */
-    public function handleHttpRequest(ServerRequest $serverRequest)
+    public function handleHttpRequest(ServerRequest $serverRequest = null)
     {
+        if (null === $serverRequest) {
+            $serverRequest = ServerRequest::createFromGlobals();
+        }
+
         $this->container->set('kernel.request', $serverRequest);
 
         $route = $this->getContainer()->singleton('kernel.routing')->match($serverRequest->getMethod(), $serverRequest->server->getPathInfo());

@@ -24,10 +24,10 @@
     },
     "require": {
         "php": ">=5.6",
-        "fastd/console": "~2.0.0",
-        "fastd/debug": "~2.0.0",
+        "fastd/console": "3.0.x-dev",
+        "fastd/debug": "3.0.x-dev",
         "fastd/database": "3.0.x-dev",
-        "fastd/storage": "2.1.x-dev",
+        "fastd/storage": "3.0.x-dev",
         "fastd/container": "3.0.x-dev",
         "fastd/http": "3.0.x-dev",
         "fastd/config": "3.0.x-dev",

@@ -1,5 +1,4 @@
 /vendor
 /.idea
-/web
 /run
 composer.lock

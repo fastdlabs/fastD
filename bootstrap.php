@@ -26,7 +26,7 @@ return [
     /**
      * App 运行环境
      */
-    'env' => 'prod',
+    'env' => 'env.ENV',
 
     /**
      * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
@@ -36,7 +36,7 @@ return [
     /**
      * 入口目录
      */
-    'web.path' => __DIR__ . '/web',
+    'web.path' => __DIR__,
 
     /**
      * 项目公共配置
