@@ -9,7 +9,7 @@
 * ext-pdo
 * [ext-swoole]
 
-#### Composer
+#### Installation
 
 ```
 composer create-project "fastd/fastd:3.0.x-dev" fastd
