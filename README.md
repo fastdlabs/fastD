@@ -17,10 +17,6 @@ composer create-project "fastd/fastd:3.0.x-dev" fastd
 
 #### Swoole Http Server
 
-保证目录在当前进程的读写权限，特别是 `storage` 的读写权限，因为此目录是用于数据缓存读写的。
-
-**推荐使用 Nginx 进行代理, Swoole 代替fpm**
-
 ```
 server {
     listen     80;
@@ -31,7 +27,7 @@ server {
         try_files $uri /$uri @rewriteapp;
     }
     location @rewriteapp {
-        proxy_pass http://127.0.0.1:9527;
+        proxy_pass http://127.0.0.1:9527; # Swoole Server Listen
     }
 }
 ```
