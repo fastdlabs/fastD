@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -8,11 +7,6 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace WelcomeBundle;
+$app = app();
 
-use FastD\Bundle\Bundle;
 
-class WelcomeBundle extends Bundle
-{
-
-}

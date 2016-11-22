@@ -13,30 +13,24 @@
  */
 return [
     /**
-     * App 需要注册的业务应用组件
-     *
-     * 需要实例化组件引导对象。 如: new WelcomeBundle
-     *
-     * Bundle 引导文件主要声明, 声明路径, 控制器, 独立配置等信息路径
-     */
-    'bundles' => [
-        new \WelcomeBundle\WelcomeBundle(),
-    ],
-
-    /**
      * App 运行环境
      */
-    'env' => 'dev',
+    'env' => 'prod',
 
     /**
-     * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
+     * 应用目录, 程序运行后, 会根据 root.path 加载对应的文件
      */
-    'src.path' => __DIR__ . '/tests/app',
+    'app.path' => __DIR__ . '/tests/app',
 
     /**
      * 入口目录
      */
     'web.path' => __DIR__,
+
+    /**
+     * 路由配置
+     */
+    'route' => __DIR__ . '/route/routes.php',
 
     /**
      * 项目公共配置
