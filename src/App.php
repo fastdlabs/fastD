@@ -61,13 +61,31 @@ class App
     protected $container;
 
     /**
+     * @var static
+     */
+    protected static $app;
+
+    /**
      * App constructor.
      *
      * @param array $bootstrap
      */
-    public function __construct(array $bootstrap)
+    public function __construct(array $bootstrap = [])
     {
         $this->bootstrap($bootstrap);
+    }
+
+    /**
+     * @param array $bootstrap
+     * @return App
+     */
+    public static function app(array $bootstrap = [])
+    {
+        if (null === static::$app) {
+            static::$app = new static($bootstrap);
+        }
+
+        return static::$app;
     }
 
     /**

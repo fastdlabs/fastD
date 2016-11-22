@@ -10,7 +10,7 @@ use FastD\App;
 
 $loader = include __DIR__ . '/vendor/autoload.php';
 
-$app = new App(include __DIR__ . '/bootstrap.php');
+$app = app(include __DIR__ . '/bootstrap.php');
 
 $response = $app->handleHttpRequest();
 

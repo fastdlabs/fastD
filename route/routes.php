@@ -7,6 +7,4 @@
  * @link      http://www.fast-d.cn/
  */
 
-$app = app();
-
-
+route();

@@ -14,7 +14,10 @@
     "autoload": {
         "psr-4": {
             "FastD\\": "src"
-        }
+        },
+        "files": [
+            "functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

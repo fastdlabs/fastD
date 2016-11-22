@@ -36,7 +36,8 @@ return [
      * 项目公共配置
      */
     'config' => [
-
+        'database' => include __DIR__ . '/config/database.php',
+        'storage' => include __DIR__ . '/config/storage.php',
     ],
 
     /**
