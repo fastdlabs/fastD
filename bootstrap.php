@@ -26,7 +26,7 @@ return [
     /**
      * App 运行环境
      */
-    'env' => 'env.ENV',
+    'env' => 'dev',
 
     /**
      * 源码目录, 程序运行后, 会根据 root.path 加载对应的文件
