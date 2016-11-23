@@ -7,4 +7,6 @@
  * @link      http://www.fast-d.cn/
  */
 
-route();
+route('GET', '/', function () {
+    return new \FastD\Http\Response('hello /');
+});

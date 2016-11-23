@@ -173,7 +173,7 @@ class App
 
         $this->container->add('kernel.request', $serverRequest);
 
-        return new Response('hello world');
+        return $this->container->get('kernel.routing')->dispatch($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
     }
 
     /**

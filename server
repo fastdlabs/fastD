@@ -55,7 +55,7 @@ use FastD\Console\Input\ArgvInput;
 use FastD\Server;
 use FastD\App;
 
-$argvInput = new ArgvInput(null, new InputDefinition);
+$argvInput = new \FastD\Console\Input\Input(null, new InputDefinition);
 
 $env = $argvInput->hasOption(['env', 'e']) ? $argvInput->getOption(['env', 'e']) : 'dev';
 

@@ -56,11 +56,10 @@ foreach ([
 }
 
 use FastD\Console\Input\InputDefinition;
-use FastD\Console\Input\ArgvInput;
 use FastD\Console;
 use FastD\App;
 
-$argvInput = new ArgvInput(null, new InputDefinition);
+$argvInput = new Console\Input\Input(null, new InputDefinition);
 
 $env = $argvInput->hasOption(['env', 'e']) ? $argvInput->getOption(['env', 'e']) : 'dev';
 

@@ -16,8 +16,11 @@ function app (array $bootstrap = []) {
 }
 
 /**
+ * @param $method
+ * @param $path
+ * @param $callback
  * @return \FastD\Routing\Route
  */
-function route () {
+function route ($method, $path, $callback) {
     return app()->getContainer()->singleton('kernel.routing')->addRoute();
 }
