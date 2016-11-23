@@ -7,6 +7,10 @@
  * @link      http://www.fast-d.cn/
  */
 
-route('GET', '/', function () {
-    return new \FastD\Http\Response('hello /');
-});
+/**
+ * @param array $bootstrap
+ * @return \FastD\App
+ */
+function app (array $bootstrap = []) {
+    return \FastD\App::app($bootstrap);
+}

@@ -9,15 +9,16 @@
 
 namespace FastD\Bundle\Middleware;
 
-use FastD\Container\ContainerAware;
 use FastD\Middleware\Middleware;
 
-/**
- * Class MiddlewareAware
- *
- * @package FastD\Standard\Middleware
- */
-abstract class MiddlewareAware extends Middleware
+class Auth extends Middleware
 {
-    use ContainerAware;
+    /**
+     * @param array $arguments
+     * @return mixed
+     */
+    public function handle($arguments = [])
+    {
+        // TODO: Implement handle() method.
+    }
 }

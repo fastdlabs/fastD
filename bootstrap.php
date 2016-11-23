@@ -28,16 +28,10 @@ return [
     'web.path' => __DIR__,
 
     /**
-     * 路由配置
-     */
-    'route' => __DIR__ . '/route/routes.php',
-
-    /**
      * 项目公共配置
      */
     'config' => [
-        'database' => include __DIR__ . '/config/database.php',
-        'storage' => include __DIR__ . '/config/storage.php',
+
     ],
 
     /**

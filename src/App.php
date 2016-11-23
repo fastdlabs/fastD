@@ -12,9 +12,9 @@ namespace FastD;
 use FastD\Container\Container;
 use FastD\Http\ServerRequest;
 use FastD\Routing\RouteCollection;
-use FastD\Http\Response;
 use FastD\Config\Config;
 use FastD\Debug\Debug;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class App
@@ -28,7 +28,7 @@ class App
      *
      * @const string
      */
-    const VERSION = '3.0.x-dev';
+    const VERSION = '3.0.0 (dev)';
 
     /**
      * @var string
@@ -157,30 +157,36 @@ class App
             $this->container->add('kernel.config', new Config($bootstrap, $this->isDebug() ? null : $this->getWebPath()));
             $this->container->add('kernel.routing', new RouteCollection());
 
+            static::$app = $this;
+
             $this->booted = true;
+
+            include $this->appPath . '/route/routes.php';
         }
     }
 
     /**
-     * @param ServerRequest $serverRequest
-     * @return Response
+     * @param $prefix
+     * @param callable $callback
+     * @return void
      */
-    public function handleHttpRequest(ServerRequest $serverRequest = null)
+    public function route($prefix, callable $callback)
     {
-        if (null === $serverRequest) {
-            $serverRequest = ServerRequest::createFromGlobals();
-        }
+        $this->container->get('kernel.routing')->group($prefix, $callback);
+    }
+
+    /**
+     * @param ServerRequestInterface|null $serverRequest
+     * @return void
+     */
+    public function run(ServerRequestInterface $serverRequest = null)
+    {
+        $serverRequest = null === $serverRequest ? ServerRequest::createFromGlobals() : $serverRequest;
 
         $this->container->add('kernel.request', $serverRequest);
 
-        return $this->container->get('kernel.routing')->dispatch($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
-    }
+        $response = $this->container->get('kernel.routing')->dispatch($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
 
-    /**
-     * @return void
-     */
-    public function shutdown()
-    {
-        unset($this);
+        $response->send();
     }
 }
