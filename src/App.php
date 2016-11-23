@@ -10,9 +10,13 @@
 namespace FastD;
 
 use FastD\Container\Container;
+use FastD\Contract\AppKernel;
+use FastD\Contract\ServiceProviderInterface;
 use FastD\Http\ServerRequest;
+use FastD\Provider\ConfigurableServiceProvider;
+use FastD\Provider\EventServiceProvider;
+use FastD\Provider\RouteServiceProvider;
 use FastD\Routing\RouteCollection;
-use FastD\Config\Config;
 use FastD\Debug\Debug;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,7 +25,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @package FastD
  */
-class App
+class App extends AppKernel
 {
     /**
      * The FastD version.
@@ -56,16 +60,6 @@ class App
     protected $booted = false;
 
     /**
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * @var static
-     */
-    protected static $app;
-
-    /**
      * App constructor.
      *
      * @param array $bootstrap
@@ -73,19 +67,6 @@ class App
     public function __construct(array $bootstrap = [])
     {
         $this->bootstrap($bootstrap);
-    }
-
-    /**
-     * @param array $bootstrap
-     * @return App
-     */
-    public static function app(array $bootstrap = [])
-    {
-        if (null === static::$app) {
-            static::$app = new static($bootstrap);
-        }
-
-        return static::$app;
     }
 
     /**
@@ -129,14 +110,6 @@ class App
     }
 
     /**
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
      * @param $bootstrap
      * @return void
      */
@@ -152,27 +125,39 @@ class App
 
             $this->container = new Container();
 
+            $this->register(new ConfigurableServiceProvider());
+            $this->register(new EventServiceProvider());
+            $this->register(new RouteServiceProvider());
             $this->container->add('kernel', $this);
-            $this->container->add('kernel.container', $this->container);
-            $this->container->add('kernel.config', new Config($bootstrap, $this->isDebug() ? null : $this->getWebPath()));
-            $this->container->add('kernel.routing', new RouteCollection());
 
             static::$app = $this;
-
             $this->booted = true;
-
-            include $this->appPath . '/route/routes.php';
         }
+    }
+
+    /**
+     * @param ServiceProviderInterface $serviceProvider
+     * @return void
+     */
+    public function register(ServiceProviderInterface $serviceProvider)
+    {
+        $serviceProvider->register($this);
     }
 
     /**
      * @param $prefix
      * @param callable $callback
-     * @return void
+     * @return RouteCollection
      */
-    public function route($prefix, callable $callback)
+    public function route($prefix = null, callable $callback = null)
     {
-        $this->container->get('kernel.routing')->group($prefix, $callback);
+        $router = $this->container->get(RouteServiceProvider::SERVICE_NAME);
+
+        if (null === $prefix && null === $callback) {
+            return $router;
+        }
+
+        return $router->group($prefix, $callback);
     }
 
     /**
@@ -183,10 +168,6 @@ class App
     {
         $serverRequest = null === $serverRequest ? ServerRequest::createFromGlobals() : $serverRequest;
 
-        $this->container->add('kernel.request', $serverRequest);
-
-        $response = $this->container->get('kernel.routing')->dispatch($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
-
-        $response->send();
+        $this->container->get(EventServiceProvider::SERVICE_NAME)->trigger('request', [$this, $serverRequest]);
     }
 }

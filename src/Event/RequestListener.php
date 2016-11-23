@@ -9,6 +9,8 @@
 
 namespace FastD\Event;
 
+use FastD\Http\Response;
+
 class RequestListener extends EventListener
 {
     /**
@@ -20,6 +22,7 @@ class RequestListener extends EventListener
      */
     public function handle(EventInterface $event, array $arguments = [])
     {
-
+        (new Response('hello'))->send();
+//        return $arguments[0]->get('kernel.routing')->dispatch();
     }
 }

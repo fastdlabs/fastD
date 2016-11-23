@@ -28,13 +28,6 @@ return [
     'web.path' => __DIR__,
 
     /**
-     * 项目公共配置
-     */
-    'config' => [
-
-    ],
-
-    /**
      * Swoole Server 配置信息。
      */
     'server' => [

@@ -6,8 +6,14 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-$loader = include __DIR__ . '/vendor/autoload.php';
 
-$app = new \FastD\App(include __DIR__ . '/bootstrap.php');
+namespace FastD\Contract;
 
-$app->run();
+use FastD\App;
+
+interface ServiceProviderInterface
+{
+    public function register(App $app);
+
+    public function getName();
+}

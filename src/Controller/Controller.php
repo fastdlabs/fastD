@@ -23,7 +23,7 @@ use FastD\Database\Fdb;
 /**
  * Class Controller
  *
- * @package FastD\Standard\Controllers
+ * @package FastD\Controller
  */
 abstract class Controller
 {

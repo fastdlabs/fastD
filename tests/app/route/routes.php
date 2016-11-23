@@ -7,8 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-app()->route('/a', function (\FastD\Routing\RouteCollection $routeCollection) {
-    $routeCollection->get('/', function () {
-        return new \FastD\Http\Response('hello world! FastD');
-    });
+app()->route()->get('/', function () {
+    return new \FastD\Http\Response('hello FastD');
 });
+
+app()->route()->get('/hello/[{name}]', function ($name) {
+    return new \FastD\Http\Response('hello ' . $name . ' !');
+}, ['name' => 'FastD']);
+

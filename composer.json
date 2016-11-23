@@ -16,7 +16,7 @@
             "FastD\\": "src"
         },
         "files": [
-            "helpers.php"
+            "src/Support/helpers.php"
         ]
     },
     "autoload-dev": {
