@@ -40,16 +40,6 @@ class App extends AppKernel
     protected $environment;
 
     /**
-     * @var string
-     */
-    protected $appPath;
-
-    /**
-     * @var string
-     */
-    protected $webPath;
-
-    /**
      * @var bool
      */
     protected $debug;
@@ -58,16 +48,6 @@ class App extends AppKernel
      * @var bool
      */
     protected $booted = false;
-
-    /**
-     * App constructor.
-     *
-     * @param array $bootstrap
-     */
-    public function __construct(array $bootstrap = [])
-    {
-        $this->bootstrap($bootstrap);
-    }
 
     /**
      * @return bool
@@ -102,24 +82,13 @@ class App extends AppKernel
     }
 
     /**
-     * @return string
-     */
-    public function getWebPath()
-    {
-        return $this->webPath;
-    }
-
-    /**
-     * @param $bootstrap
      * @return void
      */
-    public function bootstrap(array $bootstrap = [])
+    public function bootstrap()
     {
         if (!$this->booted) {
-            $this->appPath = $bootstrap['app.path'];
-            $this->webPath = $bootstrap['web.path'];
-            $this->environment = isset($bootstrap['env']) ? $bootstrap['env'] : 'dev';
-            $this->debug = in_array($this->environment, ['dev', 'test']) ? true : false;
+            $this->environment = getenv('ENV') ? getenv('ENV') : 'dev';
+            $this->debug = $this->environment === 'prod' ? false : true;
 
             Debug::enable($this->isDebug());
 

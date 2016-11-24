@@ -7,9 +7,6 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Event;
-
-class BootstrapListener
-{
-
-}
+return [
+    'listen' => 'http://0.0.0.0:9527',
+];

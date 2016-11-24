@@ -6,8 +6,10 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
+use FastD\App;
+
 $loader = include __DIR__ . '/vendor/autoload.php';
 
-$app = new \FastD\App(include __DIR__ . '/bootstrap.php');
+$app = new App(__DIR__ . '/tests/app');
 
 $app->run();

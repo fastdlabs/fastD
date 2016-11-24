@@ -8,9 +8,8 @@
  */
 
 /**
- * @param array $bootstrap
  * @return \FastD\App
  */
-function app (array $bootstrap = []) {
-    return \FastD\App::app($bootstrap);
+function app () {
+    return \FastD\App::$app;
 }

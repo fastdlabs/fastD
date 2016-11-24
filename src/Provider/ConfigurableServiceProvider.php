@@ -19,7 +19,9 @@ class ConfigurableServiceProvider implements ServiceProviderInterface
 
     public function register(App $app)
     {
-        $app->getContainer()->add($this->getName(), new Config());
+        $config = new Config();
+
+        $app->getContainer()->add($this->getName(), $config);
     }
 
     public function getName()

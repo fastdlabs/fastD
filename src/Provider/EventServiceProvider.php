@@ -12,6 +12,7 @@ namespace FastD\Provider;
 use FastD\App;
 use FastD\Contract\ServiceProviderInterface;
 use FastD\Event\EventDispatcher;
+use FastD\Event\RequestListener;
 
 class EventServiceProvider implements ServiceProviderInterface
 {
@@ -21,9 +22,7 @@ class EventServiceProvider implements ServiceProviderInterface
     {
         $dispatch = new EventDispatcher();
 
-        $dispatch->on('request', function () {
-            echo 'hello world';
-        });
+        $dispatch->on('request', new RequestListener());
 
         $app->getContainer()->add($this->getName(), $dispatch);
     }

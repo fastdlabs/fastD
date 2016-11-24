@@ -20,6 +20,11 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class AppKernel
 {
     /**
+     * @var string
+     */
+    protected $appPath;
+
+    /**
      * @var Container
      */
     protected $container;
@@ -27,20 +32,18 @@ abstract class AppKernel
     /**
      * @var static
      */
-    protected static $app;
+    public static $app;
 
     /**
-     * @param array $bootstrap
-     * @return static
+     * AppKernel constructor.
+     *
+     * @param $appPath
      */
-    public static function app(array $bootstrap = [])
+    public function __construct($appPath)
     {
-        if (null === static::$app) {
-            static::$app = new static();
-            static::$app->bootstrap($bootstrap);
-        }
+        $this->appPath = $appPath;
 
-        return static::$app;
+        $this->bootstrap();
     }
 
     /**
@@ -52,10 +55,9 @@ abstract class AppKernel
     }
 
     /**
-     * @param array $bootstrap
      * @return mixed
      */
-    abstract public function bootstrap(array $bootstrap);
+    abstract public function bootstrap();
 
     /**
      * @param ServerRequestInterface $serverRequest
