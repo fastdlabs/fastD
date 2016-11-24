@@ -67,4 +67,4 @@ $bootstrap['env'] = $env;
 
 $console = new Console(new App($bootstrap));
 
-$console->run($argvInput);
+$console->run();

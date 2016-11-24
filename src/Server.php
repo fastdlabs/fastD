@@ -11,6 +11,7 @@ namespace FastD;
 
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
+use FastD\Provider\SwooleServiceProvider;
 use FastD\Swoole\Server\Http;
 use swoole_http_request;
 use swoole_http_response;
@@ -41,7 +42,7 @@ class Server extends Http
     {
         $this->app = $app;
 
-        $this->config = $app->getContainer()->singleton('kernel.config')->get('server');
+        $app->register(new SwooleServiceProvider());
 
         parent::__construct($this->config['listen'], $this->config);
     }
@@ -60,7 +61,7 @@ class Server extends Http
      */
     public function doRequest(SwooleServerRequest $serverRequest)
     {
-        $response = $this->app->handleHttpRequest($serverRequest);
+        $response = $this->app->run($serverRequest);
 
         return $response;
     }

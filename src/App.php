@@ -10,13 +10,10 @@
 namespace FastD;
 
 use FastD\Container\Container;
-use FastD\Contract\AppKernel;
 use FastD\Contract\ServiceProviderInterface;
 use FastD\Http\ServerRequest;
-use FastD\Provider\ConfigurableServiceProvider;
 use FastD\Provider\EventServiceProvider;
 use FastD\Provider\RouteServiceProvider;
-use FastD\Provider\StoreServiceProvider;
 use FastD\Routing\RouteCollection;
 use FastD\Debug\Debug;
 use Psr\Http\Message\ServerRequestInterface;
@@ -26,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @package FastD
  */
-class App extends AppKernel
+class App
 {
     /**
      * The FastD version.
@@ -34,6 +31,21 @@ class App extends AppKernel
      * @const string
      */
     const VERSION = '3.0.0 (dev)';
+
+    /**
+     * @var string
+     */
+    protected $appPath;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * @var static
+     */
+    public static $app;
 
     /**
      * @var string
@@ -49,6 +61,18 @@ class App extends AppKernel
      * @var bool
      */
     protected $booted = false;
+
+    /**
+     * AppKernel constructor.
+     *
+     * @param $appPath
+     */
+    public function __construct($appPath)
+    {
+        $this->appPath = $appPath;
+
+        $this->bootstrap();
+    }
 
     /**
      * @return bool
@@ -83,11 +107,20 @@ class App extends AppKernel
     }
 
     /**
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * @return void
      */
     public function bootstrap()
     {
         if (!$this->booted) {
+            static::$app = $this;
             $this->environment = getenv('ENV') ? getenv('ENV') : 'dev';
             $this->debug = $this->environment === 'prod' ? false : true;
 
@@ -96,13 +129,11 @@ class App extends AppKernel
             $this->container = new Container();
             $this->container->add('kernel', $this);
 
-            $this->register(new ConfigurableServiceProvider());
-            $this->register(new RouteServiceProvider());
             $this->register(new EventServiceProvider());
-            $this->register(new StoreServiceProvider());
 
-            static::$app = $this;
             $this->booted = true;
+
+            $this->container->get(EventServiceProvider::SERVICE_NAME)->trigger('bootstrap');
         }
     }
 
@@ -113,6 +144,16 @@ class App extends AppKernel
     public function register(ServiceProviderInterface $serviceProvider)
     {
         $serviceProvider->register($this);
+    }
+
+    /**
+     * Enable debug mode.
+     *
+     * @return void
+     */
+    public function enableDebug()
+    {
+        $this->debug = true;
     }
 
     /**

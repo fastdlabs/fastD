@@ -10,24 +10,19 @@
 namespace FastD\Provider;
 
 use FastD\App;
-use FastD\Config\Config;
 use FastD\Contract\ServiceProviderInterface;
 
-class ConfigurableServiceProvider implements ServiceProviderInterface
+class SwooleServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'config';
+    const SERVER_NAME = 'swoole';
 
     public function register(App $app)
     {
-        $config = new Config();
-
-        $config->load($app->getAppPath() . '/config/app.php');
-
-        $app->getContainer()->add($this->getName(), $config);
+        // TODO: Implement register() method.
     }
 
     public function getName()
     {
-        return static::SERVICE_NAME;
+        return static::SERVER_NAME;
     }
 }

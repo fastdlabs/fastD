@@ -13,3 +13,11 @@
 function app () {
     return \FastD\App::$app;
 }
+
+function response () {
+
+}
+
+function event() {
+
+}
