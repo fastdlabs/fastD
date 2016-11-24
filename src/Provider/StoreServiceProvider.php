@@ -10,18 +10,15 @@
 namespace FastD\Provider;
 
 use FastD\App;
-use FastD\Config\Config;
 use FastD\Contract\ServiceProviderInterface;
 
-class ConfigurableServiceProvider implements ServiceProviderInterface
+class StoreServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'config';
+    const SERVICE_NAME = 'store';
 
     public function register(App $app)
     {
-        $config = new Config();
-
-        $app->getContainer()->add($this->getName(), $config);
+        // TODO: Implement register() method.
     }
 
     public function getName()

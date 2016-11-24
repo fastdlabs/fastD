@@ -16,6 +16,7 @@ use FastD\Http\ServerRequest;
 use FastD\Provider\ConfigurableServiceProvider;
 use FastD\Provider\EventServiceProvider;
 use FastD\Provider\RouteServiceProvider;
+use FastD\Provider\StoreServiceProvider;
 use FastD\Routing\RouteCollection;
 use FastD\Debug\Debug;
 use Psr\Http\Message\ServerRequestInterface;
@@ -93,11 +94,12 @@ class App extends AppKernel
             Debug::enable($this->isDebug());
 
             $this->container = new Container();
+            $this->container->add('kernel', $this);
 
             $this->register(new ConfigurableServiceProvider());
-            $this->register(new EventServiceProvider());
             $this->register(new RouteServiceProvider());
-            $this->container->add('kernel', $this);
+            $this->register(new EventServiceProvider());
+            $this->register(new StoreServiceProvider());
 
             static::$app = $this;
             $this->booted = true;

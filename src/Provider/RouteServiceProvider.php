@@ -15,7 +15,7 @@ use FastD\Routing\RouteCollection;
 
 class RouteServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'kernel.routing';
+    const SERVICE_NAME = 'routing';
 
     public function register(App $app)
     {

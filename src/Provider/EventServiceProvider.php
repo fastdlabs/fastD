@@ -16,7 +16,7 @@ use FastD\Event\RequestListener;
 
 class EventServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'kernel.event';
+    const SERVICE_NAME = 'event';
 
     public function register(App $app)
     {
