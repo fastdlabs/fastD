@@ -7,10 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-use FastD\App;
+namespace Exceptions;
 
-$loader = include __DIR__ . '/vendor/autoload.php';
+use FastD\Exceptions\AppException;
 
-$app = new App(__DIR__ . '/tests/app');
+class RouteCallbackException extends AppException
+{
 
-$app->run();
+}

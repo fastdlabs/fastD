@@ -8,9 +8,9 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace WelcomeBundle\Controller;
+namespace Welcome\Controller;
 
-use FastD\Bundle\Controller\Controller;
+use FastD\Controller\Controller;
 
 class IndexController extends Controller
 {

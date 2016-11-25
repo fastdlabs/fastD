@@ -22,7 +22,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests",
-            "": "tests/app"
+            "": "tests/app/src"
         }
     },
     "require": {

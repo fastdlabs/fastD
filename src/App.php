@@ -14,7 +14,6 @@ use FastD\Http\ServerRequest;
 use FastD\Provider\EventServiceProvider;
 use FastD\Provider\RouteServiceProvider;
 use FastD\Routing\RouteCollection;
-use FastD\Debug\Debug;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -120,11 +119,7 @@ class App extends Container
     {
         if (!$this->booted) {
             static::$app = $this;
-
-            Debug::enable($this->isDebug());
-
-            $this->container = new Container();
-            $this->container->add('kernel', $this);
+            $this['kernel'] = $this;
 
             $this->register(new EventServiceProvider());
 

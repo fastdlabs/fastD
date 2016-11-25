@@ -8,5 +8,5 @@
  */
 
 return [
-    'env' => 'dev'
+    'env' => 'prod'
 ];

@@ -9,7 +9,7 @@
 
 namespace FastD\Controller;
 
-use FastD\Container\ContainerAware;
+use FastD\Container\Support\ContainerAware;
 use FastD\Database\Drivers\DriverInterface;
 use FastD\Database\Cache\CacheInterface;
 use FastD\Packet\Binary;

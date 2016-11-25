@@ -20,7 +20,7 @@ class DemoMiddleware extends MiddlewareAware
      * @param MiddlewareInterface $next
      * @return mixed
      */
-    public function handle($arguments = [])
+    public function handle($arguments = [], \Closure $next)
     {
         // TODO: Implement handle() method.
     }
