@@ -9,17 +9,17 @@
 
 namespace FastD\Event;
 
-class BootstrapListener extends EventListener
-{
-    /**
-     * Handle event trigger
-     *
-     * @param EventInterface $event
-     * @param array $arguments
-     * @return mixed
-     */
-    public function handle(EventInterface $event, array $arguments = [])
-    {
+use FastD\App;
+use FastD\Provider\ConfigurableServiceProvider;
+use FastD\Provider\RouteServiceProvider;
+use FastD\Provider\StoreServiceProvider;
 
+class BootstrapListener
+{
+    public static function handle(App $app)
+    {
+        $app->register(new ConfigurableServiceProvider());
+        $app->register(new RouteServiceProvider());
+        $app->register(new StoreServiceProvider());
     }
 }

@@ -9,21 +9,27 @@
 
 namespace FastD\Provider;
 
-use FastD\App;
 use FastD\Config\Config;
-use FastD\Contract\ServiceProviderInterface;
+use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 
 class ConfigurableServiceProvider implements ServiceProviderInterface
 {
     const SERVICE_NAME = 'config';
 
-    public function register(App $app)
+    public function register(Container $app)
     {
         $config = new Config();
 
         $config->load($app->getAppPath() . '/config/app.php');
 
-        $app->getContainer()->add($this->getName(), $config);
+        $env = $config->get('env', 'dev');
+
+        if ($env !== 'prod') {
+            $app->enableDebug();
+        }
+
+        $app->add($this->getName(), $config);
     }
 
     public function getName()

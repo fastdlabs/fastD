@@ -7,10 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-app()->route()->get('/', [IndexController::class, 'handle']);
-app()->route()->get('/', 'IndexController@handle');
+app()->route()->get('/', function () {
+    return response('hello');
+});
 
 app()->route()->get('/hello/[{name}]', function ($name) {
-    return new \FastD\Http\Response('hello ' . $name . ' !');
+    return response('hello ' . $name . ' !');
 }, ['name' => 'FastD']);
 

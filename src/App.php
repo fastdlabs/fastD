@@ -10,7 +10,6 @@
 namespace FastD;
 
 use FastD\Container\Container;
-use FastD\Contract\ServiceProviderInterface;
 use FastD\Http\ServerRequest;
 use FastD\Provider\EventServiceProvider;
 use FastD\Provider\RouteServiceProvider;
@@ -23,7 +22,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @package FastD
  */
-class App
+class App extends Container
 {
     /**
      * The FastD version.
@@ -121,8 +120,6 @@ class App
     {
         if (!$this->booted) {
             static::$app = $this;
-            $this->environment = getenv('ENV') ? getenv('ENV') : 'dev';
-            $this->debug = $this->environment === 'prod' ? false : true;
 
             Debug::enable($this->isDebug());
 
@@ -133,17 +130,8 @@ class App
 
             $this->booted = true;
 
-            $this->container->get(EventServiceProvider::SERVICE_NAME)->trigger('bootstrap');
+            $this[EventServiceProvider::SERVICE_NAME]->trigger('bootstrap', [$this]);
         }
-    }
-
-    /**
-     * @param ServiceProviderInterface $serviceProvider
-     * @return void
-     */
-    public function register(ServiceProviderInterface $serviceProvider)
-    {
-        $serviceProvider->register($this);
     }
 
     /**
@@ -163,13 +151,11 @@ class App
      */
     public function route($prefix = null, callable $callback = null)
     {
-        $router = $this->container->get(RouteServiceProvider::SERVICE_NAME);
-
         if (null === $prefix && null === $callback) {
-            return $router;
+            return $this[RouteServiceProvider::SERVICE_NAME];
         }
 
-        return $router->group($prefix, $callback);
+        return $this[RouteServiceProvider::SERVICE_NAME]->group($prefix, $callback);
     }
 
     /**
@@ -180,6 +166,6 @@ class App
     {
         $serverRequest = null === $serverRequest ? ServerRequest::createFromGlobals() : $serverRequest;
 
-        $this->container->get(EventServiceProvider::SERVICE_NAME)->trigger('request', [$this, $serverRequest]);
+        $this[EventServiceProvider::SERVICE_NAME]->trigger('request', [$this, $serverRequest]);
     }
 }

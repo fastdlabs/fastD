@@ -9,19 +9,19 @@
 
 namespace FastD\Provider;
 
-use FastD\App;
-use FastD\Contract\ServiceProviderInterface;
+use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 use FastD\Routing\RouteCollection;
 
 class RouteServiceProvider implements ServiceProviderInterface
 {
     const SERVICE_NAME = 'routing';
 
-    public function register(App $app)
+    public function register(Container $container)
     {
-        $app->getContainer()->add($this->getName(), new RouteCollection());
+        $container->add($this->getName(), new RouteCollection());
 
-        include $app->getAppPath() . '/route/routes.php';
+        include $container->getAppPath() . '/route/routes.php';
     }
 
     public function getName()

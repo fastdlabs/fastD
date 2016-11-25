@@ -9,14 +9,14 @@
 
 namespace FastD\Provider;
 
-use FastD\App;
-use FastD\Contract\ServiceProviderInterface;
+use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 
 class SwooleServiceProvider implements ServiceProviderInterface
 {
     const SERVER_NAME = 'swoole';
 
-    public function register(App $app)
+    public function register(Container $container)
     {
         // TODO: Implement register() method.
     }

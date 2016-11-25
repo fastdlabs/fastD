@@ -9,14 +9,14 @@
 
 namespace FastD\Provider;
 
-use FastD\App;
-use FastD\Contract\ServiceProviderInterface;
+use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 
 class StoreServiceProvider implements ServiceProviderInterface
 {
     const SERVICE_NAME = 'store';
 
-    public function register(App $app)
+    public function register(Container $container)
     {
         // TODO: Implement register() method.
     }

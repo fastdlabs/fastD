@@ -9,20 +9,20 @@
 
 namespace FastD\Event;
 
-use FastD\Http\Response;
+use FastD\Container\Container;
+use FastD\Http\ServerRequest;
+use FastD\Provider\RouteServiceProvider;
 
-class RequestListener extends EventListener
+class RequestListener
 {
     /**
-     * Handle event trigger
-     *
-     * @param EventInterface $event
-     * @param array $arguments
-     * @return mixed
+     * @param Container $container
+     * @param ServerRequest $serverRequest
      */
-    public function handle(EventInterface $event, array $arguments = [])
+    public static function handle(Container $container, ServerRequest $serverRequest)
     {
-        (new Response('hello'))->send();
-//        return $arguments[0]->get('kernel.routing')->dispatch();
+        $response = $container[RouteServiceProvider::SERVICE_NAME]->dispatch($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
+
+        $response->send();
     }
 }

@@ -14,8 +14,8 @@ function app () {
     return \FastD\App::$app;
 }
 
-function response () {
-
+function response ($content, $statusCode = 200, array $headers = []) {
+    return new \FastD\Http\Response($content, $statusCode, $headers);
 }
 
 function event() {

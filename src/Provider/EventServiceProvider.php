@@ -9,8 +9,8 @@
 
 namespace FastD\Provider;
 
-use FastD\App;
-use FastD\Contract\ServiceProviderInterface;
+use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 use FastD\Event\BootstrapListener;
 use FastD\Event\EventDispatcher;
 use FastD\Event\RequestListener;
@@ -19,14 +19,14 @@ class EventServiceProvider implements ServiceProviderInterface
 {
     const SERVICE_NAME = 'event';
 
-    public function register(App $app)
+    public function register(Container $container)
     {
         $dispatch = new EventDispatcher();
 
-        $dispatch->on('bootstrap', new BootstrapListener());
-        $dispatch->on('request', new RequestListener());
+        $dispatch->on('bootstrap', BootstrapListener::class . '::handle');
+        $dispatch->on('request', RequestListener::class . '::handle');
 
-        $app->getContainer()->add($this->getName(), $dispatch);
+        $container->add($this->getName(), $dispatch);
     }
 
     public function getName()
