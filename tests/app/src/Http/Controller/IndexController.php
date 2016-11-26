@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -10,12 +9,18 @@
 
 namespace Http\Controller;
 
-use FastD\Controller\Controller;
-
-class IndexController extends Controller
+class IndexController
 {
     public function welcomeAction()
     {
         return response()->withContent('hello world');
+    }
+
+    public function storeAction()
+    {
+        $store = store('user');
+
+        echo '<pre>';
+        return response()->withContent(var_dump($store));
     }
 }

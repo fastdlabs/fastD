@@ -9,6 +9,8 @@
 
 app()->route()->get('/', [\Http\Controller\IndexController::class, 'welcomeAction']);
 
+app()->route()->get('/store', [\Http\Controller\IndexController::class, 'storeAction']);
+
 app()->route()->get('/hello/[{name}]', function ($name) {
     return response('hello ' . $name . ' !');
 });

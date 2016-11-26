@@ -11,5 +11,10 @@ namespace FastD\Contract;
 
 class StoreContract
 {
+    protected $app;
 
+    public function __construct()
+    {
+        $this->app = app();
+    }
 }

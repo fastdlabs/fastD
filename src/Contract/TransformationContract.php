@@ -9,7 +9,11 @@
 
 namespace Contract;
 
-class TransformationContract
+abstract class TransformationContract
 {
-
+    /**
+     * @param array $data
+     * @return array
+     */
+    abstract public function format(array $data);
 }
