@@ -14,19 +14,16 @@ use FastD\Controller\Controller;
 
 class IndexController extends Controller
 {
-    /**
-     * @route(method="GET", "/")
-     */
     public function welcomeAction()
     {
-        return $this->responseHtml('hello world');
-    }
+        $db = db('name');
 
-    /**
-     * @route("/demo")
-     */
-    public function demoAction()
-    {
-        return $this->responseHtml('demo');
+        $redis = storage('redis');
+
+        $user = store('user')->getUser();
+
+        $result = event('axx')->trigger();
+
+        return response();
     }
 }

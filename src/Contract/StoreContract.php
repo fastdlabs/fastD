@@ -7,10 +7,9 @@
  * @link      http://www.fast-d.cn/
  */
 
-use FastD\App;
+namespace FastD\Contract;
 
-$loader = include __DIR__ . '/vendor/autoload.php';
+class StoreContract
+{
 
-$app = new App(__DIR__ . '/tests/app');
-
-$app->run();
+}

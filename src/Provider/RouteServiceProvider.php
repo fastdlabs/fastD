@@ -21,7 +21,7 @@ class RouteServiceProvider implements ServiceProviderInterface
     {
         $container->add($this->getName(), new RouteCollection());
 
-        include $container->getAppPath() . '/route/routes.php';
+        include $container->getAppPath() . '/config/routes.php';
     }
 
     public function getName()

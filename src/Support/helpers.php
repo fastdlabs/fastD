@@ -14,6 +14,22 @@ function app () {
     return \FastD\App::$app;
 }
 
-function response ($content, $statusCode = 200, array $headers = []) {
+
+/**
+ * @param $name
+ * @return \FastD\Event\EventDispatcher
+ */
+function event ($name) {
+
+}
+
+/**
+ * @param $name
+ */
+function store ($name) {
+
+}
+
+function response ($content = '', $statusCode = 200, array $headers = []) {
     return new \FastD\Http\Response($content, $statusCode, $headers);
 }

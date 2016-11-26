@@ -8,5 +8,27 @@
  */
 
 return [
-    'env' => 'prod'
+    /**
+     * The application name.
+     */
+    'name' => 'fast:D',
+
+    'env' => 'dev',
+
+    'timezone' => 'PRC',
+
+    'controller' => '',
+
+    'middleware' => [
+
+    ],
+
+    /**
+     * Bootstrap service.
+     */
+    'services' => [
+        \FastD\Provider\RouteServiceProvider::class,
+        \FastD\Provider\StoreServiceProvider::class,
+        \FastD\Provider\MiddlewareServiceProvider::class,
+    ]
 ];
