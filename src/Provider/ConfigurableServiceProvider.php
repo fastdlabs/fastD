@@ -17,19 +17,19 @@ class ConfigurableServiceProvider implements ServiceProviderInterface
 {
     const SERVICE_NAME = 'config';
 
-    public function register(Container $app)
+    public function register(Container $container)
     {
         $config = new Config();
 
-        $config->load($app->getAppPath() . '/config/app.php');
+        $config->load($container->getAppPath() . '/config/app.php');
 
         $env = $config->get('env', 'dev');
 
         if ($env !== 'prod') {
-            $app->enableDebug();
+            $container->enableDebug();
         }
 
-        $app->add($this->getName(), $config);
+        $container->add($this->getName(), $config);
     }
 
     public function getName()

@@ -18,7 +18,9 @@ class StoreServiceProvider implements ServiceProviderInterface
 
     public function register(Container $container)
     {
-        // TODO: Implement register() method.
+        $container->add('store', function () {
+            return new \DateTime();
+        });
     }
 
     public function getName()

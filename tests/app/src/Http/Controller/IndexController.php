@@ -23,4 +23,9 @@ class IndexController
         echo '<pre>';
         return response()->withContent(var_dump($store));
     }
+
+    public function eventAction()
+    {
+
+    }
 }
