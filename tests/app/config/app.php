@@ -17,7 +17,9 @@ return [
 
     'timezone' => 'PRC',
 
-    'controller' => '',
+    'database' => include __DIR__ . '/database.php',
+
+    'storage' => include __DIR__ . '/storage.php',
 
     'middleware' => [
 

@@ -7,9 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-app()->route()->get('/', function () {
-    return response('hello world');
-});
+app()->route()->get('/', [\Http\Controller\IndexController::class, 'welcomeAction']);
 
 app()->route()->get('/hello/[{name}]', function ($name) {
     return response('hello ' . $name . ' !');
