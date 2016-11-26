@@ -11,6 +11,7 @@ namespace FastD\Provider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Store\Store;
 
 class StoreServiceProvider implements ServiceProviderInterface
 {
@@ -18,8 +19,8 @@ class StoreServiceProvider implements ServiceProviderInterface
 
     public function register(Container $container)
     {
-        $container->add('store', function () {
-            return new \DateTime();
+        $container->add('store', function (Container $container) {
+            return new Store($container);
         });
     }
 

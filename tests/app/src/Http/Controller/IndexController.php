@@ -20,6 +20,8 @@ class IndexController
     {
         $store = store('user');
 
+//        $store->getUser();
+
         echo '<pre>';
         return response()->withContent(var_dump($store));
     }

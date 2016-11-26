@@ -24,10 +24,10 @@ function event ($name) {
 
 /**
  * @param $name
- * @return mixed
+ * @return \FastD\Store\Store
  */
 function store ($name) {
-    return app()->get('store');
+    return app()->get('store')->getStore($name);
 }
 
 /**
