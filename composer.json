@@ -2,7 +2,7 @@
     "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "FastD Core.",
+    "description": "FastD Core",
     "minimum-stability": "stable",
     "keywords": ["FastD"],
     "authors": [
@@ -29,25 +29,21 @@
         "php": ">=5.6",
         "fastd/console": "3.0.x-dev",
         "fastd/debug": "3.0.x-dev",
-        "fastd/database": "3.0.x-dev",
-        "fastd/storage": "3.0.x-dev",
         "fastd/container": "3.0.x-dev",
         "fastd/http": "3.0.x-dev",
         "fastd/config": "3.0.x-dev",
+        "fastd/storage": "3.0.x-dev",
         "fastd/routing": "3.0.x-dev",
-        "fastd/annotation": "2.0.x-dev",
         "fastd/event": "1.0.x-dev",
         "fastd/middleware": "1.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
-        "fastd/session": "1.0.x-dev",
-        "twig/twig": "~1.0"
+        "fastd/session": "1.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
     },
     "bin": [
         "console",
-        "server",
-        "web.php"
+        "server"
     ]
 }

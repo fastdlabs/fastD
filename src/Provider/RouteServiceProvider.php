@@ -15,17 +15,10 @@ use FastD\Routing\RouteCollection;
 
 class RouteServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'routing';
-
     public function register(Container $container)
     {
-        $container->add($this->getName(), new RouteCollection());
+        $container->add('router', new RouteCollection());
 
-        include $container->getAppPath() . '/config/routes.php';
-    }
-
-    public function getName()
-    {
-        return static::SERVICE_NAME;
+        include $container['app']->getAppPath() . '/config/routes.php';
     }
 }

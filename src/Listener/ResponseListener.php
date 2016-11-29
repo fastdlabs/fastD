@@ -7,16 +7,14 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Store;
+namespace FastD\Listener;
 
 use FastD\Container\Container;
 
-class Store
+class ResponseListener
 {
-    protected $container;
-
-    public function __construct(Container $container)
+    public function handle(Container $container)
     {
-        $this->container = $container;
+
     }
 }

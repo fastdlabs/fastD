@@ -7,12 +7,12 @@
  * @link      http://www.fast-d.cn/
  */
 
-use FastD\App;
+use FastD\Application;
 
 $loader = include __DIR__ . '/../../../vendor/autoload.php';
 
-$app = new App(
-    __DIR__ . '/../'
+$app = new Application(
+    __DIR__ . '/..'
 );
 
 $app->run();

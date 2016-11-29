@@ -7,12 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Event;
+namespace FastD\Listener;
 
 use Exceptions\RouteCallbackException;
 use FastD\Container\Container;
 use FastD\Http\ServerRequest;
-use FastD\Provider\RouteServiceProvider;
 
 class RequestListener
 {
@@ -22,7 +21,11 @@ class RequestListener
      */
     public static function handle(Container $container, ServerRequest $serverRequest)
     {
-        $route = $container[RouteServiceProvider::SERVICE_NAME]->match($serverRequest->getMethod(), $serverRequest->server->getPathInfo());
+        $pathInfo = isset($serverRequest->getServerParams()['PATH_INFO']) ? $serverRequest->getServerParams()['PATH_INFO'] : null;
+        if (null === $pathInfo) {
+            $pathInfo = str_replace($serverRequest->getServerParams()['SCRIPT_NAME'], '', $serverRequest->getUri()->getPath());
+        }
+        $route = $container['router']->match($serverRequest->getMethod(), $pathInfo);
 
         if (is_array(($callback = $route->getCallback()))) {
             $container->injectOn('controller', $callback[0])->withMethod($callback[1])->withArguments($route->getParameters());

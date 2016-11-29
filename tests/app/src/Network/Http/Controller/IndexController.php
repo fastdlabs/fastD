@@ -11,12 +11,12 @@ namespace Http\Controller;
 
 class IndexController
 {
-    public function welcomeAction()
+    public function welcome()
     {
         return response()->withContent('hello world');
     }
 
-    public function storeAction()
+    public function store()
     {
         $store = store('user');
 
@@ -26,7 +26,7 @@ class IndexController
         return response()->withContent(var_dump($store));
     }
 
-    public function eventAction()
+    public function event()
     {
 
     }

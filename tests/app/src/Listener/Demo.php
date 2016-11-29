@@ -7,14 +7,10 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Event;
+namespace Listener;
 
-use FastD\Container\Container;
 
-class ResponseListener
+class Demo
 {
-    public function handle(Container $container)
-    {
 
-    }
 }

@@ -15,25 +15,10 @@ use FastD\Container\ServiceProviderInterface;
 
 class ConfigurableServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_NAME = 'config';
-
     public function register(Container $container)
     {
         $config = new Config();
 
-        $config->load($container->getAppPath() . '/config/app.php');
-
-        $env = $config->get('env', 'dev');
-
-        if ($env !== 'prod') {
-            $container->enableDebug();
-        }
-
-        $container->add($this->getName(), $config);
-    }
-
-    public function getName()
-    {
-        return static::SERVICE_NAME;
+        $container->add('config', $config);
     }
 }

@@ -7,11 +7,26 @@
  * @link      http://www.fast-d.cn/
  */
 
+use FastD\Application;
+
 /**
- * @return \FastD\App
+ * @return Application
  */
 function app () {
-    return \FastD\App::$app;
+    return Application::$app;
+}
+
+/**
+ * @param $prefix
+ * @param $callback
+ * @return \FastD\Routing\RouteCollection
+ */
+function route ($prefix = null, callable $callback = null) {
+    if (null === $prefix) {
+        return app()['router'];
+    }
+
+    return app()['router']->group($prefix, $callback);
 }
 
 /**
@@ -27,7 +42,14 @@ function event ($name) {
  * @return \FastD\Store\Store
  */
 function store ($name) {
-    return app()->get('store')->getStore($name);
+    return app()->get('store')->get($name);
+}
+
+/**
+ * @return \Psr\Http\Message\ServerRequestInterface
+ */
+function request () {
+    return app()->get('request');
 }
 
 /**
@@ -37,6 +59,8 @@ function store ($name) {
  * @return \FastD\Http\Response
  */
 function response ($content = '', $statusCode = 200, array $headers = []) {
+    $headers['X-FastD-Version'] = \FastD\Application::VERSION;
+    $headers['X-Powered-By'] = app()->getName();
     return new \FastD\Http\Response($content, $statusCode, $headers);
 }
 
@@ -55,4 +79,30 @@ function redirect ($url) {
  */
 function factory ($name, array $arguments = []) {
     return app()->make($name, $arguments);
+}
+
+/**
+ * @return \FastD\Session\Session
+ */
+function session () {
+    return app()->get('session');
+}
+
+/**
+ * @return \Monolog\Logger
+ */
+function logger () {
+    return app()->get('logger');
+}
+
+function storage ($name) {
+
+}
+
+function database ($name) {
+
+}
+
+function config () {
+    return app()->get('config');
 }

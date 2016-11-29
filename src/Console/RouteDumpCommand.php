@@ -76,7 +76,7 @@ class RouteDumpCommand extends ConsoleAware
                     $path = substr($name, $index + 1);
                 }
 
-                // Match all routes.
+                // Match all route.
                 try {
                     $route = $router->getRoute($path);
                 } catch (\Exception $e) {

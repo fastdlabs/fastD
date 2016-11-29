@@ -11,19 +11,17 @@ return [
     /**
      * The application name.
      */
-    'name' => 'fast:D',
+    'name' => 'fast.d',
 
-    'env' => 'dev',
+    /**
+     *
+     */
+    'environment' => 'local',
 
+    /**
+     *
+     */
     'timezone' => 'PRC',
-
-    'database' => include __DIR__ . '/database.php',
-
-    'storage' => include __DIR__ . '/storage.php',
-
-    'middleware' => [
-
-    ],
 
     /**
      * Bootstrap service.

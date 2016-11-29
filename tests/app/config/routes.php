@@ -1,17 +1,9 @@
 <?php
-/**
- * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2016
- *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
- */
 
-app()->route()->get('/', [\Http\Controller\IndexController::class, 'welcomeAction']);
+route()->get('/', 'IndexController@welcome');
 
-app()->route()->get('/store', [\Http\Controller\IndexController::class, 'storeAction']);
+route()->get('/store', 'IndexController@store');
 
-app()->route()->get('/hello/[{name}]', function ($name) {
+route()->get('/hello/[{name}]', function ($name) {
     return response('hello ' . $name . ' !');
 });
-

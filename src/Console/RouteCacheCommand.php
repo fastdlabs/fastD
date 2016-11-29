@@ -20,7 +20,7 @@ use FastD\Console\Output\Output;
  */
 class RouteCacheCommand extends ConsoleAware
 {
-    const CACHE_NAME = 'routes.cache';
+    const CACHE_NAME = 'route.cache';
 
     /**
      * @return string
