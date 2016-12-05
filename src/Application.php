@@ -9,13 +9,12 @@
 
 namespace FastD;
 
-use FastD\Container\Container;
 use FastD\Debug\Debug;
-use FastD\Http\ServerRequest;
-use FastD\Provider\ConfigurableServiceProvider;
+use FastD\Container\Container;
 use FastD\Provider\EventServiceProvider;
 use FastD\Provider\RouteServiceProvider;
 use FastD\Provider\StoreServiceProvider;
+use FastD\Provider\ConfigServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -169,9 +168,8 @@ class Application extends Container
     protected function registerServices()
     {
         $this->register(new EventServiceProvider());
-        $this->register(new ConfigurableServiceProvider());
+        $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
-        $this->register(new StoreServiceProvider());
     }
 
     /**
@@ -180,8 +178,6 @@ class Application extends Container
      */
     public function run(ServerRequestInterface $serverRequest = null)
     {
-        $serverRequest = null === $serverRequest ? ServerRequest::createServerRequestFromGlobals() : $serverRequest;
-
         $this['event']->trigger('request', [$this, $serverRequest]);
     }
 }

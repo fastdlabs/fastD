@@ -9,17 +9,24 @@
 
 namespace FastD\Provider;
 
+use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
-class MiddlewareServiceProvider implements ServiceProviderInterface
+/**
+ * Class ConfigServiceProvider
+ * @package FastD\Provider
+ */
+class ConfigServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
-     * @return mixed
+     * @return void
      */
     public function register(Container $container)
     {
-        // TODO: Implement register() method.
+        $config = new Config();
+
+        $container->add('config', $config);
     }
 }

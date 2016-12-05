@@ -19,8 +19,10 @@ class RequestListener
      * @param Container $container
      * @param ServerRequest $serverRequest
      */
-    public static function handle(Container $container, ServerRequest $serverRequest)
+    public static function handle(Container $container, ServerRequest $serverRequest = null)
     {
+        $serverRequest = null === $serverRequest ? ServerRequest::createServerRequestFromGlobals() : $serverRequest;
+
         $pathInfo = isset($serverRequest->getServerParams()['PATH_INFO']) ? $serverRequest->getServerParams()['PATH_INFO'] : null;
         if (null === $pathInfo) {
             $pathInfo = str_replace($serverRequest->getServerParams()['SCRIPT_NAME'], '', $serverRequest->getUri()->getPath());
