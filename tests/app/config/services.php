@@ -7,12 +7,4 @@
  * @link      http://www.fast-d.cn/
  */
 
-return [
-    'request' => \FastD\Http\ServerRequest::class,
-    'response' => \FastD\Http\JsonResponse::class,
-    'log' => Monolog\Logger::class,
-    'session' => \FastD\Session\Session::class,
-    'database' => \FastD\Database\Fdb::class,
-    'store' => '',
-    'storage' => '',
-];
+return [];

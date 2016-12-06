@@ -10,7 +10,6 @@
 namespace FastD;
 
 use FastD\Commands\BundleGeneratorCommand;
-use FastD\Standard\Commands\CommandAware;
 use FastD\Commands\AssetInstallCommand;
 use FastD\Commands\ConfigCacheCommand;
 use FastD\Commands\FdbDataSetCommand;
@@ -19,13 +18,14 @@ use FastD\Commands\FdbReflexCommand;
 use FastD\Commands\FdbSchemaCommand;
 use FastD\Commands\RouteDumpCommand;
 use FastD\Container\Container;
+use Symfony\Component\Console\Application;
 
 /**
  * Class AppConsole
  *
  * @package FastD\Framework\Kernel
  */
-class Console extends \FastD\Console\Console
+class Console extends Application
 {
     /**
      * @var App

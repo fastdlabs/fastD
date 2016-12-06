@@ -58,10 +58,22 @@ function request () {
  * @param array $headers
  * @return \FastD\Http\Response
  */
-function response ($content = '', $statusCode = 200, array $headers = []) {
+function response ($content = '', $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
     $headers['X-FastD-Version'] = \FastD\Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
     return new \FastD\Http\Response($content, $statusCode, $headers);
+}
+
+/**
+ * @param array $content
+ * @param int $statusCode
+ * @param array $headers
+ * @return \FastD\Http\JsonResponse
+ */
+function json (array $content = [], $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
+    $headers['X-FastD-Version'] = \FastD\Application::VERSION;
+    $headers['X-Powered-By'] = app()->getName();
+    return new \FastD\Http\JsonResponse($content, $statusCode, $headers);
 }
 
 /**
@@ -70,22 +82,6 @@ function response ($content = '', $statusCode = 200, array $headers = []) {
  */
 function redirect ($url) {
     return new \FastD\Http\RedirectResponse($url);
-}
-
-/**
- * @param $name
- * @param array $arguments
- * @return mixed
- */
-function factory ($name, array $arguments = []) {
-    return app()->make($name, $arguments);
-}
-
-/**
- * @return \FastD\Session\Session
- */
-function session () {
-    return app()->get('session');
 }
 
 /**
