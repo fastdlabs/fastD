@@ -31,14 +31,6 @@ function route ($prefix = null, callable $callback = null) {
 
 /**
  * @param $name
- * @return mixed
- */
-function event ($name) {
-    return app()->get('event')->trigger($name);
-}
-
-/**
- * @param $name
  * @return \FastD\Store\Store
  */
 function store ($name) {
@@ -59,7 +51,7 @@ function request () {
  * @return \FastD\Http\Response
  */
 function response ($content = '', $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
-    $headers['X-FastD-Version'] = \FastD\Application::VERSION;
+    $headers['X-App-Version'] = \FastD\Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
     return new \FastD\Http\Response($content, $statusCode, $headers);
 }
@@ -71,7 +63,7 @@ function response ($content = '', $statusCode = \FastD\Http\Response::HTTP_OK, a
  * @return \FastD\Http\JsonResponse
  */
 function json (array $content = [], $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
-    $headers['X-FastD-Version'] = \FastD\Application::VERSION;
+    $headers['X-App-Version'] = \FastD\Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
     return new \FastD\Http\JsonResponse($content, $statusCode, $headers);
 }

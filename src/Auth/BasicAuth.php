@@ -9,16 +9,14 @@
 
 namespace FastD\Bundle\Middleware;
 
-use FastD\Middleware\Middleware;
+use FastD\Middleware\ServerMiddleware;
 
-class Auth extends Middleware
+class Auth extends ServerMiddleware
 {
-    /**
-     * @param array $arguments
-     * @return mixed
-     */
-    public function handle($arguments = [])
+    public function __construct()
     {
-        // TODO: Implement handle() method.
+        parent::__construct(function () {
+            echo 1;
+        });
     }
 }

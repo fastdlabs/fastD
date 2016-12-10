@@ -13,6 +13,7 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use FastD\Container\Container;
+use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
@@ -48,7 +49,7 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $name = 'fast.d';
+    protected $name = 'Fast-D';
 
     /**
      * @var string
@@ -59,13 +60,6 @@ class Application extends Container
      * @var string
      */
     protected $environment = 'local';
-
-    /**
-     * Application runtime path
-     *
-     * @var string
-     */
-    protected $runtime = '';
 
     /**
      * @var bool
@@ -86,12 +80,10 @@ class Application extends Container
     {
         $this->appPath = $appPath;
 
-        $this->runtime = $appPath . '/runtime';
-
         static::$app = $this;
 
         $this['app'] = $this;
-        $this['date'] = new DateTime('now', new DateTimeZone($this->timezone));
+        $this['time'] = new DateTime('now', new DateTimeZone($this->timezone));
 
         $this->bootstrap();
     }
@@ -131,14 +123,6 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getRuntime()
-    {
-        return $this->runtime;
-    }
-
-    /**
-     * @return string
-     */
     public function getAppPath()
     {
         return $this->appPath;
@@ -158,22 +142,20 @@ class Application extends Container
 
             $this->name = $config['name'];
 
-            $this->timezone = $config['timezone'];
-
-            $this->registerServicesProviders();
+            $this->registerServicesProviders($config['services']);
 
             $this->booted = true;
         }
     }
 
     /**
+     * @param ServiceProviderInterface[] $services
      * @return void
      */
-    protected function registerServicesProviders()
+    protected function registerServicesProviders(array $services)
     {
         $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
-        $services = include $this->appPath . '/config/services.php';
         foreach ($services as $service) {
             $this->register($service);
         }
@@ -202,23 +184,9 @@ class Application extends Container
 
         $this['request'] = $serverRequest;
 
-        $route = $this['router']->match($serverRequest->getMethod(), $serverRequest->getUri()->getRelationPath());
+        $serverRequest->getUri()->withPath($serverRequest->getUri()->getRelationPath());
 
-        if (is_string(($callback = $route->getCallback()))) {
-            list($controller, $action) = explode('@', $callback);
-            $this
-                ->injectOn('controller', '\\Http\\Controller\\' . $controller)
-                ->withMethod($action)
-                ->withArguments($route->getParameters())
-            ;
-        } else if (is_callable($callback)) {
-            $this
-                ->injectOn('controller', $callback)
-                ->withArguments($route->getParameters())
-            ;
-        }
-
-        return $this->make('controller');
+        return $this['dispatcher']->dispatch($serverRequest);
     }
 
     /**

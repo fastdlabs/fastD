@@ -11,7 +11,7 @@ return [
     /**
      * The application name.
      */
-    'name' => 'fast.d',
+    'name' => 'Fast-D',
 
     /**
      *
@@ -27,8 +27,5 @@ return [
      * Bootstrap service.
      */
     'services' => [
-        \FastD\Provider\RouteServiceProvider::class,
-        \FastD\Provider\StoreServiceProvider::class,
-        \FastD\Provider\MiddlewareServiceProvider::class,
     ]
 ];

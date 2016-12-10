@@ -12,12 +12,17 @@ namespace FastD\Provider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Routing\RouteCollection;
+use FastD\Routing\RouteDispatcher;
 
 class RouteServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        $container->add('router', new RouteCollection());
+        $router = new RouteCollection();
+        $dispatcher = new RouteDispatcher($router);
+
+        $container->add('router', $router);
+        $container->add('dispatcher', $dispatcher);
 
         include $container['app']->getAppPath() . '/config/routes.php';
     }

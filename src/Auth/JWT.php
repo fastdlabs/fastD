@@ -7,4 +7,10 @@
  * @link      http://www.fast-d.cn/
  */
 
-return [];
+namespace Auth;
+
+
+class JWT
+{
+
+}
