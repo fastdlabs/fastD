@@ -7,15 +7,13 @@
  * @link      http://www.fast-d.cn/
  */
 
+include_once __DIR__ . '/TestCase.php';
 
-use FastD\Application;
-
-
-class ApplicationTest extends PHPUnit_Framework_TestCase
+class ApplicationTest extends TestCase
 {
-    public function testBootstrap()
+    public function testApplicationInitialize()
     {
-        $app = new Application(__DIR__ . '/src');
+        $app = $this->createApplication();
 
         $this->assertEquals(__DIR__ . '/src', $app->getAppPath());
         $this->assertEquals('local', $app->getEnvironment());

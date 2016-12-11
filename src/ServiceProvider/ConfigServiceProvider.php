@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Provider;
+namespace FastD\ServiceProvider;
 
 use FastD\Config\Config;
 use FastD\Container\Container;

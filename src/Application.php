@@ -18,8 +18,8 @@ use FastD\Http\HttpException;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Provider\RouteServiceProvider;
-use FastD\Provider\ConfigServiceProvider;
+use FastD\ServiceProvider\RouteServiceProvider;
+use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -184,8 +184,6 @@ class Application extends Container
 
         $this['request'] = $serverRequest;
 
-        $serverRequest->getUri()->withPath($serverRequest->getUri()->getRelationPath());
-
         return $this['dispatcher']->dispatch($serverRequest);
     }
 
@@ -200,9 +198,11 @@ class Application extends Container
             $statusCode = $e->getStatusCode();
         }
 
-        $response = new JsonResponse([
+        $response = json([
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
             'trace' => explode("\n", $e->getTraceAsString()),
         ]);
 

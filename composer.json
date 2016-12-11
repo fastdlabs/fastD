@@ -23,16 +23,20 @@
         "psr-4": {
             "Tests\\": "tests",
             "": "tests/app/src"
-        }
+        },
+        "files": [
+            "tests/TestCase.php"
+        ]
     },
     "require": {
         "php": ">=5.6",
-        "symfony/console": "^3.2",
         "fastd/container": "~3.0.0@rc",
         "fastd/http": "3.0.x-dev",
         "fastd/config": "~3.0.0@rc",
         "fastd/routing": "3.0.x-dev",
-        "fastd/middleware": "~1.0.0@rc"
+        "fastd/middleware": "~1.0.0@rc",
+        "symfony/console": "^3.2",
+        "monolog/monolog": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
