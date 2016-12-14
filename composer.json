@@ -2,7 +2,7 @@
     "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "FastD Core",
+    "description": "FastD",
     "minimum-stability": "stable",
     "keywords": ["FastD"],
     "authors": [
@@ -21,8 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests",
-            "": "tests/app/src"
+            "": "tests/src"
         },
         "files": [
             "tests/TestCase.php"

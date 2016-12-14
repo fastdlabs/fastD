@@ -7,12 +7,6 @@
  * @link      http://www.fast-d.cn/
  */
 
-use FastD\Application;
+$composer = include_once __DIR__ . '/../vendor/autoload.php';
 
-$loader = include __DIR__ . '/../../../vendor/autoload.php';
-
-$app = new Application(
-    __DIR__ . '/..'
-);
-
-$app->run();
+$composer->addPsr4("", __DIR__ . '/src/src');

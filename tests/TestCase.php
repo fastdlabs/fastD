@@ -15,8 +15,6 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         $app = new Application(__DIR__ . '/src');
 
-        route()->get('/', 'IndexController@welcomeAction');
-
         return $app;
     }
 
