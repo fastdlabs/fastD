@@ -1,5 +1,5 @@
 <?php
 
-route()->get('/', 'Http\Controller\IndexController@welcomeAction');
+route()->get('/', 'IndexController@welcome');
 
-route()->get('/foo/{name}', 'Http\Controller\IndexController@sayHelloAction');
+route()->get('/foo/{name}', 'IndexController@sayHello');

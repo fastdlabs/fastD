@@ -54,11 +54,6 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $timezone = 'PRC';
-
-    /**
-     * @var string
-     */
     protected $environment = 'local';
 
     /**
@@ -83,7 +78,6 @@ class Application extends Container
         static::$app = $this;
 
         $this['app'] = $this;
-        $this['time'] = new DateTime('now', new DateTimeZone($this->timezone));
 
         $this->bootstrap();
     }
@@ -142,6 +136,10 @@ class Application extends Container
 
             $this->name = $config['name'];
 
+            $this['time'] = new DateTime('now',
+                new DateTimeZone(isset($config['timezone']) ? $config['timezone'] : 'PRC')
+            );
+
             $this->registerServicesProviders($config['services']);
 
             $this->booted = true;
@@ -165,7 +163,7 @@ class Application extends Container
      * @param Response $response
      * @return int
      */
-    public function response(Response $response)
+    public function handleResponse(Response $response)
     {
         $response->send();
 
@@ -189,7 +187,7 @@ class Application extends Container
 
     /**
      * @param Exception $e
-     * @return Response
+     * @return JsonResponse
      */
     public function handleException($e)
     {
@@ -231,6 +229,6 @@ class Application extends Container
             $response = $this->handleException($exception);
         }
 
-        return $this->response($response);
+        return $this->handleResponse($response);
     }
 }

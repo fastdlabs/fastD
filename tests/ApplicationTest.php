@@ -7,6 +7,8 @@
  * @link      http://www.fast-d.cn/
  */
 
+use ServiceProvider\FooServiceProvider;
+
 include_once __DIR__ . '/TestCase.php';
 
 class ApplicationTest extends TestCase
@@ -39,5 +41,13 @@ class ApplicationTest extends TestCase
 
         $response = $app->handleRequest($this->createRequest('GET', '/foo/foobar'));
         $this->assertEquals(json_encode(['foo' => 'foobar']), $response->getBody());
+    }
+
+    public function testServiceProvider()
+    {
+        $app = $this->createApplication();
+
+        $app->register(new FooServiceProvider());
+        $this->assertEquals('foo', $app['foo']->name);
     }
 }

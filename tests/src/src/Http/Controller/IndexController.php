@@ -20,7 +20,7 @@ class IndexController
      * @param Delegate $delegate
      * @return \FastD\Http\JsonResponse
      */
-    public function welcomeAction(ServerRequest $request, Delegate $delegate)
+    public function welcome(ServerRequest $request, Delegate $delegate)
     {
         return json([
             'foo' => 'bar'
@@ -32,7 +32,7 @@ class IndexController
      * @param Delegate $delegate
      * @return JsonResponse
      */
-    public function sayHelloAction(ServerRequest $request, Delegate $delegate)
+    public function sayHello(ServerRequest $request, Delegate $delegate)
     {
         return json([
             'foo' => $request->getAttribute('name'),
