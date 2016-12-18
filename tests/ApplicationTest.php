@@ -43,6 +43,15 @@ class ApplicationTest extends TestCase
         $this->assertEquals(json_encode(['foo' => 'foobar']), $response->getBody());
     }
 
+    public function testHandleMiddlewareRequest()
+    {
+        $app = $this->createApplication();
+        $response = $app->handleRequest($this->createRequest('POST', '/foo/bar'));
+        $this->assertEquals(json_encode(['foo' => 'middleware']), $response->getBody());
+        $response = $app->handleRequest($this->createRequest('POST', '/foo/not'));
+        $this->assertEquals(json_encode(['foo' => 'bar']), $response->getBody());
+    }
+
     public function testServiceProvider()
     {
         $app = $this->createApplication();

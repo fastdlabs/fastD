@@ -38,4 +38,11 @@ class IndexController
             'foo' => $request->getAttribute('name'),
         ]);
     }
+
+    public function middleware(ServerRequest $serverRequest, Delegate $delegate)
+    {
+        return json([
+            'foo' => 'bar'
+        ]);
+    }
 }
