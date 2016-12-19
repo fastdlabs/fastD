@@ -12,6 +12,9 @@
  * Gmail: bboyjanhuang@gmail.com
  */
 
+use FastD\Application;
+use FastD\Console;
+
 set_time_limit(0);
 date_default_timezone_set('PRC');
 
@@ -22,12 +25,12 @@ foreach ([
              __DIR__ . '/vendor/autoload.php'
          ] as $value) {
     if (file_exists($value)) {
-        define('FASTD_COMPOSER_INSTALL', $value);
+        define('COMPOSER_INSTALL', $value);
         break;
     }
 }
 
-if (!defined('FASTD_COMPOSER_INSTALL')) {
+if (!defined('COMPOSER_INSTALL')) {
     fwrite(STDERR,
         'You need to set up the project dependencies using the following commands:' . PHP_EOL .
         'wget http://getcomposer.org/composer.phar' . PHP_EOL .
@@ -35,36 +38,8 @@ if (!defined('FASTD_COMPOSER_INSTALL')) {
     );
 }
 
-include FASTD_COMPOSER_INSTALL;
+include COMPOSER_INSTALL;
 
-$bootstrap = null;
-
-foreach ([
-             __DIR__ . '/../../../app/bootstrap.php',
-             __DIR__ . '/../../../bootstrap.php',
-             __DIR__ . '/../../app/bootstrap.php',
-             __DIR__ . '/../../bootstrap.php',
-             __DIR__ . '/../app/bootstrap.php',
-             __DIR__ . '/../bootstrap.php',
-             __DIR__ . '/app/bootstrap.php',
-             __DIR__ . '/bootstrap.php',
-         ] as $value) {
-    if (file_exists($value)) {
-        $bootstrap = include $value;
-        break;
-    }
-}
-
-use FastD\Console\Input\InputDefinition;
-use FastD\Console;
-use FastD\App;
-
-$argvInput = new Console\Input\Input(null, new InputDefinition);
-
-$env = $argvInput->hasOption(['env', 'e']) ? $argvInput->getOption(['env', 'e']) : 'dev';
-
-$bootstrap['env'] = $env;
-
-$console = new Console(new App($bootstrap));
+$console = new Console(new Application(__DIR__ . '/tests'));
 
 $console->run();

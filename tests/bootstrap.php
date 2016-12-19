@@ -8,5 +8,3 @@
  */
 
 $composer = include_once __DIR__ . '/../vendor/autoload.php';
-
-$composer->addPsr4("", __DIR__ . '/src/src');

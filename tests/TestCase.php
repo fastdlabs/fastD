@@ -13,7 +13,7 @@ class TestCase extends PHPUnit_Framework_TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__ . '/src');
+        $app = new Application(__DIR__);
 
         return $app;
     }

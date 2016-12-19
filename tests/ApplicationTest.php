@@ -17,7 +17,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $this->assertEquals(__DIR__ . '/src', $app->getAppPath());
+        $this->assertEquals(__DIR__, $app->getAppPath());
         $this->assertEquals('local', $app->getEnvironment());
         $this->assertEquals('Fast-D', $app->getName());
         $this->assertEquals('PRC', $app['time']->getTimeZone()->getName());

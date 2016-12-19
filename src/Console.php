@@ -9,84 +9,25 @@
 
 namespace FastD;
 
-use FastD\Commands\BundleGeneratorCommand;
-use FastD\Commands\AssetInstallCommand;
-use FastD\Commands\ConfigCacheCommand;
-use FastD\Commands\FdbDataSetCommand;
-use FastD\Commands\RouteCacheCommand;
-use FastD\Commands\FdbReflexCommand;
-use FastD\Commands\FdbSchemaCommand;
-use FastD\Commands\RouteDumpCommand;
-use FastD\Container\Container;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Application as Symfony;
 
 /**
  * Class AppConsole
  *
  * @package FastD\Framework\Kernel
  */
-class Console extends Application
+class Console extends Symfony
 {
-    /**
-     * @var App
-     */
-    protected $application;
-
     /**
      * AppConsole constructor.
      *
-     * @param App $app
+     * @param Application $app
      */
-    public function __construct(App $app)
+    public function __construct(Application $app)
     {
-        $this->application = $app;
-
-        parent::__construct();
+        parent::__construct($app->getName(), Application::VERSION);
 
         $this->scanCommands();
-    }
-
-    /**
-     * @return App
-     */
-    public function getApplication()
-    {
-        return $this->application;
-    }
-
-    /**
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return $this->application->getContainer();
-    }
-
-    /**
-     * @return array
-     */
-    public function getDefaultCommands()
-    {
-        $defaultCommands = parent::getDefaultCommands();
-
-        return array_merge($defaultCommands, [
-            new AssetInstallCommand($this->getContainer()),
-            new RouteCacheCommand($this->getContainer()),
-            new RouteDumpCommand($this->getContainer()),
-            new FdbReflexCommand($this->getContainer()),
-            new FdbDataSetCommand($this->getContainer()),
-            new FdbSchemaCommand($this->getContainer()),
-            new BundleGeneratorCommand($this->getContainer()),
-            new ConfigCacheCommand($this->getContainer()),
-        ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultCommandName()
-    {
-        return 'list';
     }
 
     /**
@@ -96,20 +37,10 @@ class Console extends Application
      */
     public function scanCommands()
     {
-        foreach ($this->getApplication()->getBundles() as $bundle) {
-            $dir = $bundle->getDir() . '/Commands';
-            if (!is_dir($dir)) {
-                continue;
-            }
-            if (false !== ($files = glob($dir . '/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
-                foreach ($files as $file) {
-                    $class = $bundle->getNamespace() . '\\Commands\\' . pathinfo($file, PATHINFO_FILENAME);
-                    $command = new $class();
-                    if ($command instanceof CommandAware) {
-                        $command->setContainer($this->getContainer());
-                        $this->addCommand($command);
-                    }
-                }
+        if (false !== ($files = glob(app()->getAppPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
+            foreach ($files as $file) {
+                $command = '\\Console\\' . pathinfo($file, PATHINFO_FILENAME);
+                $this->add(new $command);
             }
         }
     }

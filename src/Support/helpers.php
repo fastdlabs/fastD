@@ -8,6 +8,10 @@
  */
 
 use FastD\Application;
+use FastD\Config\Config;
+use FastD\Http\JsonResponse;
+use FastD\Http\RedirectResponse;
+use FastD\Http\Response;
 
 /**
  * @return Application
@@ -30,57 +34,44 @@ function route ($prefix = null, callable $callback = null) {
 }
 
 /**
- * @param $name
- * @return \FastD\Store\Store
+ * @return Config
  */
-function store ($name) {
-    return app()->get('store')->get($name);
+function config () {
+    return app()['config'];
 }
 
 /**
  * @return \Psr\Http\Message\ServerRequestInterface
  */
 function request () {
-    return app()->get('request');
-}
-
-/**
- * @param string $content
- * @param int $statusCode
- * @param array $headers
- * @return \FastD\Http\Response
- */
-function response ($content = '', $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
-    $headers['X-App-Version'] = \FastD\Application::VERSION;
-    $headers['X-Powered-By'] = app()->getName();
-    return new \FastD\Http\Response($content, $statusCode, $headers);
+    return app()['request'];
 }
 
 /**
  * @param array $content
  * @param int $statusCode
  * @param array $headers
- * @return \FastD\Http\JsonResponse
+ * @return JsonResponse
  */
-function json (array $content = [], $statusCode = \FastD\Http\Response::HTTP_OK, array $headers = []) {
-    $headers['X-App-Version'] = \FastD\Application::VERSION;
+function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
+    $headers['X-App-Version'] = Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
-    return new \FastD\Http\JsonResponse($content, $statusCode, $headers);
+    return new JsonResponse($content, $statusCode, $headers);
 }
 
 /**
  * @param $url
- * @return \FastD\Http\RedirectResponse
+ * @return RedirectResponse
  */
 function redirect ($url) {
-    return new \FastD\Http\RedirectResponse($url);
+    return new RedirectResponse($url);
 }
 
 /**
  * @return \Monolog\Logger
  */
 function logger () {
-    return app()->get('logger');
+    return app()['logger'];
 }
 
 function storage ($name) {
@@ -91,6 +82,4 @@ function database ($name) {
 
 }
 
-function config () {
-    return app()->get('config');
-}
+
