@@ -22,7 +22,7 @@ class IndexController
      */
     public function welcome(ServerRequest $request, Delegate $delegate)
     {
-        return json([
+        return response([
             'foo' => 'bar'
         ]);
     }
@@ -34,14 +34,14 @@ class IndexController
      */
     public function sayHello(ServerRequest $request, Delegate $delegate)
     {
-        return json([
+        return response([
             'foo' => $request->getAttribute('name'),
         ]);
     }
 
     public function middleware(ServerRequest $serverRequest, Delegate $delegate)
     {
-        return json([
+        return response([
             'foo' => 'bar'
         ]);
     }

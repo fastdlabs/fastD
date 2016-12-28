@@ -59,4 +59,12 @@ class ApplicationTest extends TestCase
         $app->register(new FooServiceProvider());
         $this->assertEquals('foo', $app['foo']->name);
     }
+
+    public function testConfiguration()
+    {
+        $app = $this->createApplication();
+
+        $this->assertEquals('Fast-D', $app->get('config')->get('name'));
+        $this->assertEquals('local', $app->get('config')->get('environment'));
+    }
 }

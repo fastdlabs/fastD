@@ -12,6 +12,8 @@ namespace ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class LoggerServiceProvider implements ServiceProviderInterface
 {
@@ -21,6 +23,8 @@ class LoggerServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-//        $container->add('logger', );
+        $logger = new Logger('');
+        $logger->pushHandler(new StreamHandler(), Logger::INFO);
+        $container->add('logger', $logger);
     }
 }

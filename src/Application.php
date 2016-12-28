@@ -139,9 +139,11 @@ class Application extends Container
             $this['time'] = new DateTime('now',
                 new DateTimeZone(isset($config['timezone']) ? $config['timezone'] : 'PRC')
             );
+            $this['config'] = $config;
 
             $this->registerServicesProviders($config['services']);
 
+            unset($config);
             $this->booted = true;
         }
     }

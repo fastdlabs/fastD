@@ -12,6 +12,7 @@ use FastD\Config\Config;
 use FastD\Http\JsonResponse;
 use FastD\Http\RedirectResponse;
 use FastD\Http\Response;
+use Monolog\Logger;
 
 /**
  * @return Application
@@ -27,24 +28,28 @@ function app () {
  */
 function route ($prefix = null, callable $callback = null) {
     if (null === $prefix) {
-        return app()['router'];
+        return app()->get('router');
     }
 
-    return app()['router']->group($prefix, $callback);
+    return app()->get('router')->group($prefix, $callback);
 }
 
 /**
+ * @param $file
  * @return Config
  */
-function config () {
-    return app()['config'];
+function config ($file = null) {
+    if (null === $file) {
+        return app()->get('config');
+    }
+    return app()->get('config')->load($file);
 }
 
 /**
- * @return \Psr\Http\Message\ServerRequestInterface
+ * @return mixed
  */
 function request () {
-    return app()['request'];
+    return $this['request'];
 }
 
 /**
@@ -53,7 +58,7 @@ function request () {
  * @param array $headers
  * @return JsonResponse
  */
-function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
+function response (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
     $headers['X-App-Version'] = Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
     return new JsonResponse($content, $statusCode, $headers);
@@ -68,10 +73,10 @@ function redirect ($url) {
 }
 
 /**
- * @return \Monolog\Logger
+ * @return Logger
  */
 function logger () {
-    return app()['logger'];
+    return app()->get('logger');
 }
 
 function storage ($name) {

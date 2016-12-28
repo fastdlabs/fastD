@@ -14,15 +14,8 @@ use FastD\Container\ServiceProviderInterface;
 
 class SwooleServiceProvider implements ServiceProviderInterface
 {
-    const SERVER_NAME = 'swoole';
-
     public function register(Container $container)
     {
         // TODO: Implement register() method.
-    }
-
-    public function getName()
-    {
-        return static::SERVER_NAME;
     }
 }
