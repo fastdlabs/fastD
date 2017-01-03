@@ -16,6 +16,6 @@ class SwooleServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)
     {
-        // TODO: Implement register() method.
+        $container['config']->load(app()->getAppPath() . '/config/server.php');
     }
 }

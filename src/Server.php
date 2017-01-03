@@ -13,7 +13,6 @@ use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Swoole\Server\Http;
-use swoole_http_request;
 use swoole_http_response;
 
 /**
@@ -23,18 +22,13 @@ use swoole_http_response;
  */
 class Server extends Http
 {
-    /**
-     * @var array
-     */
-    protected $config = [];
+    const SERVER_NAME = 'Fast-D';
 
     public function __construct(Application $application)
     {
         $application->register(new SwooleServiceProvider());
 
-        $config = include app()->getAppPath() . '/config/server.php';
-
-        parent::__construct($config['listen'], isset($config['options']) ? $config['options'] : []);
+        parent::__construct($application['config']->get('listen'), $application['config']->get('options', []));
     }
 
     /**

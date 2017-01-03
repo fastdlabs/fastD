@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use FastD\Console\RouteDump;
 use Symfony\Component\Console\Application as Symfony;
 
 /**
@@ -27,7 +28,11 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
-        $this->scanCommands();
+        $this->addCommands([
+            new RouteDump(),
+        ]);
+
+        $this->initializeCommands();
     }
 
     /**
@@ -35,7 +40,7 @@ class Console extends Symfony
      *
      * @return void
      */
-    public function scanCommands()
+    public function initializeCommands()
     {
         if (false !== ($files = glob(app()->getAppPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {

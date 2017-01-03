@@ -40,6 +40,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$console = new Console(new Application(__DIR__ . '/tests'));
+$console = new Console(new Application(getcwd()));
 
 $console->run();

@@ -189,7 +189,7 @@ class Application extends Container
 
     /**
      * @param Exception $e
-     * @return JsonResponse
+     * @return Response
      */
     public function handleException($e)
     {
@@ -198,7 +198,7 @@ class Application extends Container
             $statusCode = $e->getStatusCode();
         }
 
-        $response = json([
+        $response = response([
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
             'file' => $e->getFile(),
@@ -210,9 +210,7 @@ class Application extends Container
             $statusCode = 500;
         }
 
-        $response->withStatus($statusCode);
-
-        return $response;
+        return $response->withStatus($statusCode);
     }
 
     /**

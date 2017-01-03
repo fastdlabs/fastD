@@ -7,86 +7,32 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Commands;
+namespace FastD\Console;
 
-use FastD\Bundle\Console\ConsoleAware;
-use FastD\Console\Input\Input;
-use FastD\Console\Input\InputOption;
-use FastD\Console\Output\Output;
 use FastD\Routing\Route;
 use FastD\Routing\RouteCollection;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class RouteDump
  *
  * @package FastD\Framework\Commands
  */
-class RouteDumpCommand extends ConsoleAware
+class RouteDump extends Command
 {
-    const STYLE_LIST = 1;
-    const STYLE_DETAIL = 2;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'route:dump';
-    }
-
     /**
      * @return void|$this
      */
     public function configure()
     {
-        $this
-            ->setOption('bundle')
-            ->setOption('detail', InputOption::VALUE_OPTIONAL, '显示方法代码内容')
-            ->setArgument('route')
-        ;
+        $this->setName('route:dump');
     }
 
-    /**
-     * @param Input  $input
-     * @param Output $output
-     * @return int
-     */
-    public function execute(Input $input, Output $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $router = $this->getContainer()->singleton('kernel.routing');
 
-        $name = $input->getArgument('route');
-        $bundle = $input->getOption('bundle');
-        $style = $input->getOption('detail');
-
-        if (false !== strpos($bundle, ':')) {
-            $bundle = str_replace(':', '\\', $bundle);
-        }
-
-        if (null === $name) {
-            $this->showRouteCollections($router, $output, $bundle, $style ? self::STYLE_DETAIL: self::STYLE_LIST);
-        } else {
-            try {
-                $route = $router->getRoute($name);
-            } catch (\Exception $e) {
-                $method = 'GET';
-                $path = $name;
-                if (false !== ($index = strpos($name, ':'))) {
-                    $method = substr($name, 0, $index);
-                    $path = substr($name, $index + 1);
-                }
-
-                // Match all route.
-                try {
-                    $route = $router->getRoute($path);
-                } catch (\Exception $e) {
-                    $route = $router->dispatch($method, $path);
-                }
-            }
-            $this->formatOutput($route, $output, self::STYLE_DETAIL);
-        }
-
-        return 0;
     }
 
     /**
