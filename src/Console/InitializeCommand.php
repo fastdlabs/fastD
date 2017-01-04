@@ -7,45 +7,11 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Commands;
+namespace FastD\Console;
 
-use FastD\Bundle\Console\ConsoleAware;
-use FastD\Console\Input\Input;
-use FastD\Console\Output\Output;
 
-class InitializeCommand extends ConsoleAware
+use Symfony\Component\Console\Command\Command;
+
+class InitializeCommand extends Command
 {
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        // TODO: Implement getDescription() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'init';
-    }
-
-    /**
-     * @return void
-     */
-    public function configure()
-    {
-        // TODO: Implement configure() method.
-    }
-
-    /**
-     * @param Input $input
-     * @param Output $output
-     * @return int
-     */
-    public function execute(Input $input, Output $output)
-    {
-        // TODO: Implement execute() method.
-    }
 }

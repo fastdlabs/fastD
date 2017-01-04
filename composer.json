@@ -34,6 +34,7 @@
         "fastd/config": "~3.0.0@rc",
         "fastd/routing": "3.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
+        "fastd/testing": "0.1.x-dev",
         "fastd/middleware": "~1.0.0@rc",
         "symfony/console": "^3.2",
         "monolog/monolog": "~1.0"
