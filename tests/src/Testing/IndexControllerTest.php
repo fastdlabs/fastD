@@ -8,15 +8,20 @@
  */
 
 
+use FastD\Application;
 use FastD\Test\TestCase;
-use Http\Controller\IndexController;
 
 
 class IndexControllerTest extends TestCase
 {
+    /**
+     * @var Application
+     */
+    protected $app;
+
     public function setUp()
     {
-        $this->app = new \FastD\Application(getcwd() . '/tests');
+        $this->app = new Application(getcwd() . '/tests');
     }
 
     public function testSayHello()
