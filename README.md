@@ -1,4 +1,4 @@
-# Fast:D PHP Servitization Framework
+# Fast-D PHP High Performance API Framework
 
 [![Latest Stable Version](https://poser.pugx.org/fastd/fastd/v/stable)](https://packagist.org/packages/fastd/fastd) [![Latest Unstable Version](https://poser.pugx.org/fastd/fastd/v/unstable)](https://packagist.org/packages/fastd/fastd) [![License](https://poser.pugx.org/fastd/fastd/license)](https://packagist.org/packages/fastd/fastd)
 
@@ -12,8 +12,12 @@
 #### Installation
 
 ```
-composer create-project "fastd/fastd:3.0.x-dev" fastd
+composer create-require "fastd/fastd:3.0.x-dev"
 ```
+
+#### Documentation
+
+[中文文档](docs/zh_CN)
 
 #### Swoole Http Server
 
