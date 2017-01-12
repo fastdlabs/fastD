@@ -23,7 +23,7 @@
 -------
 
 * [中间件](3-1-middleware.md)
-* [配置](3-2-middleware.md)
+* [配置](3-2-configuration.md)
 * [命令行](3-3-console.md)
 * [单元测试](3-4-testcase.md)
 * [辅助函数](3-5-helpers.md)

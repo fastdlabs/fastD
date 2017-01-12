@@ -32,4 +32,11 @@ class IndexControllerTest extends TestCase
 
         $this->response($response, ['foo' => 'bar']);
     }
+
+    public function testDb()
+    {
+        $response = $this->app->handleRequest($this->request('GET', '/db'));
+
+        $this->status($response, 200);
+    }
 }

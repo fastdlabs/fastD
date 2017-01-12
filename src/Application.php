@@ -18,6 +18,7 @@ use FastD\Http\HttpException;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\ServiceProvider\DatabaseServiceProvider;
 use FastD\ServiceProvider\RouteServiceProvider;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
@@ -156,6 +157,7 @@ class Application extends Container
     {
         $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
+        $this->register(new DatabaseServiceProvider());
         foreach ($services as $service) {
             $this->register($service);
         }

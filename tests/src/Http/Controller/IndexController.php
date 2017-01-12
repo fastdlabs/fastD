@@ -45,4 +45,11 @@ class IndexController
             'foo' => 'bar'
         ]);
     }
+
+    public function db()
+    {
+        return response(
+            app()->get('medoo')->info()
+        );
+    }
 }
