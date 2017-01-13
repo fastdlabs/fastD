@@ -15,11 +15,11 @@ use Exception;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
-use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\DatabaseServiceProvider;
 use FastD\ServiceProvider\RouteServiceProvider;
+use FastD\ServiceProvider\CacheServiceProvider;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -158,6 +158,7 @@ class Application extends Container
         $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
         $this->register(new DatabaseServiceProvider());
+        $this->register(new CacheServiceProvider());
         foreach ($services as $service) {
             $this->register($service);
         }

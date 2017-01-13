@@ -22,13 +22,15 @@ use swoole_http_response;
  */
 class Server extends Http
 {
-    const SERVER_NAME = 'Fast-D';
-
+    /**
+     * Server constructor.
+     * @param Application $application
+     */
     public function __construct(Application $application)
     {
         $application->register(new SwooleServiceProvider());
 
-        parent::__construct($application['config']->get('listen'), $application['config']->get('options', []));
+        parent::__construct($application->getName(), $application['config']->get('listen'), $application['config']->get('options', []));
     }
 
     /**
