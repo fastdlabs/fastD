@@ -11,21 +11,25 @@ namespace Middleware;
 
 
 use FastD\Http\JsonResponse;
-use FastD\Http\ServerRequest;
-use FastD\Middleware\Delegate;
+use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\ServerMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class FooMiddleware extends ServerMiddleware
 {
-    public function __construct()
+    /**
+     * @param ServerRequestInterface $serverRequest
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
-        parent::__construct(function (ServerRequest $serverRequest, Delegate $delegate) {
-            if ('bar' == $serverRequest->getAttribute('name')) {
-                return new JsonResponse([
-                    'foo' => 'middleware'
-                ]);
-            }
-            return $delegate($serverRequest);
-        });
+        if ('bar' == $serverRequest->getAttribute('name')) {
+            return new JsonResponse([
+                'foo' => 'middleware'
+            ]);
+        }
+        return $delegate($serverRequest);
     }
 }

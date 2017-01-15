@@ -23,10 +23,15 @@ return [
      */
     'timezone' => 'PRC',
 
+    'logger' => '',
+
     /**
      * Bootstrap service.
      */
     'services' => [
+
+    ],
+    'middleware' => [
 
     ]
 ];

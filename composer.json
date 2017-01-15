@@ -35,7 +35,7 @@
         "fastd/routing": "3.0.x-dev",
         "fastd/swoole": "1.0.x-dev",
         "fastd/testing": "0.1.x-dev",
-        "fastd/middleware": "~1.0.0@rc",
+        "fastd/middleware": "1.0.x-dev",
         "catfan/Medoo": "~1.1.0",
         "symfony/cache": "~3.2",
         "symfony/console": "^3.2",

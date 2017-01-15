@@ -24,7 +24,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $logger = new Logger('');
-        $logger->pushHandler(new StreamHandler(), Logger::INFO);
+        $logger->pushHandler(new StreamHandler(''), Logger::INFO);
         $container->add('logger', $logger);
     }
 }

@@ -56,7 +56,7 @@ class RouteServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $router = new Router();
-        $dispatcher = new RouteDispatcher($router);
+        $dispatcher = new RouteDispatcher($router, $container['config']->get('middleware', []));
 
         $container->add('router', $router);
         $container->add('dispatcher', $dispatcher);
