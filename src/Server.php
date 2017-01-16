@@ -10,7 +10,7 @@
 namespace FastD;
 
 use FastD\Http\Response;
-use FastD\Http\SwooleServerRequest;
+use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Swoole\Server\Http;
 use swoole_http_response;
@@ -23,6 +23,11 @@ use swoole_http_response;
 class Server extends Http
 {
     /**
+     * @var Application
+     */
+    protected $app;
+
+    /**
      * Server constructor.
      * @param Application $application
      */
@@ -30,15 +35,27 @@ class Server extends Http
     {
         $application->register(new SwooleServiceProvider());
 
-        parent::__construct($application->getName(), $application['config']->get('listen'), $application['config']->get('options', []));
+        $this->app = $application;
+
+        parent::__construct($application->getName(), $application['config']->get('listen'));
     }
 
     /**
-     * @param SwooleServerRequest $serverRequest
+     * @param ServerRequest $serverRequest
      * @return Response
      */
-    public function doRequest(SwooleServerRequest $serverRequest)
+    public function doRequest(ServerRequest $serverRequest)
     {
         return app()->handleRequest($serverRequest);
+    }
+
+    /**
+     * Please return swoole configuration array.
+     *
+     * @return array
+     */
+    public function configure()
+    {
+        return app()['config']->all();
     }
 }

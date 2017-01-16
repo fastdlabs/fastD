@@ -14,15 +14,18 @@ return [
     'name' => 'Fast-D',
 
     /**
-     *
+     * Application environment local/dev/prod
      */
     'environment' => 'local',
 
     /**
-     *
+     * Application timezone
      */
     'timezone' => 'PRC',
 
+    /**
+     * Application logger path
+     */
     'logger' => '',
 
     /**
@@ -31,6 +34,10 @@ return [
     'services' => [
 
     ],
+
+    /**
+     * Http middleware
+     */
     'middleware' => [
 
     ]
