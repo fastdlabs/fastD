@@ -79,12 +79,18 @@ function logger () {
     return app()->get('logger');
 }
 
-function storage ($name) {
-
+/**
+ * @return mixed
+ */
+function storage () {
+    return app()->get('cache');
 }
 
-function database ($name) {
-
+/**
+ * @return mixed
+ */
+function database () {
+    return app()->get('database');
 }
 
 

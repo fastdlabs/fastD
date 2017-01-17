@@ -29,7 +29,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
     {
         $config = ConfigLoader::loadPhp(app()->getAppPath() . '/config/database.php');
 
-        $container->add('medoo', new medoo($config));
+        $container->add('database', new medoo($config));
 
         unset($config);
     }
