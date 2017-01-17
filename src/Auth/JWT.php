@@ -10,7 +10,20 @@
 namespace Auth;
 
 
-class JWT
-{
+use FastD\Middleware\DelegateInterface;
+use FastD\Middleware\ServerMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
+class JWT extends ServerMiddleware
+{
+    /**
+     * @param ServerRequestInterface $serverRequest
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
+    {
+        // TODO: Implement handle() method.
+    }
 }

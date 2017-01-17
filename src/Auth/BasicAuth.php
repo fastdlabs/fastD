@@ -9,14 +9,20 @@
 
 namespace FastD\Bundle\Middleware;
 
+use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\ServerMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Auth extends ServerMiddleware
 {
-    public function __construct()
+    /**
+     * @param ServerRequestInterface $serverRequest
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
+     */
+    public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
-        parent::__construct(function () {
-            echo 1;
-        });
+        // TODO: Implement handle() method.
     }
 }

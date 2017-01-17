@@ -13,6 +13,10 @@ use FastD\Http\JsonResponse;
 use FastD\Http\ServerRequest;
 use FastD\Middleware\Delegate;
 
+/**
+ * Class IndexController
+ * @package Http\Controller
+ */
 class IndexController
 {
     /**
@@ -39,6 +43,11 @@ class IndexController
         ]);
     }
 
+    /**
+     * @param ServerRequest $serverRequest
+     * @param Delegate $delegate
+     * @return JsonResponse
+     */
     public function middleware(ServerRequest $serverRequest, Delegate $delegate)
     {
         return response([
@@ -46,6 +55,9 @@ class IndexController
         ]);
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function db()
     {
         return response(
