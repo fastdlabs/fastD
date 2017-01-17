@@ -23,11 +23,6 @@ use swoole_http_response;
 class Server extends Http
 {
     /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
      * Server constructor.
      * @param Application $application
      */
@@ -35,9 +30,7 @@ class Server extends Http
     {
         $application->register(new SwooleServiceProvider());
 
-        $this->app = $application;
-
-        parent::__construct($application->getName(), $application['config']->get('listen'));
+        parent::__construct($application->getName(), $application->get('config')->get('listen'));
     }
 
     /**
