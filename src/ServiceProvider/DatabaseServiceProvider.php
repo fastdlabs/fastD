@@ -27,9 +27,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = ConfigLoader::load(app()->getAppPath() . '/config/database.php');
-
-        config()->merge($config);
+        $config = ConfigLoader::loadPhp(app()->getAppPath() . '/config/database.php');
 
         $container->add('medoo', new medoo($config));
 

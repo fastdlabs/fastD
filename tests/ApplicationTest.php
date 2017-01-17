@@ -9,8 +9,6 @@
 
 use ServiceProvider\FooServiceProvider;
 
-include_once __DIR__ . '/TestCase.php';
-
 class ApplicationTest extends TestCase
 {
     public function testApplicationInitialize()

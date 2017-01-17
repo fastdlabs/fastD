@@ -56,6 +56,6 @@ class Server extends Http
      */
     public function configure()
     {
-        return app()['config']->all();
+        return app()->get('config')->get('options');
     }
 }
