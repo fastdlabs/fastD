@@ -52,16 +52,22 @@ function request () {
     return $this['request'];
 }
 
-/**
- * @param array $content
- * @param int $statusCode
- * @param array $headers
- * @return JsonResponse
- */
-function response (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
+function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
     $headers['X-App-Version'] = Application::VERSION;
     $headers['X-Powered-By'] = app()->getName();
     return new JsonResponse($content, $statusCode, $headers);
+}
+
+/**
+ * @param string $content
+ * @param int $statusCode
+ * @param array $headers
+ * @return Response
+ */
+function response ($content, $statusCode = Response::HTTP_OK, array $headers = []) {
+    $headers['X-App-Version'] = Application::VERSION;
+    $headers['X-Powered-By'] = app()->getName();
+    return new Response($content, $statusCode, $headers);
 }
 
 /**

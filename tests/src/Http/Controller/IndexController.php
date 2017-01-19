@@ -26,7 +26,7 @@ class IndexController
      */
     public function welcome(ServerRequest $request, Delegate $delegate)
     {
-        return response([
+        return json([
             'foo' => 'bar'
         ]);
     }
@@ -38,7 +38,7 @@ class IndexController
      */
     public function sayHello(ServerRequest $request, Delegate $delegate)
     {
-        return response([
+        return json([
             'foo' => $request->getAttribute('name'),
         ]);
     }
@@ -50,7 +50,7 @@ class IndexController
      */
     public function middleware(ServerRequest $serverRequest, Delegate $delegate)
     {
-        return response([
+        return json([
             'foo' => 'bar'
         ]);
     }
@@ -60,7 +60,7 @@ class IndexController
      */
     public function db()
     {
-        return response(
+        return json(
             app()->get('medoo')->info()
         );
     }
