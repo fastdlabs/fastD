@@ -185,9 +185,9 @@ class Application extends Container
             $serverRequest = ServerRequest::createServerRequestFromGlobals();
         }
 
-        $this['request'] = $serverRequest;
+        $this->add('request', $serverRequest);
 
-        return $this['dispatcher']->dispatch($serverRequest);
+        return $this->get('dispatcher')->dispatch($serverRequest);
     }
 
     /**

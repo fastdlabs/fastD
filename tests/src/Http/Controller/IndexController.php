@@ -21,10 +21,9 @@ class IndexController
 {
     /**
      * @param ServerRequest $request
-     * @param Delegate $delegate
      * @return \FastD\Http\JsonResponse
      */
-    public function welcome(ServerRequest $request, Delegate $delegate)
+    public function welcome(ServerRequest $request)
     {
         return json([
             'foo' => 'bar'
@@ -33,10 +32,9 @@ class IndexController
 
     /**
      * @param ServerRequest $request
-     * @param Delegate $delegate
      * @return JsonResponse
      */
-    public function sayHello(ServerRequest $request, Delegate $delegate)
+    public function sayHello(ServerRequest $request)
     {
         return json([
             'foo' => $request->getAttribute('name'),
@@ -45,10 +43,9 @@ class IndexController
 
     /**
      * @param ServerRequest $serverRequest
-     * @param Delegate $delegate
      * @return JsonResponse
      */
-    public function middleware(ServerRequest $serverRequest, Delegate $delegate)
+    public function middleware(ServerRequest $serverRequest)
     {
         return json([
             'foo' => 'bar'
