@@ -201,7 +201,7 @@ class Application extends Container
             $statusCode = $e->getStatusCode();
         }
 
-        $response = response([
+        $response = json([
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
             'file' => $e->getFile(),
