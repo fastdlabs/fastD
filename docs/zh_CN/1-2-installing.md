@@ -30,5 +30,5 @@ $ pecl install swoole
 #### 4.0 确认支持 Swoole 启动
 
 ```
-$ 
+$ php -r 'echo SWOOLE_VERSION;'
 ```
