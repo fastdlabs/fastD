@@ -54,7 +54,6 @@ function request () {
 
 function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
     $headers['X-App-Version'] = Application::VERSION;
-    $headers['X-Powered-By'] = app()->getName();
     return new JsonResponse($content, $statusCode, $headers);
 }
 
@@ -66,7 +65,6 @@ function json (array $content = [], $statusCode = Response::HTTP_OK, array $head
  */
 function response ($content, $statusCode = Response::HTTP_OK, array $headers = []) {
     $headers['X-App-Version'] = Application::VERSION;
-    $headers['X-Powered-By'] = app()->getName();
     return new Response($content, $statusCode, $headers);
 }
 
