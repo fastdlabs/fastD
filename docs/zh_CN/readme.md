@@ -22,8 +22,8 @@
 高级
 -------
 
-* [中间件](3-1-middleware.md)
-* [配置](3-2-configuration.md)
+* [配置](3-1-configuration.md)
+* [中间件](3-2-middleware.md)
 * [命令行](3-3-console.md)
 * [单元测试](3-4-testcase.md)
 * [辅助函数](3-5-helpers.md)
@@ -34,5 +34,4 @@
 理念与架构
 ---------
 
-* [对象配置](4-1-properties-and-configurations.md)
-* [生命周期](4-2-lifecycle.md)
+* [生命周期](4-1-lifecycle.md)

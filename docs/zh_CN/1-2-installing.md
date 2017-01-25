@@ -14,7 +14,7 @@ mv composer.phar /usr/local/bin/composer
 ##### 1.1 安装 FastD
 
 ```
-composer create-require "fastd/fastd:3.0.x-dev"
+composer create-project "fastd/fastd" fastd -vvv 
 ```
 
 #### 2.0 确认安装完成
@@ -27,8 +27,16 @@ composer create-require "fastd/fastd:3.0.x-dev"
 $ pecl install swoole
 ```
 
-#### 4.0 确认支持 Swoole 启动
+#### 4.0 确认 Swoole 扩展成功安装
 
 ```
 $ php -r 'echo SWOOLE_VERSION;'
 ```
+
+#### 5.0 启动 Swoole 服务器
+
+```php
+php bin/server 
+```
+
+下一节: [目录结构](1-3-directory-structure.md)
