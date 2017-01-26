@@ -29,6 +29,7 @@
 * [辅助函数](3-5-helpers.md)
 * [服务提供器](3-6-service-provider.md)
 * [Swoole服务](3-7-swoole-server.md)
+* [扩展](3-8-extend.md)
 
 
 理念与架构
