@@ -1,7 +1,5 @@
 # 安装 FastD 
 
-========
-
 #### Composer 安装
 
 ##### 1.0 如果没有安装 Composer 

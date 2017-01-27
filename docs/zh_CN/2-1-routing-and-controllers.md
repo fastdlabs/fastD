@@ -1,7 +1,5 @@
 # 路由与控制器
 
-==========
-
 路由的提供来源于 [routing](https://github.com/JanHuang/routing) 组件，提供高性能的路由配置和解析处理，良好地支持 RESTful。
 
 路由配置文件存放于 `config/routes.php` 文件中。

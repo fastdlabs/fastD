@@ -1,7 +1,5 @@
 # 请求处理
 
-=======
-
 Http 请求处理来源于 [Http](https://github.com/JanHuang/http) 组件，由其提供强大的 Http 解析预处理，支持 Swoole.
 
 当用户发起一个 Http 请求的时候，Http 组件会将请求封装成一个 ServerRequestInterface 实现类，实现 PSR7 标准，并且将对象传递到控制器中。
