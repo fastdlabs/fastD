@@ -157,10 +157,8 @@ class Application extends Container
     {
         $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
-        $this->register(new DatabaseServiceProvider());
-        $this->register(new CacheServiceProvider());
         foreach ($services as $service) {
-            $this->register($service);
+            $this->register(new $service);
         }
     }
 

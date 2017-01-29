@@ -21,6 +21,8 @@ use medoo;
  */
 class DatabaseServiceProvider implements ServiceProviderInterface
 {
+    protected $db;
+
     /**
      * @param Container $container
      * @return void
@@ -29,7 +31,12 @@ class DatabaseServiceProvider implements ServiceProviderInterface
     {
         $config = ConfigLoader::loadPhp(app()->getAppPath() . '/config/database.php');
 
-        $container->add('database', new medoo($config));
+        $container->add('database', function () use ($config) {
+            if (null === $this->db) {
+                $this->db = new medoo($config);
+            }
+            return $this->db;
+        });
 
         unset($config);
     }

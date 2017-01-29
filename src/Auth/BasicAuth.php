@@ -7,14 +7,14 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Bundle\Middleware;
+namespace FastD\Auth;
 
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\ServerMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Auth extends ServerMiddleware
+class BasicAuth extends ServerMiddleware
 {
     /**
      * @param ServerRequestInterface $serverRequest
@@ -23,6 +23,7 @@ class Auth extends ServerMiddleware
      */
     public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
-        // TODO: Implement handle() method.
+        $auth = config()->get('auth');
+
     }
 }
