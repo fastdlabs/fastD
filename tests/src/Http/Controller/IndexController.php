@@ -58,7 +58,7 @@ class IndexController
     public function db()
     {
         return json(
-            app()->get('medoo')->info()
+            database()->info()
         );
     }
 }

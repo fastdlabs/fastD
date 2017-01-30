@@ -16,7 +16,7 @@ return [
     /**
      * Application environment local/dev/prod
      */
-    'environment' => 'local',
+    'environment' => 'prod',
 
     /**
      * Application timezone
@@ -26,19 +26,24 @@ return [
     /**
      * Application logger path
      */
-    'logger' => '',
+    'log' => [
+        'path' => 'storage',
+        'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
+        'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
+    ],
 
     /**
      * Bootstrap service.
      */
     'services' => [
-
+        \FastD\ServiceProvider\DatabaseServiceProvider::class,
+        \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
 
     /**
      * Http middleware
      */
     'middleware' => [
-
+        'auth' => \FastD\Auth\BasicAuth::class
     ]
 ];

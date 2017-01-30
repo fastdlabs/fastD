@@ -2,3 +2,4 @@
 /.idea
 /run
 composer.lock
+tests/storage

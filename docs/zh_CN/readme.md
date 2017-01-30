@@ -13,9 +13,9 @@
 
 * [路由与控制器](2-1-routing-and-controllers.md)
 * [请求处理](2-2-request-handling.md)
-* [响应处理](2-2-response-handling.md)
-* [认证授权](2-2-authorization.md)
-* [异常处理](2-2-exception-handling.md)
+* [响应处理](2-3-response-handling.md)
+* [认证授权](2-4-authorization.md)
+* [异常与日志处理](2-5-exception-logger-handling.md.md)
 
 高级
 -------

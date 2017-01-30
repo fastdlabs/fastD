@@ -16,11 +16,9 @@ class ApplicationTest extends TestCase
         $app = $this->createApplication();
 
         $this->assertEquals(__DIR__, $app->getAppPath());
-        $this->assertEquals('local', $app->getEnvironment());
         $this->assertEquals('Fast-D', $app->getName());
         $this->assertEquals('PRC', $app['time']->getTimeZone()->getName());
         $this->assertTrue($app->isBooted());
-        $this->assertTrue($app->isDebug());
     }
 
     public function testHandleRequest()
@@ -61,6 +59,20 @@ class ApplicationTest extends TestCase
         $app = $this->createApplication();
 
         $this->assertEquals('Fast-D', $app->get('config')->get('name'));
-        $this->assertEquals('local', $app->get('config')->get('environment'));
+    }
+
+    public function testLogger()
+    {
+        $app = $this->createApplication();
+
+        $response = $app->handleRequest($this->createRequest('GET', '/'));
+
+        $app->handleResponse($response);
+
+        $this->assertTrue(file_exists(app()->getAppPath() . '/storage/info.log'));
+
+        $app->run($this->createRequest('GET', '/not'));
+
+        $this->assertTrue(file_exists(app()->getAppPath() . '/storage/error.log'));
     }
 }

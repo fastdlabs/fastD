@@ -7,11 +7,12 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace ServiceProvider;
+namespace FastD\ServiceProvider;
 
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -23,8 +24,31 @@ class LoggerServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $logger = new Logger('');
-        $logger->pushHandler(new StreamHandler(''), Logger::INFO);
+        $config = config();
+        $logger = new Logger($config->get('name'));
+
+        $log = $config->get('log');
+        $path = !isset($log['path']) ? null : $log['path'];
+        if (empty($path) || '/' !== $path{0}) {
+            $path = app()->getAppPath() . '/' . $path;
+        }
+
+        if (!isset($log['info'])) {
+            $logger->pushHandler(new StreamHandler($path . '/info.log', Logger::INFO));
+        } else if (is_string($log['info'])) {
+            $logger->pushHandler(new $log['info']($path . '/info.log', Logger::INFO));
+        } else if ($log['info'] instanceof HandlerInterface) {
+            $logger->pushHandler($log['info']);
+        }
+
+        if (!isset($log['error'])) {
+            $logger->pushHandler(new StreamHandler($path . '/error.log', Logger::WARNING));
+        } else if (is_string($log['error'])) {
+            $logger->pushHandler(new $log['error']($path . '/error.log', Logger::WARNING));
+        } else if ($log['error'] instanceof HandlerInterface) {
+            $logger->pushHandler($log['error']);
+        }
+
         $container->add('logger', $logger);
     }
 }

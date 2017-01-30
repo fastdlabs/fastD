@@ -9,6 +9,7 @@
 
 namespace FastD\Auth;
 
+use Auth\UserInterface;
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\ServerMiddleware;
 use Psr\Http\Message\ResponseInterface;
@@ -23,7 +24,6 @@ class BasicAuth extends ServerMiddleware
      */
     public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
-        $auth = config()->get('auth');
 
     }
 }

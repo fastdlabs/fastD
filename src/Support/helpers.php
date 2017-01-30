@@ -35,37 +35,28 @@ function route ($prefix = null, callable $callback = null) {
 }
 
 /**
- * @param $file
  * @return Config
  */
-function config ($file = null) {
-    if (null === $file) {
-        return app()->get('config');
-    }
-    return app()->get('config')->load($file);
+function config () {
+    return app()->get('config');
 }
 
 /**
  * @return mixed
  */
 function request () {
-    return $this['request'];
-}
-
-function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
-    $headers['X-App-Version'] = Application::VERSION;
-    return new JsonResponse($content, $statusCode, $headers);
+    return app()->get('request');
 }
 
 /**
- * @param string $content
+ * @param array $content
  * @param int $statusCode
  * @param array $headers
- * @return Response
+ * @return JsonResponse
  */
-function response ($content, $statusCode = Response::HTTP_OK, array $headers = []) {
+function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
     $headers['X-App-Version'] = Application::VERSION;
-    return new Response($content, $statusCode, $headers);
+    return new JsonResponse($content, $statusCode, $headers);
 }
 
 /**
@@ -86,7 +77,7 @@ function logger () {
 /**
  * @return mixed
  */
-function storage () {
+function cache () {
     return app()->get('cache');
 }
 

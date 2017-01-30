@@ -17,10 +17,9 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\ServiceProvider\DatabaseServiceProvider;
 use FastD\ServiceProvider\RouteServiceProvider;
-use FastD\ServiceProvider\CacheServiceProvider;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use FastD\ServiceProvider\LoggerServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -157,6 +156,7 @@ class Application extends Container
     {
         $this->register(new ConfigServiceProvider());
         $this->register(new RouteServiceProvider());
+        $this->register(new LoggerServiceProvider());
         foreach ($services as $service) {
             $this->register(new $service);
         }
@@ -169,6 +169,23 @@ class Application extends Container
     public function handleResponse(Response $response)
     {
         $response->send();
+        // Not debug environment. Save log in application.
+        if (!$this->isDebug()) {
+            $request = $this->get('request');
+            $log = [
+                'statusCode' => $response->getStatusCode(),
+                'params' => [
+                    'get' => $request->getQueryParams(),
+                    'post' => $request->getParsedBody(),
+                ]
+            ];
+
+            if ($response->isSuccessful()) {
+                logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+            } else {
+                logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+            }
+        }
 
         return 0;
     }
@@ -199,13 +216,18 @@ class Application extends Container
             $statusCode = $e->getStatusCode();
         }
 
-        $response = json([
+        $data = [
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => explode("\n", $e->getTraceAsString()),
-        ]);
+        ];
+
+        if ($this->isDebug()) {
+            $data['file'] = $e->getFile();
+            $data['line'] = $e->getLine();
+            $data['trace'] = explode("\n", $e->getTraceAsString());
+        }
+
+        $response = json($data);
 
         if (!array_key_exists($statusCode, $response::$statusTexts)) {
             $statusCode = 500;
