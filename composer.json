@@ -33,7 +33,7 @@
         "fastd/http": "~3.0.0",
         "fastd/config": "~3.0.0",
         "fastd/routing": "~3.0.0",
-        "fastd/swoole": "~1.0.0@beta",
+        "fastd/swoole": "~1.0.0",
         "fastd/testing": "~0.1.0",
         "fastd/middleware": "~1.0.0",
         "catfan/Medoo": "~1.1.0",
