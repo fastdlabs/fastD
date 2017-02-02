@@ -35,6 +35,38 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
+
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputOption;
+
+$input = new ArgvInput(null, new InputDefinition([
+    new InputArgument('action', InputArgument::OPTIONAL, 'The server action', 'status'),
+    new InputOption('daemon', 'd', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
+]));
+
 $server = new Server(new Application(getcwd()));
 
-$server->start();
+if ($input->hasParameterOption(['--daemon', '-d'], true)) {
+    $server->daemon();
+}
+
+switch ($input->getArgument('action')) {
+    case 'start':
+        if ($input->hasParameterOption(['--dir'])) {
+            $server->watch([$input->getOption('dir')]);
+        } else {
+            $server->start();
+        }
+        break;
+    case 'stop':
+        $server->shutdown();
+        break;
+    case 'reload':
+        $server->reload();
+        break;
+    case 'status':
+    default:
+        $server->status();
+}

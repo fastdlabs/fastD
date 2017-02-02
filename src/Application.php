@@ -141,7 +141,7 @@ class Application extends Container
             );
             $this['config'] = $config;
 
-            $this->registerServicesProviders($config['services']);
+            $this->registerServicesProviders((array) $config['services']);
 
             unset($config);
             $this->booted = true;
