@@ -12,7 +12,7 @@
 ### Installation
 
 ```
-composer create-project "fastd/api" fastd -vvv
+composer create-project "fastd/dobee" dobee -vvv
 ```
 
 ### Documentation

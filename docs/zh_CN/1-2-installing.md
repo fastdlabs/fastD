@@ -12,7 +12,7 @@ mv composer.phar /usr/local/bin/composer
 ##### 1.1 安装 FastD
 
 ```
-composer create-project "fastd/fastd" fastd -vvv 
+composer create-project "fastd/dobee" dobee -vvv 
 ```
 
 #### 2.0 确认安装完成
