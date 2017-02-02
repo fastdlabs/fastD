@@ -31,6 +31,8 @@ class Server extends Http
         $application->register(new SwooleServiceProvider());
 
         parent::__construct($application->getName(), $application->get('config')->get('listen'));
+
+        $this->configure($application->get('config')->get('options'));
     }
 
     /**
@@ -40,15 +42,5 @@ class Server extends Http
     public function doRequest(ServerRequest $serverRequest)
     {
         return app()->handleRequest($serverRequest);
-    }
-
-    /**
-     * Please return swoole configuration array.
-     *
-     * @return array
-     */
-    public function configure()
-    {
-        return app()->get('config')->get('options');
     }
 }

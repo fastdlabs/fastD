@@ -9,8 +9,8 @@
 
 return [
     'listen' => 'http://0.0.0.0:9527',
-    'pid_file' => '',
     'options' => [
+        'pid_file' => '',
         'worker_num' => 10
     ]
 ];

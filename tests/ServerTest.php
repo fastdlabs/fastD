@@ -27,6 +27,7 @@ class ServerTest extends TestCase
         $server->bootstrap();
 
         $this->assertEquals($server->getSwoole()->setting, [
+            'pid_file' => '',
             'worker_num' => 10
         ]);
     }

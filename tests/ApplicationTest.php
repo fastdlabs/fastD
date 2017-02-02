@@ -16,7 +16,7 @@ class ApplicationTest extends TestCase
         $app = $this->createApplication();
 
         $this->assertEquals(__DIR__, $app->getAppPath());
-        $this->assertEquals('Fast-D', $app->getName());
+        $this->assertEquals('fast-d', $app->getName());
         $this->assertEquals('PRC', $app['time']->getTimeZone()->getName());
         $this->assertTrue($app->isBooted());
     }
@@ -58,7 +58,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $this->assertEquals('Fast-D', $app->get('config')->get('name'));
+        $this->assertEquals('fast-d', $app->get('config')->get('name'));
     }
 
     public function testLogger()
