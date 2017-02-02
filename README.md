@@ -17,7 +17,7 @@ composer create-project "fastd/dobee" dobee -vvv
 
 ### Documentation
 
-[中文文档](docs/zh_CN/readme.md)
+* [中文文档](docs/zh_CN/readme.md)
 
 ### Nginx Server
 
