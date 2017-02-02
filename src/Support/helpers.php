@@ -12,7 +12,10 @@ use FastD\Config\Config;
 use FastD\Http\JsonResponse;
 use FastD\Http\RedirectResponse;
 use FastD\Http\Response;
+use FastD\Routing\RouteCollection;
 use Monolog\Logger;
+use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
 /**
  * @return Application
@@ -24,7 +27,7 @@ function app () {
 /**
  * @param $prefix
  * @param $callback
- * @return \FastD\Routing\RouteCollection
+ * @return RouteCollection
  */
 function route ($prefix = null, callable $callback = null) {
     if (null === $prefix) {
@@ -42,7 +45,7 @@ function config () {
 }
 
 /**
- * @return mixed
+ * @return ServerRequestInterface
  */
 function request () {
     return app()->get('request');
@@ -75,14 +78,14 @@ function logger () {
 }
 
 /**
- * @return mixed
+ * @return AbstractAdapter
  */
 function cache () {
     return app()->get('cache');
 }
 
 /**
- * @return mixed
+ * @return medoo
  */
 function database () {
     return app()->get('database');

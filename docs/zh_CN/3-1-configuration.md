@@ -31,8 +31,10 @@
 
 ##### 自定义配置项
 
-database.php 是框架默认提供的扩展配置，由 `DatabaseServiceProvider` 进行具体读取处理。
+database.php 与 cache.php 是框架默认提供的扩展配置，由 `DatabaseServiceProvider` 与 `CacheServiceProvider` 进行具体处理。
 
-具体请参考: [服务提供器](3-6-service-provider.md)
+其中 database.php 与 cache.php 虽说是框架默认提供的，但是他们均属于自定义服务提供器之一。
+
+如果需要自定添加或者修改服务提供器，具体请参考: [服务提供器](3-6-service-provider.md)
 
 下一节: [中间件](3-2-middleware.md)

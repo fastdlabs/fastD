@@ -8,6 +8,7 @@
  */
 
 use ServiceProvider\FooServiceProvider;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class ApplicationTest extends TestCase
 {
@@ -54,14 +55,14 @@ class ApplicationTest extends TestCase
         $this->assertEquals('foo', $app['foo']->name);
     }
 
-    public function testConfiguration()
+    public function testConfigurationServiceProvider()
     {
         $app = $this->createApplication();
 
         $this->assertEquals('fast-d', $app->get('config')->get('name'));
     }
 
-    public function testLogger()
+    public function testLoggerServiceProvider()
     {
         $app = $this->createApplication();
 
@@ -74,5 +75,12 @@ class ApplicationTest extends TestCase
         $app->run($this->createRequest('GET', '/not'));
 
         $this->assertTrue(file_exists(app()->getAppPath() . '/storage/error.log'));
+    }
+
+    public function testCacheServiceProvider()
+    {
+        $app = $this->createApplication();
+
+        $this->assertInstanceOf(FilesystemAdapter::class, $app->get('cache'));
     }
 }
