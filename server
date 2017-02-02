@@ -7,8 +7,6 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-use FastD\Application;
-use FastD\Server;
 
 set_time_limit(0);
 date_default_timezone_set('PRC');
@@ -35,7 +33,8 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-
+use FastD\Application;
+use FastD\Server;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
