@@ -47,22 +47,20 @@ class Server extends Http
     {
         try {
             $swooleRequestServer = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
-
             $response = $this->doRequest($swooleRequestServer);
-
-            foreach ($response->getHeaders() as $key => $header) {
-                $swooleResponse->header($key, $response->getHeaderLine($key));
-            }
-
-            foreach ($swooleRequestServer->getCookieParams() as $key => $cookieParam) {
-                $swooleResponse->cookie($key, $cookieParam);
-            }
-
-            $swooleResponse->status($response->getStatusCode());
         } catch (Exception $e) {
             $response = $this->application->handleException($e);
         }
 
+        foreach ($response->getHeaders() as $key => $header) {
+            $swooleResponse->header($key, $response->getHeaderLine($key));
+        }
+
+        foreach ($swooleRequestServer->getCookieParams() as $key => $cookieParam) {
+            $swooleResponse->cookie($key, $cookieParam);
+        }
+
+        $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
         unset($response, $swooleRequestServer, $swooleResponse);
     }
