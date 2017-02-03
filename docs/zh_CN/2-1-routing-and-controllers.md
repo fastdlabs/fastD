@@ -30,6 +30,18 @@ route()->group('/v1', function () {
 
 以上路由会在用户访问 `/v1/` 或者 `/v1` 时候进行回调处理
 
+##### 路由模糊匹配
+
+```php
+route()->get("/foo/*", "IndexController@sayHello");
+```
+
+此模式会将 /foo 开头的 `[\/_a-zA-Z0-9-]+` 匹配地址到控制器当中，通过 `fuzzy_path` 参数进行获取匹配到的地址。
+
+```php
+$request->getAttribute('fuzzy_path');
+```
+
 ### 控制器
 
 路由配置不支持匿名函数回调，因此在核心处理中屏蔽了该功能，用户保持配置文件的清洁与独立，建议开发者使用控制器回调的方式进行处理。
