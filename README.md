@@ -1,6 +1,10 @@
 # Fast-D PHP High Performance API Framework
 
-[![Latest Stable Version](https://poser.pugx.org/fastd/fastd/v/stable)](https://packagist.org/packages/fastd/fastd) [![Latest Unstable Version](https://poser.pugx.org/fastd/fastd/v/unstable)](https://packagist.org/packages/fastd/fastd) [![License](https://poser.pugx.org/fastd/fastd/license)](https://packagist.org/packages/fastd/fastd)
+[![Latest Stable Version](https://poser.pugx.org/fastd/fastd/v/stable)](https://packagist.org/packages/fastd/fastd) 
+[![Latest Unstable Version](https://poser.pugx.org/fastd/fastd/v/unstable)](https://packagist.org/packages/fastd/fastd) 
+[![PHP Require Version](https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg)](https://secure.php.net/)
+[![Swoole Require Version](https://img.shields.io/badge/swoole-%3E%3D1.8-8892BF.svg)](http://www.swoole.com/)
+[![License](https://poser.pugx.org/fastd/fastd/license)](https://packagist.org/packages/fastd/fastd)
 
 ### Requirements
 
