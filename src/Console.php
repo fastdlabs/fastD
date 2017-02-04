@@ -9,7 +9,6 @@
 
 namespace FastD;
 
-use FastD\Console\RouteDump;
 use Symfony\Component\Console\Application as Symfony;
 
 /**

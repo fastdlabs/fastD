@@ -11,7 +11,7 @@
 * PHP >= 5.6
 * ext-curl
 * ext-pdo
-* [ext-swoole]
+* ext-swoole
 
 ### Installation
 
