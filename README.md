@@ -1,5 +1,6 @@
 # Fast-D PHP High Performance API Framework
 
+[![Build Status](https://travis-ci.org/JanHuang/fastD.svg?branch=master)](https://travis-ci.org/JanHuang/fastD)
 [![Latest Stable Version](https://poser.pugx.org/fastd/fastd/v/stable)](https://packagist.org/packages/fastd/fastd) 
 [![Latest Unstable Version](https://poser.pugx.org/fastd/fastd/v/unstable)](https://packagist.org/packages/fastd/fastd) 
 [![PHP Require Version](https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg)](https://secure.php.net/)
