@@ -28,10 +28,6 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
-        $this->addCommands([
-            new RouteDump(),
-        ]);
-
         $this->initializeCommands();
     }
 
