@@ -6,7 +6,9 @@ php:
 services:
   - mysql
 
-before_install: pecl install swoole
+before_install:
+  - pecl install swoole
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS ci;'
 
 install: composer install -vvv
 

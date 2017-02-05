@@ -9,10 +9,10 @@
 
 return [
     'database_type' => 'mysql',
-    'database_name' => 'test',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => '123456',
+    'database_name' => 'ci',
+    'server' => '127.0.0.1',
+    'username' => 'travis',
+    'password' => '',
     'charset' => 'utf8',
     'port' => 3306,
 ];
