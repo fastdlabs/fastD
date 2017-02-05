@@ -9,7 +9,7 @@ curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 ```
 
-#### 2 安装 Swoole 扩展
+##### 2 安装 Swoole 扩展
 
 ```
 $ pecl install swoole
@@ -21,7 +21,7 @@ $ pecl install swoole
 $ composer create-project "fastd/dobee" dobee -vvv 
 ```
 
-#### 4 启动服务器
+##### 4 启动服务器
 
 通过浏览器或者PHP 内置 WEB 服务器访问当前web目录
 
