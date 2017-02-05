@@ -3,6 +3,9 @@ php:
 - '5.6'
 - '7'
 
+services:
+  - mysql
+
 before_install: pecl install swoole
 
 install: composer install -vvv
