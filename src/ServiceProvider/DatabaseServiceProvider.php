@@ -16,6 +16,61 @@ use FastD\Container\ServiceProviderInterface;
 use medoo;
 
 /**
+ * Class Model
+ * @package FastD\ServiceProvider
+ */
+class Model
+{
+    /**
+     * @var medoo
+     */
+    protected $db;
+
+    /**
+     * Model constructor.
+     * @param medoo $medoo
+     */
+    public function __construct(medoo $medoo)
+    {
+        $this->db = $medoo;
+    }
+
+    /**
+     * @return medoo
+     */
+    public function getDatabase()
+    {
+        return $this->db;
+    }
+}
+
+/**
+ * Class ModelFactory
+ * @package FastD\ServiceProvider
+ */
+class ModelFactory
+{
+    /**
+     * @var Model[]
+     */
+    protected static $models = [];
+
+    /**
+     * @param $name
+     * @return Model
+     */
+    public static function createModel($name)
+    {
+        if (!isset(static::$models[$name])) {
+            $modelName = 'Model\\' . ucfirst($name) . 'Model';
+            static::$models[$name] = new $modelName(database());
+        }
+
+        return static::$models[$name];
+    }
+}
+
+/**
  * Class DatabaseServiceProvider
  * @package FastD\ServiceProvider
  */

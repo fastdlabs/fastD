@@ -61,4 +61,14 @@ class IndexController
             database()->info()
         );
     }
+
+    public function model()
+    {
+        $model = model('demo');
+
+        return json([
+            'model' => get_class($model),
+            'db' => $model->getDatabase()->info()
+        ]);
+    }
 }

@@ -83,4 +83,13 @@ class ApplicationTest extends TestCase
 
         $this->assertInstanceOf(FilesystemAdapter::class, $app->get('cache'));
     }
+
+    public function testModel()
+    {
+        $app = $this->createApplication();
+
+        $response = $app->handleRequest($this->createRequest('GET', '/model'));
+
+        echo $response->getBody();
+    }
 }

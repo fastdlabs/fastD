@@ -13,6 +13,8 @@ use FastD\Http\JsonResponse;
 use FastD\Http\RedirectResponse;
 use FastD\Http\Response;
 use FastD\Routing\RouteCollection;
+use FastD\ServiceProvider\Model;
+use FastD\ServiceProvider\ModelFactory;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
@@ -89,6 +91,14 @@ function cache () {
  */
 function database () {
     return app()->get('database');
+}
+
+/**
+ * @param $name
+ * @return Model
+ */
+function model($name) {
+    return ModelFactory::createModel($name);
 }
 
 
