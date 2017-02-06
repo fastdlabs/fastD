@@ -92,4 +92,16 @@ class IndexController
 
 如此类推。
 
+### 数据库模型
+
+框架提供简单的数据库模型，暂时不提供 ORM 等复杂操作，因为本身定位不在此处，如果想要使用 ORM 等操作，可以通过自定义 [服务提供器](3-6-service-provider.md) 来扩展。
+
+模型没有强制要求继承 `Model`，但是在每个模型初始化的时候，会默认在构造方法中注入 `medoo` 对象，分配在 `db` 属性当中。
+
+```php
+$model = model('demo');
+```
+
+模型放置在 Model 目录中，如果没有该目录，需要通过手动创建目录，通过使用 `model` 方法的时候，会自动将命名空间拼接到模型名之前，并且模型名不需要带上 `Model` 字样，如: `model('demo'')` 等于 `new Model\DemoModel`。
+
 下一节: [请求](2-2-request-handling.md)
