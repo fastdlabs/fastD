@@ -10,12 +10,11 @@
 namespace FastD;
 
 use Exception;
-use FastD\Http\HttpException;
 use FastD\Http\Response;
-use FastD\Http\ServerRequest;
 use FastD\Http\SwooleServerRequest;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Swoole\Server\Http;
+use Psr\Http\Message\ServerRequestInterface;
 use swoole_http_request;
 use swoole_http_response;
 
@@ -41,8 +40,39 @@ class Server extends Http
         parent::__construct($application->getName(), $application->get('config')->get('listen'));
 
         $this->configure($application->get('config')->get('options'));
+
+        $this->initMultiPorts()->initProcesses();
     }
 
+    /**
+     * @return $this
+     */
+    public function initMultiPorts()
+    {
+        $ports = $this->application->get('config')->get('ports', []);
+        foreach ($ports as $port) {
+            $class = $port['class'];
+            $this->listen(new $class('ports', $port['listen'], $port['options']));
+        }
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function initProcesses()
+    {
+        $processes = $this->application->get('config')->get('processes', []);
+        foreach ($processes as $process) {
+            $this->process(new $process);
+        }
+        return $this;
+    }
+
+    /**
+     * @param swoole_http_request $swooleRequet
+     * @param swoole_http_response $swooleResponse
+     */
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
     {
         try {
@@ -66,10 +96,10 @@ class Server extends Http
     }
 
     /**
-     * @param ServerRequest $serverRequest
+     * @param ServerRequestInterface $serverRequest
      * @return Response
      */
-    public function doRequest(ServerRequest $serverRequest)
+    public function doRequest(ServerRequestInterface $serverRequest)
     {
         return app()->handleRequest($serverRequest);
     }

@@ -12,5 +12,17 @@ return [
     'options' => [
         'pid_file' => '',
         'worker_num' => 10
-    ]
+    ],
+    'processes' => [
+        'class' => \Processor\DemoProcessor::class
+    ],
+    'ports' => [
+        [
+            'class' => \Port\DemoPort::class,
+            'listen' => 'tcp://127.0.0.1:9528',
+            'options' => [
+
+            ],
+        ],
+    ],
 ];

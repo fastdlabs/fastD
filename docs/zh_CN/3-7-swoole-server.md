@@ -26,4 +26,75 @@ $ php bin/server {start|status|stop|reload} -d > /dev/null
 
 以上即可通过不修改代码，支持 Swoole 操作。
 
+### 文件监听
+
+文件监听需要依赖 [inotify](https://pecl.php.net/package/inotify) 扩展，需要自行安装。
+
+```php
+$ php bin/server watch --dir=需要监听的目录
+```
+
+当监听的目录发生改变时，服务器会自动重启，推荐在开发模式下启用。
+
+### 多端口监听
+
+服务器支持多端口监听，只需要简单的配置。
+
+```php
+return [
+    'listen' => 'http://0.0.0.0:9527',
+    'options' => [
+        'pid_file' => '',
+        'worker_num' => 10
+    ],
+    // 多端口监听
+    'ports' => [
+        [
+            'class' => \Port\DemoPort::class,
+            'listen' => 'tcp://127.0.0.1:9528',
+            'options' => [
+
+            ],
+        ],
+    ],
+];
+```
+
+每个需要监听的端口需要继承 `FastD\Swoole\Server` 对象，实现内部抽象方法，具体请查看 [examples](https://github.com/JanHuang/swoole/blob/master/examples/multi_port_server.php)
+
+**注意事项**
+
+swoole_http_server和swoole_websocket_server因为是使用继承子类实现的，无法使用listen创建Http/WebSocket服务器。如果服务器的主要功能为RPC，但希望提供一个简单的Web管理界面。
+
+在这样的场景中，可以先创建Http/WebSocket服务器，然后再进行listen监听RPC服务器的端口。
+
+* [Swoole 监听端口](http://wiki.swoole.com/wiki/page/525.html)
+
+### 服务器进程
+
+服务器内置 Process 进程，在启动服务器的时候会自动拉起进程，通过 [Swoole::addProcess](http://wiki.swoole.com/wiki/page/390.html) 实现。
+
+配置依然是 [server.php](../../tests/config/server.php)。
+
+```php
+return [
+    'listen' => 'http://0.0.0.0:9527',
+    'options' => [
+        'pid_file' => '',
+        'worker_num' => 10
+    ],
+    'processes' => [
+        'class' => \Processor\DemoProcessor::class
+    ],
+];
+```
+
+重写 `FastD\Swoole\Process` 的 `handle` 方法，`handle` 为进程具体执行的事务。示例: [DemoProcessor](../../tests/src/Processor/DemoProcessor.php)
+
+### 服务状态上报与发现
+
+服务器状态上报，需要开启一个监控端，接受服务器状态的服务器(可以通过 FastD API 框架进行实现)，然后编写一个上报状态的进程，订立上报机制，对状态进行定时汇报。
+
+示例编写中...
+
 下一节: [扩展](3-8-extend.md)

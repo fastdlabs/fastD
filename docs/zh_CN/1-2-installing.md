@@ -23,7 +23,7 @@ $ composer create-project "fastd/dobee" dobee -vvv
 
 ##### 4 启动服务器
 
-通过浏览器或者PHP 内置 WEB 服务器访问当前web目录
+通过浏览器访问 PHP 内置 WEB 服务器或访问当前web目录
 
 **启动内置 Web 服务器**
 
@@ -39,6 +39,27 @@ $ php bin/server
 ```
 
 浏览器访问 `127.0.0.1:9527` 即可得到结果
+
+### Windows 配置
+
+因为 swoole 没有太多考虑 windows 环境，所以推荐使用虚拟机环境进行开发，Windows 仅支持传统 PHP 模式。
+
+##### 1 安装 fastd/dobee
+ 
+```
+$ composer create-project "fastd/dobee" dobee -vvv 
+```
+
+##### 2 启动服务器
+
+**启动内置 Web 服务器**
+
+```shell
+$ cd dobee
+$ php -S 127.0.0.1:9527 -t ./web 
+```
+
+通过浏览器访问 PHP 内置 WEB 服务器或通过 apache/nginx 访问当前web目录
 
 ### Nginx 配置
 
