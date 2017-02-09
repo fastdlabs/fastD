@@ -14,7 +14,7 @@ return [
         'worker_num' => 10
     ],
     'processes' => [
-        'class' => \Processor\DemoProcessor::class
+        \Processor\DemoProcessor::class
     ],
     'ports' => [
         [

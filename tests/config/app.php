@@ -45,5 +45,15 @@ return [
      */
     'middleware' => [
         'auth' => \FastD\Auth\BasicAuth::class
-    ]
+    ],
+
+    /**
+     * Database config
+     */
+    'database' => include __DIR__ . '/database.php',
+
+    /**
+     * Caching config
+     */
+    'cache' => include __DIR__ . '/cache.php',
 ];

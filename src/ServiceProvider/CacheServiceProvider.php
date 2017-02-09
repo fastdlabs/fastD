@@ -26,7 +26,7 @@ class CacheServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = ConfigLoader::loadPhp(app()->getAppPath() . '/config/cache.php');
+        $config = config()->get('cache');
 
         $container->add('cache', function () use ($config) {
             if (null === $this->cache) {

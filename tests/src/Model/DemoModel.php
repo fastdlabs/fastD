@@ -10,7 +10,7 @@
 namespace Model;
 
 
-use FastD\ServiceProvider\Model;
+use FastD\Model\Model;
 
 class DemoModel extends Model
 {

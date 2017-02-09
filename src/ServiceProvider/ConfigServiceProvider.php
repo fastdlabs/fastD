@@ -25,6 +25,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $container->add('config', new Config($container['config']));
+        $container->add('config', new Config($container->get('config')));
     }
 }
