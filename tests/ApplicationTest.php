@@ -90,7 +90,7 @@ class ApplicationTest extends TestCase
 
         $response = $app->handleRequest($this->createRequest('GET', '/model'));
 
-//        echo $response->getBody();
+        echo $response->getBody();
     }
 
     public function testAuth()
@@ -98,6 +98,8 @@ class ApplicationTest extends TestCase
         $app = $this->createApplication();
 
         $response = $app->handleRequest($this->createRequest('GET', '/auth'));
+
+        echo $response->getBody();
 
         $this->assertEquals(json_encode([
             'msg' => 'not allow access',
@@ -108,6 +110,8 @@ class ApplicationTest extends TestCase
             'PHP_AUTH_USER' => 'foo',
             'PHP_AUTH_PW' => 'bar'
         ]));
+
+        echo $response->getBody();
 
         $this->assertEquals(json_encode([
             'foo' => 'bar'

@@ -36,11 +36,11 @@
         "fastd/swoole": "~1.0.0",
         "fastd/testing": "~0.1.0",
         "fastd/middleware": "~1.0.0",
+        "fastd/basic-authenticate": "~0.1.0",
         "catfan/Medoo": "~1.1.0",
         "symfony/cache": "~3.2",
         "symfony/console": "^3.2",
-        "monolog/monolog": "~1.0",
-        "tuupola/slim-basic-auth": "^2.2"
+        "monolog/monolog": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"

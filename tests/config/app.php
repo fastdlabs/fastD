@@ -44,18 +44,27 @@ return [
      * Http middleware
      */
     'middleware' => [
-        'basic.auth' => \FastD\Auth\BasicAuthenticationMiddleware::class
+        'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication([
+            'authenticator' => [
+                'class' => \FastD\BasicAuthenticate\PhpAuthenticator::class,
+                'params' => [
+                    'foo' => 'bar'
+                ]
+            ],
+            'response' => [
+                'class' => \FastD\Http\JsonResponse::class,
+                'data' => [
+                    'msg' => 'not allow access',
+                    'code' => 401
+                ]
+            ]
+        ])
     ],
 
     /**
-     * HTTP basic auth
+     * User custom configure
      */
-    'basic.auth' => [
-        'secure' => false, // https
-        'users' => [
-            'foo' => 'bar'
-        ]
-    ],
+    'config' => include __DIR__ . '/config.php',
 
     /**
      * Database config
