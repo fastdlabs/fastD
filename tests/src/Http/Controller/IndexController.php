@@ -71,4 +71,11 @@ class IndexController
             'db' => $model->getDatabase()->info()
         ]);
     }
+
+    public function auth()
+    {
+        return json([
+            'foo' => 'bar'
+        ]);
+    }
 }

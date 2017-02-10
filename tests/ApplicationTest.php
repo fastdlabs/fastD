@@ -90,6 +90,27 @@ class ApplicationTest extends TestCase
 
         $response = $app->handleRequest($this->createRequest('GET', '/model'));
 
-        echo $response->getBody();
+//        echo $response->getBody();
+    }
+
+    public function testAuth()
+    {
+        $app = $this->createApplication();
+
+        $response = $app->handleRequest($this->createRequest('GET', '/auth'));
+
+        $this->assertEquals(json_encode([
+            'msg' => 'not allow access',
+            'code' => 401
+        ]), (string) $response->getBody());
+
+        $response = $app->handleRequest($this->createRequest('GET', 'http://foo:bar@example.com/auth', [], null, [
+            'PHP_AUTH_USER' => 'foo',
+            'PHP_AUTH_PW' => 'bar'
+        ]));
+
+        $this->assertEquals(json_encode([
+            'foo' => 'bar'
+        ]), (string) $response->getBody());
     }
 }

@@ -18,8 +18,8 @@ class TestCase extends PHPUnit_Framework_TestCase
         return $app;
     }
 
-    public function createRequest($method, $path)
+    public function createRequest($method, $path, array $header = [], \Psr\Http\Message\StreamInterface $body = null, array $server = [])
     {
-        return new ServerRequest($method, $path);
+        return new ServerRequest($method, $path, $header, $body, $server);
     }
 }

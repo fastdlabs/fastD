@@ -16,6 +16,10 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * Class LoggerServiceProvider
+ * @package FastD\ServiceProvider
+ */
 class LoggerServiceProvider implements ServiceProviderInterface
 {
     /**

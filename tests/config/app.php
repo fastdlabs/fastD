@@ -44,7 +44,17 @@ return [
      * Http middleware
      */
     'middleware' => [
-        'auth' => \FastD\Auth\BasicAuth::class
+        'basic.auth' => \FastD\Auth\BasicAuthenticationMiddleware::class
+    ],
+
+    /**
+     * HTTP basic auth
+     */
+    'basic.auth' => [
+        'secure' => false, // https
+        'users' => [
+            'foo' => 'bar'
+        ]
     ],
 
     /**
