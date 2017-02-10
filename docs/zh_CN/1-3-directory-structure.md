@@ -2,10 +2,12 @@
 
 ```
 config
-    app.php
-    database.php
-    routes.php
-    server.php
+    app.php             应用默认配置
+    config.php          用户自定义配置
+    database.php        数据库配置
+    routes.php          路由配置
+    server.php          swoole 服务器配置
+    cache.php           缓存配置
 src
     Console             控制台命令
     Http                
