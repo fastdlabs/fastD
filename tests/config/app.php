@@ -62,11 +62,6 @@ return [
     ],
 
     /**
-     * User custom configure
-     */
-    'config' => include __DIR__ . '/config.php',
-
-    /**
      * Database config
      */
     'database' => include __DIR__ . '/database.php',

@@ -49,8 +49,6 @@ class CacheServiceProvider implements ServiceProviderInterface
             return $this->cache;
         });
 
-        config()->merge($config);
-
         unset($config);
     }
 }
