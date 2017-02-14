@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use FastD\Console\Document;
 use Symfony\Component\Console\Application as Symfony;
 
 /**
@@ -37,6 +38,7 @@ class Console extends Symfony
      */
     public function initializeCommands()
     {
+        $this->add(new Document());
         if (false !== ($files = glob(app()->getAppPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $command = '\\Console\\' . pathinfo($file, PATHINFO_FILENAME);

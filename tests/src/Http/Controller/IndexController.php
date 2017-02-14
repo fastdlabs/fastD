@@ -14,12 +14,21 @@ use FastD\Http\ServerRequest;
 use FastD\Middleware\Delegate;
 
 /**
+ *
+ * @SWG\Info(title="My First API", version="0.1")
+ *
  * Class IndexController
  * @package Http\Controller
  */
 class IndexController
 {
     /**
+     *
+     * @SWG\Get(
+     *     path="/api/resource.json",
+     *     @SWG\Response(response="200", description="An example resource")
+     * )
+     *
      * @param ServerRequest $request
      * @return \FastD\Http\JsonResponse
      */

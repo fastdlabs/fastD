@@ -1,0 +1,19 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "My First API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/resource.json": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "An example resource"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}

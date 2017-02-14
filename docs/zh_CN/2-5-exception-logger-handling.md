@@ -39,4 +39,4 @@ return [
 
 当如果需要其他存储方式的时候，则直接实例化 logger 对象即可。
 
-下一节: [应用配置](3-1-configuration.md)
+下一节: [应用配置](2-6-docuemnt.md)
