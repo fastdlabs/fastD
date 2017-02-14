@@ -10,12 +10,13 @@
 namespace Http\Controller;
 
 use FastD\Http\JsonResponse;
+use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Middleware\Delegate;
 
 /**
  *
- * @SWG\Info(title="My First API", version="0.1")
+ * @SWG\Info(title="演示API", version="0.1")
  *
  * Class IndexController
  * @package Http\Controller
@@ -23,14 +24,54 @@ use FastD\Middleware\Delegate;
 class IndexController
 {
     /**
-     *
      * @SWG\Get(
-     *     path="/api/resource.json",
-     *     @SWG\Response(response="200", description="An example resource")
+     *   path="/foo/{name}",
+     *   summary="演示API示例",
+     *   tags={"demo"},
+     *   description="示例说明",
+     *   consumes={"application/json", "application/xml"},
+     *   produces={"application/json", "application/xml"},
+     *   @SWG\Parameter(
+     *     name="id",
+     *     in="query",
+     *     description="演示id",
+     *     required=false,
+     *     type="integer",
+     *     @SWG\Items(type="integer", format="int32"),
+     *     collectionFormat="csv"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="status",
+     *     in="query",
+     *     description="演示status",
+     *     required=false,
+     *     type="integer",
+     *     enum={"available", "pending", "sold"}
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="OK",
+     *     examples={
+     *          "application/json": {
+     *              "id"="1",
+     *              "status"="1"
+     *          }
+     *     },
+     *     @SWG\Schema(
+     *       type="integer"
+     *     ),
+     *     @SWG\Schema(
+     *       type="object",
+     *       @SWG\Property(property="error_code", type="integer", format="int32"),
+     *       @SWG\Property(property="error_message", type="string")
+     *     )
+     *   ),
+     *   @SWG\Response(response=400, description="Bad Request"),
+     *   @SWG\Response(response=500, description="Internal Server Error")
      * )
      *
-     * @param ServerRequest $request
-     * @return \FastD\Http\JsonResponse
+     * @param $request
+     * @return Response
      */
     public function welcome(ServerRequest $request)
     {

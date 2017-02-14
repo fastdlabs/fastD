@@ -1,15 +1,70 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "My First API",
-        "version": "0.1"
+        "title": "\u6f14\u793aAPI",
+        "version": "0.1",
+        "host": "127.0.0.1"
     },
     "paths": {
-        "/api/resource.json": {
+        "/foo/{name}": {
             "get": {
+                "tags": [
+                    "demo"
+                ],
+                "summary": "\u6f14\u793aAPI\u793a\u4f8b",
+                "description": "\u793a\u4f8b\u8bf4\u660e",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "\u6f14\u793aid",
+                        "required": false,
+                        "type": "integer",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "collectionFormat": "csv"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "\u6f14\u793astatus",
+                        "required": false,
+                        "type": "integer",
+                        "enum": [
+                            "available",
+                            "pending",
+                            "sold"
+                        ]
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "An example resource"
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "id": "1",
+                                "status": "1"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

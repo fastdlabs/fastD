@@ -72,7 +72,7 @@ class Document extends Command
     </style>
 </head>
 <body>
-<redoc spec-url='./{$appName}.json'></redoc>
+<redoc spec-url='{$appName}.json'></redoc>
 <script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"> </script>
 </body>
 </html>
