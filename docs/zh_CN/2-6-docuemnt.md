@@ -6,7 +6,7 @@ FastD 框架中已经默认集成 [swagger](https://github.com/zircote/swagger-p
 php bin/console doc
 ```
 
-默认将文档内容和入口生成到 `web` 目录下，两个文件，一个是 `api.json`, 另外一个是 `api.html`。
+命令会将数据按照 app.php 配置的应用名进行生成，打开 html 文件即可访问文档。
 
 文档的方式通过注释进行处理，定义在控制器中，更具体的操作请前往 [swagger getting started](https://github.com/zircote/swagger-php/blob/master/docs/Getting-started.md)
 
