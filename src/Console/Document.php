@@ -38,11 +38,16 @@ class Document extends Command
         return $this->createApiDoc($output);
     }
 
+    /**
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function createApiDoc(OutputInterface $output)
     {
+        $appName = config()->get('name');
         $dir = app()->getAppPath() . '/src/Http/Controller';
-        $index = app()->getAppPath() . '/web/api.html';
-        $apiDataFile = app()->getAppPath() . '/web/api.json';
+        $indexHtml = app()->getAppPath() . "/web/{$appName}.html";
+        $apiDataFile = app()->getAppPath() . "/web/{$appName}.json";
 
         $output->writeln(sprintf('Scanning dir: <info>%s</info>', $dir));
 
@@ -56,7 +61,7 @@ class Document extends Command
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API Document</title>
+    <title>{$appName} API Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -67,14 +72,19 @@ class Document extends Command
     </style>
 </head>
 <body>
-<redoc spec-url='./api.json'></redoc>
+<redoc spec-url='./{$appName}.json'></redoc>
 <script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"> </script>
 </body>
 </html>
 HTML;
 
-        file_put_contents($index, $html);
-        $output->writeln(sprintf('Save html: <info>%s</info>', $index));
+        if (!file_exists($indexHtml)) {
+            file_put_contents($indexHtml, $html);
+            $output->writeln(sprintf('Save html: <info>%s</info>', $indexHtml));
+        } else {
+            $output->writeln(sprintf('Html <info>%s</info> is already exists.', $indexHtml));
+        }
+
         return 0;
     }
 }
