@@ -10,153 +10,216 @@ php bin/console doc
 
 文档的方式通过注释进行处理，定义在控制器中，更具体的操作请前往 [swagger getting started](https://github.com/zircote/swagger-php/blob/master/docs/Getting-started.md)
 
-##### 注释示例: 
+### 注释示例: 
+
+##### 控制器
 
 ```php
 <?php
 /**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
  *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
  */
-class PetWithDocsController
+
+namespace Http\Controller;
+
+use FastD\Http\JsonResponse;
+use FastD\Http\Response;
+use FastD\Http\ServerRequest;
+use FastD\Middleware\Delegate;
+
+/**
+ *
+ * @SWG\Info(title="演示API", version="0.1")
+ *
+ * Class IndexController
+ * @package Http\Controller
+ */
+class IndexController
 {
     /**
-     * @SWG\Post(
-     *     path="/pets",
-     *     operationId="addPet",
-     *     description="Creates a new pet in the store.  Duplicates are allowed",
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="pet",
-     *         in="body",
-     *         description="Pet to add to the store",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/NewPet"),
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="pet response",
-     *         @SWG\Schema(ref="#/definitions/Pet")
-     *     ),
-     *     @SWG\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-     *     )
-     * )
-     */
-    public function addPet()
-    {
-    }
-    /**
      * @SWG\Get(
-     *     path="/pets/{id}",
-     *     description="Returns a user based on a single ID, if the user does not have access to the pet",
-     *     operationId="findPetById",
-     *     @SWG\Parameter(
-     *         description="ID of pet to fetch",
-     *         format="int64",
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
-     *     ),
-     *     produces={
-     *         "application/json",
-     *         "application/xml",
-     *         "text/html",
-     *         "text/xml"
+     *   path="/foo/{name}",
+     *   summary="演示API示例",
+     *   tags={"demo"},
+     *   description="示例说明",
+     *   consumes={"application/json", "application/xml"},
+     *   produces={"application/json", "application/xml"},
+     *   @SWG\Parameter(
+     *     name="id",
+     *     in="query",
+     *     description="演示id",
+     *     required=false,
+     *     type="integer",
+     *     @SWG\Items(type="integer", format="int32"),
+     *     collectionFormat="csv"
+     *   ),
+     *   @SWG\Parameter(
+     *     name="status",
+     *     in="query",
+     *     description="演示status",
+     *     required=false,
+     *     type="integer",
+     *     enum={"available", "pending", "sold"}
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="OK",
+     *     examples={
+     *          "application/json": {
+     *              "id"="1",
+     *              "status"="1"
+     *          }
      *     },
-     *     @SWG\Response(
-     *         response=200,
-     *         description="pet response",
-     *         @SWG\Schema(ref="#/definitions/Pet")
+     *     @SWG\Schema(
+     *       type="integer"
      *     ),
-     *     @SWG\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     @SWG\Schema(
+     *       type="object",
+     *       @SWG\Property(property="error_code", type="integer", format="int32"),
+     *       @SWG\Property(property="error_message", type="string")
      *     )
+     *   ),
+     *   @SWG\Response(response=400, description="Bad Request", @SWG\Schema(ref="#/definitions/User")),
+     *   @SWG\Response(response=500, description="Internal Server Error")
      * )
+     *
+     * @param $request
+     * @return Response
      */
-    public function findPetById()
+    public function welcome(ServerRequest $request)
     {
+        return json([
+            'foo' => 'bar'
+        ]);
     }
+
     /**
-     * @SWG\Get(
-     *     path="/pets",
-     *     description="Returns all pets from the system that the user has access to",
-     *     operationId="findPets",
-     *     produces={"application/json", "application/xml", "text/xml", "text/html"},
-     *     @SWG\Parameter(
-     *         name="tags",
-     *         in="query",
-     *         description="tags to filter by",
-     *         required=false,
-     *         type="array",
-     *         @SWG\Items(type="string"),
-     *         collectionFormat="csv"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         description="maximum number of results to return",
-     *         required=false,
-     *         type="integer",
-     *         format="int32"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="pet response",
-     *         @SWG\Schema(
-     *             type="array",
-     *             @SWG\Items(ref="#/definitions/Pet")
-     *         ),
-     *     ),
-     *     @SWG\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @SWG\Schema(
-     *             ref="#/definitions/ErrorModel"
-     *         )
-     *     ),
-     *     @SWG\ExternalDocumentation(
-     *         description="find more info here",
-     *         url="https://swagger.io/about"
-     *     )
-     * )
+     * @param ServerRequest $request
+     * @return JsonResponse
      */
-    public function findPets()
+    public function sayHello(ServerRequest $request)
     {
+        return json([
+            'foo' => $request->getAttribute('name'),
+        ]);
     }
+
     /**
-     * @SWG\Delete(
-     *     path="/pets/{id}",
-     *     description="deletes a single pet based on the ID supplied",
-     *     operationId="deletePet",
-     *     @SWG\Parameter(
-     *         description="ID of pet to delete",
-     *         format="int64",
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
-     *     ),
-     *     @SWG\Response(
-     *         response=204,
-     *         description="pet deleted"
-     *     ),
-     *     @SWG\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-     *     )
-     * )
+     * @param ServerRequest $serverRequest
+     * @return JsonResponse
      */
-    public function deletePet()
+    public function middleware(ServerRequest $serverRequest)
     {
+        return json([
+            'foo' => 'bar'
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function db()
+    {
+        return json(
+            database()->info()
+        );
+    }
+
+    public function model()
+    {
+        $model = model('demo');
+
+        return json([
+            'model' => get_class($model),
+            'db' => $model->getDatabase()->info()
+        ]);
+    }
+
+    public function auth()
+    {
+        return json([
+            'foo' => 'bar'
+        ]);
     }
 }
 ```
+
+### 模型
+
+```php
+<?php
+/**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
+ */
+
+namespace Document;
+
+
+/**
+ * @SWG\Definition(type="object", @SWG\Xml(name="User"))
+ */
+class User
+{
+    /**
+     * @SWG\Property(format="int64")
+     * @var int
+     */
+    public $id;
+
+    /**
+     * @SWG\Property()
+     * @var string
+     */
+    public $username;
+
+    /**
+     * @SWG\Property
+     * @var string
+     */
+    public $firstName;
+
+    /**
+     * @SWG\Property()
+     * @var string
+     */
+    public $lastName;
+
+    /**
+     * @var string
+     * @SWG\Property()
+     */
+    public $email;
+
+    /**
+     * @var string
+     * @SWG\Property()
+     */
+    public $password;
+
+    /**
+     * @var string
+     * @SWG\Property()
+     */
+    public $phone;
+
+    /**
+     * User Status
+     * @var int
+     * @SWG\Property(format="int32")
+     */
+    public $userStatus;
+}
+```
+
+值得注意的是，Schema 中的 ref 是需要映射到一个数据模型当中，而这个数据模型会推荐存放在 Document 目录中，写法参考以上代码。
 
 效果: 
 
