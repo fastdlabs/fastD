@@ -75,9 +75,8 @@ class IndexController
      */
     public function welcome(ServerRequest $request)
     {
-        return json([
-            'foo' => 'bar'
-        ]);
+        $data = (database()->select('users', '*'));
+        return json($data);
     }
 
     /**

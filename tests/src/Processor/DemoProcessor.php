@@ -20,7 +20,7 @@ class DemoProcessor extends Process
         timer_tick(1000, function ($id) {
             static $index = 0;
             $index++;
-            echo $index . PHP_EOL;
+//            echo $index . PHP_EOL;
             if ($index === 10) {
                 timer_clear($id);
             }
