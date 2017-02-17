@@ -14,6 +14,10 @@
 
 use FastD\Application;
 use FastD\Console;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputOption;
 
 set_time_limit(0);
 date_default_timezone_set('PRC');
@@ -40,6 +44,15 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$console = new Console(new Application(getcwd()));
+$input = new ArgvInput(null, new InputDefinition([
+    new InputOption('t', '-t', InputOption::VALUE_OPTIONAL, 'Web root relative path')
+]));
+
+$path = $input->getOption('t');
+if (!$path) {
+    $path = getcwd();
+}
+
+$console = new Console(new Application($path));
 
 $console->run();

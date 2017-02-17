@@ -14,11 +14,11 @@ return [
         'worker_num' => 10
     ],
     'processes' => [
-        \Processor\DemoProcessor::class
+//        \Processor\DemoProcessor::class
     ],
     'ports' => [
         [
-            'class' => \Port\DemoPort::class,
+            'class' => \FastD\Server\TCPServer::class,
             'listen' => 'tcp://127.0.0.1:9528',
             'options' => [
 
