@@ -12,11 +12,11 @@ namespace Middleware;
 
 use FastD\Http\JsonResponse;
 use FastD\Middleware\DelegateInterface;
-use FastD\Middleware\ServerMiddleware;
+use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class FooMiddleware extends ServerMiddleware
+class FooMiddleware extends Middleware
 {
     /**
      * @param ServerRequestInterface $serverRequest

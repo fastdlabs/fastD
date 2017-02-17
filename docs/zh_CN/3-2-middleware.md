@@ -4,17 +4,17 @@
 
 这里面的中间件也是这样的原理，当中间件处理完成后，最后才到路由中的回调，中间件依赖于 [middleware](https://github.com/JanHuang/middleware) 组件，支持 PSR15。
 
-中间件推荐存放在 `src/Middleware` 目录中，每个中间件必须继承 `FastD\Middleware\ServerMiddleware` 对象，实现 `handle` 方法。
+中间件推荐存放在 `src/Middleware` 目录中，每个中间件必须继承 `FastD\Middleware\Middleware` 对象，实现 `handle` 方法。
 
 ```php
 namespace FastD\Auth;
 
 use FastD\Middleware\DelegateInterface;
-use FastD\Middleware\ServerMiddleware;
+use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class BasicAuth extends ServerMiddleware
+class BasicAuth extends Middleware
 {
     /**
      * @param ServerRequestInterface $serverRequest

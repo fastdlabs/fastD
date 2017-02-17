@@ -29,7 +29,6 @@ namespace Http\Controller;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Middleware\Delegate;
 
 /**
  *
