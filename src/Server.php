@@ -12,6 +12,7 @@ namespace FastD;
 use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
+use FastD\Monitor\Report;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Swoole\Server\Http;
 use Psr\Http\Message\ServerRequestInterface;
@@ -42,7 +43,7 @@ class Server extends Http
 
         parent::__construct($application->getName(), $application->get('config')->get('listen'));
 
-        $this->configure($application->get('config')->get('options'));
+        $this->configure($application->get('config')->get('options', []));
 
         $this->initMultiPorts()->initProcesses();
     }
@@ -55,7 +56,7 @@ class Server extends Http
         $ports = $this->application->get('config')->get('ports', []);
         foreach ($ports as $port) {
             $class = $port['class'];
-            $this->listen(new $class('ports', $port['listen'], $port['options']));
+            $this->listen(new $class('ports', $port['listen'], isset($port['options']) ? $port['options'] : []));
         }
         return $this;
     }
@@ -79,8 +80,8 @@ class Server extends Http
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
     {
         try {
-            $swooleRequestServer = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
-            $response = $this->doRequest($swooleRequestServer);
+            $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
+            $response = $this->doRequest($request);
         } catch (Exception $e) {
             $response = $this->application->handleException($e);
         }
@@ -89,13 +90,14 @@ class Server extends Http
             $swooleResponse->header($key, $response->getHeaderLine($key));
         }
 
-        foreach ($swooleRequestServer->getCookieParams() as $key => $cookieParam) {
+        foreach ($request->getCookieParams() as $key => $cookieParam) {
             $swooleResponse->cookie($key, $cookieParam);
         }
 
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
-        unset($response, $swooleRequestServer, $swooleResponse);
+        unset($response, $request);
+        Report::server($this);
     }
 
     /**

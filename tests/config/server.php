@@ -11,21 +11,19 @@ return [
     'listen' => 'http://0.0.0.0:9527',
     'options' => [
         'pid_file' => '',
-        'worker_num' => 10
+        'worker_num' => 10,
+        'task_worker_num' => 20,
     ],
     'discovery' => [
         'tcp://127.0.0.1:9888'
     ],
     'processes' => [
-        \FastD\Monitor\Report::class
+        \FastD\Discovery\Discover::class
     ],
     'ports' => [
         [
             'class' => \FastD\Server\TCPServer::class,
             'listen' => 'tcp://127.0.0.1:9528',
-            'options' => [
-
-            ],
         ],
     ],
 ];

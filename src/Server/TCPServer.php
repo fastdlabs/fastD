@@ -11,6 +11,7 @@ namespace FastD\Server;
 
 
 use FastD\Http\ServerRequest;
+use FastD\Monitor\Report;
 use FastD\Packet\Json;
 use FastD\Swoole\Server\Tcp;
 use swoole_server;
@@ -36,6 +37,8 @@ class TCPServer extends Tcp
             return $e->getMessage();
         }
 
+        $server->task(isset($data['host']) ? $data['host'] : 'unknown');
+
         $service = $data['cmd'];
         $method = $data['method'];
 
@@ -54,5 +57,18 @@ class TCPServer extends Tcp
         unset($serverRequest);
 
         return (string) $response->getBody();
+    }
+
+    public function onTask(swoole_server $server, $task_id, $worker_id, $data)
+    {
+        Report::server($this, [
+            'source' => $data,
+            'target' => get_local_ip(),
+        ]);
+    }
+
+    public function onFinish(swoole_server $server, int $task_id, string $data)
+    {
+
     }
 }
