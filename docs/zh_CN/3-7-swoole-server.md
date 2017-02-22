@@ -7,7 +7,7 @@ Swoole 服务器依赖于 [swoole](https://github.com/JanHuang/swoole) 并且提
 swoole 服务器的配置文件存放在 `config/server.php` 中，其中 `listen` 选项是必填，`options` 配置项请看 [server 配置选项](http://wiki.swoole.com/wiki/page/274.html)
 
 ```php
-$ php bin/server {start|status|stop|reload}
+$ php bin/server {start|status|stop|reload} [-t] {web root 目录，默认使用当前命令执行路径}
 ```
 
 默认操作方式是 `status`，可用于简单查看进程状态。
@@ -50,15 +50,17 @@ return [
     // 多端口监听
     'ports' => [
         [
-            'class' => \Port\DemoPort::class,
+            'class' => \FastD\Server\TCPServer::class,
             'listen' => 'tcp://127.0.0.1:9528',
             'options' => [
-
+                
             ],
         ],
     ],
 ];
 ```
+
+框架提供一个默认的 TCP 服务，以提供 TCP 调用，可以通过创建发现服务器，监控实现一套 RPC 系统。
 
 每个需要监听的端口需要继承 `FastD\Swoole\Server` 对象，实现内部抽象方法，具体请查看 [examples](https://github.com/JanHuang/swoole/blob/master/examples/multi_port_server.php)
 

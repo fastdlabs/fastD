@@ -15,6 +15,10 @@ use FastD\Packet\Json;
 use FastD\Swoole\Server\Tcp;
 use swoole_server;
 
+/**
+ * Class TCPServer
+ * @package FastD\Server
+ */
 class TCPServer extends Tcp
 {
     /**
@@ -27,19 +31,27 @@ class TCPServer extends Tcp
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {
         try {
-//            $data = Json::decode($data);
-            $data = [
-                'cmd' => '/'
-            ];
+            $data = Json::decode($data);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
 
         $service = $data['cmd'];
+        $method = $data['method'];
 
-        $serverRequest = new ServerRequest('GET', $service);
+        $serverRequest = new ServerRequest(strtoupper($method), $service);
+
+        if (isset($data['args'])) {
+            if ('GET' == $serverRequest->getMethod()) {
+                $serverRequest->withQueryParams($data['args']);
+            } else {
+                $serverRequest->withParsedBody($data['args']);
+            }
+        }
 
         $response = app()->handleRequest($serverRequest);
+
+        unset($serverRequest);
 
         return (string) $response->getBody();
     }
