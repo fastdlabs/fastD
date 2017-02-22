@@ -11,6 +11,7 @@ namespace FastD\Monitor;
 
 
 use FastD\Swoole\Client\Async\AsyncClient;
+use FastD\Swoole\Client\Sync\SyncClient;
 use FastD\Swoole\Process;
 use swoole_process;
 
@@ -44,19 +45,13 @@ class Report extends Process
             $data = json_encode($data);
             foreach ($discoveries as $server) {
                 try {
-                    $client = new AsyncClient($server);
+                    $client = new SyncClient($server, SWOOLE_SOCK_UDP);
                     $client
                         ->connect(function ($client) use ($ip, $data) {
                             $client->send($data);
                         })
                         ->receive(function ($client, $data) {
                             $client->close();
-                        })
-                        ->error(function () {
-
-                        })
-                        ->close(function () {
-
                         })
                         ->resolve()
                     ;

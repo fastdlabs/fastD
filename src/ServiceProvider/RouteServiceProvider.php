@@ -51,6 +51,10 @@ class Router extends RouteCollection
     }
 }
 
+/**
+ * Class RouteServiceProvider
+ * @package FastD\ServiceProvider
+ */
 class RouteServiceProvider implements ServiceProviderInterface
 {
     public function register(Container $container)

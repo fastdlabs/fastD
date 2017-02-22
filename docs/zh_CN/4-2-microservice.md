@@ -1,11 +1,13 @@
 # RPC 服务
 
-框架以灵巧的方式进行服务提供，大部分的服务均通过 composer.json 与 [服务提供器进](3-6-service-provider.md) 进行依赖。
+基于 Swoole 扩展，可以很容易地实现 PHP 之间的网络通信，也可以很好地实现 RPC 服务，推荐学习的 RPC 入门基础框架: 
 
-如数据库服务通过依赖 `catfan/Medoo`, 通过 [DatabaseServiceProvider.php](../../src/ServiceProvider/DatabaseServiceProvider.php) 进行注册到全局核心当中。
+* [Dora-RPC](https://github.com/xcl3721/Dora-RPC)
 
-如果框架无法满足该业务需求，可以通过调配 composer 依赖，添加 ServiceProvider 到应用当中，即可完成扩展
+先理解一个图 [![RPC](https://github.com/weibocom/motan/wiki/media/14612349319195.jpg)] 
 
-如果还有疑问，可以参考 [ServiceProvider](../../src/ServiceProvider)
+我们再每次实现一个服务时候，都需要将添加的服务马上注册到发现中心，客户端在发起调用的时候，可以由发现中心进行服务发现，通过指定算法负载到指定的后端服务器当中。
 
-下一节: [理念与架构](4-1-lifecycle.md)
+其实内部就是一个网络通信的过程，服务器需要主动告诉发现端 "自己" 的存在，发现端就收到后，就可以确定该服务可用。
+
+

@@ -16,6 +16,10 @@ use FastD\Container\ServiceProviderInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
+/**
+ * Class CacheServiceProvider
+ * @package FastD\ServiceProvider
+ */
 class CacheServiceProvider implements ServiceProviderInterface
 {
     protected $cache;
