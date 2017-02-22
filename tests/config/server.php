@@ -13,8 +13,11 @@ return [
         'pid_file' => '',
         'worker_num' => 10
     ],
+    'discovery' => [
+        'tcp://127.0.0.1:9888'
+    ],
     'processes' => [
-//        \Processor\DemoProcessor::class
+        \FastD\Monitor\Report::class
     ],
     'ports' => [
         [
