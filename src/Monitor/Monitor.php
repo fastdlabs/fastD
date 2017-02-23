@@ -11,7 +11,6 @@ namespace FastD\Monitor;
 
 
 use FastD\Swoole\Client\Sync\SyncClient;
-use FastD\Swoole\Server;
 use swoole_process;
 
 /**

@@ -32,12 +32,7 @@ class TCPServer extends Tcp
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {
         try {
-//            $data = Json::decode($data);
-            $data = [
-                'method' => 'get',
-                'cmd' => '/',
-                'target' => get_local_ip(),
-            ];
+            $data = Json::decode($data);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
