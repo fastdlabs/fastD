@@ -10,7 +10,7 @@
 namespace FastD\Monitor;
 
 
-use FastD\Swoole\Client\Sync\SyncClient;
+use FastD\Swoole\Client\Async\AsyncClient;
 use swoole_process;
 
 /**
@@ -23,7 +23,7 @@ class Monitor
     {
         $monitor = config()->get('monitor');
         foreach ($monitor as $value) {
-            $client = new SyncClient($value);
+            $client = new AsyncClient($value);
             $client
                 ->connect(function ($client) use ($options) {
                     $client->send(json_encode($options));
