@@ -17,6 +17,9 @@ return [
     'discovery' => [
         'tcp://127.0.0.1:9888'
     ],
+    'monitor' => [
+        'tcp://127.0.0.1:9889'
+    ],
     'processes' => [
         \FastD\Discovery\Discover::class
     ],

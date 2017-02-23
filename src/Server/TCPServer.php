@@ -32,12 +32,15 @@ class TCPServer extends Tcp
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {
         try {
-            $data = Json::decode($data);
+//            $data = Json::decode($data);
+            $data = [
+                'method' => 'get',
+                'cmd' => '/',
+                'target' => get_local_ip(),
+            ];
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-
-        $server->task(isset($data['host']) ? $data['host'] : 'unknown');
 
         $service = $data['cmd'];
         $method = $data['method'];
@@ -56,19 +59,14 @@ class TCPServer extends Tcp
 
         unset($serverRequest);
 
+        if (null !== config()->get('monitor', null)) {
+            $server->task([
+                'source' => isset($data['source']) ? $data['source'] : $server->connection_info($fd)['remote_ip'],
+                'target' => get_local_ip(),
+                'cmd' => $data['cmd'],
+            ]);
+        }
+
         return (string) $response->getBody();
-    }
-
-    public function onTask(swoole_server $server, $task_id, $worker_id, $data)
-    {
-        Report::server($this, [
-            'source' => $data,
-            'target' => get_local_ip(),
-        ]);
-    }
-
-    public function onFinish(swoole_server $server, int $task_id, string $data)
-    {
-
     }
 }

@@ -12,12 +12,15 @@ namespace FastD;
 use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
+use FastD\Monitor\Monitor;
 use FastD\Monitor\Report;
 use FastD\ServiceProvider\SwooleServiceProvider;
+use FastD\Swoole\Client\Sync\SyncClient;
 use FastD\Swoole\Server\Http;
 use Psr\Http\Message\ServerRequestInterface;
 use swoole_http_request;
 use swoole_http_response;
+use swoole_server;
 
 /**
  * Class App
@@ -94,10 +97,18 @@ class Server extends Http
             $swooleResponse->cookie($key, $cookieParam);
         }
 
+        if (null !== config()->get('monitor', null)) {
+            // report monitor
+            $this->getSwoole()->task([
+                'source' => $swooleRequet->server['remote_addr'],
+                'cmd' => $swooleRequet->server['path_info'],
+                'target' => get_local_ip(),
+            ]);
+        }
+
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
         unset($response, $request);
-        Report::server($this);
     }
 
     /**
@@ -107,5 +118,16 @@ class Server extends Http
     public function doRequest(ServerRequestInterface $serverRequest)
     {
         return app()->handleRequest($serverRequest);
+    }
+
+    /**
+     * @param swoole_server $server
+     * @param $taskId
+     * @param $workerId
+     * @param $data
+     */
+    public function doTask(swoole_server $server, $taskId, $workerId, $data)
+    {
+        Monitor::report($data);
     }
 }

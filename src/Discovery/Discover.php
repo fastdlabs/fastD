@@ -29,11 +29,11 @@ class Discover extends Process
         $discoveries = config()->get('discovery');
         $serviceName = config()->get('name');
         $ip = get_local_ip();
-
-        timer_tick(1000, function () use ($discoveries, $serviceName, $ip) {
+        $pid = !isset($this->server->getSwoole()->master_pid) ? file_get_contents($this->server->getPid()) : $this->server->getSwoole()->master_pid;
+        timer_tick(1000, function () use ($discoveries, $serviceName, $ip, $pid) {
             $data = [
                 'service'   => $serviceName,
-                'pid'       => $this->server->getSwoole()->master_pid,
+                'pid'       => $pid,
                 'sock'      => $this->server->getScheme(),
                 'host'      => $ip,
                 'port'      => $this->server->getPort(),
@@ -44,7 +44,7 @@ class Discover extends Process
             $data = json_encode($data);
             foreach ($discoveries as $server) {
                 try {
-                    $client = new SyncClient($server, SWOOLE_SOCK_UDP);
+                    $client = new SyncClient($server);
                     $client
                         ->connect(function ($client) use ($ip, $data) {
                             $client->send($data);
