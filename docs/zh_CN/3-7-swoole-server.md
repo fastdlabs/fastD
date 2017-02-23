@@ -93,10 +93,4 @@ return [
 
 重写 `FastD\Swoole\Process` 的 `handle` 方法，`handle` 为进程具体执行的事务。示例: [DemoProcessor](../../tests/src/Processor/DemoProcessor.php)
 
-### 服务状态上报与发现
-
-服务器状态上报，需要开启一个监控端，接受服务器状态的服务器(可以通过 FastD API 框架进行实现)，然后编写一个上报状态的进程，订立上报机制，对状态进行定时汇报。
-
-示例编写中...
-
 下一节: [扩展](3-8-extend.md)
