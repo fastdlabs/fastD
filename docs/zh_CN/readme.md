@@ -33,12 +33,14 @@
 
 * [配置](3-1-configuration.md)
 * [中间件](3-2-middleware.md)
-* [命令行](3-3-console.md)
-* [单元测试](3-4-testcase.md)
-* [辅助函数](3-5-helpers.md)
-* [服务提供器](3-6-service-provider.md)
-* [Swoole服务器](3-7-swoole-server.md)
-* [扩展](3-8-extend.md)
+* [数据库medoo](3-3-database.md)
+* [缓存](3-4-cache.md)
+* [命令行](3-5-console.md)
+* [单元测试](3-6-testcase.md)
+* [辅助函数](3-7-helpers.md)
+* [服务提供器](3-8-service-provider.md)
+* [Swoole服务器](3-9-swoole-server.md)
+* [扩展](3-10-extend.md)
 
 
 架构

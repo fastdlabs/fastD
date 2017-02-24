@@ -30,4 +30,4 @@ class Demo extends Command
 
 更多请查看: [console](http://symfony.com/doc/current/console.html)
 
-下一节: [单元测试](3-4-testcase.md)
+下一节: [单元测试](3-6-testcase.md)
