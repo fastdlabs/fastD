@@ -10,6 +10,5 @@
 return [
     'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
     'params' => [
-//        'dsn' => 'redis://22.11.11.22',
     ],
 ];
