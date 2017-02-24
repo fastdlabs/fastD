@@ -14,14 +14,14 @@ return [
         'worker_num' => 10,
         'task_worker_num' => 20,
     ],
-    /*'discovery' => [
+    'discovery' => [
         'tcp://127.0.0.1:9888'
     ],
     'monitor' => [
         'tcp://127.0.0.1:9889'
-    ],*/
+    ],
     'processes' => [
-//        \FastD\Discovery\Discover::class
+        \FastD\Discovery\Discover::class
     ],
     'ports' => [
         [
