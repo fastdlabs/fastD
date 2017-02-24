@@ -28,7 +28,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = config()->get('database');
+        $config = config()->get('database', config()->load(app()->getPath() . '/config/database.php')->get('database'));
 
         $container->add('database', function () use ($config) {
             if (null === $this->db) {

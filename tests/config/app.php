@@ -14,9 +14,9 @@ return [
     'name' => 'fast-d',
 
     /**
-     * Application environment local/dev/prod
+     * debug mode
      */
-    'environment' => 'prod',
+    'debug' => true,
 
     /**
      * Application timezone
@@ -60,14 +60,4 @@ return [
             ]
         ])
     ],
-
-    /**
-     * Database config
-     */
-    'database' => include __DIR__ . '/database.php',
-
-    /**
-     * Caching config
-     */
-    'cache' => include __DIR__ . '/cache.php',
 ];

@@ -12,6 +12,7 @@ namespace FastD;
 use DateTime;
 use DateTimeZone;
 use Exception;
+use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
@@ -44,22 +45,17 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $appPath;
+    protected $path;
 
     /**
      * @var string
      */
-    protected $name = 'Fast-D';
-
-    /**
-     * @var string
-     */
-    protected $environment = 'local';
+    protected $name = 'fast-d';
 
     /**
      * @var bool
      */
-    protected $debug = true;
+    protected $debug = false;
 
     /**
      * @var bool
@@ -69,15 +65,15 @@ class Application extends Container
     /**
      * AppKernel constructor.
      *
-     * @param $appPath
+     * @param $path
      */
-    public function __construct($appPath)
+    public function __construct($path)
     {
-        $this->appPath = $appPath;
+        $this->path = $path;
 
         static::$app = $this;
 
-        $this['app'] = $this;
+        $this->add('app', $this);
 
         $this->bootstrap();
     }
@@ -109,17 +105,9 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getEnvironment()
+    public function getPath()
     {
-        return $this->environment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppPath()
-    {
-        return $this->appPath;
+        return $this->path;
     }
 
     /**
@@ -128,21 +116,21 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-            $config = include $this->appPath . '/config/app.php';
+            $config = new Config();
 
-            $this->environment = $config['environment'];
+            $config->load($this->path . '/config/app.php');
 
-            $this->debug = 'prod' == $this->environment ? false : true;
+            $this->name = $config->get('name', 'fast-d');
 
-            $this->name = $config['name'];
+            $this->debug = $config->get('debug', false);
 
             $this['time'] = new DateTime('now',
-                new DateTimeZone(isset($config['timezone']) ? $config['timezone'] : 'PRC')
+                new DateTimeZone($config->get('timezone', 'PRC'))
             );
-            $this['config'] = $config;
 
-            $this->registerServicesProviders((array) $config['services']);
+            $this->add('config', $config);
 
+            $this->registerServicesProviders($config->get('services', []));
             unset($config);
             $this->booted = true;
         }

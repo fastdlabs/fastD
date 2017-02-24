@@ -16,7 +16,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $this->assertEquals(__DIR__, $app->getAppPath());
+        $this->assertEquals(__DIR__, $app->getPath());
         $this->assertEquals('fast-d', $app->getName());
         $this->assertEquals('PRC', $app['time']->getTimeZone()->getName());
         $this->assertTrue($app->isBooted());
@@ -71,11 +71,11 @@ class ApplicationTest extends TestCase
 
         $app->handleResponse($response);
 
-        $this->assertTrue(file_exists(app()->getAppPath() . '/storage/info.log'));
+        $this->assertTrue(file_exists(app()->getPath() . '/storage/info.log'));
 
         $app->run($this->createRequest('GET', '/not'));
 
-        $this->assertTrue(file_exists(app()->getAppPath() . '/storage/error.log'));
+        $this->assertTrue(file_exists(app()->getPath() . '/storage/error.log'));
     }
 
     public function testCacheServiceProvider()

@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Http\Controller;
+namespace Controller;
 
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;

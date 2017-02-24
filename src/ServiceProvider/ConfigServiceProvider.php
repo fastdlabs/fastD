@@ -25,10 +25,12 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = new Config($container->get('config'));
-
-        $config->load(app()->getAppPath() . '/config/config.php');
-
-        $container->add('config', $config);
+        $dir = app()->getPath() . '/config';
+        $container->get('config')->load($dir . '/config.php');
+        $config = [
+            'database' => include $dir . '/database.php',
+            'cache' => include $dir . '/cache.php',
+        ];
+        $container->get('config')->merge($config);
     }
 }

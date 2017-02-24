@@ -34,7 +34,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $log = $config->get('log');
         $path = !isset($log['path']) ? null : $log['path'];
         if (empty($path) || '/' !== $path{0}) {
-            $path = app()->getAppPath() . '/' . $path;
+            $path = app()->getPath() . '/' . $path;
         }
 
         if (!isset($log['info'])) {
