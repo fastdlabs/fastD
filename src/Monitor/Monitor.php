@@ -10,6 +10,7 @@
 namespace FastD\Monitor;
 
 
+use FastD\Swoole\Server;
 use FastD\Swoole\Client\Async\AsyncClient;
 use swoole_process;
 
@@ -19,9 +20,22 @@ use swoole_process;
  */
 class Monitor
 {
-    public static function report(array $options = [])
+    public static function report(Server $server, array $options = [])
     {
+        $serviceName = config()->get('name');
+        $ip = get_local_ip();
         $monitor = config()->get('monitor');
+        $pid = !isset($server->getSwoole()->master_pid) ? file_get_contents($server->getPid()) : $server->getSwoole()->master_pid;
+        $options = array_merge([
+            'service'   => $serviceName,
+            'pid'       => $pid,
+            'sock'      => $server->getScheme(),
+            'host'      => $ip,
+            'port'      => $server->getPort(),
+            'error'     => $server->getSwoole()->getLastError(),
+            'time'      => time()
+        ], $options, $server->getSwoole()->stats());
+
         foreach ($monitor as $value) {
             $client = new AsyncClient($value);
             $client

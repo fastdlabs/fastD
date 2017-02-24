@@ -128,6 +128,6 @@ class Server extends Http
      */
     public function doTask(swoole_server $server, $taskId, $workerId, $data)
     {
-        Monitor::report($data);
+        Monitor::report($this, $data);
     }
 }
