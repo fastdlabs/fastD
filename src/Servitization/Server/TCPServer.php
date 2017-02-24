@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Server;
+namespace FastD\Servitization\Server;
 
 
 use FastD\Http\ServerRequest;

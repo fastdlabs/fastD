@@ -1,6 +1,6 @@
 <phpunit
         colors="true"
-        bootstrap="./tests/bootstrap.php"
+        bootstrap="vendor/autoload.php"
 >
     <testsuites>
         <testsuite name="FastD">

@@ -7,4 +7,12 @@
  * @link      http://www.fast-d.cn/
  */
 
-$composer = include_once __DIR__ . '/../vendor/autoload.php';
+namespace FastD\Servitization\Client;
+
+
+use FastD\Swoole\Client\Sync\SyncClient;
+
+class TCP extends SyncClient
+{
+
+}

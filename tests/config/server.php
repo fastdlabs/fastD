@@ -21,11 +21,11 @@ return [
         'tcp://127.0.0.1:9889'
     ],
     'processes' => [
-        \FastD\Discovery\Discover::class
+        \FastD\Servitization\Discovery\Discover::class
     ],
     'ports' => [
         [
-            'class' => \FastD\Server\TCPServer::class,
+            'class' => \FastD\Servitization\Server\TCPServer::class,
             'listen' => 'tcp://127.0.0.1:9528',
         ],
     ],
