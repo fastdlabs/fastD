@@ -33,20 +33,20 @@
         "fastd/http": "~3.0.0",
         "fastd/config": "~3.0.0",
         "fastd/routing": "~3.0.0",
-        "fastd/swoole": "1.0.x-dev",
-        "fastd/testing": "~0.1.0",
         "fastd/middleware": "~1.0.0",
         "fastd/basic-authenticate": "~0.1.0",
+        "fastd/swoole": "~1.0.0",
         "catfan/Medoo": "~1.1.0",
+        "fzaninotto/faker": "~1.6.0",
         "symfony/cache": "~3.2",
         "symfony/console": "^3.2",
         "monolog/monolog": "~1.0",
         "zircote/swagger-php": "^2.0",
-        "jolicode/jolinotif": "^1.0",
-        "squizlabs/php_codesniffer": "^2.8"
+        "jolicode/jolinotif": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0"
+        "phpunit/phpunit": "^5.0",
+        "squizlabs/php_codesniffer": "^2.8"
     },
     "bin": [
         "console",

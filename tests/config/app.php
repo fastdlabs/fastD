@@ -14,9 +14,9 @@ return [
     'name' => 'fast-d',
 
     /**
-     * debug mode
+     * Run environment
      */
-    'debug' => true,
+    'env' => 'dev',
 
     /**
      * Application timezone
@@ -35,9 +35,9 @@ return [
     /**
      * Bootstrap service.
      */
-    'services' => [
-        \FastD\ServiceProvider\DatabaseServiceProvider::class,
-        \FastD\ServiceProvider\CacheServiceProvider::class,
+    'providers' => [
+        \FastD\ServiceProvider\DatabaseProvider::class,
+        \FastD\ServiceProvider\CacheProvider::class,
     ],
 
     /**

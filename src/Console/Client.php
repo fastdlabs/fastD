@@ -10,7 +10,9 @@
 namespace FastD\Console;
 
 
+use FastD\Swoole\Async\Http;
 use FastD\Swoole\Client\Sync\TCP;
+use FastD\Swoole\Client\Sync\UDP;
 use FastD\Swoole\Swoole;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -58,7 +60,7 @@ class Client extends Command
                 $client = TCP::class;
                 break;
             case 'udp':
-                $client = Udp::class;
+                $client = UDP::class;
                 $address .= 'udp://';
                 break;
             case 'ws':

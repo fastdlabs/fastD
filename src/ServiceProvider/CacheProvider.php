@@ -20,7 +20,7 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
  * Class CacheServiceProvider
  * @package FastD\ServiceProvider
  */
-class CacheServiceProvider implements ServiceProviderInterface
+class CacheProvider implements ServiceProviderInterface
 {
     protected $cache;
 

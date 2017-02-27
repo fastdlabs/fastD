@@ -66,7 +66,7 @@ switch ($input->getArgument('action')) {
         }
         break;
     case 'stop':
-        $server->shutdown();
+        $server->stop();
         break;
     case 'reload':
         $server->reload();

@@ -55,7 +55,7 @@ class Router extends RouteCollection
  * Class RouteServiceProvider
  * @package FastD\ServiceProvider
  */
-class RouteServiceProvider implements ServiceProviderInterface
+class RouteProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container

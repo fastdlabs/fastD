@@ -18,9 +18,9 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\ServiceProvider\RouteServiceProvider;
-use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\ServiceProvider\LoggerServiceProvider;
+use FastD\ServiceProvider\ConfigProvider;
+use FastD\ServiceProvider\LoggerProvider;
+use FastD\ServiceProvider\RouteProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -46,6 +46,11 @@ class Application extends Container
      * @var string
      */
     protected $path;
+
+    /**
+     * @var string
+     */
+    protected $env;
 
     /**
      * @var string
@@ -87,11 +92,11 @@ class Application extends Container
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isDebug()
+    public function getEnv()
     {
-        return $this->debug;
+        return $this->env;
     }
 
     /**
@@ -122,7 +127,7 @@ class Application extends Container
 
             $this->name = $config->get('name', 'fast-d');
 
-            $this->debug = $config->get('debug', false);
+            $this->env = $config->get('env', false);
 
             $this['time'] = new DateTime('now',
                 new DateTimeZone($config->get('timezone', 'PRC'))
@@ -130,7 +135,7 @@ class Application extends Container
 
             $this->add('config', $config);
 
-            $this->registerServicesProviders($config->get('services', []));
+            $this->registerServicesProviders($config->get('providers', []));
             unset($config);
             $this->booted = true;
         }
@@ -142,9 +147,9 @@ class Application extends Container
      */
     protected function registerServicesProviders(array $services)
     {
-        $this->register(new ConfigServiceProvider());
-        $this->register(new RouteServiceProvider());
-        $this->register(new LoggerServiceProvider());
+        $this->register(new ConfigProvider());
+        $this->register(new RouteProvider());
+        $this->register(new LoggerProvider());
         foreach ($services as $service) {
             $this->register(new $service);
         }
@@ -157,22 +162,20 @@ class Application extends Container
     public function handleResponse(Response $response)
     {
         $response->send();
-        // Not debug environment. Save log in application.
-        if (!$this->isDebug()) {
-            $request = $this->get('request');
-            $log = [
-                'statusCode' => $response->getStatusCode(),
-                'params' => [
-                    'get' => $request->getQueryParams(),
-                    'post' => $request->getParsedBody(),
-                ]
-            ];
 
-            if ($response->isSuccessful()) {
-                logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-            } else {
-                logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-            }
+        $request = $this->get('request');
+        $log = [
+            'statusCode' => $response->getStatusCode(),
+            'params' => [
+                'get' => $request->getQueryParams(),
+                'post' => $request->getParsedBody(),
+            ]
+        ];
+
+        if ($response->isSuccessful()) {
+            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+        } else {
+            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
         }
 
         return 0;
@@ -207,13 +210,10 @@ class Application extends Container
         $data = [
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'trace'=> explode("\n", $e->getTraceAsString()),
         ];
-
-        if ($this->isDebug()) {
-            $data['file'] = $e->getFile();
-            $data['line'] = $e->getLine();
-            $data['trace'] = explode("\n", $e->getTraceAsString());
-        }
 
         $response = json($data);
 

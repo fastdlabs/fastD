@@ -9,16 +9,8 @@
 
 namespace FastD;
 
-use Exception;
-use FastD\Http\Response;
-use FastD\Http\SwooleServerRequest;
-use FastD\Monitor\Monitor;
-use FastD\Monitor\Report;
-use FastD\ServiceProvider\SwooleServiceProvider;
-use FastD\Swoole\Client\Sync\SyncClient;
-use FastD\Swoole\Server\Http;
-use Psr\Http\Message\ServerRequestInterface;
-use swoole_http_request;
+use FastD\ServiceProvider\SwooleProvider;
+use Servitization\Server\HTTPServer;
 use swoole_http_response;
 use swoole_server;
 
@@ -27,12 +19,17 @@ use swoole_server;
  *
  * @package FastD
  */
-class Server extends Http
+class Server
 {
     /**
      * @var Application
      */
     protected $application;
+
+    /**
+     * @var \FastD\Swoole\Server
+     */
+    protected $server;
 
     /**
      * Server constructor.
@@ -42,19 +39,31 @@ class Server extends Http
     {
         $this->application = $application;
 
-        $application->register(new SwooleServiceProvider($this));
+        $application->register(new SwooleProvider());
 
-        parent::__construct($application->getName(), $application->get('config')->get('listen'));
+        $server = config()->get('swoole.class', HTTPServer::class);
 
-        $this->configure($application->get('config')->get('options', []));
+        $this->server = $server::createServer($application->getName(), config()->get('swoole.listen'), config()->get('swoole.options'));
 
-        $this->initMultiPorts()->initProcesses();
+        $this->initListeners();
+        $this->initProcesses();
+        $this->initConnectionPool();
+
+        $this->server->bootstrap();
+    }
+
+    /**
+     *
+     */
+    public function initConnectionPool()
+    {
+
     }
 
     /**
      * @return $this
      */
-    public function initMultiPorts()
+    public function initListeners()
     {
         $ports = $this->application->get('config')->get('ports', []);
         foreach ($ports as $port) {
@@ -76,58 +85,38 @@ class Server extends Http
         return $this;
     }
 
-    /**
-     * @param swoole_http_request $swooleRequet
-     * @param swoole_http_response $swooleResponse
-     */
-    public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
+    public function daemon()
     {
-        try {
-            $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
-            $response = $this->doRequest($request);
-        } catch (Exception $e) {
-            $response = $this->application->handleException($e);
-        }
-
-        foreach ($response->getHeaders() as $key => $header) {
-            $swooleResponse->header($key, $response->getHeaderLine($key));
-        }
-
-        foreach ($request->getCookieParams() as $key => $cookieParam) {
-            $swooleResponse->cookie($key, $cookieParam);
-        }
-
-        if (null !== config()->get('monitor', null)) {
-            // report monitor
-            $this->getSwoole()->task([
-                'source' => $swooleRequet->server['remote_addr'],
-                'cmd' => $swooleRequet->server['path_info'],
-                'target' => get_local_ip(),
-            ]);
-        }
-
-        $swooleResponse->status($response->getStatusCode());
-        $swooleResponse->end((string) $response->getBody());
-        unset($response, $request);
+        return $this->server->daemon();
     }
 
-    /**
-     * @param ServerRequestInterface $serverRequest
-     * @return Response
-     */
-    public function doRequest(ServerRequestInterface $serverRequest)
+    public function start()
     {
-        return app()->handleRequest($serverRequest);
+        return $this->server->start();
     }
 
-    /**
-     * @param swoole_server $server
-     * @param $taskId
-     * @param $workerId
-     * @param $data
-     */
-    public function doTask(swoole_server $server, $taskId, $workerId, $data)
+    public function stop()
     {
-        Monitor::report($this, $data);
+        return $this->server->shutdown();
+    }
+
+    public function restart()
+    {
+        return $this->server->restart();
+    }
+
+    public function reload()
+    {
+        return $this->server->reload();
+    }
+
+    public function status()
+    {
+        return $this->server->status();
+    }
+
+    public function watch(array $dir = ['.'])
+    {
+        return $this->server->watch($dir);
     }
 }
