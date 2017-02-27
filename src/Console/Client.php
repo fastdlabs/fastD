@@ -11,6 +11,7 @@ namespace FastD\Console;
 
 
 use FastD\Swoole\Async\Http;
+use FastD\Swoole\Client\Sync\SyncClient;
 use FastD\Swoole\Client\Sync\TCP;
 use FastD\Swoole\Client\Sync\UDP;
 use FastD\Swoole\Swoole;
@@ -57,7 +58,7 @@ class Client extends Command
                 break;
             case 'tcp':
                 $address .= 'tcp://';
-                $client = TCP::class;
+                $client = SyncClient::class;
                 break;
             case 'udp':
                 $client = UDP::class;

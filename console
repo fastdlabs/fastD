@@ -44,15 +44,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$input = new ArgvInput(null, new InputDefinition([
-    new InputOption('t', '-t', InputOption::VALUE_OPTIONAL, 'Web root relative path')
-]));
-
-$path = $input->getOption('t');
-if (!$path) {
-    $path = getcwd();
-}
-
-$console = new Console(new Application($path));
+$console = new Console(new Application(getcwd()));
 
 $console->run();
