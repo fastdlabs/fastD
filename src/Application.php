@@ -22,7 +22,6 @@ use FastD\ServiceProvider\ConfigProvider;
 use FastD\ServiceProvider\LoggerProvider;
 use FastD\ServiceProvider\RouteProvider;
 use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
 
 /**
  * Class Application
@@ -35,7 +34,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.0.0';
+    const VERSION = '3.1.0 (dev)';
 
     /**
      * @var Application
@@ -121,21 +120,19 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-            $config = new Config();
+            $config = load($this->path . '/config/app.php');
 
-            $config->load($this->path . '/config/app.php');
+            $this->name = $config['name'];
 
-            $this->name = $config->get('name', 'fast-d');
-
-            $this->env = $config->get('env', false);
+            $this->env = $config['env'];
 
             $this['time'] = new DateTime('now',
-                new DateTimeZone($config->get('timezone', 'PRC'))
+                new DateTimeZone($config['timezone'])
             );
 
-            $this->add('config', $config);
+            $this->add('config', Config::create($config));
 
-            $this->registerServicesProviders($config->get('providers', []));
+            $this->registerServicesProviders($config['providers']);
             unset($config);
             $this->booted = true;
         }
@@ -156,6 +153,26 @@ class Application extends Container
     }
 
     /**
+     * @param ServerRequestInterface|null $request
+     * @return Response
+     */
+    public function handleRequest(ServerRequestInterface $request = null)
+    {
+        if (null === $request) {
+            $request = ServerRequest::createServerRequestFromGlobals();
+        }
+
+        try {
+            $this->add('request', $request);
+            return $this->get('dispatcher')->dispatch($request);
+        } catch (Exception $exception) {
+            $response = $this->handleException($exception);
+        }
+
+        return $response;
+    }
+
+    /**
      * @param Response $response
      * @return int
      */
@@ -164,6 +181,7 @@ class Application extends Container
         $response->send();
 
         $request = $this->get('request');
+
         $log = [
             'statusCode' => $response->getStatusCode(),
             'params' => [
@@ -178,22 +196,8 @@ class Application extends Container
             logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
         }
 
+        unset($request, $response);
         return 0;
-    }
-
-    /**
-     * @param ServerRequestInterface|null $serverRequest
-     * @return Response
-     */
-    public function handleRequest(ServerRequestInterface $serverRequest = null)
-    {
-        if (null === $serverRequest) {
-            $serverRequest = ServerRequest::createServerRequestFromGlobals();
-        }
-
-        $this->add('request', $serverRequest);
-
-        return $this->get('dispatcher')->dispatch($serverRequest);
     }
 
     /**
@@ -215,30 +219,20 @@ class Application extends Container
             'trace'=> explode("\n", $e->getTraceAsString()),
         ];
 
-        $response = json($data);
-
-        if (!array_key_exists($statusCode, $response::$statusTexts)) {
+        if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 
-        return $response->withStatus($statusCode);
+        return json($data, $statusCode);
     }
 
     /**
-     * @param ServerRequestInterface|null $serverRequest
+     * @param ServerRequestInterface|null $request
      * @return int
      */
-    public function run(ServerRequestInterface $serverRequest = null)
+    public function run(ServerRequestInterface $request = null)
     {
-        try {
-            $response = $this->handleRequest($serverRequest);
-        } catch (HttpException $exception) {
-            $response = $this->handleException($exception);
-        } catch (Exception $exception) {
-            $response = $this->handleException($exception);
-        } catch (Throwable $exception) {
-            $response = $this->handleException($exception);
-        }
+        $response = $this->handleRequest($request);
 
         return $this->handleResponse($response);
     }

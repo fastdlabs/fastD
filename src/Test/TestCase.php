@@ -15,6 +15,10 @@ use FastD\Http\ServerRequest;
 use PHPUnit_Framework_TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class TestCase
+ * @package FastD\Test
+ */
 class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
@@ -37,6 +41,38 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function response(ResponseInterface $response, $assert)
     {
         $this->assertEquals((string) $response->getBody(), json_encode($assert));
+    }
+
+    /**
+     * @param ResponseInterface $response
+     */
+    public function isServerInterval(ResponseInterface $response)
+    {
+        $this->assertEquals(500, $response->getStatusCode());
+    }
+
+    /**
+     * @param ResponseInterface $response
+     */
+    public function isBadRequest(ResponseInterface $response)
+    {
+        $this->assertEquals(400, $response->getStatusCode());
+    }
+
+    /**
+     * @param ResponseInterface $response
+     */
+    public function isNotFound(ResponseInterface $response)
+    {
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    /**
+     * @param ResponseInterface $response
+     */
+    public function isSuccessful(ResponseInterface $response)
+    {
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     /**
