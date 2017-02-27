@@ -12,6 +12,7 @@
 * 添加 Servitization 服务化模块
 * 新增路由组中间件
 * 去除 Http 目录，改为 Controller，支持HTTP，TCP调用
+* 增加 Swoole 客户端命令行， `php bin/console client {host} {port} [--method|-m GET|POST]`
 
 ##### 3.0.0
 
