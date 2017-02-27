@@ -11,16 +11,14 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Http\ServerRequest;
-use FastD\Monitor\Report;
-use FastD\Packet\Json;
-use FastD\Swoole\Server\Tcp;
+use FastD\Swoole\Server\TCP;
 use swoole_server;
 
 /**
  * Class TCPServer
  * @package FastD\Server
  */
-class TCPServer extends Tcp
+class TCPServer extends TCP
 {
     /**
      * @param swoole_server $server

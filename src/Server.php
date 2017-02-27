@@ -43,7 +43,7 @@ class Server
 
         $server = config()->get('swoole.class', HTTPServer::class);
 
-        $this->server = $server::createServer($application->getName(), config()->get('swoole.listen'), config()->get('swoole.options'));
+        $this->server = $server::createServer($application->getName(), config()->get('swoole.listen'), config()->get('swoole.options', []));
 
         $this->initListeners();
         $this->initProcesses();
