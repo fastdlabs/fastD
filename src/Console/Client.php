@@ -39,6 +39,7 @@ class Client extends Command
         $this
             ->addArgument('host', InputArgument::REQUIRED, 'Swoole server host address')
             ->addArgument('port', InputArgument::REQUIRED, 'Swoole server port')
+            ->addOption('method', 'm', InputOption::VALUE_OPTIONAL, 'Request method', 'GET')
             ->addOption('type', 't', InputOption::VALUE_OPTIONAL, 'Swoole server type', 'tcp')
         ;
     }
@@ -52,24 +53,10 @@ class Client extends Command
     {
         $address = '';
         switch ($input->getOption('type')) {
-            case 'http':
-                $address .= 'http://';
-                $client = Http::class;
-                break;
             case 'tcp':
+            default:
                 $address .= 'tcp://';
                 $client = SyncClient::class;
-                break;
-            case 'udp':
-                $client = UDP::class;
-                $address .= 'udp://';
-                break;
-            case 'ws':
-                $client = WebSocket::class;
-                $address .= 'ws://';
-                break;
-            default:
-                throw new \LogicException('Not support server type ' . $input->getOption('type'));
         }
 
         $address .= $input->getArgument('host') . ':' . $input->getArgument('port');
@@ -84,12 +71,17 @@ class Client extends Command
             return 0;
         }
 
+        $method = $input->getParameterOption(['--method', '-m']);
+
         $client
-            ->connect(function ($client) use ($sendData) {
-                $client->send($sendData);
+            ->connect(function ($client) use ($sendData, $method) {
+                $client->send(json_encode([
+                    'cmd' => $sendData,
+                    'method' => $method
+                ]));
             })
             ->receive(function ($client, $data) use ($input, $output) {
-                $output->writeln('<info>Receive: </info>' . $data);
+                $output->writeln('<info>Receive: </info>: ' . $data);
                 $this->execute($input, $output);
             })
             ->resolve()
