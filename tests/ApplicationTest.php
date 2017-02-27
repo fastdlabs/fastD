@@ -60,7 +60,7 @@ class ApplicationTest extends TestCase
         $app = $this->createApplication();
 
         $this->assertEquals('fast-d', $app->get('config')->get('name'));
-        $this->assertEquals('bar', config()->get('foo'));
+        $this->assertNull(config()->get('foo'));
     }
 
     public function testLoggerServiceProvider()

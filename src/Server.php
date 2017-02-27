@@ -10,7 +10,7 @@
 namespace FastD;
 
 use FastD\ServiceProvider\SwooleProvider;
-use Servitization\Server\HTTPServer;
+use FastD\Servitization\Server\HTTPServer;
 use swoole_http_response;
 use swoole_server;
 
@@ -50,6 +50,11 @@ class Server
         $this->initConnectionPool();
 
         $this->server->bootstrap();
+    }
+
+    public function getSwoole()
+    {
+        return $this->server->getSwoole();
     }
 
     /**
