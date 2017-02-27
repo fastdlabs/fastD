@@ -19,7 +19,11 @@ class Route extends Command
 {
     public function configure()
     {
-        $this->setName('route');
+        $this
+            ->setName('route')
+            ->setHelp('Show all route')
+            ->setDescription('Show you defined routes.')
+        ;
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

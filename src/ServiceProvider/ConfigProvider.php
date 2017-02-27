@@ -27,10 +27,9 @@ class ConfigProvider implements ServiceProviderInterface
     {
         $dir = app()->getPath() . '/config';
         $container->get('config')->load($dir . '/config.php');
-        $config = [
-            'database' => include $dir . '/database.php',
-            'cache' => include $dir . '/cache.php',
-        ];
-        $container->get('config')->merge($config);
+        $container->get('config')->merge([
+            'database' => load($dir . '/database.php'),
+            'cache' => load($dir . '/cache.php'),
+        ]);
     }
 }
