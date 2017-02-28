@@ -16,7 +16,7 @@ return [
     /**
      * Run environment
      */
-    'env' => 'dev',
+    'environment' => 'dev',
 
     /**
      * Application timezone

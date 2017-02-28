@@ -49,7 +49,7 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $env;
+    protected $environment;
 
     /**
      * @var string
@@ -93,9 +93,9 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getEnv()
+    public function getEnvironment()
     {
-        return $this->env;
+        return $this->environment;
     }
 
     /**
@@ -124,7 +124,7 @@ class Application extends Container
 
             $this->name = $config['name'];
 
-            $this->env = $config['env'];
+            $this->environment = $config['environment'];
 
             $this['time'] = new DateTime('now',
                 new DateTimeZone($config['timezone'])
