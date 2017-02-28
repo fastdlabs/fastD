@@ -87,7 +87,7 @@ function cache () {
 }
 
 /**
- * @return medoo
+ * @return \Medoo\Medoo
  */
 function database () {
     return app()->get('database');
