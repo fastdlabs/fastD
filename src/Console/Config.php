@@ -10,7 +10,9 @@
 namespace FastD\Console;
 
 
+use FastD\Utils\FileObject;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -23,6 +25,21 @@ class Config extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $table = new Table($output);
+        $rows = [];
+        $table->setHeaders(array('File', 'Config', 'Owner', 'Modify At',));
 
+        foreach (glob(app()->getPath() . '/config/*') as $file) {
+            $file = new FileObject($file);
+            $rows[] = [
+                $file->getFilename(),
+                count(array_keys(load($file->getPathname()))) . ' Keys',
+                posix_getpwuid($file->getOwner())['name'],
+                date('Y-m-d H:i:s', $file->getMTime()),
+            ];
+        }
+
+        $table->setRows($rows);
+        $table->render();
     }
 }
