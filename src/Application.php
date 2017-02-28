@@ -153,15 +153,11 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface|null $request
+     * @param ServerRequestInterface $request
      * @return Response
      */
-    public function handleRequest(ServerRequestInterface $request = null)
+    public function handleRequest(ServerRequestInterface $request)
     {
-        if (null === $request) {
-            $request = ServerRequest::createServerRequestFromGlobals();
-        }
-
         try {
             $this->add('request', $request);
             return $this->get('dispatcher')->dispatch($request);
@@ -209,6 +205,10 @@ class Application extends Container
      */
     public function run(ServerRequestInterface $request = null)
     {
+        if (null === $request) {
+            $request = ServerRequest::createServerRequestFromGlobals();
+        }
+
         $response = $this->handleRequest($request);
 
         $this->handleResponse($response);
