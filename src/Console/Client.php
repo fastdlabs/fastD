@@ -29,7 +29,7 @@ class Client extends Command
         $this
             ->setName('client')
             ->setHelp('This command allows you to create swoole client...')
-            ->setDescription('Create new swoole client')
+            ->setDescription('Create new swoole tcp/udp client')
         ;
 
         $this
