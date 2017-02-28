@@ -27,7 +27,7 @@ class Client extends Command
     public function configure()
     {
         $this
-            ->setName('client')
+            ->setName('swoole:client')
             ->setHelp('This command allows you to create swoole client...')
             ->setDescription('Create new swoole tcp/udp client')
         ;

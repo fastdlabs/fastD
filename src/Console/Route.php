@@ -20,7 +20,7 @@ class Route extends Command
     public function configure()
     {
         $this
-            ->setName('route')
+            ->setName('route:dump')
             ->setHelp('Show all route')
             ->setDescription('Show you defined routes.')
         ;

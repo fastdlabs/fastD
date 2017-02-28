@@ -18,9 +18,9 @@ return [
     'processes' => [
         [
             'class' => \FastD\Servitization\Discovery\Discover::class,
-            'scheme' => 'tcp://127.0.0.1:9888',
+            'uri' => 'tcp://127.0.0.1:9888',
         ],
     ],
-    'servers' => [
+    'listeners' => [
     ],
 ];

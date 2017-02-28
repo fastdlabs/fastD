@@ -22,8 +22,11 @@ class ServerTest extends TestCase
     {
         $server = $this->createServer();
 
-        print_r($server->getSwoole()->setting);
-
-
+        $this->assertEquals([
+            'task_worker_num' => 20,
+            'task_tmpdir' => '/tmp',
+            'pid_file' => '/tmp/fast-d.pid',
+            'worker_num' => 10
+        ], $server->getSwoole()->setting);
     }
 }

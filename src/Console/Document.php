@@ -23,7 +23,7 @@ class Document extends Command
     public function configure()
     {
         $this
-            ->setName('doc')
+            ->setName('doc:swagger')
             ->setDescription('Scan and create api.json into Swagger documentation.')
         ;
     }

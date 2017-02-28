@@ -9,8 +9,14 @@
 
 namespace FastD;
 
+
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use swoole_http_response;
 use swoole_server;
 
@@ -37,8 +43,6 @@ class Server
      */
     public function __construct(Application $application)
     {
-        $this->application = $application;
-
         $application->register(new SwooleServiceProvider());
 
         $server = config()->get('swoole.class', HTTPServer::class);
@@ -52,21 +56,26 @@ class Server
         $this->initListeners();
         $this->initProcesses();
         $this->initConnectionPool();
-
-        $this->server->bootstrap();
     }
 
+    /**
+     * @return swoole_server
+     */
     public function getSwoole()
     {
         return $this->server->getSwoole();
     }
 
     /**
+     * 初始化连接池
      *
+     * @return $this
      */
     public function initConnectionPool()
     {
 
+
+        return $this;
     }
 
     /**
@@ -74,10 +83,13 @@ class Server
      */
     public function initListeners()
     {
-        $ports = $this->application->get('config')->get('ports', []);
-        foreach ($ports as $port) {
-            $class = $port['class'];
-            $this->listen(new $class('ports', $port['listen'], isset($port['options']) ? $port['options'] : []));
+        $listeners = config()->get('listeners', []);
+        foreach ($listeners as $listener) {
+            $this->server->listen(new $listener['class'](
+                app()->getName() . ' ports',
+                $listener['listen'],
+                isset($listener['options']) ? $listener['options'] : []
+            ));
         }
         return $this;
     }
@@ -87,45 +99,98 @@ class Server
      */
     public function initProcesses()
     {
-        $processes = $this->application->get('config')->get('processes', []);
+        $processes = config()->get('processes', []);
         foreach ($processes as $process) {
-            $this->process(new $process);
+            $this->server->process(new $process);
         }
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function daemon()
     {
-        return $this->server->daemon();
+        $this->server->daemon();
+
+        return $this;
     }
 
+    /**
+     * @return int
+     */
     public function start()
     {
         return $this->server->start();
     }
 
+    /**
+     * @return int
+     */
     public function stop()
     {
         return $this->server->shutdown();
     }
 
+    /**
+     * @return int
+     */
     public function restart()
     {
         return $this->server->restart();
     }
 
+    /**
+     * @return int
+     */
     public function reload()
     {
         return $this->server->reload();
     }
 
+    /**
+     * @return int
+     */
     public function status()
     {
         return $this->server->status();
     }
 
+    /**
+     * @param array $dir
+     * @return int
+     */
     public function watch(array $dir = ['.'])
     {
         return $this->server->watch($dir);
+    }
+
+    /**
+     * @param InputInterface $input
+     */
+    public function run(InputInterface $input)
+    {
+        if ($input->hasParameterOption(['--daemon', '-d'], true)) {
+            $this->daemon();
+        }
+
+        switch ($input->getArgument('action')) {
+            case 'start':
+                if ($input->hasParameterOption(['--dir'])) {
+                    $this->watch([$input->getOption('dir')]);
+                } else {
+                    $this->start();
+                }
+                break;
+            case 'stop':
+                $this->stop();
+                break;
+            case 'reload':
+                $this->reload();
+                break;
+            case 'status':
+            default:
+                $this->status();
+        }
     }
 }
