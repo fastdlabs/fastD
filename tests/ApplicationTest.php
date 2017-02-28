@@ -76,11 +76,15 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $response = $app->handleRequest($this->createRequest('GET', '/'));
+        $request = $this->createRequest('GET', '/');
+        $response = $app->handleRequest($request);
+        $app->shutdown($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertTrue(file_exists(app()->getPath() . '/storage/info.log'));
 
-        $response = $app->handleRequest($this->createRequest('GET', '/not/found'));
+        $request = $this->createRequest('GET', '/not/found');
+        $response = $app->handleRequest($request);
+        $app->shutdown($request, $response);
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertTrue(file_exists(app()->getPath() . '/storage/error.log'));
     }
