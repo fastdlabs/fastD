@@ -12,7 +12,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use medoo;
+use Medoo\Medoo;
 
 /**
  * Class DatabaseServiceProvider
@@ -32,7 +32,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
         $container->add('database', function () use ($config) {
             if (null === $this->db) {
-                $this->db = new medoo($config);
+                $this->db = new Medoo($config);
             }
             return $this->db;
         });
