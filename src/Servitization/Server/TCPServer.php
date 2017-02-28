@@ -38,28 +38,26 @@ class TCPServer extends TCP
         $service = $data['cmd'];
         $method = $data['method'];
 
-        $serverRequest = new ServerRequest(strtoupper($method), $service);
+        $request = new ServerRequest(strtoupper($method), $service);
 
         if (isset($data['args'])) {
-            if ('GET' == $serverRequest->getMethod()) {
-                $serverRequest->withQueryParams($data['args']);
+            if ('GET' == $request->getMethod()) {
+                $request->withQueryParams($data['args']);
             } else {
-                $serverRequest->withParsedBody($data['args']);
+                $request->withParsedBody($data['args']);
             }
         }
 
-        $response = app()->handleRequest($serverRequest);
-
-        unset($serverRequest);
-
-        if (null !== config()->get('monitor', null)) {
-            $server->task([
-                'source' => isset($data['source']) ? $data['source'] : $server->connection_info($fd)['remote_ip'],
-                'target' => get_local_ip(),
-                'cmd' => $data['cmd'],
-            ]);
+        try {
+            $response = app()->handleRequest($request);
+        } catch (\Exception $e) {
+            $response = app()->handleException($e);
         }
 
-        return (string) $response->getBody();
+        $content = (string) $response->getBody();
+
+        app()->shutdown($request, $response);
+
+        return $content;
     }
 }

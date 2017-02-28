@@ -166,38 +166,16 @@ class Application extends Container
             $this->add('request', $request);
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            $response = $this->handleException($exception);
+            return $this->handleException($exception);
         }
-
-        return $response;
     }
 
     /**
      * @param Response $response
-     * @return int
      */
     public function handleResponse(Response $response)
     {
         $response->send();
-
-        $request = $this->get('request');
-
-        $log = [
-            'statusCode' => $response->getStatusCode(),
-            'params' => [
-                'get' => $request->getQueryParams(),
-                'post' => $request->getParsedBody(),
-            ]
-        ];
-
-        if ($response->isSuccessful()) {
-            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        } else {
-            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        }
-
-        unset($request, $response);
-        return 0;
     }
 
     /**
@@ -228,12 +206,36 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface|null $request
-     * @return int
      */
     public function run(ServerRequestInterface $request = null)
     {
         $response = $this->handleRequest($request);
 
-        return $this->handleResponse($response);
+        $this->handleResponse($response);
+
+        return $this->shutdown($request, $response);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param Response $response
+     */
+    public function shutdown(ServerRequestInterface $request, Response $response)
+    {
+        $log = [
+            'statusCode' => $response->getStatusCode(),
+            'params' => [
+                'get' => $request->getQueryParams(),
+                'post' => $request->getParsedBody(),
+            ]
+        ];
+
+        if ($response->isSuccessful()) {
+            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+        } else {
+            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+        }
+
+        unset($request, $response);
     }
 }

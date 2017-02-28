@@ -61,6 +61,17 @@ class ApplicationTest extends TestCase
         $this->assertNull(config()->get('foo'));
     }
 
+    public function testAppShutdown()
+    {
+        $app = $this->createApplication();
+
+        $request = $this->createRequest('GET', '/');
+
+        $response = $app->handleRequest($request);
+
+        $app->shutdown($request, $response);
+    }
+
     public function testLoggerServiceProvider()
     {
         $app = $this->createApplication();

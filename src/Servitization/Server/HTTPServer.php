@@ -41,18 +41,10 @@ class HTTPServer extends HTTP
             $swooleResponse->cookie($key, $cookieParam);
         }
 
-        if (null !== config()->get('monitor', null)) {
-            // report monitor
-            $this->getSwoole()->task([
-                'source' => $swooleRequet->server['remote_addr'],
-                'cmd' => $swooleRequet->server['path_info'],
-                'target' => get_local_ip(),
-            ]);
-        }
-
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
-        unset($response, $request);
+
+        app()->shutdown($request, $response);
     }
 
     /**
