@@ -8,8 +8,8 @@
  */
 
 return [
-    'listen' => 'tcp://0.0.0.0:9527',
-    'class' => \FastD\Servitization\Server\TCPServer::class,
+    'listen' => 'http://0.0.0.0:9527',
+    'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => '',
         'worker_num' => 10,

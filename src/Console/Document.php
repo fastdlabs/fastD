@@ -45,9 +45,9 @@ class Document extends Command
     protected function createApiDoc(OutputInterface $output)
     {
         $appName = config()->get('name');
-        $dir = app()->getAppPath() . '/src';
-        $indexHtml = app()->getAppPath() . "/web/{$appName}.html";
-        $apiDataFile = app()->getAppPath() . "/web/{$appName}.json";
+        $dir = app()->getPath() . '/src';
+        $indexHtml = app()->getPath() . "/web/{$appName}.html";
+        $apiDataFile = app()->getPath() . "/web/{$appName}.json";
 
         $output->writeln(sprintf('Scanning dir: <info>%s</info>', $dir));
 

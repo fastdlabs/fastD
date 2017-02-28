@@ -10,11 +10,7 @@
 namespace FastD\Console;
 
 
-use FastD\Swoole\Async\Http;
-use FastD\Swoole\Client\Sync\SyncClient;
 use FastD\Swoole\Client\Sync\TCP;
-use FastD\Swoole\Client\Sync\UDP;
-use FastD\Swoole\Swoole;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -56,12 +52,10 @@ class Client extends Command
             case 'tcp':
             default:
                 $address .= 'tcp://';
-                $client = SyncClient::class;
+                $client = TCP::class;
         }
 
         $address .= $input->getArgument('host') . ':' . $input->getArgument('port');
-
-        $client = new $client($address);
 
         $questionHelper = $this->getHelper('question');
         $question = new Question('Please enter the send data.(default: <info>Hello World</info>, Enter (<info>exit/quit</info>) can be exit console.): ', 'Hello World');
@@ -73,18 +67,13 @@ class Client extends Command
 
         $method = $input->getParameterOption(['--method', '-m']);
 
-        $client
-            ->connect(function ($client) use ($sendData, $method) {
-                $client->send(json_encode([
-                    'cmd' => $sendData,
-                    'method' => $method
-                ]));
-            })
-            ->receive(function ($client, $data) use ($input, $output) {
-                $output->writeln('<info>Receive: </info>: ' . $data);
-                $this->execute($input, $output);
-            })
-            ->resolve()
-        ;
+        $client = new $client($address);
+
+        $json = $client->send(json_encode([
+            'cmd' => $sendData,
+            'method' => $method,
+        ]));
+
+        $output->writeln(json_encode(json_decode($json), JSON_PRETTY_PRINT));
     }
 }

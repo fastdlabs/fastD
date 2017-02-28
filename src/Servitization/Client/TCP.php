@@ -10,9 +10,9 @@
 namespace FastD\Servitization\Client;
 
 
-use FastD\Swoole\Client\Sync\SyncClient;
+use FastD\Swoole\Client\Sync\TCP;
 
-class TCP extends SyncClient
+class TCPClient extends TCP
 {
 
 }
