@@ -6,7 +6,7 @@
 * 删除过多无用配置
 * 修改 services 配置项为 providers
 * 新增路由命令
-* 支持自定义 Server
+* 支持自定义 Server, 内置 TCPServer、HTTPServer
 * 集成 testing 测试
 * 标准命名
 * 添加 Servitization 服务化模块
