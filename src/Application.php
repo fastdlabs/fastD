@@ -132,7 +132,7 @@ class Application extends Container
 
             $this->add('config', Config::create($config));
 
-            $this->registerServicesProviders($config['providers']);
+            $this->registerServicesProviders($config['services']);
             unset($config);
             $this->booted = true;
         }

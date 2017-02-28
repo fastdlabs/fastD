@@ -35,7 +35,7 @@ return [
     /**
      * Bootstrap service.
      */
-    'providers' => [
+    'services' => [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
