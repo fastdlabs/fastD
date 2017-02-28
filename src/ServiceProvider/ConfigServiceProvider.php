@@ -17,7 +17,7 @@ use FastD\Container\ServiceProviderInterface;
  * Class ConfigServiceProvider
  * @package FastD\Provider
  */
-class ConfigProvider implements ServiceProviderInterface
+class ConfigServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container

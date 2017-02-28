@@ -18,9 +18,9 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\ServiceProvider\ConfigProvider;
-use FastD\ServiceProvider\LoggerProvider;
-use FastD\ServiceProvider\RouteProvider;
+use FastD\ServiceProvider\ConfigServiceProvider;
+use FastD\ServiceProvider\LoggerServiceProvider;
+use FastD\ServiceProvider\RouteServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -144,9 +144,9 @@ class Application extends Container
      */
     protected function registerServicesProviders(array $services)
     {
-        $this->register(new ConfigProvider());
-        $this->register(new RouteProvider());
-        $this->register(new LoggerProvider());
+        $this->register(new ConfigServiceProvider());
+        $this->register(new RouteServiceProvider());
+        $this->register(new LoggerServiceProvider());
         foreach ($services as $service) {
             $this->register(new $service);
         }

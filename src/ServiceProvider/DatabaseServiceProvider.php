@@ -9,23 +9,34 @@
 
 namespace FastD\ServiceProvider;
 
+
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use medoo;
 
 /**
- * Class SwooleServiceProvider
+ * Class DatabaseServiceProvider
  * @package FastD\ServiceProvider
  */
-class SwooleProvider implements ServiceProviderInterface
+class DatabaseServiceProvider implements ServiceProviderInterface
 {
+    protected $db;
+
     /**
      * @param Container $container
-     * @return mixed
+     * @return void
      */
     public function register(Container $container)
     {
-        config()->merge([
-            'swoole' => load(app()->getPath() . '/config/server.php')
-        ]);
+        $config = config()->get('database', []);
+
+        $container->add('database', function () use ($config) {
+            if (null === $this->db) {
+                $this->db = new medoo($config);
+            }
+            return $this->db;
+        });
+
+        unset($config);
     }
 }

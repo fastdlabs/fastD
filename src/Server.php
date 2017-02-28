@@ -9,7 +9,7 @@
 
 namespace FastD;
 
-use FastD\ServiceProvider\SwooleProvider;
+use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
 use swoole_http_response;
 use swoole_server;
@@ -39,7 +39,7 @@ class Server
     {
         $this->application = $application;
 
-        $application->register(new SwooleProvider());
+        $application->register(new SwooleServiceProvider());
 
         $server = config()->get('swoole.class', HTTPServer::class);
 

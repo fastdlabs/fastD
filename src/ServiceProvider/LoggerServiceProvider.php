@@ -20,7 +20,7 @@ use Monolog\Logger;
  * Class LoggerServiceProvider
  * @package FastD\ServiceProvider
  */
-class LoggerProvider implements ServiceProviderInterface
+class LoggerServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
