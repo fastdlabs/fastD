@@ -37,7 +37,7 @@
         "fastd/basic-authenticate": "~0.1.0",
         "fastd/swoole": "2.0.x-dev",
         "fastd/utils": "0.1.x-dev",
-        "catfan/Medoo": "~1.1.0",
+        "catfan/Medoo": "~1.0",
         "symfony/cache": "~3.2",
         "symfony/console": "^3.2",
         "monolog/monolog": "~1.0",
