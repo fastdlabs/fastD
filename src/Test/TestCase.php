@@ -9,17 +9,15 @@
 
 namespace FastD\Test;
 
-use Faker\Factory;
+
 use FastD\Application;
-use FastD\Http\ServerRequest;
-use PHPUnit_Framework_TestCase;
-use Psr\Http\Message\ResponseInterface;
+use FastD\Testing\WebTestCase;
 
 /**
  * Class TestCase
  * @package FastD\Test
  */
-class TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends WebTestCase
 {
     /**
      * @var Application
@@ -35,73 +33,20 @@ class TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param ResponseInterface $response
-     * @param $assert
+     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
      */
-    public function response(ResponseInterface $response, $assert)
+    public function getConnection()
     {
-        $this->assertEquals((string) $response->getBody(), json_encode($assert));
+        return $this->createDefaultDBConnection(database()->pdo);
     }
 
     /**
-     * @param ResponseInterface $response
+     * @return \PHPUnit_Extensions_Database_DataSet_ArrayDataSet
      */
-    public function isServerInterval(ResponseInterface $response)
+    public function getDataSet()
     {
-        $this->assertEquals(500, $response->getStatusCode());
-    }
+        return new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
 
-    /**
-     * @param ResponseInterface $response
-     */
-    public function isBadRequest(ResponseInterface $response)
-    {
-        $this->assertEquals(400, $response->getStatusCode());
-    }
-
-    /**
-     * @param ResponseInterface $response
-     */
-    public function isNotFound(ResponseInterface $response)
-    {
-        $this->assertEquals(404, $response->getStatusCode());
-    }
-
-    /**
-     * @param ResponseInterface $response
-     */
-    public function isSuccessful(ResponseInterface $response)
-    {
-        $this->assertEquals(200, $response->getStatusCode());
-    }
-
-    /**
-     * @param $method
-     * @param $path
-     * @param array $headers
-     * @return ServerRequest
-     */
-    public function request($method, $path, array $headers = [])
-    {
-        $serverRequest = new ServerRequest($method, $path, $headers);
-
-        return $serverRequest;
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @param $statusCode
-     */
-    public function status(ResponseInterface $response, $statusCode)
-    {
-        $this->assertEquals($response->getStatusCode(), $statusCode);
-    }
-
-    /**
-     * @return \Faker\Generator
-     */
-    public function fake()
-    {
-        return Factory::create();
+        ]);
     }
 }

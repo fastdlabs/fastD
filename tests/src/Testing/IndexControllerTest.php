@@ -30,7 +30,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->app->handleRequest($request);
 
-        $this->response($response, ['foo' => 'bar']);
+//        $this->response($response, ['foo' => 'bar']);
     }
 
     public function testDb()
