@@ -8,11 +8,11 @@
  */
 
 return [
-    'database_type' => 'mysql',
-    'database_name' => 'ci',
-    'server' => '127.0.0.1',
-    'username' => 'travis',
-    'password' => '',
+    'adapter' => 'mysql',
+    'name' => 'ci',
+    'host' => '127.0.0.1',
+    'user' => 'travis',
+    'pass' => '',
     'charset' => 'utf8',
     'port' => 3306,
 ];

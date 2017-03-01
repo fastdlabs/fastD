@@ -32,7 +32,15 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
         $container->add('database', function () use ($config) {
             if (null === $this->db) {
-                $this->db = new Medoo($config);
+                $this->db = new Medoo([
+                    'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
+                    'database_name' => $config['name'],
+                    'server' => $config['host'],
+                    'username' => $config['user'],
+                    'password' => $config['pass'],
+                    'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
+                    'port' => isset($config['port']) ? $config['port'] : 3306,
+                ]);
             }
             return $this->db;
         });

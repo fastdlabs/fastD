@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use FastD\Console\Migration;
 use FastD\Console\Config;
 use FastD\Console\Client;
 use FastD\Console\Document;
@@ -36,6 +37,7 @@ class Console extends Symfony
             new Client(),
             new Route(),
             new Config(),
+            new Migration(),
         ]);
 
         $this->registerCommands();

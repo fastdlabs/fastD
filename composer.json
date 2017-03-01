@@ -41,6 +41,7 @@
         "catfan/Medoo": "~1.0",
         "symfony/cache": "~3.2",
         "monolog/monolog": "~1.0",
+        "robmorgan/phinx": "^0.8.0",
         "zircote/swagger-php": "^2.0"
     },
     "require-dev": {
