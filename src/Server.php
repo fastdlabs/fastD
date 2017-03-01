@@ -67,6 +67,14 @@ class Server
     }
 
     /**
+     * @return Swoole\Server
+     */
+    public function bootstrap()
+    {
+        return $this->server->bootstrap();
+    }
+
+    /**
      * 初始化连接池
      *
      * @return $this

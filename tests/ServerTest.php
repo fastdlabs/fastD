@@ -22,6 +22,8 @@ class ServerTest extends TestCase
     {
         $server = $this->createServer();
 
+        $server->bootstrap();
+
         $this->assertEquals([
             'task_worker_num' => 20,
             'task_tmpdir' => '/tmp',
