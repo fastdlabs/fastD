@@ -41,6 +41,13 @@ return [
     ],
 
     /**
+     *
+     */
+    'consoles' => [
+
+    ],
+
+    /**
      * Http middleware
      */
     'middleware' => [
