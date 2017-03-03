@@ -32,7 +32,7 @@
 * [响应处理](2-3-response-handling.md)
 * [认证授权](2-4-authorization.md)
 * [异常与日志处理](2-5-exception-logger-handling.md)
-* [API文档](2-6-docuemnt.md)
+* ~~[API文档](2-6-docuemnt.md)~~
 
 高级
 -------
