@@ -40,13 +40,10 @@
         "fastd/testing": "0.2.x-dev",
         "catfan/Medoo": "~1.0",
         "symfony/cache": "~3.2",
-        "monolog/monolog": "~1.0",
-        "robmorgan/phinx": "^0.8.0",
-        "zircote/swagger-php": "^2.0"
+        "monolog/monolog": "~1.0"
     },
     "require-dev": {
-        "phpunit/dbunit": "^2.0",
-        "squizlabs/php_codesniffer": "^2.8"
+        "phpunit/dbunit": "^2.0"
     },
     "bin": [
         "console",
