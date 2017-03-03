@@ -50,6 +50,10 @@ class Console extends Symfony
      */
     public function registerCommands()
     {
+        foreach (config()->get('consoles', []) as $console) {
+            $this->add(new $console);
+        }
+
         if (false !== ($files = glob(app()->getPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $command = '\\Console\\' . pathinfo($file, PATHINFO_FILENAME);
