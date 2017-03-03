@@ -33,7 +33,7 @@ return [
     ],
 
     /**
-     * Bootstrap service.
+     * Bootstrap service
      */
     'services' => [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
@@ -41,7 +41,7 @@ return [
     ],
 
     /**
-     *
+     * Consoles
      */
     'consoles' => [
 
