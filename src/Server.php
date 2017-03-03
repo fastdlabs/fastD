@@ -45,12 +45,12 @@ class Server
     {
         $application->register(new SwooleServiceProvider());
 
-        $server = config()->get('swoole.class', HTTPServer::class);
+        $server = config()->get('server.class', HTTPServer::class);
 
         $this->server = $server::createServer(
             $application->getName(),
-            config()->get('swoole.listen'),
-            config()->get('swoole.options', [])
+            config()->get('server.listen'),
+            config()->get('server.options', [])
         );
 
         $this->initListeners();

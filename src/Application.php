@@ -123,13 +123,10 @@ class Application extends Container
             $config = load($this->path . '/config/app.php');
 
             $this->name = $config['name'];
-
             $this->environment = $config['environment'];
-
             $this['time'] = new DateTime('now',
                 new DateTimeZone($config['timezone'])
             );
-
             $this->add('config', Config::create($config));
 
             $this->registerServicesProviders($config['services']);
@@ -201,13 +198,10 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface|null $request
      */
-    public function run(ServerRequestInterface $request = null)
+    public function run()
     {
-        if (null === $request) {
-            $request = ServerRequest::createServerRequestFromGlobals();
-        }
+        $request = ServerRequest::createServerRequestFromGlobals();
 
         $response = $this->handleRequest($request);
 
