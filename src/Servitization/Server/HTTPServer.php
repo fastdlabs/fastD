@@ -41,10 +41,10 @@ class HTTPServer extends HTTP
             $swooleResponse->cookie($key, $cookieParam);
         }
 
+        app()->shutdown($request, $response);
+
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
-
-        app()->shutdown($request, $response);
     }
 
     /**

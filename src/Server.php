@@ -81,8 +81,6 @@ class Server
      */
     public function initConnectionPool()
     {
-
-
         return $this;
     }
 
