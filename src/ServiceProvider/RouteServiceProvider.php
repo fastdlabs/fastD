@@ -69,6 +69,6 @@ class RouteServiceProvider implements ServiceProviderInterface
         $container->add('router', $router);
         $container->add('dispatcher', $dispatcher);
 
-        load(app()->getPath() . '/config/routes.php');
+        include app()->getPath() . '/config/routes.php';
     }
 }

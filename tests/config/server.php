@@ -8,19 +8,23 @@
  */
 
 return [
-    'listen' => 'http://0.0.0.0:9527',
+    'host' => 'http://0.0.0.0:9527',
     'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
-        'pid_file' => '',
+        'pid_file' => __DIR__ . '/../runtime/pid/' . app()->getName() . '.pid',
         'worker_num' => 10,
         'task_worker_num' => 20,
     ],
     'processes' => [
         [
             'class' => \FastD\Servitization\Discovery\Discover::class,
-            'uri' => 'tcp://127.0.0.1:9888',
+            'host' => 'tcp://127.0.0.1:9888',
         ],
     ],
     'listeners' => [
+        [
+            'class' => \FastD\Servitization\Server\TCPServer::class,
+            'host' => 'tcp://127.0.0.1:9528',
+        ]
     ],
 ];

@@ -32,10 +32,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $logger = new Logger($config->get('name'));
 
         $log = $config->get('log');
-        $path = !isset($log['path']) ? null : $log['path'];
-        if (empty($path) || '/' !== $path{0}) {
-            $path = app()->getPath() . '/' . $path;
-        }
+        $path = app()->getPath() . '/runtime/logs';
 
         if (!isset($log['info'])) {
             $logger->pushHandler(new StreamHandler($path . '/info.log', Logger::INFO));

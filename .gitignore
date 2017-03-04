@@ -1,5 +1,5 @@
 /vendor
 /.idea
-/run
+/tests/runtime
 composer.lock
 tests/storage

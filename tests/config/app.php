@@ -27,7 +27,6 @@ return [
      * Application logger path
      */
     'log' => [
-        'path' => 'storage',
         'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
         'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
     ],

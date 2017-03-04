@@ -49,7 +49,7 @@ class Server
 
         $this->server = $server::createServer(
             $application->getName(),
-            config()->get('server.listen'),
+            config()->get('server.host'),
             config()->get('server.options', [])
         );
 
@@ -93,7 +93,7 @@ class Server
         foreach ($listeners as $listener) {
             $this->server->listen(new $listener['class'](
                 app()->getName() . ' ports',
-                $listener['listen'],
+                $listener['host'],
                 isset($listener['options']) ? $listener['options'] : []
             ));
         }
