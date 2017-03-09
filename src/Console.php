@@ -9,9 +9,12 @@
 
 namespace FastD;
 
+
 use FastD\Console\Config;
 use FastD\Console\Client;
 use FastD\Console\Route;
+use FastD\Console\SeedCreate;
+use FastD\Console\SeedRun;
 use Symfony\Component\Console\Application as Symfony;
 
 /**
@@ -34,6 +37,8 @@ class Console extends Symfony
             new Client(),
             new Route(),
             new Config(),
+            new SeedCreate(),
+            new SeedRun(),
         ]);
 
         $this->registerCommands();
