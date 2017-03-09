@@ -11,11 +11,6 @@ use FastD\Http\ServerRequest;
  */
 class TestCase extends \FastD\Test\TestCase
 {
-    public function setUp()
-    {
-        $this->app = $this->createApplication();
-    }
-
     public function createApplication()
     {
         $app = new Application(__DIR__);

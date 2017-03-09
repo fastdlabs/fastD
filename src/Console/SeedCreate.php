@@ -17,7 +17,7 @@ class SeedCreate extends \Phinx\Console\Command\SeedCreate
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database';
+        $path = app()->getPath() . '/database/seeds';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
