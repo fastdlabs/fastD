@@ -68,6 +68,6 @@ class Client extends Command
             'args' => $args,
         ]));
 
-        $output->writeln(json_encode(json_decode($json), JSON_PRETTY_PRINT));
+        $output->writeln(json_encode(json_decode($json, true), JSON_PRETTY_PRINT));
     }
 }
