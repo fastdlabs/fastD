@@ -89,7 +89,7 @@ class Server
      */
     public function initListeners()
     {
-        $listeners = config()->get('listeners', []);
+        $listeners = config()->get('server.listeners', []);
         foreach ($listeners as $listener) {
             $this->server->listen(new $listener['class'](
                 app()->getName() . ' ports',
@@ -105,7 +105,7 @@ class Server
      */
     public function initProcesses()
     {
-        $processes = config()->get('processes', []);
+        $processes = config()->get('server.processes', []);
         foreach ($processes as $process) {
             $this->server->process(new $process);
         }

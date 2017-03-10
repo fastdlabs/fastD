@@ -35,10 +35,13 @@ class TCPServer extends TCP
             return $e->getMessage();
         }
 
-        $service = $data['cmd'];
-        $method = $data['method'];
+        if (false === $route = app()->get('router')->getRoute($data['cmd'])) {
+            $server->send($fd, 'route ' . $data['cmd'] . ' is not found');
+            $server->close($fd);
+            return -1;
+        }
 
-        $request = new ServerRequest(strtoupper($method), $service);
+        $request = new ServerRequest($route->getMethod(), $route->getPath());
 
         if (isset($data['args'])) {
             if ('GET' == $request->getMethod()) {
@@ -49,15 +52,18 @@ class TCPServer extends TCP
         }
 
         try {
-            $response = app()->handleRequest($request);
+            app()->add('request', $request);
+            $response = app()->get('dispatcher')->callMiddleware($route, $request);
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
 
         $content = (string) $response->getBody();
-
+        $server->send($fd, $content);
+        if (isset($data['keep_alive'])) {
+            false === $data['keep_alive'] && $server->close($fd);
+        }
         app()->shutdown($request, $response);
-
-        return $content;
+        return 0;
     }
 }

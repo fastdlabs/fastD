@@ -1,13 +1,13 @@
 <?php
 
-route()->get('/', 'IndexController@welcome');
+route()->get(['/', 'name' => 'welcome'], 'IndexController@welcome');
 
-route()->get('/foo/{name}', 'IndexController@sayHello');
+route()->get(['/foo/{name}', 'name' => 'foo'], 'IndexController@sayHello');
 
-route()->get('/db', 'IndexController@db');
+route()->get(['/db', 'name' => 'db'], 'IndexController@db');
 
-route()->post('/foo/{name}', 'IndexController@middleware')->withAddMiddleware(new \Middleware\FooMiddleware());
+route()->post(['/foo/{name}', 'name' => 'post'], 'IndexController@middleware')->withAddMiddleware(new \Middleware\FooMiddleware());
 
-route()->get('/model', 'IndexController@model');
+route()->get(['/model', 'name' => 'model'], 'IndexController@model');
 
-route()->get('/auth', 'IndexController@auth')->withAddMiddleware('basic.auth');
+route()->get(['/auth', 'name' => 'auth'], 'IndexController@auth')->withAddMiddleware('basic.auth');

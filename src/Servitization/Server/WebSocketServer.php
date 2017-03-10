@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Servitization\Server;
+namespace FastD\Servitization\Server;
 
 
 use FastD\Swoole\Server\WebSocket;
@@ -35,6 +35,7 @@ class WebSocketServer extends WebSocket
      */
     public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
     {
-        // TODO: Implement doMessage() method.
+        echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+        $server->push($frame->fd, "this is server");
     }
 }
