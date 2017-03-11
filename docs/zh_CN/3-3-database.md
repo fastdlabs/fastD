@@ -43,8 +43,86 @@ $model = model('demo');
 
 从 3.1 版本开始支持构建简单的数据表模型，通过简单命令构建基础的数据表模型。
 
-### 数据库测试
+```shell
+$ php bin/console seed:create Demo
+```
 
+文件构建在 `database/seeds` 目录下，名字自动构建如下: 
 
+```php
+<?php
+
+use Phinx\Seed\AbstractSeed;
+
+class Demo extends AbstractSeed
+{
+    /**
+     * Run Method.
+     *
+     * Write your database seeder using this method.
+     *
+     * More information on writing seeders is available here:
+     * http://docs.phinx.org/en/latest/seeding.html
+     */
+    public function run()
+    {
+        
+    }
+}
+```
+
+通过实现 run 方法，添加数据库结构，方便表结构迁移。
+
+```php
+<?php
+
+use Phinx\Seed\AbstractSeed;
+
+class Demo extends AbstractSeed
+{
+    /**
+     * Run Method.
+     *
+     * Write your database seeder using this method.
+     *
+     * More information on writing seeders is available here:
+     * http://docs.phinx.org/en/latest/seeding.html
+     */
+    public function run()
+    {
+        $table = $this->table('demo');
+        $table->addColumn('user_id', 'integer')
+            ->addColumn('created', 'datetime')
+            ->create();
+    }
+}
+```
+
+编写完成初步的表结构，运行命令: 
+
+```shell
+$ php bin/console seed:run
+```
+
+自动构建数据表，但是需要先手动创建数据库。
+
+### 数据集，为测试做准备
+
+数据集主要为了做数据填充和数据测试使用，数据集使用 yml 格式进行编写，存储在 `database/dataset` 中，目录需要手动构建。
+
+示例: 
+
+```yaml
+-
+  id: 1
+  user_id: 1
+  created: 2010-04-24 17:15:23
+-
+  id: 2
+  user_id: 2
+  created: 2010-04-26 12:14:20
+```
+
+每个字段对应一行记录，只会填充一次，每次测试后会还原数据。具体可以查看[数据库测试](https://phpunit.de/manual/current/zh_cn/database.html)
 
 下一节: [命令行](3-4-cache.md)
