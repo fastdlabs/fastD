@@ -1,5 +1,7 @@
 # 异常与日志处理
 
+框架中提供基础错误处理，没有实现 `set_error_handle` 也不建议，因为 Swoole 的特殊性，没有全局注册处理。可以集中式处理各种异常。
+
 ### 异常
 
 框架中的异常会通过 `json` 的形式返回到客户端，输出具体的错误信息
@@ -26,7 +28,6 @@
 ```php
 return [
     'log' => [
-        'path' => 'storage',
         'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
         'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
     ],

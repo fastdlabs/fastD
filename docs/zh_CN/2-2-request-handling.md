@@ -7,7 +7,7 @@ Http 请求处理来源于 [Http](https://github.com/JanHuang/http) 组件，由
 > 由于 Http 解析是通过 parse_url 进行解析的，因此您需要配置好你的虚拟域名(virtual-host)进行访问，否则会提示 route 404 not found
 
 ```php
-namespace Http\Controller;
+namespace Controller;
 
 
 use FastD\Http\ServerRequest;

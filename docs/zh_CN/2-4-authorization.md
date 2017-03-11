@@ -40,4 +40,4 @@ return [
 route()->get("/", "IndexController@sayHello")->withAddMiddleware('basic.auth');
 ```
 
-下一节: [异常处理](2-5-exception-handling.md)
+下一节: [异常处理](2-5-exception-logger-handling.md)

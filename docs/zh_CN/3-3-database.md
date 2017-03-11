@@ -1,6 +1,6 @@
 # 数据库
 
-FastD 3.0 默认集成 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
+框架模式使用 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
 
 ### 基础 medoo 使用
 
@@ -26,8 +26,6 @@ return [
 ```
 
 框架提供辅助函数: `database()`, 函数返回一个 `Medoo\Medoo` 对象。提供最原始的操作，详细 `Medoo` 操作文档: [Medoo Doc](http://medoo.in/doc).
-
-如果您有更好的选择，求给我提供文档或者 PR。
 
 ### 数据库模型
 

@@ -23,6 +23,8 @@
 
 具体内容请查看: [app.php](../../tests/config/app.php)
 
+用户自定义配置可以设置 [config.php](../../tests/config/config.php)，此处配置项会合并到 app.php 配置中，因为不能出现重名配置项。
+
 **完整的配置项**
 
 ```php
@@ -31,7 +33,7 @@ return [
     /**
      * The application name.
      */
-    'name' => 'fast-d',
+    'name' => 'dobee',
 
     /**
      * Run environment
@@ -47,7 +49,6 @@ return [
      * Application logger path
      */
     'log' => [
-        'path' => 'storage',
         'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
         'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
     ],
@@ -59,6 +60,11 @@ return [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
+
+    /**
+     * Application consoles
+     */
+    'consoles' => [],
 
     /**
      * Http middleware
@@ -94,7 +100,7 @@ return [
 ```php
 <?php
 return [
-    'listen' => 'http://0.0.0.0:9527',
+    'host' => 'http://0.0.0.0:9527',
     'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => '',
@@ -102,15 +108,12 @@ return [
         'task_worker_num' => 20,
     ],
     'processes' => [
-        [
-            'class' => \FastD\Servitization\Discovery\Discover::class,
-            'scheme' => 'tcp://127.0.0.1:9888',
-        ],
+        
     ],
-    'servers' => [
+    'listeners' => [
         [
             'class' => \FastD\Servitization\Server\TCPServer::class,
-            'listen' => 'tcp://127.0.0.1:9528',
+            'host' => 'tcp://127.0.0.1:9528',
         ],
     ],
 ];
@@ -118,7 +121,7 @@ return [
 
 ##### 自定义配置项
 
-database.php 与 cache.php 是框架默认提供的扩展配置，由 `DatabaseServiceProvider` 与 `CacheServiceProvider` 进行具体处理。
+[database.php](../../tests/config/database.php) 与 [cache.php](../../tests/config/cache.php) 是框架默认提供的扩展配置，由 [DatabaseServiceProvider](../../src/ServiceProvider/DatabaseServiceProvider.php) 与 [CacheServiceProvider](../../src/ServiceProvider/CacheServiceProvider.php) 进行具体处理。
 
 其中 database.php 与 cache.php 虽说是框架默认提供的，但是他们均属于自定义服务提供器之一。
 

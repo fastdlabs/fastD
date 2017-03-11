@@ -1,6 +1,6 @@
 # API 文档 (已废弃，可手动集成)
 
-FastD 框架中已经默认集成 [swagger](https://github.com/zircote/swagger-php) 文档，仅需要通过以下命令即可生成文档，亦可通过集成的方式将文档集中到一个中心管理。
+* [swagger](https://github.com/zircote/swagger-php)
 
 ```php
 php bin/console doc
