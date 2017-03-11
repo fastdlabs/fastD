@@ -9,16 +9,14 @@
 
 namespace FastD;
 
-use Exception;
-use FastD\Http\Response;
-use FastD\Http\SwooleServerRequest;
-use FastD\Monitor\Monitor;
-use FastD\Monitor\Report;
+
 use FastD\ServiceProvider\SwooleServiceProvider;
-use FastD\Swoole\Client\Sync\SyncClient;
-use FastD\Swoole\Server\Http;
-use Psr\Http\Message\ServerRequestInterface;
-use swoole_http_request;
+use FastD\Servitization\Server\HTTPServer;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use swoole_http_response;
 use swoole_server;
 
@@ -27,7 +25,7 @@ use swoole_server;
  *
  * @package FastD
  */
-class Server extends Http
+class Server
 {
     /**
      * @var Application
@@ -35,31 +33,69 @@ class Server extends Http
     protected $application;
 
     /**
+     * @var \FastD\Swoole\Server
+     */
+    protected $server;
+
+    /**
      * Server constructor.
      * @param Application $application
      */
     public function __construct(Application $application)
     {
-        $this->application = $application;
+        $application->register(new SwooleServiceProvider());
 
-        $application->register(new SwooleServiceProvider($this));
+        $server = config()->get('server.class', HTTPServer::class);
 
-        parent::__construct($application->getName(), $application->get('config')->get('listen'));
+        $this->server = $server::createServer(
+            $application->getName(),
+            config()->get('server.host'),
+            config()->get('server.options', [])
+        );
 
-        $this->configure($application->get('config')->get('options', []));
+        $this->initListeners();
+        $this->initProcesses();
+        $this->initConnectionPool();
+    }
 
-        $this->initMultiPorts()->initProcesses();
+    /**
+     * @return swoole_server
+     */
+    public function getSwoole()
+    {
+        return $this->server->getSwoole();
+    }
+
+    /**
+     * @return Swoole\Server
+     */
+    public function bootstrap()
+    {
+        return $this->server->bootstrap();
+    }
+
+    /**
+     * 初始化连接池
+     *
+     * @return $this
+     */
+    public function initConnectionPool()
+    {
+        return $this;
     }
 
     /**
      * @return $this
      */
-    public function initMultiPorts()
+    public function initListeners()
     {
-        $ports = $this->application->get('config')->get('ports', []);
-        foreach ($ports as $port) {
-            $class = $port['class'];
-            $this->listen(new $class('ports', $port['listen'], isset($port['options']) ? $port['options'] : []));
+        $listeners = config()->get('server.listeners', []);
+        foreach ($listeners as $listener) {
+            $this->server->listen(new $listener['class'](
+                app()->getName() . ' ports',
+                $listener['host'],
+                isset($listener['options']) ? $listener['options'] : []
+            ));
         }
         return $this;
     }
@@ -69,65 +105,98 @@ class Server extends Http
      */
     public function initProcesses()
     {
-        $processes = $this->application->get('config')->get('processes', []);
+        $processes = config()->get('server.processes', []);
         foreach ($processes as $process) {
-            $this->process(new $process);
+            $this->server->process(new $process);
         }
         return $this;
     }
 
     /**
-     * @param swoole_http_request $swooleRequet
-     * @param swoole_http_response $swooleResponse
+     * @return $this
      */
-    public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
+    public function daemon()
     {
-        try {
-            $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
-            $response = $this->doRequest($request);
-        } catch (Exception $e) {
-            $response = $this->application->handleException($e);
-        }
+        $this->server->daemon();
 
-        foreach ($response->getHeaders() as $key => $header) {
-            $swooleResponse->header($key, $response->getHeaderLine($key));
-        }
-
-        foreach ($request->getCookieParams() as $key => $cookieParam) {
-            $swooleResponse->cookie($key, $cookieParam);
-        }
-
-        if (null !== config()->get('monitor', null)) {
-            // report monitor
-            $this->getSwoole()->task([
-                'source' => $swooleRequet->server['remote_addr'],
-                'cmd' => $swooleRequet->server['path_info'],
-                'target' => get_local_ip(),
-            ]);
-        }
-
-        $swooleResponse->status($response->getStatusCode());
-        $swooleResponse->end((string) $response->getBody());
-        unset($response, $request);
+        return $this;
     }
 
     /**
-     * @param ServerRequestInterface $serverRequest
-     * @return Response
+     * @return int
      */
-    public function doRequest(ServerRequestInterface $serverRequest)
+    public function start()
     {
-        return app()->handleRequest($serverRequest);
+        return $this->server->start();
     }
 
     /**
-     * @param swoole_server $server
-     * @param $taskId
-     * @param $workerId
-     * @param $data
+     * @return int
      */
-    public function doTask(swoole_server $server, $taskId, $workerId, $data)
+    public function stop()
     {
-        Monitor::report($this, $data);
+        return $this->server->shutdown();
+    }
+
+    /**
+     * @return int
+     */
+    public function restart()
+    {
+        return $this->server->restart();
+    }
+
+    /**
+     * @return int
+     */
+    public function reload()
+    {
+        return $this->server->reload();
+    }
+
+    /**
+     * @return int
+     */
+    public function status()
+    {
+        return $this->server->status();
+    }
+
+    /**
+     * @param array $dir
+     * @return int
+     */
+    public function watch(array $dir = ['.'])
+    {
+        return $this->server->watch($dir);
+    }
+
+    /**
+     * @param InputInterface $input
+     */
+    public function run(InputInterface $input)
+    {
+        if ($input->hasParameterOption(['--daemon', '-d'], true)) {
+            $this->daemon();
+        }
+
+        switch ($input->getArgument('action')) {
+            case 'start':
+                if ($input->hasParameterOption(['--dir'])) {
+                    $this->watch([$input->getOption('dir')]);
+                } else {
+                    $this->start();
+                }
+                break;
+            case 'stop':
+                $this->stop();
+                break;
+            case 'reload':
+                $this->reload();
+                break;
+            case 'status':
+            default:
+                $this->status();
+        }
     }
 }

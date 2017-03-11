@@ -7,4 +7,10 @@
  * @link      http://www.fast-d.cn/
  */
 
-$composer = include_once __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/../../vendor/autoload.php';
+
+use FastD\Application;
+
+$app = new Application(__DIR__ . '/..');
+
+$app->run();

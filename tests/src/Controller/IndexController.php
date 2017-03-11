@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Http\Controller;
+namespace Controller;
 
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
@@ -16,16 +16,18 @@ use FastD\Middleware\Delegate;
 
 /**
  *
+ * @SWG\Info(title="演示API", version="0.1")
+ *
  * Class IndexController
  * @package Http\Controller
  */
-class UserController
+class IndexController
 {
     /**
      * @SWG\Get(
-     *   path="/user/{name}",
+     *   path="/foo/{name}",
      *   summary="演示API示例",
-     *   tags={"user"},
+     *   tags={"demo"},
      *   description="示例说明",
      *   consumes={"application/json", "application/xml"},
      *   produces={"application/json", "application/xml"},
@@ -64,7 +66,7 @@ class UserController
      *       @SWG\Property(property="error_message", type="string")
      *     )
      *   ),
-     *   @SWG\Response(response=400, description="Bad Request"),
+     *   @SWG\Response(response=400, description="Bad Request", @SWG\Schema(ref="#/definitions/User")),
      *   @SWG\Response(response=500, description="Internal Server Error")
      * )
      *
@@ -116,7 +118,8 @@ class UserController
 
         return json([
             'model' => get_class($model),
-            'db' => $model->getDatabase()->info()
+            'db' => $model->getDatabase()->info(),
+            'data' => database()->query('select * from user_logins')->fetchAll(),
         ]);
     }
 

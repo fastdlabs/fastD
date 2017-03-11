@@ -15,9 +15,7 @@ class ServerTest extends TestCase
 {
     public function createServer()
     {
-        $app = $this->createApplication();
-
-        return new Server($app);
+        return new Server($this->createApplication());
     }
 
     public function testServerInit()
@@ -25,11 +23,5 @@ class ServerTest extends TestCase
         $server = $this->createServer();
 
         $server->bootstrap();
-
-        $this->assertEquals($server->getSwoole()->setting, [
-            'pid_file' => '/tmp/fast-d.pid',
-            'task_worker_num' => 20,
-            'worker_num' => 10
-        ]);
     }
 }

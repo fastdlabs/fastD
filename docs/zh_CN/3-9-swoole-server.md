@@ -93,4 +93,27 @@ return [
 
 重写 `FastD\Swoole\Process` 的 `handle` 方法，`handle` 为进程具体执行的事务。示例: [DemoProcessor](../../tests/src/Processor/DemoProcessor.php)
 
+##### 完整的配置
+
+```php
+<?php
+return [
+    'listen' => 'http://0.0.0.0:9527',
+    'class' => \FastD\Servitization\Server\HTTPServer::class,
+    'options' => [
+        'pid_file' => '',
+        'worker_num' => 10,
+        'task_worker_num' => 20,
+    ],
+    'processes' => [
+        [
+            'class' => \FastD\Servitization\Discovery\Discover::class,
+            'scheme' => 'tcp://127.0.0.1:9888',
+        ],
+    ],
+    'servers' => [
+    ],
+];
+```
+
 下一节: [扩展](3-10-extend.md)

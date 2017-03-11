@@ -30,7 +30,7 @@ class CacheServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = config()->get('cache');
+        $config = $container->get('config')->get('cache');
 
         $container->add('cache', function () use ($config) {
             if (null === $this->cache) {

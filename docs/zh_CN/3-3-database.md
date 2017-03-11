@@ -1,6 +1,6 @@
 # 数据库
 
-FastD 3.0 默认集成 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
+框架模式使用 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
 
 ### 基础 medoo 使用
 
@@ -15,19 +15,17 @@ ORM 框架
 ```php
 <?php
 return [
-    'database_type' => 'mysql',
-    'database_name' => 'database name',
-    'server' => 'database host',
-    'username' => 'database user',
-    'password' => 'database pass',
+    'adapter' => 'mysql',
+    'name' => 'ci',
+    'host' => '127.0.0.1',
+    'user' => 'travis',
+    'pass' => '',
     'charset' => 'utf8',
     'port' => 3306,
 ];
 ```
 
-框架提供辅助函数: `database()`, 函数返回一个 medoo 对象。提供最原始的操作，详细 medoo 操作文档: [Medoo Doc](http://medoo.in/doc).
-
-如果您有更好的选择，求给我提供文档或者 PR。
+框架提供辅助函数: `database()`, 函数返回一个 `Medoo\Medoo` 对象。提供最原始的操作，详细 `Medoo` 操作文档: [Medoo Doc](http://medoo.in/doc).
 
 ### 数据库模型
 
@@ -41,5 +39,90 @@ $model = model('demo');
 
 模型放置在 Model 目录中，如果没有该目录，需要通过手动创建目录，通过使用 `model` 方法的时候，会自动将命名空间拼接到模型名之前，并且模型名不需要带上 `Model` 字样，如: `model('demo'')` 等于 `new Model\DemoModel`。
 
+### 数据表结构
 
-下一节: [命令行](3-4-cache.md)
+从 3.1 版本开始支持构建简单的数据表模型，通过简单命令构建基础的数据表模型。
+
+```shell
+$ php bin/console seed:create Demo
+```
+
+文件构建在 `database/seeds` 目录下，名字自动构建如下: 
+
+```php
+<?php
+
+use Phinx\Seed\AbstractSeed;
+
+class Demo extends AbstractSeed
+{
+    /**
+     * Run Method.
+     *
+     * Write your database seeder using this method.
+     *
+     * More information on writing seeders is available here:
+     * http://docs.phinx.org/en/latest/seeding.html
+     */
+    public function run()
+    {
+        
+    }
+}
+```
+
+通过实现 run 方法，添加数据库结构，方便表结构迁移。
+
+```php
+<?php
+
+use Phinx\Seed\AbstractSeed;
+
+class Demo extends AbstractSeed
+{
+    /**
+     * Run Method.
+     *
+     * Write your database seeder using this method.
+     *
+     * More information on writing seeders is available here:
+     * http://docs.phinx.org/en/latest/seeding.html
+     */
+    public function run()
+    {
+        $table = $this->table('demo');
+        $table->addColumn('user_id', 'integer')
+            ->addColumn('created', 'datetime')
+            ->create();
+    }
+}
+```
+
+编写完成初步的表结构，运行命令: 
+
+```shell
+$ php bin/console seed:run
+```
+
+自动构建数据表，但是需要先手动创建数据库。
+
+### 数据集，为测试做准备
+
+数据集主要为了做数据填充和数据测试使用，数据集使用 yml 格式进行编写，存储在 `database/dataset` 中，目录需要手动构建。
+
+示例: 
+
+```yaml
+-
+  id: 1
+  user_id: 1
+  created: 2010-04-24 17:15:23
+-
+  id: 2
+  user_id: 2
+  created: 2010-04-26 12:14:20
+```
+
+每个字段对应一行记录，只会填充一次，每次测试后会还原数据。具体可以查看[数据库测试](https://phpunit.de/manual/current/zh_cn/database.html)
+
+下一节: [缓存](3-4-cache.md)

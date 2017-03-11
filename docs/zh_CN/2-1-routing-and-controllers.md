@@ -2,23 +2,23 @@
 
 路由的提供来源于 [routing](https://github.com/JanHuang/routing) 组件，提供高性能的路由配置和解析处理，良好地支持 RESTful。
 
-路由配置文件存放于 `config/routes.php` 文件中。
-
 ### 路由配置
 
-在路由回调处理中，控制器不需要编写命名空间，默认在控制器前追加 `Http\Controoler` 命名空间。
+在路由回调处理中，控制器不需要编写命名空间，默认在控制器前追加 `Controoler` 命名空间。
 
-##### 方法路由:
+> 3.1 版本控制器已经迁移到 `Controller` 目录，3.0 版本存储在 `Http/Controller` 目录
+
+##### 方法路由
  
 ```php
-route()->get('/', 'IndexController@sayHello');
+route()->get(['/', 'name' => 'get.welcome'], 'IndexController@sayHello');
 ``` 
 
 ```php
-route()->post('/', 'IndexController@sayHello');
+route()->post(['/', 'name' => 'post.welcome'], 'IndexController@sayHello');
 ```
 
-支持 `get, post, put, head, delete` 方法
+支持 `get, post, put, head, delete` 方法。添加路由名，可以更加方便在 [TCPServer](3-9-swoole-server.md) 中调用
 
 ##### 路由组
 
@@ -28,7 +28,15 @@ route()->group('/v1', function () {
 });
 ```
 
-以上路由会在用户访问 `/v1/` 或者 `/v1` 时候进行回调处理
+以上路由会在用户访问 `/v1/` 或者 `/v1` 时候进行回调处理。
+
+```php
+route()->group(['prefix' => '/v1', 'middleware' => 'demo'], function () {
+    route()->get('/', 'IndexController@sayHello');
+});
+```
+
+路由组支持全局设置中间件，可以子路由可以统一设置中间。
 
 ##### 路由模糊匹配
 
@@ -51,7 +59,7 @@ $request->getAttribute('fuzzy_path');
 > 控制器无需继承任何对象，方法均有 [辅助函数](3-5-helpers.md) 提供
 
 ```php
-namespace Http\Controller;
+namespace Controller;
 
 
 class IndexController
@@ -76,7 +84,7 @@ route()->get('/hello/{name}', 'IndexController@sayHello');
 ```
 
 ```php
-namespace Http\Controller;
+namespace Controller;
 
 
 use FastD\Http\ServerRequest;
@@ -91,7 +99,5 @@ class IndexController
     }
 }
 ```
-
-如此类推。
 
 下一节: [请求](2-2-request-handling.md)

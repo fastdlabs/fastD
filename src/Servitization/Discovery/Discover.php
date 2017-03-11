@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Discovery;
+namespace FastD\Servitization\Discovery;
 
 
 use FastD\Swoole\Client\Sync\SyncClient;

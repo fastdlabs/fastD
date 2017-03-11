@@ -12,7 +12,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use medoo;
+use Medoo\Medoo;
 
 /**
  * Class DatabaseServiceProvider
@@ -28,11 +28,19 @@ class DatabaseServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = config()->get('database');
+        $config = config()->get('database', []);
 
         $container->add('database', function () use ($config) {
             if (null === $this->db) {
-                $this->db = new medoo($config);
+                $this->db = new Medoo([
+                    'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
+                    'database_name' => $config['name'],
+                    'server' => $config['host'],
+                    'username' => $config['user'],
+                    'password' => $config['pass'],
+                    'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
+                    'port' => isset($config['port']) ? $config['port'] : 3306,
+                ]);
             }
             return $this->db;
         });

@@ -10,7 +10,7 @@
 namespace FastD\Model;
 
 
-use medoo;
+use Medoo\Medoo;
 
 /**
  * Class Model
@@ -27,7 +27,7 @@ class Model
      * Model constructor.
      * @param medoo $medoo
      */
-    public function __construct(medoo $medoo)
+    public function __construct(Medoo $medoo)
     {
         $this->db = $medoo;
     }

@@ -1,23 +1,15 @@
 #!/usr/bin/env php
 <?php
 /**
- * Created by PhpStorm.
- * User: janhuang
- * Date: 15/3/19
- * Time: 下午8:03
- * Github: https://www.github.com/janhuang
- * Coding: https://www.coding.net/janhuang
- * SegmentFault: http://segmentfault.com/u/janhuang
- * Blog: http://segmentfault.com/blog/janhuang
- * Gmail: bboyjanhuang@gmail.com
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
  */
 
 use FastD\Application;
 use FastD\Console;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputOption;
 
 set_time_limit(0);
 date_default_timezone_set('PRC');
@@ -44,15 +36,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$input = new ArgvInput(null, new InputDefinition([
-    new InputOption('t', '-t', InputOption::VALUE_OPTIONAL, 'Web root relative path')
-]));
-
-$path = $input->getOption('t');
-if (!$path) {
-    $path = getcwd();
-}
-
-$console = new Console(new Application($path));
+$console = new Console(new Application(getcwd()));
 
 $console->run();

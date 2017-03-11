@@ -14,9 +14,9 @@ return [
     'name' => 'fast-d',
 
     /**
-     * Application environment local/dev/prod
+     * Run environment
      */
-    'environment' => 'prod',
+    'environment' => 'dev',
 
     /**
      * Application timezone
@@ -27,17 +27,23 @@ return [
      * Application logger path
      */
     'log' => [
-        'path' => 'storage',
         'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
         'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
     ],
 
     /**
-     * Bootstrap service.
+     * Bootstrap service
      */
     'services' => [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
+    ],
+
+    /**
+     * Consoles
+     */
+    'consoles' => [
+
     ],
 
     /**
@@ -60,14 +66,4 @@ return [
             ]
         ])
     ],
-
-    /**
-     * Database config
-     */
-    'database' => include __DIR__ . '/database.php',
-
-    /**
-     * Caching config
-     */
-    'cache' => include __DIR__ . '/cache.php',
 ];

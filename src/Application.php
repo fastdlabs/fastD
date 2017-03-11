@@ -12,16 +12,16 @@ namespace FastD;
 use DateTime;
 use DateTimeZone;
 use Exception;
+use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\ServiceProvider\RouteServiceProvider;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use FastD\ServiceProvider\LoggerServiceProvider;
+use FastD\ServiceProvider\RouteServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
 
 /**
  * Class Application
@@ -34,7 +34,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.0.0';
+    const VERSION = '3.1.0 (dev)';
 
     /**
      * @var Application
@@ -44,22 +44,22 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $appPath;
+    protected $path;
 
     /**
      * @var string
      */
-    protected $name = 'Fast-D';
+    protected $environment;
 
     /**
      * @var string
      */
-    protected $environment = 'local';
+    protected $name = 'fast-d';
 
     /**
      * @var bool
      */
-    protected $debug = true;
+    protected $debug = false;
 
     /**
      * @var bool
@@ -69,15 +69,15 @@ class Application extends Container
     /**
      * AppKernel constructor.
      *
-     * @param $appPath
+     * @param $path
      */
-    public function __construct($appPath)
+    public function __construct($path)
     {
-        $this->appPath = $appPath;
+        $this->path = $path;
 
         static::$app = $this;
 
-        $this['app'] = $this;
+        $this->add('app', $this);
 
         $this->bootstrap();
     }
@@ -91,11 +91,11 @@ class Application extends Container
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isDebug()
+    public function getEnvironment()
     {
-        return $this->debug;
+        return $this->environment;
     }
 
     /**
@@ -109,17 +109,9 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getEnvironment()
+    public function getPath()
     {
-        return $this->environment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAppPath()
-    {
-        return $this->appPath;
+        return $this->path;
     }
 
     /**
@@ -128,21 +120,16 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-            $config = include $this->appPath . '/config/app.php';
-
-            $this->environment = $config['environment'];
-
-            $this->debug = 'prod' == $this->environment ? false : true;
+            $config = load($this->path . '/config/app.php');
 
             $this->name = $config['name'];
-
+            $this->environment = $config['environment'];
             $this['time'] = new DateTime('now',
-                new DateTimeZone(isset($config['timezone']) ? $config['timezone'] : 'PRC')
+                new DateTimeZone($config['timezone'])
             );
-            $this['config'] = $config;
+            $this->add('config', Config::create($config));
 
-            $this->registerServicesProviders((array) $config['services']);
-
+            $this->registerServicesProviders($config['services']);
             unset($config);
             $this->booted = true;
         }
@@ -163,46 +150,25 @@ class Application extends Container
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return Response
+     */
+    public function handleRequest(ServerRequestInterface $request)
+    {
+        try {
+            $this->add('request', $request);
+            return $this->get('dispatcher')->dispatch($request);
+        } catch (Exception $exception) {
+            return $this->handleException($exception);
+        }
+    }
+
+    /**
      * @param Response $response
-     * @return int
      */
     public function handleResponse(Response $response)
     {
         $response->send();
-        // Not debug environment. Save log in application.
-        if (!$this->isDebug()) {
-            $request = $this->get('request');
-            $log = [
-                'statusCode' => $response->getStatusCode(),
-                'params' => [
-                    'get' => $request->getQueryParams(),
-                    'post' => $request->getParsedBody(),
-                ]
-            ];
-
-            if ($response->isSuccessful()) {
-                logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-            } else {
-                logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-            }
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param ServerRequestInterface|null $serverRequest
-     * @return Response
-     */
-    public function handleRequest(ServerRequestInterface $serverRequest = null)
-    {
-        if (null === $serverRequest) {
-            $serverRequest = ServerRequest::createServerRequestFromGlobals();
-        }
-
-        $this->add('request', $serverRequest);
-
-        return $this->get('dispatcher')->dispatch($serverRequest);
     }
 
     /**
@@ -219,39 +185,51 @@ class Application extends Container
         $data = [
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'trace'=> explode("\n", $e->getTraceAsString()),
         ];
 
-        if ($this->isDebug()) {
-            $data['file'] = $e->getFile();
-            $data['line'] = $e->getLine();
-            $data['trace'] = explode("\n", $e->getTraceAsString());
-        }
-
-        $response = json($data);
-
-        if (!array_key_exists($statusCode, $response::$statusTexts)) {
+        if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 
-        return $response->withStatus($statusCode);
+        return json($data, $statusCode);
     }
 
     /**
-     * @param ServerRequestInterface|null $serverRequest
-     * @return int
      */
-    public function run(ServerRequestInterface $serverRequest = null)
+    public function run()
     {
-        try {
-            $response = $this->handleRequest($serverRequest);
-        } catch (HttpException $exception) {
-            $response = $this->handleException($exception);
-        } catch (Exception $exception) {
-            $response = $this->handleException($exception);
-        } catch (Throwable $exception) {
-            $response = $this->handleException($exception);
+        $request = ServerRequest::createServerRequestFromGlobals();
+
+        $response = $this->handleRequest($request);
+
+        $this->handleResponse($response);
+
+        return $this->shutdown($request, $response);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param Response $response
+     */
+    public function shutdown(ServerRequestInterface $request, Response $response)
+    {
+        $log = [
+            'statusCode' => $response->getStatusCode(),
+            'params' => [
+                'get' => $request->getQueryParams(),
+                'post' => $request->getParsedBody(),
+            ]
+        ];
+
+        if ($response->isSuccessful()) {
+            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
+        } else {
+            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
         }
 
-        return $this->handleResponse($response);
+        unset($request, $response);
     }
 }

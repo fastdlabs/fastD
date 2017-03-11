@@ -19,7 +19,7 @@ class Router extends RouteCollection
     protected function concat($callback)
     {
         if (is_string($callback)) {
-            return '\\Http\\Controller\\' . $callback;
+            return '\\Controller\\' . $callback;
         }
 
         return $callback;
@@ -57,6 +57,10 @@ class Router extends RouteCollection
  */
 class RouteServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param Container $container
+     * @return mixed
+     */
     public function register(Container $container)
     {
         $router = new Router();
@@ -65,6 +69,6 @@ class RouteServiceProvider implements ServiceProviderInterface
         $container->add('router', $router);
         $container->add('dispatcher', $dispatcher);
 
-        include $container->get('app')->getAppPath() . '/config/routes.php';
+        include app()->getPath() . '/config/routes.php';
     }
 }

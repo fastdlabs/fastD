@@ -9,7 +9,7 @@ use FastD\Http\ServerRequest;
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-class TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends \FastD\Test\TestCase
 {
     public function createApplication()
     {

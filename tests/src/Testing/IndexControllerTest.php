@@ -14,14 +14,9 @@ use FastD\Test\TestCase;
 
 class IndexControllerTest extends TestCase
 {
-    /**
-     * @var Application
-     */
-    protected $app;
-
-    public function setUp()
+    public function createApplication()
     {
-        $this->app = new Application(getcwd() . '/tests');
+        return new Application(getcwd() . '/tests');
     }
 
     public function testSayHello()
@@ -30,7 +25,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->app->handleRequest($request);
 
-        $this->response($response, ['foo' => 'bar']);
+        $this->response($response, json_encode(['foo' => 'bar']));
     }
 
     public function testDb()

@@ -53,25 +53,4 @@ if (!$path) {
 
 $server = new Server(new Application($path));
 
-if ($input->hasParameterOption(['--daemon', '-d'], true)) {
-    $server->daemon();
-}
-
-switch ($input->getArgument('action')) {
-    case 'start':
-        if ($input->hasParameterOption(['--dir'])) {
-            $server->watch([$input->getOption('dir')]);
-        } else {
-            $server->start();
-        }
-        break;
-    case 'stop':
-        $server->shutdown();
-        break;
-    case 'reload':
-        $server->reload();
-        break;
-    case 'status':
-    default:
-        $server->status();
-}
+$server->run($input);

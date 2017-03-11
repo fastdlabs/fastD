@@ -9,7 +9,12 @@
 
 namespace FastD;
 
-use FastD\Console\Document;
+
+use FastD\Console\Config;
+use FastD\Console\Client;
+use FastD\Console\Route;
+use FastD\Console\SeedCreate;
+use FastD\Console\SeedRun;
 use Symfony\Component\Console\Application as Symfony;
 
 /**
@@ -28,7 +33,15 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
-        $this->initializeCommands();
+        $this->addCommands([
+            new Client(),
+            new Route(),
+            new Config(),
+            new SeedCreate(),
+            new SeedRun(),
+        ]);
+
+        $this->registerCommands();
     }
 
     /**
@@ -36,10 +49,13 @@ class Console extends Symfony
      *
      * @return void
      */
-    public function initializeCommands()
+    public function registerCommands()
     {
-        $this->add(new Document());
-        if (false !== ($files = glob(app()->getAppPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
+        foreach (config()->get('consoles', []) as $console) {
+            $this->add(new $console);
+        }
+
+        if (false !== ($files = glob(app()->getPath() . '/src/Console/*.php', GLOB_NOSORT | GLOB_NOESCAPE))) {
             foreach ($files as $file) {
                 $command = '\\Console\\' . pathinfo($file, PATHINFO_FILENAME);
                 $this->add(new $command);

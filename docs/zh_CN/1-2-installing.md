@@ -5,8 +5,9 @@
 ##### 1 如果没有安装 Composer 
 
 ```
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
+$ curl -sS https://getcomposer.org/installer | php
+$ mv composer.phar /usr/local/bin/composer
+$ chown +x /usr/local/bin/composer
 ```
 
 ##### 2 安装 Swoole 扩展
@@ -29,16 +30,16 @@ $ composer create-project "fastd/dobee" dobee -vvv
 
 ```shell
 $ cd dobee
-$ php -S 127.0.0.1:9527 -t ./web 
+$ php -S 127.0.0.1:9527 -t ./web
+$ curl http://127.0.0.1:9527/
 ```
 
 **启动 Swoole**
 
 ```php
-$ php bin/server 
+$ php bin/server start
+$ curl http://127.0.0.1:9527/
 ```
-
-浏览器访问 `127.0.0.1:9527` 即可得到结果
 
 ### Windows 配置
 
@@ -50,22 +51,22 @@ $ php bin/server
 $ composer create-project "fastd/dobee" dobee -vvv 
 ```
 
-##### 2 启动服务器
+##### 2 配置环境
 
-**启动内置 Web 服务器**
+##### 2.1 配置 apache 虚拟域名
 
-```shell
-$ cd dobee
-$ php -S 127.0.0.1:9527 -t ./web 
+修改 httpd.conf，开启 vhost.conf，添加虚拟与名到 vhost.conf 文件中，修改目录地址。
+
+```apacheconfig
+<VirtualHost *:80>
+    DocumentRoot "/path/to/web"
+    ServerName example.com
+</VirtualHost>
 ```
 
-通过浏览器访问 PHP 内置 WEB 服务器或通过 apache/nginx 访问当前web目录
+映射本地 ip 到虚拟域名，修改 System32 下面的 hosts 文件
 
-### Nginx 配置
-
-搭配推荐使用 Nginx 作为代理入口，通过 Nginx 转发到后端服务器处理。
-
-##### FPM
+##### 2.2 配置 nginx 配置
 
 ```
 server
@@ -86,7 +87,7 @@ server
 }
 ```
 
-##### Swoole
+##### 3 Nginx + Swoole 代理 (推荐使用 Linux 环境)
 
 ```
 server 
