@@ -1,4 +1,14 @@
-# FastD 中文文档
+<h1 align="center">FastD 中文文档</h1>
+
+<p align="center">:rocket: A high performance PHP API framework.</p>
+
+<p align="center">
+<a href="https://packagist.org/packages/fastd/fastd"><img src="https://travis-ci.org/JanHuang/fastD.svg?branch=master" /></a>
+<a href="https://packagist.org/packages/fastd/fastd"><img src="https://poser.pugx.org/fastd/fastd/v/stable" /></a>
+<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg" /></a>
+<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D1.8-8892BF.svg" /></a>
+<a href="https://packagist.org/packages/fastd/fastd"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
+</p>
 
 框架中集成了部分使用率较高的工具，提高开发效率，不必担心的是，框架并不会因为依赖的东西多了而造成速度的变慢，程序中，仅会对使用到的文件代码进行操作。
 
