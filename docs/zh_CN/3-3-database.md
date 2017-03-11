@@ -125,4 +125,4 @@ $ php bin/console seed:run
 
 每个字段对应一行记录，只会填充一次，每次测试后会还原数据。具体可以查看[数据库测试](https://phpunit.de/manual/current/zh_cn/database.html)
 
-下一节: [命令行](3-4-cache.md)
+下一节: [缓存](3-4-cache.md)
