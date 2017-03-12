@@ -136,48 +136,30 @@ class SeedCreate extends Create
         return '
 <?php
 
-use $useClassName;
+use FastD\Model\Migration;
 
-class $className extends $baseClassName
+class $className extends Migration
 {
     /**
-     * Change Method.
-     *
-     * Write your reversible migrations using this method.
-     *
-     * More information on writing migrations is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-     *
-     * The following commands can be used in this method and Phinx will
-     * automatically reverse them when rolling back:
-     *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
-     *
-     * Remember to call "create()" or "update()" and NOT "save()" when working
-     * with the Table class.
+     * Set up database table schema
      */
-    public function change()
-    {
-
-    }
-    
-    /**
-     * Migrate Up.
-     */
-    public function up()
+    public function setUp()
     {
     
     }
 
     /**
-     * Migrate Down.
+     * Insert into data set in table
      */
-    public function down()
+    public function dataSet()
+    {
+    
+    }
+
+    /**
+     * delete data or truncate table
+     */
+    public function tearDown()
     {
     
     }
