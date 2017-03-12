@@ -43,7 +43,6 @@ class Dem extends AbstractMigration
      */
     public function up()
     {
-        echo 'up';die;
         $this->insert('user_logins', [
             [
                 'user_id' => 1,
