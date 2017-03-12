@@ -44,7 +44,7 @@
         "robmorgan/phinx": "^0.8.0"
     },
     "require-dev": {
-        "phpunit/dbunit": "^2.0"
+        "phpunit/phpunit": "^5.0"
     },
     "bin": [
         "console",
