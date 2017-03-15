@@ -119,7 +119,6 @@ class IndexController
         return json([
             'model' => get_class($model),
             'db' => $model->getDatabase()->info(),
-            'data' => database()->query('select * from user_logins')->fetchAll(),
         ]);
     }
 
