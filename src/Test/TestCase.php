@@ -30,7 +30,6 @@ class TestCase extends WebTestCase
     public function setUp()
     {
         $this->app = $this->createApplication();
-        parent::setUp();
     }
 
     /**
@@ -39,32 +38,5 @@ class TestCase extends WebTestCase
     public function createApplication()
     {
         return new Application(getcwd());
-    }
-
-    /**
-     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
-     */
-    protected function getConnection()
-    {
-        return $this->createDefaultDBConnection(database()->pdo, app()->getName());
-    }
-
-    /**
-     * @return \PHPUnit_Extensions_Database_DataSet_CompositeDataSet
-     */
-    protected function getDataSet()
-    {
-        $compositeDs = new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
-
-        $path = app()->getPath() . '/database/dataset/*.yml';
-
-        if (false !== ($files = glob($path, GLOB_NOSORT | GLOB_NOESCAPE))) {
-            foreach ($files as $file) {
-                $ds = $this->createArrayDataSet([pathinfo($file, PATHINFO_FILENAME) => load($file),]);
-                $compositeDs->addDataSet($ds);
-            }
-        }
-
-        return $compositeDs;
     }
 }
