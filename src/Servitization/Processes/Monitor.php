@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Servitization\Monitor;
+namespace FastD\Servitization\Processes;
 
 
 use FastD\Swoole\Client\Sync\SyncClient;

@@ -36,12 +36,12 @@ class TCPServer extends TCP
         }
 
         if (false === $route = app()->get('router')->getRoute($data['cmd'])) {
-            $server->send($fd, 'route ' . $data['cmd'] . ' is not found');
+            $server->send($fd, 'service ' . $data['cmd'] . ' is not found');
             $server->close($fd);
             return -1;
         }
 
-        $request = new ServerRequest($route->getMethod(), $route->getPath());
+        $request = new ServerRequest($route->getMethod(), isset($data['path']) ? $data['path'] : $route->getPath());
 
         if (isset($data['args'])) {
             if ('GET' == $request->getMethod()) {
@@ -65,5 +65,25 @@ class TCPServer extends TCP
         }
         app()->shutdown($request, $response);
         return 0;
+    }
+
+    /**
+     * @param swoole_server $server
+     * @param $fd
+     * @param $from_id
+     */
+    public function doConnect(swoole_server $server, $fd, $from_id)
+    {
+
+    }
+
+    /**
+     * @param swoole_server $server
+     * @param $fd
+     * @param $fromId
+     */
+    public function onClose(swoole_server $server, $fd, $fromId)
+    {
+
     }
 }
