@@ -36,10 +36,12 @@ class TCPServer extends TCP
         }
         $data = Json::decode($data);
         $request = new ServerRequest($data['method'], $data['path']);
-        if ('GET' === $request->getMethod()) {
-            $request->withQueryParams($data['args']);
-        } else {
-            $request->withParsedBody($data['args']);
+        if (isset($data['args'])) {
+            if ('GET' === $request->getMethod()) {
+                $request->withQueryParams($data['args']);
+            } else {
+                $request->withParsedBody($data['args']);
+            }
         }
         try {
             $response = app()->handleRequest($request);
