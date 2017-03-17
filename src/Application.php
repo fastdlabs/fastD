@@ -21,6 +21,7 @@ use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use FastD\ServiceProvider\LoggerServiceProvider;
 use FastD\ServiceProvider\RouteServiceProvider;
+use FastD\Servitization\Pool\PoolInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

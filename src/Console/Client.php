@@ -10,6 +10,7 @@
 namespace FastD\Console;
 
 
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -88,13 +89,17 @@ class Client extends Command
             }
         }
 
-        $json = $this->connectToServer($input->getArgument('host'), $input->getArgument('port'))->send(json_encode([
-            'method' => $method,
-            'path' => $path,
-            'args' => $args,
-        ]));
-
-        $content = json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
-        $output->writeln('<info>' . $content . '</info>');
+        try {
+            $json = $this->connectToServer($input->getArgument('host'), $input->getArgument('port'))->send(json_encode([
+                'method' => $method,
+                'path' => $path,
+                'args' => $args,
+            ]));
+            $content = json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
+            $output->writeln('<info>' . $content . '</info>');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            throw $e;
+        }
     }
 }

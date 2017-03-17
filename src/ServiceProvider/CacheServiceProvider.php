@@ -10,18 +10,15 @@
 namespace FastD\ServiceProvider;
 
 
-use FastD\Config\ConfigLoader;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Servitization\Pool\PoolInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 /**
  * Class CacheServiceProvider
  * @package FastD\ServiceProvider
  */
-class CacheServiceProvider implements ServiceProviderInterface, PoolInterface
+class CacheServiceProvider implements ServiceProviderInterface
 {
     protected $cache;
 
@@ -55,10 +52,5 @@ class CacheServiceProvider implements ServiceProviderInterface, PoolInterface
         });
 
         unset($config);
-    }
-
-    public function initPool()
-    {
-        // TODO: Implement initPool() method.
     }
 }

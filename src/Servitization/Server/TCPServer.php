@@ -13,7 +13,6 @@ namespace FastD\Servitization\Server;
 use FastD\Http\ServerRequest;
 use FastD\Swoole\Server\TCP;
 use FastD\Packet\Json;
-use LogicException;
 use swoole_server;
 
 /**

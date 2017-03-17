@@ -9,7 +9,7 @@
 
 return [
     'host' => 'http://0.0.0.0:9527',
-    'class' => \FastD\Servitization\Server\WebSocketServer::class,
+    'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => __DIR__ . '/../runtime/pid/' . app()->getName() . '.pid',
         'worker_num' => 10,

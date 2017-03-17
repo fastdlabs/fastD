@@ -12,14 +12,13 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Servitization\Pool\PoolInterface;
 use Medoo\Medoo;
 
 /**
  * Class DatabaseServiceProvider
  * @package FastD\ServiceProvider
  */
-class DatabaseServiceProvider implements ServiceProviderInterface, PoolInterface
+class DatabaseServiceProvider implements ServiceProviderInterface
 {
     protected $db;
 
@@ -47,10 +46,5 @@ class DatabaseServiceProvider implements ServiceProviderInterface, PoolInterface
         });
 
         unset($config);
-    }
-
-    public function initPool()
-    {
-        // TODO: Implement initPool() method.
     }
 }

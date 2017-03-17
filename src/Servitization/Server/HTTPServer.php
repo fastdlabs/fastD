@@ -26,19 +26,18 @@ class HTTPServer extends HTTP
      */
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
     {
+        $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
+
         try {
-            $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
             $response = $this->doRequest($request);
+            foreach ($response->getHeaders() as $key => $header) {
+                $swooleResponse->header($key, $response->getHeaderLine($key));
+            }
+            foreach ($response->getCookieParams() as $key => $cookieParam) {
+                $swooleResponse->cookie($key, $cookieParam);
+            }
         } catch (Exception $e) {
             $response = app()->handleException($e);
-        }
-
-        foreach ($response->getHeaders() as $key => $header) {
-            $swooleResponse->header($key, $response->getHeaderLine($key));
-        }
-
-        foreach ($response->getCookieParams() as $key => $cookieParam) {
-            $swooleResponse->cookie($key, $cookieParam);
         }
 
         app()->shutdown($request, $response);
