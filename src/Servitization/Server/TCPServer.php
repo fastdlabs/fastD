@@ -12,6 +12,8 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Swoole\Server\TCP;
+use FastD\Packet\Json;
+use LogicException;
 use swoole_server;
 
 /**
@@ -29,61 +31,25 @@ class TCPServer extends TCP
      */
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {
-        try {
-            $data = json_decode($data, true);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-
-        if (false === $route = app()->get('router')->getRoute($data['cmd'])) {
-            $server->send($fd, 'service ' . $data['cmd'] . ' is not found');
+        if ('quit' == $data) {
             $server->close($fd);
-            return -1;
+            return 0;
         }
-
-        $request = new ServerRequest($route->getMethod(), isset($data['path']) ? $data['path'] : $route->getPath());
-
-        if (isset($data['args'])) {
-            if ('GET' == $request->getMethod()) {
-                $request->withQueryParams($data['args']);
-            } else {
-                $request->withParsedBody($data['args']);
-            }
+        $data = Json::decode($data);
+        $request = new ServerRequest($data['method'], $data['path']);
+        if ('GET' === $request->getMethod()) {
+            $request->withQueryParams($data['args']);
+        } else {
+            $request->withParsedBody($data['args']);
         }
-
+        app()->add('request', $request);
         try {
-            app()->add('request', $request);
-            $response = app()->get('dispatcher')->callMiddleware($route, $request);
+            $response = app()->get('dispatcher')->handleRequest($request);
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
-
-        $content = (string) $response->getBody();
-        $server->send($fd, $content);
-        if (isset($data['keep_alive'])) {
-            false === $data['keep_alive'] && $server->close($fd);
-        }
         app()->shutdown($request, $response);
+        $server->send($fd, (string) $response->getBody());
         return 0;
-    }
-
-    /**
-     * @param swoole_server $server
-     * @param $fd
-     * @param $from_id
-     */
-    public function doConnect(swoole_server $server, $fd, $from_id)
-    {
-
-    }
-
-    /**
-     * @param swoole_server $server
-     * @param $fd
-     * @param $fromId
-     */
-    public function onClose(swoole_server $server, $fd, $fromId)
-    {
-
     }
 }
