@@ -10,10 +10,8 @@
 namespace FastD\ServiceProvider;
 
 
-use FastD\Config\ConfigLoader;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 /**

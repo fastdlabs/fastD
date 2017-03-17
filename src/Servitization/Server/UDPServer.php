@@ -12,21 +12,19 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
-use FastD\Swoole\Server\WebSocket;
+use FastD\Swoole\Server\UDP;
 use swoole_server;
-use swoole_websocket_frame;
-use swoole_websocket_server;
 
-class WebSocketServer extends WebSocket
+class UDPServer extends UDP
 {
     /**
      * @param swoole_server $server
-     * @param swoole_websocket_frame $frame
+     * @param $data
+     * @param $clientInfo
      * @return mixed
      */
-    public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
+    public function doPacket(swoole_server $server, $data, $clientInfo)
     {
-        $data = $frame->data;
         $data = Json::decode($data);
         $request = new ServerRequest($data['method'], $data['path']);
         if (isset($data['args'])) {
@@ -42,7 +40,6 @@ class WebSocketServer extends WebSocket
             $response = app()->handleException($e);
         }
         app()->shutdown($request, $response);
-        $server->push($frame->fd, (string) $response->getBody());
-        return 0;
+        $server->sendto($clientInfo['address'], $clientInfo['port'], (string) $response->getBody());
     }
 }
