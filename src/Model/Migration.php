@@ -18,25 +18,4 @@ use Phinx\Migration\AbstractMigration;
  */
 abstract class Migration extends AbstractMigration
 {
-    public function change()
-    {
-        $this->setUp();
-        $this->dataSet();
-        $this->tearDown();
-    }
-
-    /**
-     * Set up database table schema
-     */
-    abstract public function setUp();
-
-    /**
-     * Insert into data set in table
-     */
-    abstract public function dataSet();
-
-    /**
-     * delete data or truncate table
-     */
-    abstract public function tearDown();
 }

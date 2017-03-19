@@ -143,15 +143,7 @@ class $className extends Migration
     /**
      * Set up database table schema
      */
-    public function setUp()
-    {
-    
-    }
-
-    /**
-     * Insert into data set in table
-     */
-    public function dataSet()
+    public function up()
     {
     
     }
@@ -159,7 +151,7 @@ class $className extends Migration
     /**
      * delete data or truncate table
      */
-    public function tearDown()
+    public function down()
     {
     
     }

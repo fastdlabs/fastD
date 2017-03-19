@@ -40,8 +40,8 @@ class Config extends Command
         if ($input->getArgument('name')) {
             $file = app()->getPath() . '/config/' . $input->getArgument('name') . '.php';
             $config = load($file);
-            $output->writeln('file: ' . $file);
-            $output->writeln('<info>' . Yaml::dump($config) . '</info>');
+            $output->writeln('<info>' . 'file: ' . $file . '</info>');
+            $output->write(Yaml::dump($config));
             return 0;
         }
         $table = new Table($output);

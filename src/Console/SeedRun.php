@@ -80,7 +80,7 @@ class Migration extends Manager
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $version = date('YmdHis');
+                $version = date('YmdHis') . $class;
                 $migration = new $class($version, $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
