@@ -21,7 +21,7 @@ class SeedCreate extends Create
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database/seeds';
+        $path = app()->getPath() . '/database';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
