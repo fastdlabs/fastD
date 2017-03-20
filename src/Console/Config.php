@@ -40,8 +40,7 @@ class Config extends Command
         if ($input->getArgument('name')) {
             $file = app()->getPath() . '/config/' . $input->getArgument('name') . '.php';
             $config = load($file);
-            $output->writeln('<info>' . 'file: ' . $file . '</info>');
-            $output->write(Yaml::dump($config));
+            $output->write('<comment>' . Yaml::dump($config) . '</comment>');
             return 0;
         }
         $table = new Table($output);
@@ -51,9 +50,13 @@ class Config extends Command
         foreach (glob(app()->getPath() . '/config/*') as $file) {
             $file = new FileObject($file);
             $config = load($file->getPathname());
+            $count = 0;
+            if (is_array($config)) {
+                $count = count(array_keys($config));
+            }
             $rows[] = [
                 $file->getFilename(),
-                count(array_keys($config)) . ' Keys',
+                $count . ' Keys',
                 posix_getpwuid($file->getOwner())['name'],
                 date('Y-m-d H:i:s', $file->getMTime()),
             ];
