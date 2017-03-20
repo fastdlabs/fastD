@@ -39,7 +39,8 @@ class SeedCreate extends Create
                     "name" => config()->get('database.name'),
                     "user" => config()->get('database.user'),
                     "pass" => config()->get('database.pass'),
-                    "port" => config()->get('database.port')
+                    "port" => config()->get('database.port'),
+                    'charset' => config()->get('database.charset', 'utf8'),
                 )
             )
         )));
