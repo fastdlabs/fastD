@@ -60,6 +60,11 @@ class Client extends Command
             throw new \RuntimeException('Not action input.');
         }
 
+        if ($action) {
+            $output->writeln('quit');
+            return 0;
+        }
+
         $array = preg_split('/\s+/', $action);
         for ($i = 0; $i < 3; $i++) {
             if (!isset($array[$i])) {
@@ -91,6 +96,7 @@ class Client extends Command
             ]));
             $content = json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
             $output->writeln('<info>' . $content . '</info>');
+            $this->execute($input, $output);
         } catch (Exception $e) {
             echo $e->getMessage();
             throw $e;
