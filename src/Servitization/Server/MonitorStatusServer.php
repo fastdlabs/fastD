@@ -23,7 +23,7 @@ class MonitorStatusServer extends TCP
      */
     public function doConnect(swoole_server $server, $fd, $from_id)
     {
-        $server->send($fd, sprintf('FastD server: %s %s', app()->getName(), Application::VERSION) . PHP_EOL);
+        $server->send($fd, sprintf('server: %s %s', app()->getName(), Application::VERSION) . PHP_EOL);
     }
 
     /**
