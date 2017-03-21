@@ -146,15 +146,7 @@ class $className extends Migration
      */
     public function up()
     {
-    
-    }
-
-    /**
-     * delete data or truncate table
-     */
-    public function down()
-    {
-    
+        
     }
 }';
     }

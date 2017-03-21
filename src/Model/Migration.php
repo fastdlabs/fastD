@@ -18,4 +18,12 @@ use Phinx\Migration\AbstractMigration;
  */
 abstract class Migration extends AbstractMigration
 {
+    public function change()
+    {
+        $this->up();
+        $this->dateSet();
+    }
+
+    public function dateSet()
+    {}
 }

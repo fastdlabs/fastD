@@ -150,6 +150,4 @@ class Migration extends Manager
 
         return $this->migrations;
     }
-
-
 }

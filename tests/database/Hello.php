@@ -12,12 +12,4 @@ class Hello extends Migration
     {
         echo 'up' . PHP_EOL;
     }
-
-    /**
-     * delete data or truncate table
-     */
-    public function down()
-    {
-        echo 'down' . PHP_EOL;
-    }
 }
