@@ -72,17 +72,17 @@ class Migration extends Manager
 
             // filter the files to only get the ones that match our naming scheme
             $fileNames = array();
-            /** @var AbstractMigration[] $versions */
-            $versions = array();
+            /** @var AbstractMigration[] $migrations */
+            $migrations = array();
 
-
+            $version = date('Ymd');
+            $versionIncrementSeed = mt_rand(1000, 9999 - count($phpFiles));
 
             foreach ($phpFiles as $filePath) {
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $version = date('YmdHis') . $class;
-                $migration = new $class($version, $this->getInput(), $this->getOutput());
+                $migration = new $class($version . (++$versionIncrementSeed), $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
                     throw new \InvalidArgumentException(sprintf(
@@ -91,11 +91,12 @@ class Migration extends Manager
                         $filePath
                     ));
                 }
-                $versions[$version] = $migration;
+
+                $migrations[$migration->getName()] = $migration;
             }
 
-            ksort($versions);
-            $this->setMigrations($versions);
+            ksort($migrations);
+            $this->setMigrations($migrations);
         }
 
         return $this->migrations;
