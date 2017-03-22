@@ -60,7 +60,7 @@ class Client extends Command
             throw new \RuntimeException('Not action input.');
         }
 
-        if ($action) {
+        if ('quit' === trim($action)) {
             $output->writeln('quit');
             return 0;
         }
