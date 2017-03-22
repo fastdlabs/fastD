@@ -31,6 +31,8 @@ $ php bin/server {start|status|stop|reload} -d > /dev/null
 服务器支持多端口监听，只需要简单的配置。
 
 ```php
+<?php 
+
 return [
     'host' => 'http://0.0.0.0:9527',
     'class' => \FastD\Servitization\Server\HTTPServer::class,

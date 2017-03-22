@@ -42,7 +42,7 @@ route("/", function () {
 
 缓存提供器依赖于 [Symfony/cache](https://symfony.com/doc/current/components/cache.html) ，缓存函数返回一个 AbstractAdapter 对象，具体操作可以查看文档。如果无法满足业务需求，可以自定义服务提供器，对其进行代替.
 
-#### database(): \medoo
+#### database(): \Medoo
 
 框架默认的 `DatabaseServiceProvider` 是提供 medoo 操作，不提供具体的 ORM 等关系操作，如果需要自定义数据库操作，可以通过实现自己的 ServiceProvider 进行扩展。
 

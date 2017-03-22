@@ -7,12 +7,15 @@
 中间件推荐存放在 `src/Middleware` 目录中，每个中间件必须继承 `FastD\Middleware\Middleware` 对象，实现 `handle` 方法。
 
 ```php
+<?php
+
 namespace FastD\Auth;
 
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use FastD\Http\Response;
 
 class BasicAuth extends Middleware
 {
@@ -27,7 +30,7 @@ class BasicAuth extends Middleware
             $delegate($serverRequest);
         }
         
-        return 'hello';
+        return new Response('hello');
     }
 }
 ```

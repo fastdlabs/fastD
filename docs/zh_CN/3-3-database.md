@@ -47,7 +47,7 @@ $model = model('demo');
 $ php bin/console seed:create Demo
 ```
 
-文件构建在 `database/seeds` 目录下，名字自动构建如下: 
+文件构建在 `database` 目录下，名字自动构建如下: 
 
 ```php
 <?php
@@ -76,9 +76,9 @@ class Demo extends AbstractSeed
 ```php
 <?php
 
-use Phinx\Seed\AbstractSeed;
+use FastD\Model\Migration;
 
-class Demo extends AbstractSeed
+class Demo extends Migration
 {
     /**
      * Run Method.
@@ -88,7 +88,7 @@ class Demo extends AbstractSeed
      * More information on writing seeders is available here:
      * http://docs.phinx.org/en/latest/seeding.html
      */
-    public function run()
+    public function up()
     {
         $table = $this->table('demo');
         $table->addColumn('user_id', 'integer')
@@ -104,25 +104,6 @@ class Demo extends AbstractSeed
 $ php bin/console seed:run
 ```
 
-自动构建数据表，但是需要先手动创建数据库。
-
-### 数据集，为测试做准备
-
-数据集主要为了做数据填充和数据测试使用，数据集使用 yml 格式进行编写，存储在 `database/dataset` 中，目录需要手动构建。
-
-示例: 
-
-```yaml
--
-  id: 1
-  user_id: 1
-  created: 2010-04-24 17:15:23
--
-  id: 2
-  user_id: 2
-  created: 2010-04-26 12:14:20
-```
-
-每个字段对应一行记录，只会填充一次，每次测试后会还原数据。具体可以查看[数据库测试](https://phpunit.de/manual/current/zh_cn/database.html)
+自动构建数据表，但是需要先手动创建数据库。具体操作可参考: [phinx](https://tsy12321.gitbooks.io/phinx-doc/writing-migrations-working-with-tables.html)
 
 下一节: [缓存](3-4-cache.md)
