@@ -71,7 +71,7 @@ class Demo extends AbstractSeed
 }
 ```
 
-通过实现 run 方法，添加数据库结构，方便表结构迁移。
+通过实现 up 方法，添加数据库结构，方便表结构迁移。
 
 ```php
 <?php
