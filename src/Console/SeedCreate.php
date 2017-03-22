@@ -21,7 +21,7 @@ class SeedCreate extends Create
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database/seeds';
+        $path = app()->getPath() . '/database';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -39,7 +39,8 @@ class SeedCreate extends Create
                     "name" => config()->get('database.name'),
                     "user" => config()->get('database.user'),
                     "pass" => config()->get('database.pass'),
-                    "port" => config()->get('database.port')
+                    "port" => config()->get('database.port'),
+                    'charset' => config()->get('database.charset', 'utf8'),
                 )
             )
         )));
@@ -143,25 +144,9 @@ class $className extends Migration
     /**
      * Set up database table schema
      */
-    public function setUp()
+    public function up()
     {
-    
-    }
-
-    /**
-     * Insert into data set in table
-     */
-    public function dataSet()
-    {
-    
-    }
-
-    /**
-     * delete data or truncate table
-     */
-    public function tearDown()
-    {
-    
+        
     }
 }';
     }

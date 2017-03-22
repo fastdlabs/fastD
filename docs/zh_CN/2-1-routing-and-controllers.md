@@ -11,11 +11,11 @@
 ##### 方法路由
  
 ```php
-route()->get(['/', 'name' => 'get.welcome'], 'IndexController@sayHello');
+route()->get('/', 'IndexController@sayHello');
 ``` 
 
 ```php
-route()->post(['/', 'name' => 'post.welcome'], 'IndexController@sayHello');
+route()->post('/', 'IndexController@sayHello');
 ```
 
 支持 `get, post, put, head, delete` 方法。添加路由名，可以更加方便在 [TCPServer](3-9-swoole-server.md) 中调用

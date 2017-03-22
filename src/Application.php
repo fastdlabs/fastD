@@ -21,7 +21,6 @@ use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use FastD\ServiceProvider\LoggerServiceProvider;
 use FastD\ServiceProvider\RouteServiceProvider;
-use FastD\Servitization\Pool\PoolInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -128,7 +127,7 @@ class Application extends Container
             $this['time'] = new DateTime('now',
                 new DateTimeZone($config['timezone'])
             );
-            $this->add('config', Config::create($config));
+            $this->add('config', new Config($config));
 
             $this->registerServicesProviders($config['services']);
             unset($config);

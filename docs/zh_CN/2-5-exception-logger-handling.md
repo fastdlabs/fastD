@@ -6,6 +6,10 @@
 
 框架中的异常会通过 `json` 的形式返回到客户端，输出具体的错误信息
 
+```
+HTTP 404 Not Found
+```
+
 ```json
 {
     "msg": "Route \"/d\" is not found.",

@@ -18,7 +18,7 @@ use swoole_process;
  * Class Discover
  * @package FastD\Discovery
  */
-class Discover extends Process
+class ReportProcess extends Process
 {
     /**
      * @param swoole_process $swoole_process

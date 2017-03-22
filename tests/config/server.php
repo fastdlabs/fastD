@@ -22,6 +22,10 @@ return [
         [
             'class' => \FastD\Servitization\Server\TCPServer::class,
             'host' => 'tcp://127.0.0.1:9528',
-        ]
+        ],
+        [
+            'class' => \FastD\Servitization\Server\MonitorStatusServer::class,
+            'host' => 'tcp://127.0.0.1:9529',
+        ],
     ],
 ];

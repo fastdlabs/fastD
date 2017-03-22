@@ -32,23 +32,17 @@ class Client extends Command
         ;
 
         $this
-            ->addArgument('host', InputArgument::REQUIRED, 'Swoole server host address')
-            ->addArgument('port', InputArgument::REQUIRED, 'Swoole server port')
+            ->addArgument('schema', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post')
         ;
     }
 
     /**
-     * @param $host
-     * @param $port
+     * @param InputInterface $input
      * @return \FastD\Swoole\Client
      */
-    protected function connectToServer($host, $port)
+    protected function connectToServer(InputInterface $input)
     {
-        $address = '';
-
-        $address .= $host . ':' . $port;
-
-        return new \FastD\Swoole\Client($address);
+        return new \FastD\Swoole\Client($input->getArgument('schema'), false, false);
     }
 
     /**
@@ -64,6 +58,11 @@ class Client extends Command
         $action = $helper->ask($input, $output, $question);
         if (empty($action)) {
             throw new \RuntimeException('Not action input.');
+        }
+
+        if ($action) {
+            $output->writeln('quit');
+            return 0;
         }
 
         $array = preg_split('/\s+/', $action);
@@ -90,13 +89,14 @@ class Client extends Command
         }
 
         try {
-            $json = $this->connectToServer($input->getArgument('host'), $input->getArgument('port'))->send(json_encode([
+            $json = $this->connectToServer($input)->send(json_encode([
                 'method' => $method,
                 'path' => $path,
                 'args' => $args,
             ]));
             $content = json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
             $output->writeln('<info>' . $content . '</info>');
+            $this->execute($input, $output);
         } catch (Exception $e) {
             echo $e->getMessage();
             throw $e;

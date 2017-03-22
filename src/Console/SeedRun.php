@@ -17,8 +17,23 @@ use Phinx\Migration\Manager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class SeedRun
+ * @package FastD\Console
+ */
 class SeedRun extends Migrate
 {
+    const ENV = 'dev';
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function loadManager(InputInterface $input, OutputInterface $output)
     {
         if (null === $this->getManager()) {
@@ -30,7 +45,7 @@ class SeedRun extends Migrate
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database/seeds';
+        $path = app()->getPath() . '/database';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -41,20 +56,55 @@ class SeedRun extends Migrate
                 "seeds" => $path,
             ),
             "environments" => array(
-                "default_database" => "dev",
-                "dev" => array(
+                "default_database" => static::ENV,
+                static::ENV => array(
                     "adapter" => "mysql",
                     "host" => config()->get('database.host'),
                     "name" => config()->get('database.name'),
                     "user" => config()->get('database.user'),
                     "pass" => config()->get('database.pass'),
-                    "port" => config()->get('database.port')
+                    "port" => config()->get('database.port'),
+                    'charset' => config()->get('database.charset', 'utf8'),
                 )
             )
         )));
     }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    public function bootstrap(InputInterface $input, OutputInterface $output)
+    {
+        if (false === $this->booted) {
+            parent::bootstrap($input, $output);
+            $this->booted = true;
+        }
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->bootstrap($input, $output);
+
+        $config = $this->getConfig()->getEnvironment(static::ENV);
+        $adapter = $this->getManager()->getEnvironment(static::ENV)->getAdapter();
+        if (!$adapter->hasDatabase($config['name'])) {
+            $adapter->createDatabase($config['name']);
+        }
+
+        return parent::execute($input, $output);
+    }
 }
 
+/**
+ * Class Migration
+ * @package FastD\Console
+ */
 class Migration extends Manager
 {
     /**
@@ -71,17 +121,17 @@ class Migration extends Manager
 
             // filter the files to only get the ones that match our naming scheme
             $fileNames = array();
-            /** @var AbstractMigration[] $versions */
-            $versions = array();
+            /** @var AbstractMigration[] $migrations */
+            $migrations = array();
 
-
+            $version = date('Ymd');
+            $versionIncrementSeed = mt_rand(1000, 9999 - count($phpFiles));
 
             foreach ($phpFiles as $filePath) {
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $version = date('YmdHis');
-                $migration = new $class($version, $this->getInput(), $this->getOutput());
+                $migration = new $class($version . (++$versionIncrementSeed), $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
                     throw new \InvalidArgumentException(sprintf(
@@ -90,11 +140,12 @@ class Migration extends Manager
                         $filePath
                     ));
                 }
-                $versions[$version] = $migration;
+
+                $migrations[$migration->getName()] = $migration;
             }
 
-            ksort($versions);
-            $this->setMigrations($versions);
+            ksort($migrations);
+            $this->setMigrations($migrations);
         }
 
         return $this->migrations;

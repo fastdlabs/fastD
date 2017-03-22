@@ -20,23 +20,10 @@ abstract class Migration extends AbstractMigration
 {
     public function change()
     {
-        $this->setUp();
-        $this->dataSet();
-        $this->tearDown();
+        $this->up();
+        $this->dateSet();
     }
 
-    /**
-     * Set up database table schema
-     */
-    abstract public function setUp();
-
-    /**
-     * Insert into data set in table
-     */
-    abstract public function dataSet();
-
-    /**
-     * delete data or truncate table
-     */
-    abstract public function tearDown();
+    public function dateSet()
+    {}
 }

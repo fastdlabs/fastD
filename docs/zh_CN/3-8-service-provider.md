@@ -7,13 +7,13 @@
 如数据库服务提供器
 
 ```php
+<?php
+
 namespace FastD\ServiceProvider;
 
 
-use FastD\Config\ConfigLoader;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use medoo;
 
 class DatabaseServiceProvider implements ServiceProviderInterface
 {
@@ -21,11 +21,11 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
     public function register(Container $container)
     {
-        $config = ConfigLoader::loadPhp(app()->getAppPath() . '/config/database.php');
+        $config = load(app()->getAppPath() . '/config/database.php');
 
         $container->add('database', function () use ($config) {
             if (null === $this->db) {
-                $this->db = new medoo($config);
+                $this->db = new \Medoo($config);
             }
             return $this->db;
         });
