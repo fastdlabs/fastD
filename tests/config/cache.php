@@ -8,7 +8,15 @@
  */
 
 return [
-    'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
-    'params' => [
+    'default' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'params' => [
+        ],
+    ],
+    'redis' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
+        'params' => [
+            'dsn' => 'redis://192.168.199.88'
+        ],
     ],
 ];

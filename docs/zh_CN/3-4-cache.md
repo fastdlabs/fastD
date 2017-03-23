@@ -10,9 +10,11 @@
 <?php
 
 return [
-    'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
-    'params' => [
-    ],
+    'default' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'params' => [
+        ],
+    ]
 ];
 ```
 
@@ -23,10 +25,12 @@ return [
 ```php
 <?php
 return [
-    'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
-    'params' => [
-        'dsn' => 'redis://pass@host/dbindex',
-    ],
+    'default' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
+        'params' => [
+            'dsn' => 'redis://pass@host/dbindex',
+        ],
+    ]
 ];
 ```
 

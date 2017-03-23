@@ -12,13 +12,33 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
+use FastD\Servitization\PoolInterface;
 use FastD\Swoole\Server\WebSocket;
 use swoole_server;
 use swoole_websocket_frame;
 use swoole_websocket_server;
 
+/**
+ * Class WebSocketServer
+ * @package FastD\Servitization\Server
+ */
 class WebSocketServer extends WebSocket
 {
+    /**
+     * @param swoole_server $server
+     * @param int $worker_id
+     */
+    public function onWorkerStart(swoole_server $server, $worker_id)
+    {
+        parent::onWorkerStart($server, $worker_id);
+
+        foreach (app() as $service) {
+            if ($service instanceof PoolInterface) {
+                $service->initPool();
+            }
+        }
+    }
+
     /**
      * @param swoole_server $server
      * @param swoole_websocket_frame $frame

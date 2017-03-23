@@ -80,17 +80,19 @@ function logger () {
 }
 
 /**
+ * @param $key
  * @return AbstractAdapter
  */
-function cache () {
-    return app()->get('cache');
+function cache ($key = 'default') {
+    return app()->get('cache')->getCache($key);
 }
 
 /**
+ * @param $key
  * @return \Medoo\Medoo
  */
-function database () {
-    return app()->get('database');
+function database ($key = 'default') {
+    return app()->get('database')->getConnection($key);
 }
 
 /**

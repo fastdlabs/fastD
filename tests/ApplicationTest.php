@@ -93,7 +93,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $this->assertInstanceOf(FilesystemAdapter::class, $app->get('cache'));
+        $this->assertInstanceOf(FilesystemAdapter::class, $app->get('cache')->getCache('default'));
     }
 
     public function testModel()

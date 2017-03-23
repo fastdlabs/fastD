@@ -15,13 +15,15 @@ ORM 框架
 ```php
 <?php
 return [
-    'adapter' => 'mysql',
-    'name' => 'ci',
-    'host' => '127.0.0.1',
-    'user' => 'travis',
-    'pass' => '',
-    'charset' => 'utf8',
-    'port' => 3306,
+    'default' => [
+        'adapter' => 'mysql',
+        'name' => 'ci',
+        'host' => '127.0.0.1',
+        'user' => 'travis',
+        'pass' => '',
+        'charset' => 'utf8',
+        'port' => 3306,
+    ]
 ];
 ```
 
