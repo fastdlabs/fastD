@@ -12,6 +12,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Servitization\PoolInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
@@ -19,7 +20,7 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
  * Class Cache
  * @package FastD\ServiceProvider
  */
-class Cache
+class Cache implements PoolInterface
 {
     /**
      * @var AbstractAdapter[]
@@ -66,6 +67,16 @@ class Cache
         }
         return $this->caches[$name];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function initPool()
+    {
+        foreach ($this->config as $name => $config) {
+            $this->getCache($name);
+        }
+    }
 }
 
 /**
@@ -74,11 +85,6 @@ class Cache
  */
 class CacheServiceProvider implements ServiceProviderInterface
 {
-    /**
-     * @var AbstractAdapter
-     */
-    protected $cache;
-
     /**
      * @param Container $container
      * @return mixed

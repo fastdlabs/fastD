@@ -13,13 +13,34 @@ namespace FastD\Servitization\Server;
 use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
+use FastD\Servitization\PoolInterface;
 use FastD\Swoole\Server\HTTP;
 use Psr\Http\Message\ServerRequestInterface;
 use swoole_http_request;
 use swoole_http_response;
+use swoole_server;
 
+/**
+ * Class HTTPServer
+ * @package FastD\Servitization\Server
+ */
 class HTTPServer extends HTTP
 {
+    /**
+     * @param swoole_server $server
+     * @param int $worker_id
+     */
+    public function onWorkerStart(swoole_server $server, $worker_id)
+    {
+        parent::onWorkerStart($server, $worker_id);
+
+        foreach (app() as $service) {
+            if ($service instanceof PoolInterface) {
+                $service->initPool();
+            }
+        }
+    }
+
     /**
      * @param swoole_http_request $swooleRequet
      * @param swoole_http_response $swooleResponse

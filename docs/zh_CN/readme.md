@@ -56,7 +56,8 @@
 * [辅助函数](3-7-helpers.md)
 * [服务提供器](3-8-service-provider.md)
 * [Swoole服务器](3-9-swoole-server.md)
-* [扩展](3-10-extend.md)
+* [连接池](3-10-connection-pool.md)
+* [扩展](3-11-extend.md)
 
 
 架构

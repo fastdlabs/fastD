@@ -13,18 +13,37 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use Medoo\Medoo;
+use FastD\Servitization\PoolInterface;
 
-class Database
+/**
+ * Class Database
+ * @package FastD\ServiceProvider
+ */
+class Database implements PoolInterface
 {
+    /**
+     * @var Medoo[]
+     */
     protected $connections = [];
 
+    /**
+     * @var array
+     */
     protected $config;
 
+    /**
+     * Database constructor.
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
     }
 
+    /**
+     * @param $key
+     * @return Medoo
+     */
     public function getConnection($key)
     {
         if (!isset($this->connections[$key])) {
@@ -41,6 +60,16 @@ class Database
         }
         return $this->connections[$key];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function initPool()
+    {
+        foreach ($this->config as $name => $config) {
+            $this->getConnection($name);
+        }
+    }
 }
 
 /**
@@ -49,8 +78,6 @@ class Database
  */
 class DatabaseServiceProvider implements ServiceProviderInterface
 {
-    protected $db;
-
     /**
      * @param Container $container
      * @return void

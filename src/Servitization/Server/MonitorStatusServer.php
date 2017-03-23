@@ -11,11 +11,31 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Application;
+use FastD\Servitization\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use swoole_server;
 
+/**
+ * Class MonitorStatusServer
+ * @package FastD\Servitization\Server
+ */
 class MonitorStatusServer extends TCP
 {
+    /**
+     * @param swoole_server $server
+     * @param int $worker_id
+     */
+    public function onWorkerStart(swoole_server $server, $worker_id)
+    {
+        parent::onWorkerStart($server, $worker_id);
+
+        foreach (app() as $service) {
+            if ($service instanceof PoolInterface) {
+                $service->initPool();
+            }
+        }
+    }
+
     /**
      * @param swoole_server $server
      * @param $fd

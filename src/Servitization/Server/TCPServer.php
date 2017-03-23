@@ -11,6 +11,7 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Http\ServerRequest;
+use FastD\Servitization\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use FastD\Packet\Json;
 use swoole_server;
@@ -21,6 +22,21 @@ use swoole_server;
  */
 class TCPServer extends TCP
 {
+    /**
+     * @param swoole_server $server
+     * @param int $worker_id
+     */
+    public function onWorkerStart(swoole_server $server, $worker_id)
+    {
+        parent::onWorkerStart($server, $worker_id);
+
+        foreach (app() as $service) {
+            if ($service instanceof PoolInterface) {
+                $service->initPool();
+            }
+        }
+    }
+
     /**
      * @param swoole_server $server
      * @param $fd
