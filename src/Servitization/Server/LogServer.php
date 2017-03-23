@@ -43,18 +43,6 @@ class LogServer extends UDP
      */
     public function doPacket(swoole_server $server, $data, $clientInfo)
     {
-        echo $data;
-    }
-
-    /**
-     * @param swoole_server $server
-     * @param $data
-     * @param $taskId
-     * @param $workerId
-     * @return mixed
-     */
-    public function doTask(swoole_server $server, $data, $taskId, $workerId)
-    {
-//        cache('log')->;
+        $server->task($data);
     }
 }
