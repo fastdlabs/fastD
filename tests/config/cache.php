@@ -8,7 +8,9 @@
  */
 
 return [
-    'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
-    'params' => [
+    'default' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'params' => [
+        ],
     ],
 ];

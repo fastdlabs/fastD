@@ -80,10 +80,11 @@ function logger () {
 }
 
 /**
+ * @param $key
  * @return AbstractAdapter
  */
-function cache () {
-    return app()->get('cache');
+function cache ($key = 'default') {
+    return app()->get('cache')->getCache($key);
 }
 
 /**

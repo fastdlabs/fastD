@@ -12,7 +12,61 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
+
+/**
+ * Class Cache
+ * @package FastD\ServiceProvider
+ */
+class Cache
+{
+    /**
+     * @var AbstractAdapter[]
+     */
+    protected $caches = [];
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * Cache constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param $name
+     * @return AbstractAdapter
+     */
+    public function getCache($name)
+    {
+        if (!isset($this->caches[$name])) {
+            $config = $this->config[$name];
+            switch ($config['adapter']) {
+                case RedisAdapter::class:
+                    $this->caches[$name] = new RedisAdapter(
+                        RedisAdapter::createConnection($config['params']['dsn']),
+                        isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
+                        isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
+                    );
+                    break;
+                default:
+                    $this->caches[$name] = new $config['adapter'](
+                        isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
+                        isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
+                        isset($config['params']['directory']) ? $config['params']['directory'] : ''
+                    );
+            }
+        }
+        return $this->caches[$name];
+    }
+}
 
 /**
  * Class CacheServiceProvider
@@ -20,6 +74,9 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
  */
 class CacheServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @var AbstractAdapter
+     */
     protected $cache;
 
     /**
@@ -32,21 +89,7 @@ class CacheServiceProvider implements ServiceProviderInterface
 
         $container->add('cache', function () use ($config) {
             if (null === $this->cache) {
-                switch ($config['adapter']) {
-                    case RedisAdapter::class:
-                        $this->cache = new RedisAdapter(
-                            RedisAdapter::createConnection($config['params']['dsn']),
-                            isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
-                            isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
-                        );
-                        break;
-                    default:
-                        $this->cache = new $config['adapter'](
-                            isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
-                            isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
-                            isset($config['params']['directory']) ? $config['params']['directory'] : ''
-                        );
-                }
+                $this->cache = new Cache($config);
             }
             return $this->cache;
         });
