@@ -87,12 +87,7 @@ class CacheServiceProvider implements ServiceProviderInterface
     {
         $config = $container->get('config')->get('cache');
 
-        $container->add('cache', function () use ($config) {
-            if (null === $this->cache) {
-                $this->cache = new Cache($config);
-            }
-            return $this->cache;
-        });
+        $container->add('cache', new Cache($config));
 
         unset($config);
     }

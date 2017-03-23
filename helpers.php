@@ -88,10 +88,11 @@ function cache ($key = 'default') {
 }
 
 /**
+ * @param $key
  * @return \Medoo\Medoo
  */
-function database () {
-    return app()->get('database');
+function database ($key = 'default') {
+    return app()->get('database')->getConnection($key);
 }
 
 /**
