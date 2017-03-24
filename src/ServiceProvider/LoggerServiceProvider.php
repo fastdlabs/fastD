@@ -29,7 +29,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $config = config();
-        $logger = new Logger($config->get('name'));
+        $logger = new Logger(app()->getName());
 
         $log = $config->get('log');
         $path = app()->getPath() . '/runtime/logs';

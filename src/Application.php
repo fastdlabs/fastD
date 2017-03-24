@@ -187,7 +187,6 @@ class Application extends Container
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-            'trace'=> explode("\n", $e->getTraceAsString()),
         ];
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
@@ -196,6 +195,14 @@ class Application extends Container
 
         logger()->addError(request()->getMethod() . ' ' . request()->getUri()->getPath(), [
             'statusCode' => $statusCode,
+            'ip' => function_exists('swoole_get_local_ip') ? get_local_ip() : 'unknown',
+            'exception' => [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ],
             'params' => [
                 'get' => request()->getQueryParams(),
                 'post' => request()->getParsedBody(),
