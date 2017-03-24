@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SeedRun extends Migrate
 {
-    const ENV = 'dev';
+    protected $env = 'default';
 
     /**
      * @var bool
@@ -97,8 +97,8 @@ class SeedRun extends Migrate
     {
         $this->bootstrap($input, $output);
 
-        $config = $this->getConfig()->getEnvironment(static::ENV);
-        $adapter = $this->getManager()->getEnvironment(static::ENV)->getAdapter();
+        $config = $this->getConfig()->getEnvironment($this->env);
+        $adapter = $this->getManager()->getEnvironment($this->env)->getAdapter();
         if (!$adapter->hasDatabase($config['name'])) {
             $adapter->createDatabase($config['name']);
         }
