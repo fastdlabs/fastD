@@ -22,7 +22,7 @@ return [
      * Application logger path
      */
     'log' => [
-        'error' => new \Monolog\Handler\SocketHandler('udp://127.0.0.1:9528'), // 错误日志
+        'error' => new \Monolog\Handler\SocketHandler('udp://127.0.0.1:9989'), // 错误日志
     ],
 
     /**
