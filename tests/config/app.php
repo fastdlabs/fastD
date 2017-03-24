@@ -14,11 +14,6 @@ return [
     'name' => 'fast-d',
 
     /**
-     * Run environment
-     */
-    'environment' => 'dev',
-
-    /**
      * Application timezone
      */
     'timezone' => 'PRC',
