@@ -194,11 +194,17 @@ class Application extends Container
             $statusCode = 500;
         }
 
+        logger()->addError(request()->getMethod() . ' ' . request()->getUri()->getPath(), [
+            'statusCode' => $statusCode,
+            'params' => [
+                'get' => request()->getQueryParams(),
+                'post' => request()->getParsedBody(),
+            ]
+        ]);
+
         return json($data, $statusCode);
     }
 
-    /**
-     */
     public function run()
     {
         $request = ServerRequest::createServerRequestFromGlobals();
@@ -206,30 +212,5 @@ class Application extends Container
         $response = $this->handleRequest($request);
 
         $this->handleResponse($response);
-
-        return $this->shutdown($request, $response);
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param Response $response
-     */
-    public function shutdown(ServerRequestInterface $request, Response $response)
-    {
-        $log = [
-            'statusCode' => $response->getStatusCode(),
-            'params' => [
-                'get' => $request->getQueryParams(),
-                'post' => $request->getParsedBody(),
-            ]
-        ];
-
-        if ($response->isSuccessful()) {
-            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        } else {
-            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        }
-
-        unset($request, $response);
     }
 }

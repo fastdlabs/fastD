@@ -61,30 +61,16 @@ class ApplicationTest extends TestCase
         $this->assertNull(config()->get('foo'));
     }
 
-    public function testAppShutdown()
-    {
-        $app = $this->createApplication();
-
-        $request = $this->createRequest('GET', '/');
-
-        $response = $app->handleRequest($request);
-
-        $app->shutdown($request, $response);
-    }
-
     public function testLoggerServiceProvider()
     {
         $app = $this->createApplication();
 
         $request = $this->createRequest('GET', '/');
         $response = $app->handleRequest($request);
-        $app->shutdown($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/info.log'));
 
         $request = $this->createRequest('GET', '/not/found');
         $response = $app->handleRequest($request);
-        $app->shutdown($request, $response);
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/error.log'));
     }

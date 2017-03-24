@@ -61,7 +61,6 @@ class WebSocketServer extends WebSocket
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
-        app()->shutdown($request, $response);
         $server->push($frame->fd, (string) $response->getBody());
         return 0;
     }

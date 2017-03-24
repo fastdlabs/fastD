@@ -64,7 +64,6 @@ class TCPServer extends TCP
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
-        app()->shutdown($request, $response);
         $server->send($fd, (string) $response->getBody());
         return 0;
     }
