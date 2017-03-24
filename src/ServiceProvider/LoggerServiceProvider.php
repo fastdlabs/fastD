@@ -34,14 +34,6 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $log = $config->get('log');
         $path = app()->getPath() . '/runtime/logs';
 
-        if (!isset($log['info'])) {
-            $logger->pushHandler(new StreamHandler($path . '/info.log', Logger::INFO));
-        } else if (is_string($log['info'])) {
-            $logger->pushHandler(new $log['info']($path . '/info.log', Logger::INFO));
-        } else if ($log['info'] instanceof HandlerInterface) {
-            $logger->pushHandler($log['info']);
-        }
-
         if (!isset($log['error'])) {
             $logger->pushHandler(new StreamHandler($path . '/error.log', Logger::WARNING));
         } else if (is_string($log['error'])) {
