@@ -50,23 +50,29 @@ class SeedRun extends Migrate
             mkdir($path, 0755, true);
         }
         $this->setName('seed:run');
+        $database = config()->get('database');
+        $env = [];
+        $keys = array_keys($database);
+        $default = $keys[0];
+        foreach ($database as $name => $config) {
+            $env[$name] = [
+                "adapter" => "mysql",
+                "host" => config()->get('database.' . $name . '.host'),
+                "name" => config()->get('database.' . $name . '.name'),
+                "user" => config()->get('database.' . $name . '.user'),
+                "pass" => config()->get('database.' . $name . '.pass'),
+                "port" => config()->get('database.' . $name . '.port'),
+                'charset' => config()->get('database.' . $name . '.charset', 'utf8'),
+            ];
+        }
         $this->setConfig(new MConfig(array(
             "paths" => array(
                 "migrations" => $path,
                 "seeds" => $path,
             ),
-            "environments" => array(
-                "default_database" => static::ENV,
-                static::ENV => array(
-                    "adapter" => "mysql",
-                    "host" => config()->get('database.host'),
-                    "name" => config()->get('database.name'),
-                    "user" => config()->get('database.user'),
-                    "pass" => config()->get('database.pass'),
-                    "port" => config()->get('database.port'),
-                    'charset' => config()->get('database.charset', 'utf8'),
-                )
-            )
+            "environments" => array_merge([
+                "default_database" => $default,
+            ], $env),
         )));
     }
 

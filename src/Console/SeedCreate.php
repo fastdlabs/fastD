@@ -26,23 +26,29 @@ class SeedCreate extends Create
             mkdir($path, 0755, true);
         }
         $this->setName('seed:create');
+        $database = config()->get('database');
+        $env = [];
+        $keys = array_keys($database);
+        $default = $keys[0];
+        foreach ($database as $name => $config) {
+            $env[$name] = [
+                "adapter" => "mysql",
+                "host" => config()->get('database.' . $name . '.host'),
+                "name" => config()->get('database.' . $name . '.name'),
+                "user" => config()->get('database.' . $name . '.user'),
+                "pass" => config()->get('database.' . $name . '.pass'),
+                "port" => config()->get('database.' . $name . '.port'),
+                'charset' => config()->get('database.' . $name . '.charset', 'utf8'),
+            ];
+        }
         $this->setConfig(new MConfig(array(
             "paths" => array(
                 "migrations" => $path,
                 "seeds" => $path,
             ),
-            "environments" => array(
-                "default_database" => "dev",
-                "dev" => array(
-                    "adapter" => "mysql",
-                    "host" => config()->get('database.host'),
-                    "name" => config()->get('database.name'),
-                    "user" => config()->get('database.user'),
-                    "pass" => config()->get('database.pass'),
-                    "port" => config()->get('database.port'),
-                    'charset' => config()->get('database.charset', 'utf8'),
-                )
-            )
+            "environments" => array_merge([
+                "default_database" => $default,
+            ], $env),
         )));
     }
 
@@ -63,7 +69,7 @@ class SeedCreate extends Create
         $path = $this->getMigrationPath($input, $output);
 
         if (!file_exists($path)) {
-            $helper   = $this->getHelper('question');
+            $helper = $this->getHelper('question');
             $question = $this->getCreateMigrationDirectoryQuestion();
 
             if ($helper->ask($input, $output, $question)) {
@@ -106,8 +112,8 @@ class SeedCreate extends Create
 
         // inject the class names appropriate to this migration
         $classes = array(
-            '$useClassName'  => $this->getConfig()->getMigrationBaseClassName(false),
-            '$className'     => $className,
+            '$useClassName' => $this->getConfig()->getMigrationBaseClassName(false),
+            '$className' => $className,
             '$baseClassName' => $this->getConfig()->getMigrationBaseClassName(true),
         );
         $contents = strtr($contents, $classes);
