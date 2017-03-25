@@ -128,6 +128,10 @@ class Server
      */
     public function start()
     {
+        $server = $this->server->bootstrap();
+
+        app()->add('server', $server->getSwoole());
+
         return $this->server->start();
     }
 

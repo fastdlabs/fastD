@@ -103,4 +103,9 @@ function model($name) {
     return ModelFactory::createModel($name);
 }
 
-
+/**
+ * @return swoole_server
+ */
+function server () {
+    return app()->get('server');
+}

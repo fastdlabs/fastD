@@ -13,10 +13,5 @@ return [
         'params' => [
         ],
     ],
-    'redis' => [
-        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
-        'params' => [
-            'dsn' => 'redis://192.168.199.88'
-        ],
-    ],
+
 ];
