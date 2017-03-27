@@ -34,7 +34,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.1.0 (beta)';
+    const VERSION = '3.1.0 (release candidate)';
 
     /**
      * @var Application

@@ -7,7 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Servitization;
+namespace FastD\Pool;
 
 
 /**

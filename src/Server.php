@@ -11,13 +11,8 @@ namespace FastD;
 
 
 use FastD\ServiceProvider\SwooleServiceProvider;
-use FastD\Servitization\Pool\PoolInterface;
 use FastD\Servitization\Server\HTTPServer;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use swoole_http_response;
 use swoole_server;
 
