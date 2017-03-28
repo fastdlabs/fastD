@@ -11,7 +11,7 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Http\ServerRequest;
-use FastD\Servitization\PoolInterface;
+use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use FastD\Packet\Json;
 use swoole_server;

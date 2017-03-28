@@ -13,7 +13,7 @@ namespace FastD\Servitization\Server;
 use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
-use FastD\Servitization\PoolInterface;
+use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\HTTP;
 use Psr\Http\Message\ServerRequestInterface;
 use swoole_http_request;
