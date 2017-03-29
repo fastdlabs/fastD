@@ -17,16 +17,16 @@ src
     Model               数据模型
     Testing             单元测试
 bin
-    console
-    server
+    console             命令行管理
+    server              swoole 服务
 web
-    index.php
+    index.php           应用入口文件
 runtime                 程序运行数据目录
     pid                 服务器 pid 文件目录
     logs                日志目录
 ```
 
-源代码均放置在 src 目录，如果目录并不能满足业务需求，可以通过手动修改方式进行调整。
+源代码均放置在 src 目录，如果目录并不能满足业务需求，可以通过调整 `composer.json` 文件进行适配。
 
 下一节: [路由与控制器](2-1-routing-and-controllers.md)
 

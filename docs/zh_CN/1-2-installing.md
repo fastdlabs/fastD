@@ -2,6 +2,8 @@
 
 > 如果使用浏览器访问入口，需要给项目配置虚拟域名，将路径指向项目的 web 目录
 
+推荐配合 Vagrant 虚拟机使用，能够更快适应开发环境。
+
 ##### 1 如果没有安装 Composer 
 
 ```
@@ -28,6 +30,8 @@ $ composer create-project "fastd/dobee" dobee -vvv
 
 **启动内置 Web 服务器**
 
+> 推荐在开发环境下使用，可脱离 Apache 和 Nginx，更易使用
+
 ```shell
 $ cd dobee
 $ php -S 127.0.0.1:9527 -t ./web
@@ -53,7 +57,15 @@ $ composer create-project "fastd/dobee" dobee -vvv
 
 ##### 2 配置环境
 
-##### 2.1 配置 apache 虚拟域名
+##### 2.1 PHP 内置 Web 服务器
+
+```shell
+$ cd dobee
+$ php -S 127.0.0.1:9527 -t ./web
+$ curl http://127.0.0.1:9527/
+```
+
+##### 2.2 配置 apache 虚拟域名
 
 修改 httpd.conf，开启 vhost.conf，添加虚拟与名到 vhost.conf 文件中，修改目录地址。
 
@@ -66,7 +78,7 @@ $ composer create-project "fastd/dobee" dobee -vvv
 
 映射本地 ip 到虚拟域名，修改 System32 下面的 hosts 文件
 
-##### 2.2 配置 nginx 配置
+##### 2.3 配置 nginx 配置
 
 ```
 server
@@ -99,5 +111,7 @@ server
     }
 }
 ```
+
+不建议完全替代 Nginx + FPM，毕竟有 Nginx 作为前端服务器，灵活和扩展性会大大提高。
 
 下一节: [目录结构](1-3-directory-structure.md)
