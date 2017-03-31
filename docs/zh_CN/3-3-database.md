@@ -2,6 +2,8 @@
 
 框架模式使用 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
 
+> 3.1 版本开始，支持二维数组定义
+
 ### 基础 medoo 使用
 
 ORM 框架

@@ -79,7 +79,7 @@ return [
 健名 `basic.auth` 即是中间件名字，可以通过 
 
 ```php
-route()->post('/', 'IndexController@sayHello')->middleware('basic.auth');
+route()->post('/', 'IndexController@sayHello')->withMiddleware('basic.auth');
 ```
 
 进行配置。每当程序调用 `/` 地址的时候，会先经过配置的中间件。

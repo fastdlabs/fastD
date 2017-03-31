@@ -19,7 +19,7 @@
 
 ##### 应用配置
 
-应用配置则是整体核心配置的集合，包括时区，环境，日志，服务提供器，中间件等等，可以通过自定义 [服务提供器](3-6-service-provider.md) 来读取具体的配置内容。
+应用配置则是整体核心配置的集合，包括时区，环境，日志，服务提供器，中间件等等，可以通过自定义 [服务提供器](3-8-service-provider.md) 来读取具体的配置内容。
 
 具体内容请查看: [app.php](../../tests/config/app.php)
 
@@ -49,7 +49,6 @@ return [
      * Application logger path
      */
     'log' => [
-        'info' => \Monolog\Handler\StreamHandler::class, // 访问日志
         'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
     ],
 
@@ -89,11 +88,11 @@ return [
 ];
 ```
 
-> !! 默认的配置项请不要删除
+**!! 默认的配置项请不要删除**
 
 ##### 服务器配置
 
-服务器配置项 listen 是必填的，是 Swoole 服务器监听的地址。其他配置请查看 [Swoole配置](http://wiki.swoole.com/wiki/page/274.html)
+服务器配置项 host 是必填的，是 Swoole 服务器监听的地址。`options` 配置项请查看 [Swoole配置](http://wiki.swoole.com/wiki/page/274.html)
 
 **完整的配置**
 

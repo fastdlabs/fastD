@@ -6,7 +6,7 @@
 <a href="https://travis-ci.org/JanHuang/fastD"><img src="https://travis-ci.org/JanHuang/fastD.svg?branch=master" /></a>
 <a href="https://packagist.org/packages/fastd/fastd"><img src="https://poser.pugx.org/fastd/fastd/v/stable" /></a>
 <a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg" /></a>
-<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D1.8-8892BF.svg" /></a>
+<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D1.9.6-8892BF.svg" /></a>
 <a href="https://packagist.org/packages/fastd/fastd"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
 </p>
 
@@ -23,48 +23,48 @@
 修改日志
 --------
 
-* [修改日志](change-log.md)
-* [升级指南](upgrade.md)
+- [x] [修改日志](change-log.md)
+- [x] [升级指南](upgrade.md)
 
 安装与配置
 --------
 
-* [关于 FastD](1-1-about-fastd.md)
-* [安装 FastD](1-2-installing.md)
-* [目录结构](1-3-directory-structure.md)
+- [x] [关于 FastD](1-1-about-fastd.md)
+- [x] [安装 FastD](1-2-installing.md)
+- [x] [目录结构](1-3-directory-structure.md)
 
 
 基础入门
 -------
 
-* [路由与控制器](2-1-routing-and-controllers.md)
-* [请求处理](2-2-request-handling.md)
-* [响应处理](2-3-response-handling.md)
-* [认证授权](2-4-authorization.md)
-* [异常与日志处理](2-5-exception-logger-handling.md)
-* ~~[API文档](2-6-docuemnt.md)~~
+- [x] [路由与控制器](2-1-routing-and-controllers.md)
+- [x] [请求处理](2-2-request-handling.md)
+- [x] [响应处理](2-3-response-handling.md)
+- [x] [认证授权](2-4-authorization.md)
+- [x] [异常与日志处理](2-5-exception-logger-handling.md)
+- [ ] ~~[API文档](2-6-docuemnt.md)~~
 
 高级
 -------
 
-* [配置](3-1-configuration.md)
-* [中间件](3-2-middleware.md)
-* [数据库medoo](3-3-database.md)
-* [缓存](3-4-cache.md)
-* [命令行](3-5-console.md)
-* [单元测试](3-6-testcase.md)
-* [辅助函数](3-7-helpers.md)
-* [服务提供器](3-8-service-provider.md)
-* [Swoole服务器](3-9-swoole-server.md)
-* [连接池](3-10-connection-pool.md)
-* [扩展](3-11-extend.md)
+- [x] [配置](3-1-configuration.md)
+- [x] [中间件](3-2-middleware.md)
+- [x] [数据库medoo](3-3-database.md)
+- [x] [缓存](3-4-cache.md)
+- [x] [命令行](3-5-console.md)
+- [x] [单元测试](3-6-testcase.md)
+- [x] [辅助函数](3-7-helpers.md)
+- [x] [服务提供器](3-8-service-provider.md)
+- [x] [Swoole服务器](3-9-swoole-server.md)
+- [x] [连接池](3-10-connection-pool.md)
+- [x] [扩展](3-11-extend.md)
 
 
 架构
 ---------
 
-* [生命周期](4-1-lifecycle.md)
-* [RPC服务](4-2-microservice.md)
+- [x] [生命周期](4-1-lifecycle.md)
+- [x] [RPC服务](4-2-microservice.md)
 
 ### Support
 
