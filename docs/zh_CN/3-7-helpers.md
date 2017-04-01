@@ -48,4 +48,8 @@ route("/", function () {
 
 具体的操作和使用方式请查看: [服务提供器](3-6-service-provider.md)
 
+#### server(): \swoole_server
+
+server 函数返回 swoole 对象，在 swoole 启动的时候会自动赋值，可在控制器中使用 server 对象进行操作。 
+
 下一节: [服务提供器](3-8-service-provider.md)

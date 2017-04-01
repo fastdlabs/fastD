@@ -48,7 +48,7 @@ $model = model('demo');
 从 3.1 版本开始支持构建简单的数据表模型，通过简单命令构建基础的数据表模型。
 
 ```shell
-$ php bin/console seed:create Demo
+$ php bin/console seed:create Hello
 ```
 
 文件构建在 `database` 目录下，名字自动构建如下: 
@@ -56,44 +56,16 @@ $ php bin/console seed:create Demo
 ```php
 <?php
 
-use Phinx\Seed\AbstractSeed;
-
-class Demo extends AbstractSeed
-{
-    /**
-     * Run Method.
-     *
-     * Write your database seeder using this method.
-     *
-     * More information on writing seeders is available here:
-     * http://docs.phinx.org/en/latest/seeding.html
-     */
-    public function run()
-    {
-        
-    }
-}
-```
-
-通过实现 up 方法，添加数据库结构，方便表结构迁移。
-
-```php
-<?php
-
 use FastD\Model\Migration;
 
-class Demo extends Migration
+class Hello extends Migration
 {
     /**
-     * Run Method.
-     *
-     * Write your database seeder using this method.
-     *
-     * More information on writing seeders is available here:
-     * http://docs.phinx.org/en/latest/seeding.html
+     * Set up database table schema
      */
     public function up()
     {
+        // create table
         $table = $this->table('demo');
         $table->addColumn('user_id', 'integer')
             ->addColumn('created', 'datetime')
@@ -101,6 +73,8 @@ class Demo extends Migration
     }
 }
 ```
+
+通过实现 up 方法，添加数据库结构，方便表结构迁移。
 
 编写完成初步的表结构，运行命令: 
 
