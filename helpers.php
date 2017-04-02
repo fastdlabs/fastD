@@ -60,7 +60,7 @@ function request () {
  * @return JsonResponse
  */
 function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
-    $headers['X-App-Version'] = Application::VERSION;
+    $headers['X-Version'] = Application::VERSION;
     return new JsonResponse($content, $statusCode, $headers);
 }
 
@@ -103,4 +103,9 @@ function model($name) {
     return ModelFactory::createModel($name);
 }
 
-
+/**
+ * @return swoole_server
+ */
+function server () {
+    return app()->get('server');
+}

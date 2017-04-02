@@ -4,22 +4,65 @@
 
 #### 连接池实现
 
-在 Server `onWokerStart` 回调中，程序会调用 `app()` 函数递归所有服务，若服务实现自 `FastD\Servitization\PoolInterface` 接口，那么在 Server 启动的时候，就会自动调用 `initPool` 方法，在该方法下执行连接，连接玩除非 Worker 中断，否则会一直连接。
+在 Server `onWokerStart` 回调中，程序会调用 `app()` 函数递归所有服务，若服务实现自 `FastD\Pool\PoolInterface` 接口，那么在 Server 启动的时候，就会自动调用 `initPool` 方法，在该方法下执行连接，连接玩除非 Worker 中断，否则会一直连接。
 
 ```php
-/**
- * Class Database
- * @package FastD\ServiceProvider
- */
-class Database implements PoolInterface
+<?php
+namespace FastD\Pool;
+
+
+use Medoo\Medoo;
+
+class DatabasePool implements PoolInterface
 {
-   
+    /**
+     * @var Medoo[]
+     */
+    protected $connections = [];
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * Database constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param $key
+     * @return Medoo
+     */
+    public function getConnection($key)
+    {
+        if (!isset($this->connections[$key])) {
+            $config = $this->config[$key];
+            $this->connections[$key] = new Medoo([
+                'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
+                'database_name' => $config['name'],
+                'server' => $config['host'],
+                'username' => $config['user'],
+                'password' => $config['pass'],
+                'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
+                'port' => isset($config['port']) ? $config['port'] : 3306,
+            ]);
+        }
+        return $this->connections[$key];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function initPool()
     {
-        // TODO connection
+        foreach ($this->config as $name => $config) {
+            $this->getConnection($name);
+        }
     }
 }
 ```

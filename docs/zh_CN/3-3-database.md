@@ -2,6 +2,8 @@
 
 框架模式使用 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
 
+> 3.1 版本开始，支持二维数组定义
+
 ### 基础 medoo 使用
 
 ORM 框架
@@ -46,7 +48,7 @@ $model = model('demo');
 从 3.1 版本开始支持构建简单的数据表模型，通过简单命令构建基础的数据表模型。
 
 ```shell
-$ php bin/console seed:create Demo
+$ php bin/console seed:create Hello
 ```
 
 文件构建在 `database` 目录下，名字自动构建如下: 
@@ -54,44 +56,16 @@ $ php bin/console seed:create Demo
 ```php
 <?php
 
-use Phinx\Seed\AbstractSeed;
-
-class Demo extends AbstractSeed
-{
-    /**
-     * Run Method.
-     *
-     * Write your database seeder using this method.
-     *
-     * More information on writing seeders is available here:
-     * http://docs.phinx.org/en/latest/seeding.html
-     */
-    public function run()
-    {
-        
-    }
-}
-```
-
-通过实现 up 方法，添加数据库结构，方便表结构迁移。
-
-```php
-<?php
-
 use FastD\Model\Migration;
 
-class Demo extends Migration
+class Hello extends Migration
 {
     /**
-     * Run Method.
-     *
-     * Write your database seeder using this method.
-     *
-     * More information on writing seeders is available here:
-     * http://docs.phinx.org/en/latest/seeding.html
+     * Set up database table schema
      */
     public function up()
     {
+        // create table
         $table = $this->table('demo');
         $table->addColumn('user_id', 'integer')
             ->addColumn('created', 'datetime')
@@ -99,6 +73,8 @@ class Demo extends Migration
     }
 }
 ```
+
+通过实现 up 方法，添加数据库结构，方便表结构迁移。
 
 编写完成初步的表结构，运行命令: 
 

@@ -34,7 +34,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.1.0 (dev)';
+    const VERSION = '3.1.0 (release candidate)';
 
     /**
      * @var Application
@@ -49,17 +49,7 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $environment;
-
-    /**
-     * @var string
-     */
     protected $name = 'fast-d';
-
-    /**
-     * @var bool
-     */
-    protected $debug = false;
 
     /**
      * @var bool
@@ -91,14 +81,6 @@ class Application extends Container
     }
 
     /**
-     * @return string
-     */
-    public function getEnvironment()
-    {
-        return $this->environment;
-    }
-
-    /**
      * @return bool
      */
     public function isBooted()
@@ -123,7 +105,6 @@ class Application extends Container
             $config = load($this->path . '/config/app.php');
 
             $this->name = $config['name'];
-            $this->environment = $config['environment'];
             $this['time'] = new DateTime('now',
                 new DateTimeZone($config['timezone'])
             );
@@ -177,28 +158,34 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        $statusCode = $e->getCode();
-        if ($e instanceof HttpException) {
-            $statusCode = $e->getStatusCode();
-        }
+        $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        $data = [
+        $error = [
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-            'trace'=> explode("\n", $e->getTraceAsString()),
+            'trace' => explode("\n", $e->getTraceAsString())
         ];
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 
-        return json($data, $statusCode);
+        logger()->addError(request()->getMethod() . ' ' . request()->getUri()->getPath(), [
+            'status' => $statusCode,
+            'get' => request()->getQueryParams(),
+            'post' => request()->getParsedBody(),
+            'ip' => function_exists('swoole_get_local_ip') ? get_local_ip() : 'unknown',
+            'error' => $error,
+        ]);
+
+        return json('dev' === env('env') ? $error : [
+            'msg' => $error['msg'],
+            'code' => $error['code'],
+        ], $statusCode);
     }
 
-    /**
-     */
     public function run()
     {
         $request = ServerRequest::createServerRequestFromGlobals();
@@ -206,30 +193,5 @@ class Application extends Container
         $response = $this->handleRequest($request);
 
         $this->handleResponse($response);
-
-        return $this->shutdown($request, $response);
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param Response $response
-     */
-    public function shutdown(ServerRequestInterface $request, Response $response)
-    {
-        $log = [
-            'statusCode' => $response->getStatusCode(),
-            'params' => [
-                'get' => $request->getQueryParams(),
-                'post' => $request->getParsedBody(),
-            ]
-        ];
-
-        if ($response->isSuccessful()) {
-            logger()->addInfo($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        } else {
-            logger()->addError($request->getMethod() . ' ' . $request->getUri()->getPath(), $log);
-        }
-
-        unset($request, $response);
     }
 }

@@ -11,7 +11,7 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Application;
-use FastD\Servitization\PoolInterface;
+use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use swoole_server;
 

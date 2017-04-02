@@ -12,7 +12,7 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
-use FastD\Servitization\PoolInterface;
+use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\UDP;
 use swoole_server;
 
@@ -59,7 +59,6 @@ class UDPServer extends UDP
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
-        app()->shutdown($request, $response);
         $server->sendto($clientInfo['address'], $clientInfo['port'], (string) $response->getBody());
     }
 }

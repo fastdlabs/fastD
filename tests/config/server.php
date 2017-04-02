@@ -30,9 +30,5 @@ return [
             'class' => \FastD\Servitization\Server\MonitorStatusServer::class,
             'host' => 'tcp://127.0.0.1:9529',
         ],
-        [
-            'class' => \FastD\Servitization\Server\LogServer::class,
-            'host' => 'udp://127.0.0.1:9530',
-        ],
     ],
 ];

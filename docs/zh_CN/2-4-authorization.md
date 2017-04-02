@@ -8,9 +8,10 @@
 
 授权认证主要依赖于: [basic-auth](https://github.com/JanHuang/basic-authenticate) 组件
 
-应用配置: 
+##### 应用配置: 
 
 ```php
+<?php
 return [
     'middleware' => [
         'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication([
@@ -34,7 +35,29 @@ return [
 
 认证授权初始化需要接收用户提供器，否则无法判断来源用户是否合法，最后，会通过查询用户合法性来校验，支持 PDO 处理。
 
-路由配置: 
+##### 路由配置: 
+
+```php
+route()->get("/", "IndexController@sayHello")->withAddMiddleware('basic.auth');
+```
+
+支持配置组中间件，配置仅需将配置转换成二位数组即可，格式保持不变.
+
+##### 应用配置
+
+```php
+<?php
+return [
+    'middleware' => [
+        'basic' => [
+            // middleware 1
+            // middleware 2
+        ]
+    ],
+];
+```
+
+##### 路由配置
 
 ```php
 route()->get("/", "IndexController@sayHello")->withAddMiddleware('basic.auth');

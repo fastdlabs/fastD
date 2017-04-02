@@ -4,6 +4,8 @@
 
 提供辅助函数: `cache()`，函数返回原始 `Symfony\Component\Cache\Adapter\AbstractAdapter` 对象。目前支持文件缓存、Redis缓存，欢迎有志之士提供各种缓存提供器。
 
+> 3.1 版本开始，支持二维数组配置
+
 配置信息: 
 
 ```php

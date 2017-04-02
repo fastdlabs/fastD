@@ -11,7 +11,7 @@ namespace FastD\Servitization\Server;
 
 
 use FastD\Http\ServerRequest;
-use FastD\Servitization\PoolInterface;
+use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use FastD\Packet\Json;
 use swoole_server;
@@ -64,7 +64,6 @@ class TCPServer extends TCP
         } catch (\Exception $e) {
             $response = app()->handleException($e);
         }
-        app()->shutdown($request, $response);
         $server->send($fd, (string) $response->getBody());
         return 0;
     }
