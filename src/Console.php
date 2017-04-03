@@ -11,7 +11,6 @@ namespace FastD;
 
 
 use FastD\Console\Config;
-use FastD\Console\Client;
 use FastD\Console\Route;
 use FastD\Console\SeedCreate;
 use FastD\Console\SeedRun;
@@ -34,7 +33,6 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
-            new Client(),
             new Route(),
             new Config(),
             new SeedCreate(),

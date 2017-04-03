@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
+ */
+
+set_time_limit(0);
+date_default_timezone_set('PRC');
+
+// autoload composer
+foreach ([
+             __DIR__ . '/../../autoload.php',
+             __DIR__ . '/../vendor/autoload.php',
+             __DIR__ . '/vendor/autoload.php'
+         ] as $value) {
+    if (file_exists($value)) {
+        define('COMPOSER_INSTALL', $value);
+        break;
+    }
+}
+
+if (!defined('COMPOSER_INSTALL')) {
+    fwrite(STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
+
+include COMPOSER_INSTALL;
+
+use FastD\Client;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+
+$input = new ArgvInput(null, new InputDefinition([
+    new InputArgument('schema', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post'),
+]));
+
+$server = new Client();
+
+$server->execute($input);

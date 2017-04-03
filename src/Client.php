@@ -7,57 +7,52 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD;
 
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Exception;
+use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Application as Console;
+use FastD\Swoole\Client as SwooleClient;
 
 /**
  * Class Client
- * @package FastD\Console
+ * @package FastD
  */
-class Client extends Command
+class Client
 {
-    public function configure()
-    {
-        $this
-            ->setName('client')
-            ->setHelp('This command allows you to create swoole client...')
-            ->setDescription('Create new swoole tcp client')
-        ;
-
-        $this
-            ->addArgument('schema', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post')
-        ;
-    }
-
     /**
      * @param InputInterface $input
-     * @return \FastD\Swoole\Client
+     * @return SwooleClient
      */
-    protected function connectToServer(InputInterface $input)
+    public function connect(InputInterface $input)
     {
-        return new \FastD\Swoole\Client($input->getArgument('schema'), false, false);
+        return new SwooleClient($input->getArgument('schema'), false, false);
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
+     * @throws \Exception
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output = null)
     {
-        $helper = $this->getHelper('question');
+        if (null === $output) {
+            $output = new ConsoleOutput();
+        }
+
+        $helper = new QuestionHelper(array(new FormatterHelper()));
         $question = new Question('Continue with this action <info>[get /hello foo:bar] ? </info>', false);
 
         $action = $helper->ask($input, $output, $question);
         if (empty($action)) {
-            throw new \RuntimeException('Not action input.');
+            return $this->execute($input, $output);
         }
 
         if ('quit' === trim($action)) {
@@ -89,7 +84,7 @@ class Client extends Command
         }
 
         try {
-            $json = $this->connectToServer($input)->send(json_encode([
+            $json = $this->connect($input)->send(json_encode([
                 'method' => $method,
                 'path' => $path,
                 'args' => $args,

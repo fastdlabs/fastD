@@ -39,6 +39,7 @@ class Config extends Command
     {
         if ($input->getArgument('name')) {
             $file = app()->getPath() . '/config/' . $input->getArgument('name') . '.php';
+            $file = str_replace('.php.php', '.php', $file);
             $config = load($file);
             $output->write('<comment>' . Yaml::dump($config) . '</comment>');
             return 0;

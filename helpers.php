@@ -19,7 +19,6 @@ use Medoo\Medoo;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
-use swoole_server;
 
 /**
  * @return Application
@@ -107,7 +106,7 @@ function model($name, $key = 'default') {
 }
 
 /**
- * @return swoole_server
+ * @return \swoole_server
  */
 function server () {
     return app()->get('server');
