@@ -15,9 +15,11 @@ use FastD\Http\Response;
 use FastD\Model\Model;
 use FastD\Routing\RouteCollection;
 use FastD\Model\ModelFactory;
+use Medoo\Medoo;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
+use swoole_server;
 
 /**
  * @return Application
@@ -89,7 +91,7 @@ function cache ($key = 'default') {
 
 /**
  * @param $key
- * @return \Medoo\Medoo
+ * @return Medoo
  */
 function database ($key = 'default') {
     return app()->get('database')->getConnection($key);
@@ -97,10 +99,11 @@ function database ($key = 'default') {
 
 /**
  * @param $name
+ * @param $key
  * @return Model
  */
-function model($name) {
-    return ModelFactory::createModel($name);
+function model($name, $key = 'default') {
+    return ModelFactory::createModel($name, $key);
 }
 
 /**
