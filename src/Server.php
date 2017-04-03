@@ -123,7 +123,7 @@ class Server
      */
     public function start()
     {
-        $server = $this->server->bootstrap();
+        $server = $this->bootstrap();
 
         app()->add('server', $server->getSwoole());
 

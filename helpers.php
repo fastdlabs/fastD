@@ -7,6 +7,7 @@
  * @link      http://www.fast-d.cn/
  */
 
+
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
@@ -15,6 +16,7 @@ use FastD\Http\Response;
 use FastD\Model\Model;
 use FastD\Routing\RouteCollection;
 use FastD\Model\ModelFactory;
+use Medoo\Medoo;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
@@ -89,7 +91,7 @@ function cache ($key = 'default') {
 
 /**
  * @param $key
- * @return \Medoo\Medoo
+ * @return Medoo
  */
 function database ($key = 'default') {
     return app()->get('database')->getConnection($key);
@@ -97,14 +99,15 @@ function database ($key = 'default') {
 
 /**
  * @param $name
+ * @param $key
  * @return Model
  */
-function model($name) {
-    return ModelFactory::createModel($name);
+function model($name, $key = 'default') {
+    return ModelFactory::createModel($name, $key);
 }
 
 /**
- * @return swoole_server
+ * @return \swoole_server
  */
 function server () {
     return app()->get('server');

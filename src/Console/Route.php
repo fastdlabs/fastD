@@ -15,6 +15,10 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class Route
+ * @package FastD\Console
+ */
 class Route extends Command
 {
     public function configure()
@@ -26,6 +30,11 @@ class Route extends Command
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return mixed
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $table = new Table($output);

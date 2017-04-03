@@ -2,12 +2,12 @@
 
 Swoole 服务器依赖于 [swoole](https://github.com/JanHuang/swoole) 并且提供灵活优雅的实现方式。
 
-> swoole 必须依赖于 ext-swoole 扩展，并且版本 >= 1.8.5
+> swoole 必须依赖于 ext-swoole 扩展，并且版本 >= 1.9.6
 
-swoole 服务器的配置文件存放在 `config/server.php` 中，其中 `listen` 选项是必填，`options` 配置项请看 [server 配置选项](http://wiki.swoole.com/wiki/page/274.html)
+swoole 服务器的配置文件存放在 `config/server.php` 中，其中 `host` 选项是必填，`options` 配置项请看 [server 配置选项](http://wiki.swoole.com/wiki/page/274.html)
 
 ```php
-$ php bin/server {start|status|stop|reload} [-t] {web root 目录，默认使用当前命令执行路径}
+$ php bin/server {start|status|stop|reload} [-d: 守护进程] [-t: web root 目录，默认使用当前命令执行路径]
 ```
 
 默认操作方式是 `status`，可用于简单查看进程状态。
@@ -41,6 +41,19 @@ return [
         'worker_num' => 10,
         'task_worker_num' => 20,
     ],
+    'listeners' => [
+        [
+            'class' => \FastD\Servitization\Server\TCPServer::class,
+            'host' => 'tcp://127.0.0.1:9528',
+            'options' => [
+
+            ]
+        ],
+        [
+            'class' => \FastD\Servitization\Server\MonitorStatusServer::class,
+            'host' => 'tcp://127.0.0.1:9529',
+        ],
+    ],
 ];
 ```
 
@@ -50,9 +63,11 @@ return [
 
 **注意事项**
 
-swoole_http_server和swoole_websocket_server因为是使用继承子类实现的，无法使用listen创建Http/WebSocket服务器。如果服务器的主要功能为RPC，但希望提供一个简单的Web管理界面。
+`swoole_http_server` 和 `swoole_websocket_server` 因为是使用继承子类实现的，无法使用 listen 创建 Http/WebSocket 服务器。如果服务器的主要功能为RPC，但希望提供一个简单的Web管理界面。
 
-在这样的场景中，可以先创建Http/WebSocket服务器，然后再进行listen监听RPC服务器的端口。
+在这样的场景中，可以先创建 Http/WebSocket 服务器，然后再进行 listen 监听 RPC 服务器的端口。
+
+因为多端口是共享进程处理的，所以如果要使用 task 任务处理，需要在主服务器中处理 `doTask` 回调方法。 
 
 * [Swoole 监听端口](http://wiki.swoole.com/wiki/page/525.html)
 
@@ -166,5 +181,13 @@ return [
 ```
 
 即可实现 task 服务器
+
+### Swoole 客户端
+
+除了提供 Swoole Server 以外，还提供一个远程操作的 Client 连接端客户，在服务器启动后，可以通过客户端，对远程服务器进行管理。
+
+使用: `php bin/client schema://host:port` 
+
+根据提示，输入具体操作的命令。
 
 下一节: [扩展](3-10-connection-pool.md)
