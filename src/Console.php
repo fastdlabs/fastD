@@ -10,6 +10,7 @@
 namespace FastD;
 
 
+use FastD\Console\ControllerCreate;
 use FastD\Console\ModelCreate;
 use FastD\Console\Config;
 use FastD\Console\Route;
@@ -35,6 +36,7 @@ class Console extends Symfony
 
         $this->addCommands([
             new ModelCreate(),
+            new ControllerCreate(),
             new Route(),
             new Config(),
             new SeedCreate(),
