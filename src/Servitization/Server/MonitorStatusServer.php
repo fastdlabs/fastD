@@ -60,6 +60,10 @@ class MonitorStatusServer extends TCP
                 $server->send($fd, 'connection closed');
                 $server->close($fd);
                 break;
+            case 'route':
+                break;
+            case 'config':
+                break;
             case 'status':
             default:
                 $info = $server->stats();

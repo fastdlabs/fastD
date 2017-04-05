@@ -7,12 +7,12 @@
  * @link      http://www.fast-d.cn/
  */
 
-namespace Model;
+namespace Console;
 
 
-use FastD\Model\Model;
+use Symfony\Component\Console\Command\Command;
 
-class DemoModel extends Model
+class SeedReset extends Command
 {
 
 }
