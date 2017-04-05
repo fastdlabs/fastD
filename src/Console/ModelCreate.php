@@ -30,11 +30,10 @@ class ModelCreate extends Command
             mkdir($modelPath, 0755, true);
         }
 
-        $name = ucfirst($input->getArgument('name'));
-        $name = str_replace(['Model', 'model'], '', $name);
-        $content = $this->createModelTemplate();
+        $name = ucfirst($input->getArgument('name')) . 'Model';
+        $content = $this->createModelTemplate($name);
 
-        $modelFile = $modelPath . '/' . $name . 'Model.php';
+        $modelFile = $modelPath . '/' . $name . '.php';
 
         if (file_exists($modelFile)) {
             throw new \LogicException(sprintf('Model %s is already exists', $name));
@@ -44,7 +43,7 @@ class ModelCreate extends Command
         $output->writeln(sprintf('Model %s created successful. path in %s', $name, $modelPath));
     }
 
-    protected function createModelTemplate()
+    protected function createModelTemplate($name)
     {
         return <<<MODEL
 <?php
@@ -54,7 +53,7 @@ namespace Model;
 
 use FastD\Model\Model;
 
-class UserModel extends Model
+class {$name} extends Model
 {
     const TABLE = '';
     const LIMIT = '15';
