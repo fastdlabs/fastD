@@ -10,6 +10,7 @@
 namespace FastD\Model;
 
 
+use Phinx\Db\Table;
 use Phinx\Migration\AbstractMigration;
 
 /**
@@ -18,12 +19,26 @@ use Phinx\Migration\AbstractMigration;
  */
 abstract class Migration extends AbstractMigration
 {
+    /**
+     *
+     */
     public function change()
     {
-        $this->up();
-        $this->dateSet();
+        $table = $this->setUp();
+        if (!$table->exists()) {
+            $table->create();
+        }
+        $this->dataSet($table);
     }
 
-    public function dateSet()
-    {}
+    /**
+     * @return Table
+     */
+    abstract public function setUp();
+
+    /**
+     * @param Table $table
+     * @return mixed
+     */
+    abstract public function dataSet(Table $table);
 }
