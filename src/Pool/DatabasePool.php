@@ -49,6 +49,7 @@ class DatabasePool implements PoolInterface
                 'password' => $config['pass'],
                 'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
                 'port' => isset($config['port']) ? $config['port'] : 3306,
+                'prefix' => isset($config['prefix']) ? $config['prefix'] : '',
             ]);
         }
         return $this->connections[$key];
