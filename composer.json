@@ -37,14 +37,15 @@
         "fastd/routing": "^3.0",
         "fastd/swoole": "^2.0@beta",
         "fastd/utils": "^0.1",
-        "fastd/testing": "^0.2",
+        "fastd/testing": "0.3.x-dev",
         "catfan/Medoo": "~1.0",
         "symfony/cache": "~3.2",
         "monolog/monolog": "~1.0",
         "robmorgan/phinx": "^0.8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0"
+        "phpunit/phpunit": "^5.0",
+        "phpunit/dbunit": "^2.0"
     },
     "bin": [
         "console",

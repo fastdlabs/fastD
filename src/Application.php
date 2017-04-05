@@ -49,7 +49,7 @@ class Application extends Container
     /**
      * @var string
      */
-    protected $name = 'fast-d';
+    protected $name;
 
     /**
      * @var bool
