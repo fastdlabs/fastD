@@ -144,15 +144,24 @@ class SeedCreate extends Create
 <?php
 
 use FastD\Model\Migration;
+use Phinx\Db\Table;
 
 class $className extends Migration
 {
     /**
-     * Set up database table schema
+     * @return Table
      */
-    public function up()
+    public function setUp()
     {
         
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function dataSet(Table $table)
+    {
+    
     }
 }';
     }
