@@ -21,7 +21,7 @@ class SeedCreate extends Create
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database';
+        $path = app()->getPath() . '/database/schema';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -157,11 +157,13 @@ class $className extends Migration
     }
     
     /**
+     * The table preinstall dataset.
+     *
      * @return mixed
      */
     public function dataSet(Table $table)
     {
-    
+        
     }
 }';
     }

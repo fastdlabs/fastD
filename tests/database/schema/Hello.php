@@ -11,7 +11,13 @@ class Hello extends Migration
      */
     public function setUp()
     {
-        return $this->table('');
+        $table = $this->table('hello');
+        $table
+            ->addColumn('content', 'string')
+            ->addColumn('user', 'string')
+            ->addColumn('created', 'datetime')
+        ;
+        return $table;
     }
 
     public function dataSet(Table $table)

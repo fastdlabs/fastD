@@ -45,7 +45,7 @@ class SeedRun extends Migrate
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database';
+        $path = app()->getPath() . '/database/schema';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -103,7 +103,9 @@ class SeedRun extends Migrate
             $adapter->createDatabase($config['name']);
         }
 
-        return parent::execute($input, $output);
+        $code = parent::execute($input, $output);
+
+        return $code;
     }
 }
 

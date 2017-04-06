@@ -22,7 +22,7 @@ use Symfony\Component\Yaml\Yaml;
  * Class Config
  * @package FastD\Console
  */
-class Config extends Command
+class ConfigDump extends Command
 {
     public function configure()
     {

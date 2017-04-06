@@ -15,6 +15,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ModelCreate
+ * @package FastD\Console
+ */
 class ModelCreate extends Command
 {
     public function configure()
@@ -45,6 +49,7 @@ class ModelCreate extends Command
 
     protected function createModelTemplate($name)
     {
+        $table = str_replace('Model', '', $name);
         return <<<MODEL
 <?php
 
@@ -55,7 +60,7 @@ use FastD\Model\Model;
 
 class {$name} extends Model
 {
-    const TABLE = '';
+    const TABLE = '{$table}';
     const LIMIT = '15';
 
     public function select(\$page = 1)

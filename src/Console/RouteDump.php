@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class Route
  * @package FastD\Console
  */
-class Route extends Command
+class RouteDump extends Command
 {
     public function configure()
     {

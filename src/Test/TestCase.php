@@ -32,6 +32,7 @@ class TestCase extends WebTestCase
     public function setUp()
     {
         $this->app = $this->createApplication();
+        parent::setUp();
     }
 
     /**
@@ -49,7 +50,11 @@ class TestCase extends WebTestCase
      */
     protected function getConnection()
     {
-        return $this->createDefaultDBConnection(database()->pdo);
+        $connection = env('connection');
+        if (!$connection) {
+            $connection = 'default';
+        }
+        return $this->createDefaultDBConnection(database($connection)->pdo);
     }
 
     /**
@@ -59,8 +64,18 @@ class TestCase extends WebTestCase
      */
     protected function getDataSet()
     {
-        $path = app()->getPath() . '/database/dataset';
+        $path = app()->getPath() . '/database/dataset/*';
 
-        return new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet([]);
+        $composite = new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+
+        foreach (glob($path) as $file) {
+            $dataSet = load($file);
+            $tableName = pathinfo($file, PATHINFO_FILENAME);
+            $composite->addDataSet(new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
+                $tableName => $dataSet
+            ]));
+        }
+
+        return $composite;
     }
 }
