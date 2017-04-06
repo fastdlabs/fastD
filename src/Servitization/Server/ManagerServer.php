@@ -19,7 +19,7 @@ use swoole_server;
  * Class MonitorStatusServer
  * @package FastD\Servitization\Server
  */
-class MonitorStatusServer extends TCP
+class ManagerServer extends TCP
 {
     /**
      * @param swoole_server $server
@@ -61,11 +61,7 @@ class MonitorStatusServer extends TCP
                 $server->close($fd);
                 break;
             case 'reload':
-                break;
-            case 'route':
-
-                break;
-            case 'config':
+                $this->getSwoole()->reload();
                 break;
             case 'status':
             default:

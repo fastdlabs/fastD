@@ -27,7 +27,7 @@ return [
             ]
         ],
         [
-            'class' => \FastD\Servitization\Server\MonitorStatusServer::class,
+            'class' => \FastD\Servitization\Server\ManagerServer::class,
             'host' => 'tcp://127.0.0.1:9529',
         ],
     ],
