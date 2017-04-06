@@ -31,15 +31,15 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $config = config();
         $logger = new Logger(app()->getName());
 
-        $log = $config->get('log');
+        $logs = $config->get('log');
         $path = app()->getPath() . '/runtime/logs';
 
-        if (!isset($log['error'])) {
-            $logger->pushHandler(new StreamHandler($path . '/error.log', Logger::WARNING));
-        } else if (is_string($log['error'])) {
-            $logger->pushHandler(new $log['error']($path . '/error.log', Logger::WARNING));
-        } else if ($log['error'] instanceof HandlerInterface) {
-            $logger->pushHandler($log['error']);
+        foreach ($logs as $logHandle) {
+            if (is_string($logHandle)) {
+                $logger->pushHandler(new $logHandle($path . '/error.log', Logger::WARNING));
+            } else if ($logHandle instanceof HandlerInterface) {
+                $logger->pushHandler($logHandle);
+            }
         }
 
         $container->add('logger', $logger);
