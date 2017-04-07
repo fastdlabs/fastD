@@ -11,12 +11,12 @@ tools:
 filter:
     excluded_paths:
         - 'tests/*'
-project_setup:
-    before:
-        - pecl install swoole
-        - mysql -e "CREATE DATABASE IF NOT EXISTS ci;"
-        - mysql -e 'CREATE TABLE `ci`.`hello` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` varchar(255) NOT NULL,`user` varchar(255) NOT NULL,`created` datetime NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;'
 build:
+    project_setup:
+        before:
+            - pecl install swoole
+            - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS ci;"
+            - mysql -uroot -e 'CREATE TABLE `ci`.`hello` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` varchar(255) NOT NULL,`user` varchar(255) NOT NULL,`created` datetime NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;'
     tests:
         override:
             -
