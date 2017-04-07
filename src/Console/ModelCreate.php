@@ -98,7 +98,7 @@ class {$name} extends Model
         return \$this->find(\$id);
     }
 
-    public function deleteUser(\$id)
+    public function delete(\$id)
     {
         return \$this->db->delete(static::TABLE, [
             'id' => \$id
