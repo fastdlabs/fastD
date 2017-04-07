@@ -9,19 +9,18 @@
 
 namespace FastD\ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Pool\DatabasePool;
 
 /**
- * Class DatabaseServiceProvider
- * @package FastD\ServiceProvider
+ * Class DatabaseServiceProvider.
  */
 class DatabaseServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return void
      */
     public function register(Container $container)

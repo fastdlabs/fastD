@@ -9,10 +9,8 @@
 
 namespace FastD\Model;
 
-
 /**
- * Class ModelFactory
- * @package FastD\ServiceProvider
+ * Class ModelFactory.
  */
 class ModelFactory
 {
@@ -24,12 +22,13 @@ class ModelFactory
     /**
      * @param $name
      * @param $key
+     *
      * @return Model
      */
     public static function createModel($name, $key = 'default')
     {
         if (!isset(static::$models[$name])) {
-            $modelName = 'Model\\' . ucfirst($name) . 'Model';
+            $modelName = 'Model\\'.ucfirst($name).'Model';
             static::$models[$name] = new $modelName(database($key));
         }
 

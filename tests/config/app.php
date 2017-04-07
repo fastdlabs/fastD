@@ -8,24 +8,24 @@
  */
 
 return [
-    /**
+    /*
      * The application name.
      */
     'name' => 'fast-d',
 
-    /**
+    /*
      * Application timezone
      */
     'timezone' => 'PRC',
 
-    /**
+    /*
      * Application logger path
      */
     'log' => [
         \Monolog\Handler\StreamHandler::class, // 错误日志
     ],
 
-    /**
+    /*
      * Bootstrap service
      */
     'services' => [
@@ -33,31 +33,31 @@ return [
         \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
 
-    /**
+    /*
      * Consoles
      */
     'consoles' => [
 
     ],
 
-    /**
+    /*
      * Http middleware
      */
     'middleware' => [
         'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication([
             'authenticator' => [
-                'class' => \FastD\BasicAuthenticate\PhpAuthenticator::class,
+                'class'  => \FastD\BasicAuthenticate\PhpAuthenticator::class,
                 'params' => [
-                    'foo' => 'bar'
-                ]
+                    'foo' => 'bar',
+                ],
             ],
             'response' => [
                 'class' => \FastD\Http\JsonResponse::class,
-                'data' => [
-                    'msg' => 'not allow access',
-                    'code' => 401
-                ]
-            ]
-        ])
+                'data'  => [
+                    'msg'  => 'not allow access',
+                    'code' => 401,
+                ],
+            ],
+        ]),
     ],
 ];

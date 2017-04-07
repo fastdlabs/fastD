@@ -9,15 +9,13 @@
 
 namespace FastD\Console;
 
-
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Route
- * @package FastD\Console
+ * Class Route.
  */
 class RouteDump extends Command
 {
@@ -26,20 +24,20 @@ class RouteDump extends Command
         $this
             ->setName('route:dump')
             ->setHelp('Show all route')
-            ->setDescription('Show you defined routes.')
-        ;
+            ->setDescription('Show you defined routes.');
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $table = new Table($output);
         $rows = [];
-        $table->setHeaders(array('Name', 'Path', 'Method', 'Callback', 'Middleware'));
+        $table->setHeaders(['Name', 'Path', 'Method', 'Callback', 'Middleware']);
         foreach (route()->aliasMap as $routes) {
             foreach ($routes as $route) {
                 $m = [];
@@ -52,7 +50,7 @@ class RouteDump extends Command
                             $m[] = $value;
                         }
                     }
-                } else if(is_object($middleware)) {
+                } elseif (is_object($middleware)) {
                     $m[] = get_class($middleware);
                 }
                 $rows[] = [
@@ -63,7 +61,6 @@ class RouteDump extends Command
                     implode(',', $m),
                 ];
             }
-
         }
 
         $table->setRows($rows);

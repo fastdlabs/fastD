@@ -9,21 +9,19 @@
 
 namespace FastD\Servitization\Server;
 
-
 use FastD\Application;
 use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\TCP;
 use swoole_server;
 
 /**
- * Class MonitorStatusServer
- * @package FastD\Servitization\Server
+ * Class MonitorStatusServer.
  */
 class ManagerServer extends TCP
 {
     /**
      * @param swoole_server $server
-     * @param int $worker_id
+     * @param int           $worker_id
      */
     public function onWorkerStart(swoole_server $server, $worker_id)
     {
@@ -43,7 +41,7 @@ class ManagerServer extends TCP
      */
     public function doConnect(swoole_server $server, $fd, $from_id)
     {
-        $server->send($fd, sprintf('server: %s %s', app()->getName(), Application::VERSION) . PHP_EOL);
+        $server->send($fd, sprintf('server: %s %s', app()->getName(), Application::VERSION).PHP_EOL);
     }
 
     /**
@@ -51,6 +49,7 @@ class ManagerServer extends TCP
      * @param $fd
      * @param $data
      * @param $from_id
+     *
      * @return mixed
      */
     public function doWork(swoole_server $server, $fd, $data, $from_id)
@@ -68,7 +67,7 @@ class ManagerServer extends TCP
                 $info = $server->stats();
                 $status = '';
                 foreach ($info as $key => $value) {
-                    $status .= "[" .date('Y-m-d H:i:s'). "]: " . $key . ': ' . $value . PHP_EOL;
+                    $status .= '['.date('Y-m-d H:i:s').']: '.$key.': '.$value.PHP_EOL;
                 }
                 $server->send($fd, $status);
                 break;

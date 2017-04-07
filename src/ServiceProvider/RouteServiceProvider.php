@@ -19,7 +19,7 @@ class Router extends RouteCollection
     protected function concat($callback)
     {
         if (is_string($callback)) {
-            return '\\Controller\\' . $callback;
+            return '\\Controller\\'.$callback;
         }
 
         return $callback;
@@ -52,13 +52,13 @@ class Router extends RouteCollection
 }
 
 /**
- * Class RouteServiceProvider
- * @package FastD\ServiceProvider
+ * Class RouteServiceProvider.
  */
 class RouteServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)
@@ -69,6 +69,6 @@ class RouteServiceProvider implements ServiceProviderInterface
         $container->add('router', $router);
         $container->add('dispatcher', $dispatcher);
 
-        include app()->getPath() . '/config/routes.php';
+        include app()->getPath().'/config/routes.php';
     }
 }

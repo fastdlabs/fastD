@@ -9,7 +9,6 @@
 
 namespace FastD\Pool;
 
-
 use Medoo\Medoo;
 
 class DatabasePool implements PoolInterface
@@ -26,6 +25,7 @@ class DatabasePool implements PoolInterface
 
     /**
      * Database constructor.
+     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -35,6 +35,7 @@ class DatabasePool implements PoolInterface
 
     /**
      * @param $key
+     *
      * @return Medoo
      */
     public function getConnection($key)
@@ -44,14 +45,15 @@ class DatabasePool implements PoolInterface
             $this->connections[$key] = new Medoo([
                 'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
                 'database_name' => $config['name'],
-                'server' => $config['host'],
-                'username' => $config['user'],
-                'password' => $config['pass'],
-                'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
-                'port' => isset($config['port']) ? $config['port'] : 3306,
-                'prefix' => isset($config['prefix']) ? $config['prefix'] : '',
+                'server'        => $config['host'],
+                'username'      => $config['user'],
+                'password'      => $config['pass'],
+                'charset'       => isset($config['charset']) ? $config['charset'] : 'utf8',
+                'port'          => isset($config['port']) ? $config['port'] : 3306,
+                'prefix'        => isset($config['prefix']) ? $config['prefix'] : '',
             ]);
         }
+
         return $this->connections[$key];
     }
 

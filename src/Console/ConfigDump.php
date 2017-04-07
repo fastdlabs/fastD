@@ -9,7 +9,6 @@
 
 namespace FastD\Console;
 
-
 use FastD\Utils\FileObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -19,8 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class Config
- * @package FastD\Console
+ * Class Config.
  */
 class ConfigDump extends Command
 {
@@ -31,24 +29,26 @@ class ConfigDump extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getArgument('name')) {
-            $file = app()->getPath() . '/config/' . $input->getArgument('name') . '.php';
+            $file = app()->getPath().'/config/'.$input->getArgument('name').'.php';
             $file = str_replace('.php.php', '.php', $file);
             $config = load($file);
-            $output->write('<comment>' . Yaml::dump($config) . '</comment>');
+            $output->write('<comment>'.Yaml::dump($config).'</comment>');
+
             return 0;
         }
         $table = new Table($output);
         $rows = [];
-        $table->setHeaders(array('File', 'Config', 'Owner', 'Modify At',));
+        $table->setHeaders(['File', 'Config', 'Owner', 'Modify At']);
 
-        foreach (glob(app()->getPath() . '/config/*') as $file) {
+        foreach (glob(app()->getPath().'/config/*') as $file) {
             $file = new FileObject($file);
             $config = load($file->getPathname());
             $count = 0;
@@ -57,7 +57,7 @@ class ConfigDump extends Command
             }
             $rows[] = [
                 $file->getFilename(),
-                $count . ' Keys',
+                $count.' Keys',
                 posix_getpwuid($file->getOwner())['name'],
                 date('Y-m-d H:i:s', $file->getMTime()),
             ];

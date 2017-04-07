@@ -2,7 +2,6 @@
 
 namespace Model;
 
-
 use FastD\Model\Model;
 
 class DemoModel extends Model
@@ -13,8 +12,9 @@ class DemoModel extends Model
     public function select($page = 1)
     {
         $offset = ($page - 1) * static::LIMIT;
+
         return $this->db->select(static::TABLE, '*', [
-            'LIMIT' => [$offset, static::LIMIT]
+            'LIMIT' => [$offset, static::LIMIT],
         ]);
     }
 
@@ -23,7 +23,7 @@ class DemoModel extends Model
         return $this->db->get(static::TABLE, '*', [
             'OR' => [
                 'id' => $id,
-            ]
+            ],
         ]);
     }
 
@@ -32,7 +32,7 @@ class DemoModel extends Model
         $affected = $this->db->update(static::TABLE, $data, [
             'OR' => [
                 'id' => $id,
-            ]
+            ],
         ]);
 
         return $this->find($id);
@@ -48,7 +48,7 @@ class DemoModel extends Model
     public function deleteUser($id)
     {
         return $this->db->delete(static::TABLE, [
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }
