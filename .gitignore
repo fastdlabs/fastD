@@ -3,4 +3,3 @@
 /tests/runtime
 composer.lock
 tests/storage
-/tests/src/Model/DemoModel.php
