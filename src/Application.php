@@ -105,7 +105,7 @@ class Application extends Container
             $config = load($this->path . '/config/app.php');
 
             $this->name = $config['name'];
-            $this['time'] = new DateTime('now',
+            $this['datetime'] = new DateTime('now',
                 new DateTimeZone($config['timezone'])
             );
             $this->add('config', new Config($config));
@@ -126,7 +126,7 @@ class Application extends Container
         $this->register(new RouteServiceProvider());
         $this->register(new LoggerServiceProvider());
         foreach ($services as $service) {
-            $this->register(new $service);
+            $this->register(new $service());
         }
     }
 

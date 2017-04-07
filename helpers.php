@@ -6,16 +6,14 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-
-
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
 use FastD\Http\RedirectResponse;
 use FastD\Http\Response;
 use FastD\Model\Model;
-use FastD\Routing\RouteCollection;
 use FastD\Model\ModelFactory;
+use FastD\Routing\RouteCollection;
 use Medoo\Medoo;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,7 +22,8 @@ use Symfony\Component\Cache\Adapter\AbstractAdapter;
 /**
  * @return Application
  */
-function app () {
+function app()
+{
     return Application::$app;
 }
 
@@ -33,7 +32,8 @@ function app () {
  * @param $callback
  * @return RouteCollection
  */
-function route ($prefix = null, callable $callback = null) {
+function route($prefix = null, callable $callback = null)
+{
     if (null === $prefix) {
         return app()->get('router');
     }
@@ -44,14 +44,16 @@ function route ($prefix = null, callable $callback = null) {
 /**
  * @return Config
  */
-function config () {
+function config()
+{
     return app()->get('config');
 }
 
 /**
  * @return ServerRequestInterface
  */
-function request () {
+function request()
+{
     return app()->get('request');
 }
 
@@ -61,7 +63,8 @@ function request () {
  * @param array $headers
  * @return JsonResponse
  */
-function json (array $content = [], $statusCode = Response::HTTP_OK, array $headers = []) {
+function json(array $content = [], $statusCode = Response::HTTP_OK, array $headers = [])
+{
     $headers['X-Version'] = Application::VERSION;
     return new JsonResponse($content, $statusCode, $headers);
 }
@@ -70,14 +73,16 @@ function json (array $content = [], $statusCode = Response::HTTP_OK, array $head
  * @param $url
  * @return RedirectResponse
  */
-function redirect ($url) {
+function redirect($url)
+{
     return new RedirectResponse($url);
 }
 
 /**
  * @return Logger
  */
-function logger () {
+function logger()
+{
     return app()->get('logger');
 }
 
@@ -85,7 +90,8 @@ function logger () {
  * @param $key
  * @return AbstractAdapter
  */
-function cache ($key = 'default') {
+function cache($key = 'default')
+{
     return app()->get('cache')->getCache($key);
 }
 
@@ -93,7 +99,8 @@ function cache ($key = 'default') {
  * @param $key
  * @return Medoo
  */
-function database ($key = 'default') {
+function database($key = 'default')
+{
     return app()->get('database')->getConnection($key);
 }
 
@@ -102,13 +109,15 @@ function database ($key = 'default') {
  * @param $key
  * @return Model
  */
-function model($name, $key = 'default') {
+function model($name, $key = 'default')
+{
     return ModelFactory::createModel($name, $key);
 }
 
 /**
  * @return \swoole_server
  */
-function server () {
+function server()
+{
     return app()->get('server');
 }
