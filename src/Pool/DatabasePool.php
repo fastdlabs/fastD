@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Pool;
-
 
 use Medoo\Medoo;
 
@@ -26,6 +25,7 @@ class DatabasePool implements PoolInterface
 
     /**
      * Database constructor.
+     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -35,6 +35,7 @@ class DatabasePool implements PoolInterface
 
     /**
      * @param $key
+     *
      * @return Medoo
      */
     public function getConnection($key)
@@ -52,6 +53,7 @@ class DatabasePool implements PoolInterface
                 'prefix' => isset($config['prefix']) ? $config['prefix'] : '',
             ]);
         }
+
         return $this->connections[$key];
     }
 

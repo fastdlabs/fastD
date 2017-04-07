@@ -3,18 +3,16 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Model;
 
-
 use Medoo\Medoo;
 
 /**
- * Class Model
- * @package FastD\ServiceProvider
+ * Class Model.
  */
 class Model
 {
@@ -25,6 +23,7 @@ class Model
 
     /**
      * Model constructor.
+     *
      * @param medoo $medoo
      */
     public function __construct(Medoo $medoo)

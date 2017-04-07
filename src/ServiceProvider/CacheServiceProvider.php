@@ -3,26 +3,24 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\ServiceProvider;
-
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Pool\CachePool;
 
-
 /**
- * Class CacheServiceProvider
- * @package FastD\ServiceProvider
+ * Class CacheServiceProvider.
  */
 class CacheServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)

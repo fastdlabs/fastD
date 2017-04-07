@@ -3,8 +3,8 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace Controller;
@@ -12,12 +12,9 @@ namespace Controller;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Middleware\Delegate;
 
 /**
- *
- * Class IndexController
- * @package Http\Controller
+ * Class IndexController.
  */
 class UserController
 {
@@ -69,17 +66,19 @@ class UserController
      * )
      *
      * @param $request
+     *
      * @return Response
      */
     public function welcome(ServerRequest $request)
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
     /**
      * @param ServerRequest $request
+     *
      * @return JsonResponse
      */
     public function sayHello(ServerRequest $request)
@@ -91,12 +90,13 @@ class UserController
 
     /**
      * @param ServerRequest $serverRequest
+     *
      * @return JsonResponse
      */
     public function middleware(ServerRequest $serverRequest)
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
@@ -116,14 +116,14 @@ class UserController
 
         return json([
             'model' => get_class($model),
-            'db' => $model->getDatabase()->info()
+            'db' => $model->getDatabase()->info(),
         ]);
     }
 
     public function auth()
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 }

@@ -3,8 +3,8 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 use FastD\Application;
 use FastD\Config\Config;
@@ -30,6 +30,7 @@ function app()
 /**
  * @param $prefix
  * @param $callback
+ *
  * @return RouteCollection
  */
 function route($prefix = null, callable $callback = null)
@@ -59,18 +60,21 @@ function request()
 
 /**
  * @param array $content
- * @param int $statusCode
+ * @param int   $statusCode
  * @param array $headers
+ *
  * @return JsonResponse
  */
 function json(array $content = [], $statusCode = Response::HTTP_OK, array $headers = [])
 {
     $headers['X-Version'] = Application::VERSION;
+
     return new JsonResponse($content, $statusCode, $headers);
 }
 
 /**
  * @param $url
+ *
  * @return RedirectResponse
  */
 function redirect($url)
@@ -88,6 +92,7 @@ function logger()
 
 /**
  * @param $key
+ *
  * @return AbstractAdapter
  */
 function cache($key = 'default')
@@ -97,6 +102,7 @@ function cache($key = 'default')
 
 /**
  * @param $key
+ *
  * @return Medoo
  */
 function database($key = 'default')
@@ -107,6 +113,7 @@ function database($key = 'default')
 /**
  * @param $name
  * @param $key
+ *
  * @return Model
  */
 function model($name, $key = 'default')

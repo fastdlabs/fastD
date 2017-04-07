@@ -3,20 +3,17 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
-
-
 use FastD\Application;
 use FastD\Test\TestCase;
-
 
 class IndexControllerTest extends TestCase
 {
     public function createApplication()
     {
-        return new Application(getcwd() . '/tests');
+        return new Application(getcwd().'/tests');
     }
 
     public function testSayHello()

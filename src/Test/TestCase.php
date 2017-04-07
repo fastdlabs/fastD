@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Test;
-
 
 use FastD\Application;
 use FastD\Testing\WebTestCase;
@@ -16,8 +15,7 @@ use PHPUnit_Extensions_Database_DataSet_IDataSet;
 use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
 
 /**
- * Class TestCase
- * @package FastD\Test
+ * Class TestCase.
  */
 class TestCase extends WebTestCase
 {
@@ -54,6 +52,7 @@ class TestCase extends WebTestCase
         if (!$connection) {
             $connection = 'default';
         }
+
         return $this->createDefaultDBConnection(database($connection)->pdo);
     }
 
@@ -64,7 +63,7 @@ class TestCase extends WebTestCase
      */
     protected function getDataSet()
     {
-        $path = app()->getPath() . '/database/dataset/*';
+        $path = app()->getPath().'/database/dataset/*';
 
         $composite = new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
 
@@ -72,7 +71,7 @@ class TestCase extends WebTestCase
             $dataSet = load($file);
             $tableName = pathinfo($file, PATHINFO_FILENAME);
             $composite->addDataSet(new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
-                $tableName => $dataSet
+                $tableName => $dataSet,
             ]));
         }
 
