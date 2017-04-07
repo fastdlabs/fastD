@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Console;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -16,8 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Route
- * @package FastD\Console
+ * Class Route.
  */
 class RouteDump extends Command
 {
@@ -31,8 +29,9 @@ class RouteDump extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -52,7 +51,7 @@ class RouteDump extends Command
                             $m[] = $value;
                         }
                     }
-                } else if(is_object($middleware)) {
+                } elseif (is_object($middleware)) {
                     $m[] = get_class($middleware);
                 }
                 $rows[] = [
@@ -63,7 +62,6 @@ class RouteDump extends Command
                     implode(',', $m),
                 ];
             }
-
         }
 
         $table->setRows($rows);

@@ -3,8 +3,8 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD;
@@ -24,8 +24,7 @@ use FastD\ServiceProvider\RouteServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Application
- * @package FastD
+ * Class Application.
  */
 class Application extends Container
 {
@@ -96,12 +95,9 @@ class Application extends Container
         return $this->path;
     }
 
-    /**
-     * @return void
-     */
     public function bootstrap()
     {
-        if ( ! $this->booted) {
+        if (!$this->booted) {
             $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
@@ -118,7 +114,6 @@ class Application extends Container
 
     /**
      * @param ServiceProviderInterface[] $services
-     * @return void
      */
     protected function registerServicesProviders(array $services)
     {
@@ -132,6 +127,7 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
+     *
      * @return Response
      */
     public function handleRequest(ServerRequestInterface $request)
@@ -155,6 +151,7 @@ class Application extends Container
 
     /**
      * @param Exception $e
+     *
      * @return Response
      */
     public function handleException($e)
@@ -169,7 +166,7 @@ class Application extends Container
             'trace' => explode("\n", $e->getTraceAsString()),
         ];
 
-        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
+        if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 

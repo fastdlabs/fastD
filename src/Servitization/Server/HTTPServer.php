@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Servitization\Server;
-
 
 use Exception;
 use FastD\Http\Response;
@@ -21,14 +20,13 @@ use swoole_http_response;
 use swoole_server;
 
 /**
- * Class HTTPServer
- * @package FastD\Servitization\Server
+ * Class HTTPServer.
  */
 class HTTPServer extends HTTP
 {
     /**
      * @param swoole_server $server
-     * @param int $worker_id
+     * @param int           $worker_id
      */
     public function onWorkerStart(swoole_server $server, $worker_id)
     {
@@ -42,7 +40,7 @@ class HTTPServer extends HTTP
     }
 
     /**
-     * @param swoole_http_request $swooleRequet
+     * @param swoole_http_request  $swooleRequet
      * @param swoole_http_response $swooleResponse
      */
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
@@ -67,6 +65,7 @@ class HTTPServer extends HTTP
 
     /**
      * @param ServerRequestInterface $serverRequest
+     *
      * @return Response
      */
     public function doRequest(ServerRequestInterface $serverRequest)

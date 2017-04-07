@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Console;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,8 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ModelCreate
- * @package FastD\Console
+ * Class ModelCreate.
  */
 class ModelCreate extends Command
 {
@@ -29,15 +27,15 @@ class ModelCreate extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $modelPath = app()->getPath() . '/src/Model';
+        $modelPath = app()->getPath().'/src/Model';
         if (!file_exists($modelPath)) {
             mkdir($modelPath, 0755, true);
         }
 
-        $name = ucfirst($input->getArgument('name')) . 'Model';
+        $name = ucfirst($input->getArgument('name')).'Model';
         $content = $this->createModelTemplate($name);
 
-        $modelFile = $modelPath . '/' . $name . '.php';
+        $modelFile = $modelPath.'/'.$name.'.php';
 
         if (file_exists($modelFile)) {
             throw new \LogicException(sprintf('Model %s is already exists', $name));
@@ -50,6 +48,7 @@ class ModelCreate extends Command
     protected function createModelTemplate($name)
     {
         $table = strtolower(str_replace('Model', '', $name));
+
         return <<<MODEL
 <?php
 
@@ -106,6 +105,5 @@ class {$name} extends Model
     }
 }
 MODEL;
-
     }
 }

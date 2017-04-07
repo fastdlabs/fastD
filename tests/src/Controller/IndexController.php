@@ -3,8 +3,8 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace Controller;
@@ -12,14 +12,11 @@ namespace Controller;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Middleware\Delegate;
 
 /**
- *
  * @SWG\Info(title="演示API", version="0.1")
  *
  * Class IndexController
- * @package Http\Controller
  */
 class IndexController
 {
@@ -71,17 +68,19 @@ class IndexController
      * )
      *
      * @param $request
+     *
      * @return Response
      */
     public function welcome(ServerRequest $request)
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
     /**
      * @param ServerRequest $request
+     *
      * @return JsonResponse
      */
     public function sayHello(ServerRequest $request)
@@ -93,12 +92,13 @@ class IndexController
 
     /**
      * @param ServerRequest $serverRequest
+     *
      * @return JsonResponse
      */
     public function middleware(ServerRequest $serverRequest)
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
@@ -125,7 +125,7 @@ class IndexController
     public function auth()
     {
         return json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 }

@@ -3,12 +3,11 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace Middleware;
-
 
 use FastD\Http\JsonResponse;
 use FastD\Middleware\DelegateInterface;
@@ -20,16 +19,18 @@ class FooMiddleware extends Middleware
 {
     /**
      * @param ServerRequestInterface $serverRequest
-     * @param DelegateInterface $delegate
+     * @param DelegateInterface      $delegate
+     *
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
-        if ('bar' == $serverRequest->getAttribute('name')) {
+        if ('bar' === $serverRequest->getAttribute('name')) {
             return new JsonResponse([
-                'foo' => 'middleware'
+                'foo' => 'middleware',
             ]);
         }
+
         return $delegate($serverRequest);
     }
 }
