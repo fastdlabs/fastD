@@ -17,7 +17,7 @@ class ApplicationTest extends TestCase
 
         $this->assertEquals(__DIR__, $app->getPath());
         $this->assertEquals('fast-d', $app->getName());
-        $this->assertEquals('PRC', $app['time']->getTimeZone()->getName());
+        $this->assertEquals('PRC', $app['datetime']->getTimeZone()->getName());
         $this->assertTrue($app->isBooted());
     }
 
