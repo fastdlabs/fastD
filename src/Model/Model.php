@@ -9,12 +9,10 @@
 
 namespace FastD\Model;
 
-
 use Medoo\Medoo;
 
 /**
- * Class Model
- * @package FastD\ServiceProvider
+ * Class Model.
  */
 class Model
 {
@@ -25,6 +23,7 @@ class Model
 
     /**
      * Model constructor.
+     *
      * @param medoo $medoo
      */
     public function __construct(Medoo $medoo)

@@ -1,4 +1,5 @@
 <?php
+
 use FastD\Application;
 use FastD\Http\ServerRequest;
 

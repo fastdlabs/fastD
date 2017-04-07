@@ -9,24 +9,23 @@
 
 namespace FastD\ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
 /**
- * Class SwooleServiceProvider
- * @package FastD\ServiceProvider
+ * Class SwooleServiceProvider.
  */
 class SwooleServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)
     {
         config()->merge([
-            'server' => load(app()->getPath() . '/config/server.php')
+            'server' => load(app()->getPath().'/config/server.php'),
         ]);
     }
 }

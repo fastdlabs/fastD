@@ -9,7 +9,6 @@
 
 namespace FastD\Pool;
 
-
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
@@ -27,6 +26,7 @@ class CachePool implements PoolInterface
 
     /**
      * Cache constructor.
+     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -36,6 +36,7 @@ class CachePool implements PoolInterface
 
     /**
      * @param $name
+     *
      * @return AbstractAdapter
      */
     public function getCache($name)
@@ -58,6 +59,7 @@ class CachePool implements PoolInterface
                     );
             }
         }
+
         return $this->caches[$name];
     }
 

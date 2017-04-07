@@ -6,10 +6,7 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-
-
 use FastD\Server;
-
 
 class ServerTest extends TestCase
 {

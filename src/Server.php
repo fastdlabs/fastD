@@ -9,17 +9,13 @@
 
 namespace FastD;
 
-
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
-use Symfony\Component\Console\Input\InputInterface;
-use swoole_http_response;
 use swoole_server;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
- * Class App
- *
- * @package FastD
+ * Class App.
  */
 class Server
 {
@@ -35,6 +31,7 @@ class Server
 
     /**
      * Server constructor.
+     *
      * @param Application $application
      */
     public function __construct(Application $application)
@@ -71,7 +68,7 @@ class Server
     }
 
     /**
-     * 初始化连接池
+     * 初始化连接池.
      *
      * @return $this
      */
@@ -88,11 +85,12 @@ class Server
         $listeners = config()->get('server.listeners', []);
         foreach ($listeners as $listener) {
             $this->server->listen(new $listener['class'](
-                app()->getName() . ' ports',
+                app()->getName().' ports',
                 $listener['host'],
                 isset($listener['options']) ? $listener['options'] : []
             ));
         }
+
         return $this;
     }
 
@@ -103,8 +101,9 @@ class Server
     {
         $processes = config()->get('server.processes', []);
         foreach ($processes as $process) {
-            $this->server->process(new $process);
+            $this->server->process(new $process());
         }
+
         return $this;
     }
 
@@ -164,6 +163,7 @@ class Server
 
     /**
      * @param array $dir
+     *
      * @return int
      */
     public function watch(array $dir = ['.'])

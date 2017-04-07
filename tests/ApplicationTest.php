@@ -6,7 +6,6 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-
 use ServiceProvider\FooServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
@@ -72,7 +71,7 @@ class ApplicationTest extends TestCase
         $request = $this->createRequest('GET', '/not/found');
         $response = $app->handleRequest($request);
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/error.log'));
+        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
 
     public function testCacheServiceProvider()
@@ -101,19 +100,19 @@ class ApplicationTest extends TestCase
         $this->assertEquals(401, $response->getStatusCode());
 
         $this->assertEquals(json_encode([
-            'msg' => 'not allow access',
-            'code' => 401
-        ]), (string)$response->getBody());
+            'msg'  => 'not allow access',
+            'code' => 401,
+        ]), (string) $response->getBody());
 
         $response = $app->handleRequest($this->createRequest('GET', 'http://foo:bar@example.com/auth', [], null, [
             'PHP_AUTH_USER' => 'foo',
-            'PHP_AUTH_PW' => 'bar'
+            'PHP_AUTH_PW'   => 'bar',
         ]));
 
         $this->assertEquals(200, $response->getStatusCode());
 
         $this->assertEquals(json_encode([
-            'foo' => 'bar'
-        ]), (string)$response->getBody());
+            'foo' => 'bar',
+        ]), (string) $response->getBody());
     }
 }

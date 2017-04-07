@@ -9,7 +9,6 @@
 
 namespace Middleware;
 
-
 use FastD\Http\JsonResponse;
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\Middleware;
@@ -20,16 +19,18 @@ class FooMiddleware extends Middleware
 {
     /**
      * @param ServerRequestInterface $serverRequest
-     * @param DelegateInterface $delegate
+     * @param DelegateInterface      $delegate
+     *
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
     {
         if ('bar' == $serverRequest->getAttribute('name')) {
             return new JsonResponse([
-                'foo' => 'middleware'
+                'foo' => 'middleware',
             ]);
         }
+
         return $delegate($serverRequest);
     }
 }

@@ -9,10 +9,8 @@
 
 namespace FastD\Pool;
 
-
 /**
- * Interface PoolInterface
- * @package Servitization
+ * Interface PoolInterface.
  */
 interface PoolInterface
 {

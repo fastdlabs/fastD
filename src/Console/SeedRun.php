@@ -9,7 +9,6 @@
 
 namespace FastD\Console;
 
-
 use Phinx\Config\Config as MConfig;
 use Phinx\Console\Command\Migrate;
 use Phinx\Migration\AbstractMigration;
@@ -18,8 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class SeedRun
- * @package FastD\Console
+ * Class SeedRun.
  */
 class SeedRun extends Migrate
 {
@@ -31,7 +29,7 @@ class SeedRun extends Migrate
     protected $booted = false;
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function loadManager(InputInterface $input, OutputInterface $output)
@@ -45,7 +43,7 @@ class SeedRun extends Migrate
     public function configure()
     {
         parent::configure();
-        $path = app()->getPath() . '/database/schema';
+        $path = app()->getPath().'/database/schema';
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
@@ -56,28 +54,28 @@ class SeedRun extends Migrate
         $default = $keys[0];
         foreach ($database as $name => $config) {
             $env[$name] = [
-                "adapter" => "mysql",
-                "host" => config()->get('database.' . $name . '.host'),
-                "name" => config()->get('database.' . $name . '.name'),
-                "user" => config()->get('database.' . $name . '.user'),
-                "pass" => config()->get('database.' . $name . '.pass'),
-                "port" => config()->get('database.' . $name . '.port'),
-                'charset' => config()->get('database.' . $name . '.charset', 'utf8'),
+                'adapter' => 'mysql',
+                'host'    => config()->get('database.'.$name.'.host'),
+                'name'    => config()->get('database.'.$name.'.name'),
+                'user'    => config()->get('database.'.$name.'.user'),
+                'pass'    => config()->get('database.'.$name.'.pass'),
+                'port'    => config()->get('database.'.$name.'.port'),
+                'charset' => config()->get('database.'.$name.'.charset', 'utf8'),
             ];
         }
-        $this->setConfig(new MConfig(array(
-            "paths" => array(
-                "migrations" => $path,
-                "seeds" => $path,
-            ),
-            "environments" => array_merge([
-                "default_database" => $default,
+        $this->setConfig(new MConfig([
+            'paths' => [
+                'migrations' => $path,
+                'seeds'      => $path,
+            ],
+            'environments' => array_merge([
+                'default_database' => $default,
             ], $env),
-        )));
+        ]));
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     public function bootstrap(InputInterface $input, OutputInterface $output)
@@ -89,8 +87,9 @@ class SeedRun extends Migrate
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -110,16 +109,16 @@ class SeedRun extends Migrate
 }
 
 /**
- * Class Migration
- * @package FastD\Console
+ * Class Migration.
  */
 class Migration extends Manager
 {
     /**
      * Gets an array of the database migrations, indexed by migration name (aka creation time) and sorted in ascending
-     * order
+     * order.
      *
      * @throws \InvalidArgumentException
+     *
      * @return AbstractMigration[]
      */
     public function getMigrations()
@@ -128,9 +127,9 @@ class Migration extends Manager
             $phpFiles = $this->getMigrationFiles();
 
             // filter the files to only get the ones that match our naming scheme
-            $fileNames = array();
+            $fileNames = [];
             /** @var AbstractMigration[] $migrations */
-            $migrations = array();
+            $migrations = [];
 
             $version = date('Ymd');
             $versionIncrementSeed = mt_rand(1000, 9999 - count($phpFiles));
@@ -139,7 +138,7 @@ class Migration extends Manager
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $migration = new $class($version . (++$versionIncrementSeed), $this->getInput(), $this->getOutput());
+                $migration = new $class($version.(++$versionIncrementSeed), $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
                     throw new \InvalidArgumentException(sprintf(

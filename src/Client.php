@@ -9,24 +9,23 @@
 
 namespace FastD;
 
-
 use Exception;
+use FastD\Swoole\Client as SwooleClient;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use FastD\Swoole\Client as SwooleClient;
 
 /**
- * Class Client
- * @package FastD
+ * Class Client.
  */
 class Client
 {
     /**
      * @param InputInterface $input
+     *
      * @return SwooleClient
      */
     public function connect(InputInterface $input)
@@ -35,10 +34,12 @@ class Client
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return int
+     *
      * @throws \Exception
+     *
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output = null)
     {
@@ -46,7 +47,7 @@ class Client
             $output = new ConsoleOutput();
         }
 
-        $helper = new QuestionHelper(array(new FormatterHelper()));
+        $helper = new QuestionHelper([new FormatterHelper()]);
         $question = new Question('Continue with this action <info>[get /hello foo:bar] ? </info>', false);
 
         $action = $helper->ask($input, $output, $question);
@@ -56,6 +57,7 @@ class Client
 
         if ('quit' === trim($action)) {
             $output->writeln('quit');
+
             return 0;
         }
 
@@ -85,11 +87,11 @@ class Client
         try {
             $json = $this->connect($input)->send(json_encode([
                 'method' => $method,
-                'path' => $path,
-                'args' => $args,
+                'path'   => $path,
+                'args'   => $args,
             ]));
             $content = json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
-            $output->writeln('<info>' . $content . '</info>');
+            $output->writeln('<info>'.$content.'</info>');
             $this->execute($input, $output);
         } catch (Exception $e) {
             echo $e->getMessage();

@@ -14,22 +14,22 @@ use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
 /**
- * Class ConfigServiceProvider
- * @package FastD\Provider
+ * Class ConfigServiceProvider.
  */
 class ConfigServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return void
      */
     public function register(Container $container)
     {
-        $dir = app()->getPath() . '/config';
-        $container->get('config')->load($dir . '/config.php');
+        $dir = app()->getPath().'/config';
+        $container->get('config')->load($dir.'/config.php');
         $container->get('config')->merge([
-            'database' => load($dir . '/database.php'),
-            'cache' => load($dir . '/cache.php'),
+            'database' => load($dir.'/database.php'),
+            'cache'    => load($dir.'/cache.php'),
         ]);
     }
 }

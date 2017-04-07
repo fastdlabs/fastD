@@ -1,4 +1,5 @@
 <?php
+
 namespace Console;
 
 use Symfony\Component\Console\Command\Command;

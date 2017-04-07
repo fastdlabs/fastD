@@ -9,24 +9,21 @@
 
 namespace FastD\Servitization\Server;
 
-
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
 use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\WebSocket;
 use swoole_server;
 use swoole_websocket_frame;
-use swoole_websocket_server;
 
 /**
- * Class WebSocketServer
- * @package FastD\Servitization\Server
+ * Class WebSocketServer.
  */
 class WebSocketServer extends WebSocket
 {
     /**
      * @param swoole_server $server
-     * @param int $worker_id
+     * @param int           $worker_id
      */
     public function onWorkerStart(swoole_server $server, $worker_id)
     {
@@ -40,8 +37,9 @@ class WebSocketServer extends WebSocket
     }
 
     /**
-     * @param swoole_server $server
+     * @param swoole_server          $server
      * @param swoole_websocket_frame $frame
+     *
      * @return mixed
      */
     public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
@@ -62,6 +60,7 @@ class WebSocketServer extends WebSocket
             $response = app()->handleException($e);
         }
         $server->push($frame->fd, (string) $response->getBody());
+
         return 0;
     }
 }

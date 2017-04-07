@@ -6,17 +6,14 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-
-
 use FastD\Application;
 use FastD\Test\TestCase;
-
 
 class IndexControllerTest extends TestCase
 {
     public function createApplication()
     {
-        return new Application(getcwd() . '/tests');
+        return new Application(getcwd().'/tests');
     }
 
     public function testSayHello()

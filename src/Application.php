@@ -24,8 +24,7 @@ use FastD\ServiceProvider\RouteServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Application
- * @package FastD
+ * Class Application.
  */
 class Application extends Container
 {
@@ -102,7 +101,7 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-            $config = load($this->path . '/config/app.php');
+            $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
             $this['time'] = new DateTime('now',
@@ -118,6 +117,7 @@ class Application extends Container
 
     /**
      * @param ServiceProviderInterface[] $services
+     *
      * @return void
      */
     protected function registerServicesProviders(array $services)
@@ -126,18 +126,20 @@ class Application extends Container
         $this->register(new RouteServiceProvider());
         $this->register(new LoggerServiceProvider());
         foreach ($services as $service) {
-            $this->register(new $service);
+            $this->register(new $service());
         }
     }
 
     /**
      * @param ServerRequestInterface $request
+     *
      * @return Response
      */
     public function handleRequest(ServerRequestInterface $request)
     {
         try {
             $this->add('request', $request);
+
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -154,6 +156,7 @@ class Application extends Container
 
     /**
      * @param Exception $e
+     *
      * @return Response
      */
     public function handleException($e)
@@ -161,27 +164,27 @@ class Application extends Container
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         $error = [
-            'msg' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => explode("\n", $e->getTraceAsString())
+            'msg'   => $e->getMessage(),
+            'code'  => $e->getCode(),
+            'file'  => $e->getFile(),
+            'line'  => $e->getLine(),
+            'trace' => explode("\n", $e->getTraceAsString()),
         ];
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 
-        logger()->addError(request()->getMethod() . ' ' . request()->getUri()->getPath(), [
+        logger()->addError(request()->getMethod().' '.request()->getUri()->getPath(), [
             'status' => $statusCode,
-            'get' => request()->getQueryParams(),
-            'post' => request()->getParsedBody(),
-            'ip' => function_exists('swoole_get_local_ip') ? get_local_ip() : 'unknown',
-            'error' => $error,
+            'get'    => request()->getQueryParams(),
+            'post'   => request()->getParsedBody(),
+            'ip'     => function_exists('swoole_get_local_ip') ? get_local_ip() : 'unknown',
+            'error'  => $error,
         ]);
 
         return json('dev' === env('env') ? $error : [
-            'msg' => $error['msg'],
+            'msg'  => $error['msg'],
             'code' => $error['code'],
         ], $statusCode);
     }

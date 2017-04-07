@@ -9,7 +9,6 @@
 
 namespace FastD\Console;
 
-
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,15 +25,15 @@ class ControllerCreate extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $controllerPath = app()->getPath() . '/src/Controller';
+        $controllerPath = app()->getPath().'/src/Controller';
         if (!file_exists($controllerPath)) {
             mkdir($controllerPath, 0755, true);
         }
 
-        $name = ucfirst($input->getArgument('name')) . 'Controller';
+        $name = ucfirst($input->getArgument('name')).'Controller';
         $content = $this->createControllerTemplate($name);
 
-        $controllerFile = $controllerPath . '/' . $name . '.php';
+        $controllerFile = $controllerPath.'/'.$name.'.php';
 
         if (file_exists($controllerFile)) {
             throw new \LogicException(sprintf('Controller %s is already exists', $name));

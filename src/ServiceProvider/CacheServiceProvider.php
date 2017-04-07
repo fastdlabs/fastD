@@ -9,20 +9,18 @@
 
 namespace FastD\ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Pool\CachePool;
 
-
 /**
- * Class CacheServiceProvider
- * @package FastD\ServiceProvider
+ * Class CacheServiceProvider.
  */
 class CacheServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)

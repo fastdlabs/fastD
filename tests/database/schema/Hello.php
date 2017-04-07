@@ -7,7 +7,7 @@ use Phinx\Db\Table;
 class Hello extends Migration
 {
     /**
-     * Set up database table schema
+     * Set up database table schema.
      */
     public function setUp()
     {
@@ -15,13 +15,12 @@ class Hello extends Migration
         $table
             ->addColumn('content', 'string')
             ->addColumn('user', 'string')
-            ->addColumn('created', 'datetime')
-        ;
+            ->addColumn('created', 'datetime');
+
         return $table;
     }
 
     public function dataSet(Table $table)
     {
-
     }
 }

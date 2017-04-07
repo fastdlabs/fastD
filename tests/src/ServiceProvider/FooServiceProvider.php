@@ -9,11 +9,11 @@
 
 namespace ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
-class Foo {
+class Foo
+{
     public $name = 'foo';
 }
 
@@ -21,6 +21,7 @@ class FooServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)
