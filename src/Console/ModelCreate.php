@@ -49,7 +49,7 @@ class ModelCreate extends Command
 
     protected function createModelTemplate($name)
     {
-        $table = str_replace('Model', '', $name);
+        $table = strtolower(str_replace('Model', '', $name));
         return <<<MODEL
 <?php
 

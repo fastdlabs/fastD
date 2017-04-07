@@ -12,6 +12,12 @@ $ mv composer.phar /usr/local/bin/composer
 $ chown +x /usr/local/bin/composer
 ```
 
+**国内镜像**
+
+```
+composer config -g repo.packagist composer https://packagist.phpcomposer.com
+```
+
 ##### 2 安装 Swoole 扩展
 
 ```
