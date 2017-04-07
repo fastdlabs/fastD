@@ -5,10 +5,11 @@
 * 统一文件命名，不影响操作
 * 新增 model:create 命令
 * 新增 controller:create 命令
-* 升级testing，增加dbunit，生产环境下增加 composer 选项 `--no-dev`
+* 升级 testing，增加 dbunit。生产环境下增加 composer 选项 `--no-dev`
 * 调整 seed:create 结构，由 up 方法改为 setUp，setUp 方法返回表对象，并新增 dataSet 方法
 * 调整 seed:create 命令生成位置
 * 新增 client 客户端命令
+* 更新文档
 
 ##### 3.1.0-beta1
 

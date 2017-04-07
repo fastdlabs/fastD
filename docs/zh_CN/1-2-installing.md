@@ -2,7 +2,9 @@
 
 > 如果使用浏览器访问入口，需要给项目配置虚拟域名，将路径指向项目的 web 目录
 
-推荐配合 Vagrant 虚拟机使用，能够更快适应开发环境。
+:bangbang:推荐配合 Vagrant 虚拟机使用，能够更快适应开发环境。
+
+### Linux 环境
 
 ##### 1 如果没有安装 Composer 
 
@@ -12,13 +14,17 @@ $ mv composer.phar /usr/local/bin/composer
 $ chown +x /usr/local/bin/composer
 ```
 
-**国内镜像**
+:soon:国内镜像，加速 composer 安装
 
 ```
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
+更多使用方式请前往: [Composer国内镜像](https://pkg.phpcomposer.com/)
+
 ##### 2 安装 Swoole 扩展
+
+:bangbang:推荐使用1.9.6以上版本
 
 ```
 $ pecl install swoole
@@ -30,11 +36,8 @@ $ pecl install swoole
 $ composer create-project "fastd/dobee" dobee -vvv 
 ```
 
-##### 4 启动服务器
 
-通过浏览器访问 PHP 内置 WEB 服务器或访问当前web目录
-
-**启动内置 Web 服务器**
+##### 4 启动内置 Web 服务器
 
 > 推荐在开发环境下使用，可脱离 Apache 和 Nginx，更易使用
 
@@ -44,14 +47,14 @@ $ php -S 127.0.0.1:9527 -t ./web
 $ curl http://127.0.0.1:9527/
 ```
 
-**启动 Swoole**
+##### 启动 Swoole 服务器
 
 ```php
 $ php bin/server start
 $ curl http://127.0.0.1:9527/
 ```
 
-### Windows 配置
+### Windows 环境
 
 因为 swoole 没有太多考虑 windows 环境，所以推荐使用虚拟机环境进行开发，Windows 仅支持传统 PHP 模式。
 
@@ -61,9 +64,7 @@ $ curl http://127.0.0.1:9527/
 $ composer create-project "fastd/dobee" dobee -vvv 
 ```
 
-##### 2 配置环境
-
-##### 2.1 PHP 内置 Web 服务器
+##### 2 PHP 内置 Web 服务器
 
 ```shell
 $ cd dobee
@@ -71,7 +72,7 @@ $ php -S 127.0.0.1:9527 -t ./web
 $ curl http://127.0.0.1:9527/
 ```
 
-##### 2.2 配置 apache 虚拟域名
+##### 3 配置 apache 虚拟域名
 
 修改 httpd.conf，开启 vhost.conf，添加虚拟与名到 vhost.conf 文件中，修改目录地址。
 
@@ -84,7 +85,7 @@ $ curl http://127.0.0.1:9527/
 
 映射本地 ip 到虚拟域名，修改 System32 下面的 hosts 文件
 
-##### 2.3 配置 nginx 配置
+##### 4 配置 nginx 配置
 
 ```
 server
@@ -105,7 +106,7 @@ server
 }
 ```
 
-##### 3 Nginx + Swoole 代理 (推荐使用 Linux 环境)
+### Nginx + Swoole 代理 (推荐使用 Linux 环境)
 
 ```
 server 
