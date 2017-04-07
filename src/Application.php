@@ -101,8 +101,8 @@ class Application extends Container
      */
     public function bootstrap()
     {
-        if (!$this->booted) {
-            $config = load($this->path . '/config/app.php');
+        if ( ! $this->booted) {
+            $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
             $this['datetime'] = new DateTime('now',
@@ -138,6 +138,7 @@ class Application extends Container
     {
         try {
             $this->add('request', $request);
+
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
             return $this->handleException($exception);
@@ -165,14 +166,14 @@ class Application extends Container
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-            'trace' => explode("\n", $e->getTraceAsString())
+            'trace' => explode("\n", $e->getTraceAsString()),
         ];
 
-        if (!array_key_exists($statusCode, Response::$statusTexts)) {
+        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 500;
         }
 
-        logger()->addError(request()->getMethod() . ' ' . request()->getUri()->getPath(), [
+        logger()->addError(request()->getMethod().' '.request()->getUri()->getPath(), [
             'status' => $statusCode,
             'get' => request()->getQueryParams(),
             'post' => request()->getParsedBody(),
