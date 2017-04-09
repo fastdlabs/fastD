@@ -30,8 +30,20 @@ class HelpersTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(cache()->getItem('hello')->isHit());
     }
 
-    public function testFunctionRoute()
+    public function testFunctionConfig()
     {
-        
+        $this->assertEquals('fast-d', config()->get('name'));
+        $this->assertArrayHasKey('database', config()->all());
+    }
+
+    public function testFunctionRequest()
+    {
+        $this->assertNotNull(request());
+    }
+
+    public function testFunctionDatabase()
+    {
+        $this->assertEquals('mysql', database()->info()['driver']);
+        $this->assertNotNull(database());
     }
 }
