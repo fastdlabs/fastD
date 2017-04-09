@@ -9,7 +9,6 @@
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
-use FastD\Http\RedirectResponse;
 use FastD\Http\Response;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
@@ -70,16 +69,6 @@ function json(array $content = [], $statusCode = Response::HTTP_OK, array $heade
     $headers['X-Version'] = Application::VERSION;
 
     return new JsonResponse($content, $statusCode, $headers);
-}
-
-/**
- * @param $url
- *
- * @return RedirectResponse
- */
-function redirect($url)
-{
-    return new RedirectResponse($url);
 }
 
 /**

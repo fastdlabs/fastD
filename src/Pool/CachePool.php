@@ -55,7 +55,7 @@ class CachePool implements PoolInterface
                     $this->caches[$name] = new $config['adapter'](
                         isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
                         isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
-                        isset($config['params']['directory']) ? $config['params']['directory'] : ''
+                        isset($config['params']['directory']) ? $config['params']['directory'] : app()->getPath().'/runtime/cache'
                     );
             }
         }

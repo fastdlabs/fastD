@@ -22,7 +22,8 @@ return [
      * Application logger path
      */
     'log' => [
-        \Monolog\Handler\StreamHandler::class, // 错误日志
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR],
+        [\Monolog\Handler\StreamHandler::class, 'testCase.log'],
     ],
 
     /*
@@ -43,20 +44,22 @@ return [
      * Http middleware
      */
     'middleware' => [
-        'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication([
-            'authenticator' => [
-                'class' => \FastD\BasicAuthenticate\PhpAuthenticator::class,
-                'params' => [
-                    'foo' => 'bar',
+        'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication(
+            [
+                'authenticator' => [
+                    'class' => \FastD\BasicAuthenticate\PhpAuthenticator::class,
+                    'params' => [
+                        'foo' => 'bar',
+                    ],
                 ],
-            ],
-            'response' => [
-                'class' => \FastD\Http\JsonResponse::class,
-                'data' => [
-                    'msg' => 'not allow access',
-                    'code' => 401,
+                'response' => [
+                    'class' => \FastD\Http\JsonResponse::class,
+                    'data' => [
+                        'msg' => 'not allow access',
+                        'code' => 401,
+                    ],
                 ],
-            ],
-        ]),
+            ]
+        ),
     ],
 ];

@@ -24,17 +24,17 @@ class LoggerServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $config = config();
         $logger = new Logger(app()->getName());
 
-        $logs = $config->get('log');
+        $logs = config()->get('log');
         $path = app()->getPath().'/runtime/logs';
 
         foreach ($logs as $logHandle) {
-            if (is_string($logHandle)) {
-                $logger->pushHandler(new $logHandle($path.'/error.log', Logger::WARNING));
-            } elseif ($logHandle instanceof HandlerInterface) {
-                $logger->pushHandler($logHandle);
+            list($handle, $name, $level) = array_pad($logHandle, 3, Logger::NOTICE);
+            if (is_string($handle)) {
+                $logger->pushHandler(new $handle($path.'/'.$name, $level));
+            } elseif ($handle instanceof HandlerInterface) {
+                $logger->pushHandler($handle);
             }
         }
 
