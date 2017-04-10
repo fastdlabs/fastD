@@ -119,6 +119,7 @@ class IndexController
         return json([
             'model' => get_class($model),
             'db' => $model->getDatabase()->info(),
+            'list' => $model->select(),
         ]);
     }
 

@@ -10,6 +10,7 @@
 namespace FastD\Pool;
 
 use Medoo\Medoo;
+use FastD\Model\Database;
 
 class DatabasePool implements PoolInterface
 {
@@ -36,13 +37,13 @@ class DatabasePool implements PoolInterface
     /**
      * @param $key
      *
-     * @return Medoo
+     * @return Database
      */
     public function getConnection($key)
     {
         if (!isset($this->connections[$key])) {
             $config = $this->config[$key];
-            $this->connections[$key] = new Medoo([
+            $this->connections[$key] = new Database([
                 'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
                 'database_name' => $config['name'],
                 'server' => $config['host'],

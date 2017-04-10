@@ -13,7 +13,7 @@ use FastD\Http\Response;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Routing\RouteCollection;
-use Medoo\Medoo;
+use FastD\Model\Database;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
@@ -92,7 +92,7 @@ function cache($key = 'default')
 /**
  * @param $key
  *
- * @return Medoo
+ * @return Database
  */
 function database($key = 'default')
 {

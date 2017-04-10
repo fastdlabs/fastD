@@ -9,30 +9,27 @@
 
 namespace FastD\Model;
 
-use Medoo\Medoo;
-
 /**
  * Class Model.
  */
 class Model
 {
     /**
-     * @var medoo
+     * @var Database
      */
     protected $db;
 
     /**
      * Model constructor.
-     *
-     * @param medoo $medoo
+     * @param Database $database
      */
-    public function __construct(Medoo $medoo)
+    public function __construct(Database $database)
     {
-        $this->db = $medoo;
+        $this->db = $database;
     }
 
     /**
-     * @return medoo
+     * @return Database
      */
     public function getDatabase()
     {
