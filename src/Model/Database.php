@@ -63,6 +63,7 @@ class Database extends Medoo
         if (false === $result) {
             $this->checkGoneAway();
         }
+
         return parent::query($query);
     }
 
@@ -76,6 +77,7 @@ class Database extends Medoo
         if (false === $result) {
             $this->checkGoneAway();
         }
+
         return parent::exec($query);
     }
 }

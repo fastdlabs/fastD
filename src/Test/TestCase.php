@@ -10,9 +10,11 @@
 namespace FastD\Test;
 
 use FastD\Application;
+use FastD\Http\Response;
 use FastD\Testing\WebTestCase;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
 use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class TestCase.
@@ -42,6 +44,26 @@ class TestCase extends WebTestCase
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @param array $params
+     * @param array $headers
+     * @return Response
+     */
+    public function handleRequest(ServerRequestInterface $request, array $params = [], array $headers = [])
+    {
+        if ('GET' == $request->getMethod()) {
+            $request->withQueryParams($params);
+        } else {
+            $request->withParsedBody($params);
+        }
+        foreach ($headers as $name => $header) {
+            $request->withAddedHeader($name, $header);
+        }
+
+        return $this->app->handleRequest($request);
+    }
+
+    /**
      * Returns the test database connection.
      *
      * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
@@ -49,7 +71,7 @@ class TestCase extends WebTestCase
     protected function getConnection()
     {
         $connection = env('connection');
-        if (!$connection) {
+        if ( ! $connection) {
             $connection = 'default';
         }
 
@@ -70,9 +92,13 @@ class TestCase extends WebTestCase
         foreach (glob($path) as $file) {
             $dataSet = load($file);
             $tableName = pathinfo($file, PATHINFO_FILENAME);
-            $composite->addDataSet(new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet([
-                $tableName => $dataSet,
-            ]));
+            $composite->addDataSet(
+                new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet(
+                    [
+                        $tableName => $dataSet,
+                    ]
+                )
+            );
         }
 
         return $composite;
