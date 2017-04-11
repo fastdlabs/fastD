@@ -30,6 +30,10 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 * [Dobee API Framework](https://github.com/JanHuang/dobee)
 
+### Periphery
+
+* [userd](https://github.com/JanHuang/userd)
+
 ### Support
 
 如果你在使用中遇到问题，请联系: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com). 微博: [编码侠](http://weibo.com/ecbboyjan)
