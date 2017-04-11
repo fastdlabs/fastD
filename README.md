@@ -33,6 +33,10 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 ### Periphery
 
 * [userd](https://github.com/JanHuang/userd)
+* [mediad](https://github.com/JanHuang/mediad)
+* [postsd](https://github.com/JanHuang/postsd)
+* [tagd](https://github.com/JanHuang/tagd)
+* [commentd](https://github.com/JanHuang/commentd)
 
 ### Support
 
