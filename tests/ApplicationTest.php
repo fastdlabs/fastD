@@ -25,25 +25,25 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
         $response = $app->handleRequest($this->createRequest('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar']), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
     public function testHandleDynamicRequest()
     {
         $app = $this->createApplication();
         $response = $app->handleRequest($this->createRequest('GET', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'bar']), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
         $response = $app->handleRequest($this->createRequest('GET', '/foo/foobar'));
-        $this->assertEquals(json_encode(['foo' => 'foobar']), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'foobar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
     public function testHandleMiddlewareRequest()
     {
         $app = $this->createApplication();
         $response = $app->handleRequest($this->createRequest('POST', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'middleware']), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'middleware'], TestCase::JSON_OPTION), $response->getBody());
         $response = $app->handleRequest($this->createRequest('POST', '/foo/not'));
-        $this->assertEquals(json_encode(['foo' => 'bar']), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
     public function testServiceProvider()
@@ -102,7 +102,7 @@ class ApplicationTest extends TestCase
         $this->assertEquals(json_encode([
             'msg' => 'not allow access',
             'code' => 401,
-        ]), (string) $response->getBody());
+        ], TestCase::JSON_OPTION), (string) $response->getBody());
 
         $response = $app->handleRequest($this->createRequest('GET', 'http://foo:bar@example.com/auth', [], null, [
             'PHP_AUTH_USER' => 'foo',
@@ -113,6 +113,6 @@ class ApplicationTest extends TestCase
 
         $this->assertEquals(json_encode([
             'foo' => 'bar',
-        ]), (string) $response->getBody());
+        ], TestCase::JSON_OPTION), (string) $response->getBody());
     }
 }

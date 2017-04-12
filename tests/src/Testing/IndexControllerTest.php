@@ -22,7 +22,7 @@ class IndexControllerTest extends TestCase
 
         $response = $this->app->handleRequest($request);
 
-        $this->response($response, json_encode(['foo' => 'bar']));
+        $this->json($response, ['foo' => 'bar']);
     }
 
     public function testDb()
