@@ -44,9 +44,6 @@ class SeedRun extends Migrate
     {
         parent::configure();
         $path = app()->getPath().'/database/schema';
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        }
         $this->setName('seed:run');
         $database = config()->get('database');
         $env = [];

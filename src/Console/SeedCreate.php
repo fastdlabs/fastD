@@ -21,9 +21,6 @@ class SeedCreate extends Create
     {
         parent::configure();
         $path = app()->getPath().'/database/schema';
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        }
         $this->setName('seed:create');
         $database = config()->get('database');
         $env = [];
@@ -65,15 +62,10 @@ class SeedCreate extends Create
         $this->bootstrap($input, $output);
 
         // get the migration path from the config
-        $path = $this->getMigrationPath($input, $output);
+        $path = $this->getConfig()->getMigrationPaths()[0];
 
         if (!file_exists($path)) {
-            $helper = $this->getHelper('question');
-            $question = $this->getCreateMigrationDirectoryQuestion();
-
-            if ($helper->ask($input, $output, $question)) {
-                mkdir($path, 0755, true);
-            }
+            mkdir($path, 0755, true);
         }
 
         $this->verifyMigrationDirectory($path);
