@@ -38,6 +38,11 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * [tagd](https://github.com/JanHuang/tagd)
 * [commentd](https://github.com/JanHuang/commentd)
 
+### Contributor
+
+* [yyz26371945](https://github.com/yyz26371945)
+* [RunnerLee](https://github.com/RunnerLee)
+
 ### Support
 
 如果你在使用中遇到问题，请联系: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com). 微博: [编码侠](http://weibo.com/ecbboyjan)
