@@ -9,12 +9,10 @@
 
 namespace FastD\Model;
 
-
 use Medoo\Medoo;
 
 /**
- * Class Database
- * @package Model
+ * Class Database.
  */
 class Database extends Medoo
 {
@@ -25,6 +23,7 @@ class Database extends Medoo
 
     /**
      * Database constructor.
+     *
      * @param null $options
      */
     public function __construct($options = null)
@@ -35,7 +34,7 @@ class Database extends Medoo
     }
 
     /**
-     * reconnect database
+     * reconnect database.
      */
     public function reconnect()
     {
@@ -43,18 +42,19 @@ class Database extends Medoo
     }
 
     /**
-     * check database gone away
+     * check database gone away.
      */
     public function checkGoneAway()
     {
-        list(, $code,) = $this->pdo->errorInfo();
-        if (2006 == $code || 2013 == $code) {
+        list(, $code) = $this->pdo->errorInfo();
+        if (2006 === $code || 2013 === $code) {
             $this->reconnect();
         }
     }
 
     /**
      * @param $query
+     *
      * @return bool|\PDOStatement
      */
     public function query($query)
@@ -70,6 +70,7 @@ class Database extends Medoo
 
     /**
      * @param $query
+     *
      * @return bool|int
      */
     public function exec($query)

@@ -21,6 +21,7 @@ class Model
 
     /**
      * Model constructor.
+     *
      * @param Database $database
      */
     public function __construct(Database $database)
