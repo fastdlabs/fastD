@@ -45,13 +45,14 @@ class TestCase extends WebTestCase
 
     /**
      * @param ServerRequestInterface $request
-     * @param array $params
-     * @param array $headers
+     * @param array                  $params
+     * @param array                  $headers
+     *
      * @return Response
      */
     public function handleRequest(ServerRequestInterface $request, array $params = [], array $headers = [])
     {
-        if ('GET' == $request->getMethod()) {
+        if ('GET' === $request->getMethod()) {
             $request->withQueryParams($params);
         } else {
             $request->withParsedBody($params);
@@ -71,7 +72,7 @@ class TestCase extends WebTestCase
     protected function getConnection()
     {
         $connection = env('connection');
-        if ( ! $connection) {
+        if (!$connection) {
             $connection = 'default';
         }
 

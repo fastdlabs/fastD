@@ -9,8 +9,8 @@
 
 namespace FastD\Pool;
 
-use Medoo\Medoo;
 use FastD\Model\Database;
+use Medoo\Medoo;
 
 class DatabasePool implements PoolInterface
 {
