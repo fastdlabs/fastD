@@ -32,12 +32,7 @@ class TestCase extends WebTestCase
     public function setUp()
     {
         $this->app = $this->createApplication();
-        null != $this->getConnection() && parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        null != $this->getConnection() && parent::tearDown();
+        parent::setUp();
     }
 
     /**
