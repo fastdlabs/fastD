@@ -18,9 +18,6 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\ServiceProvider\LoggerServiceProvider;
-use FastD\ServiceProvider\RouteServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
