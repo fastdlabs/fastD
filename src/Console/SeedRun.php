@@ -40,11 +40,9 @@ class SeedRun extends Migrate
         }
     }
 
-    public function configure()
+    public function getConfig()
     {
-        parent::configure();
         $path = app()->getPath().'/database/schema';
-        $this->setName('seed:run');
         $database = config()->get('database');
         $env = [];
         $keys = array_keys($database);
@@ -60,19 +58,24 @@ class SeedRun extends Migrate
                 'charset' => config()->get('database.'.$name.'.charset', 'utf8'),
             ];
         }
-        $this->setConfig(new MConfig(array(
+        return new MConfig(array(
             'paths' => array(
-                'migrations' => [
-                    $path
-                ],
-                'seeds' => [
-                    $path
-                ],
+                'migrations' => $path,
+                'seeds' => $path,
             ),
             'environments' => array_merge([
                 'default_database' => $default,
             ], $env),
-        )));
+        ));
+    }
+
+    public function configure()
+    {
+        parent::configure();
+
+        $this->setName('seed:run');
+
+        $this->setConfig($this->getConfig());
     }
 
     /**

@@ -17,9 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SeedCreate extends Create
 {
-    public function configure()
+    public function getConfig()
     {
-        parent::configure();
         $path = app()->getPath().'/database/schema';
         $this->setName('seed:create');
         $database = config()->get('database');
@@ -37,7 +36,8 @@ class SeedCreate extends Create
                 'charset' => config()->get('database.'.$name.'.charset', 'utf8'),
             ];
         }
-        $this->setConfig(new MConfig(array(
+
+        return new MConfig(array(
             'paths' => array(
                 'migrations' => $path,
                 'seeds' => $path,
@@ -45,7 +45,14 @@ class SeedCreate extends Create
             'environments' => array_merge([
                 'default_database' => $default,
             ], $env),
-        )));
+        ));
+    }
+
+    public function configure()
+    {
+        parent::configure();
+
+        $this->setConfig($this->getConfig());
     }
 
     /**
