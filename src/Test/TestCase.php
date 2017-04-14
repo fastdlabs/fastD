@@ -32,7 +32,12 @@ class TestCase extends WebTestCase
     public function setUp()
     {
         $this->app = $this->createApplication();
-        parent::setUp();
+        null != $this->getConnection() && parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        null != $this->getConnection() && parent::tearDown();
     }
 
     /**
@@ -45,8 +50,8 @@ class TestCase extends WebTestCase
 
     /**
      * @param ServerRequestInterface $request
-     * @param array                  $params
-     * @param array                  $headers
+     * @param array $params
+     * @param array $headers
      *
      * @return Response
      */
@@ -71,12 +76,16 @@ class TestCase extends WebTestCase
      */
     protected function getConnection()
     {
-        $connection = env('connection');
-        if (!$connection) {
-            $connection = 'default';
-        }
+        try {
+            $connection = env('connection');
+            if ( ! $connection) {
+                $connection = 'default';
+            }
 
-        return $this->createDefaultDBConnection(database($connection)->pdo);
+            return $this->createDefaultDBConnection(database($connection)->pdo);
+        } catch (\Exception $exception) {
+            return null;
+        }
     }
 
     /**
