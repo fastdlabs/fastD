@@ -117,9 +117,6 @@ class Application extends Container
      */
     protected function registerServicesProviders(array $services)
     {
-        $this->register(new ConfigServiceProvider());
-        $this->register(new RouteServiceProvider());
-        $this->register(new LoggerServiceProvider());
         foreach ($services as $service) {
             $this->register(new $service());
         }
