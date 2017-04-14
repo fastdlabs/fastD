@@ -62,8 +62,12 @@ class SeedRun extends Migrate
         }
         $this->setConfig(new MConfig(array(
             'paths' => array(
-                'migrations' => $path,
-                'seeds' => $path,
+                'migrations' => [
+                    $path
+                ],
+                'seeds' => [
+                    $path
+                ],
             ),
             'environments' => array_merge([
                 'default_database' => $default,

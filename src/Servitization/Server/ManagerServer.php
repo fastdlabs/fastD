@@ -10,8 +10,8 @@
 namespace FastD\Servitization\Server;
 
 use FastD\Application;
-use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\TCP;
+use FastD\Servitization\OnWorkerStart;
 use swoole_server;
 
 /**
@@ -19,20 +19,7 @@ use swoole_server;
  */
 class ManagerServer extends TCP
 {
-    /**
-     * @param swoole_server $server
-     * @param int           $worker_id
-     */
-    public function onWorkerStart(swoole_server $server, $worker_id)
-    {
-        parent::onWorkerStart($server, $worker_id);
-
-        foreach (app() as $service) {
-            if ($service instanceof PoolInterface) {
-                $service->initPool();
-            }
-        }
-    }
+    use OnWorkerStart;
 
     /**
      * @param swoole_server $server

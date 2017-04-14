@@ -13,6 +13,7 @@ use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
 use FastD\Pool\PoolInterface;
 use FastD\Swoole\Server\UDP;
+use FastD\Servitization\OnWorkerStart;
 use swoole_server;
 
 /**
@@ -20,6 +21,8 @@ use swoole_server;
  */
 class UDPServer extends UDP
 {
+    use OnWorkerStart;
+
     /**
      * @param swoole_server $server
      * @param int           $worker_id

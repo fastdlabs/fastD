@@ -8,8 +8,8 @@
  */
 
 return [
-    'host' => 'udp://0.0.0.0:9527',
-    'class' => \FastD\Servitization\Server\UDPServer::class,
+    'host' => 'http://0.0.0.0:9527',
+    'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => __DIR__.'/../runtime/pid/'.app()->getName().'.pid',
         'worker_num' => 10,
@@ -19,14 +19,20 @@ return [
     ],
     'listeners' => [
         [
+            'class' => \FastD\Servitization\Server\UDPServer::class,
+            'host' => 'udp://0.0.0.0:9528',
+            'options' => [
+            ],
+        ],
+        [
             'class' => \FastD\Servitization\Server\TCPServer::class,
-            'host' => 'tcp://127.0.0.1:9528',
+            'host' => 'tcp://0.0.0.0:9529',
             'options' => [
             ],
         ],
         [
             'class' => \FastD\Servitization\Server\ManagerServer::class,
-            'host' => 'tcp://127.0.0.1:9529',
+            'host' => 'tcp://0.0.0.0:9530',
         ],
     ],
 ];
