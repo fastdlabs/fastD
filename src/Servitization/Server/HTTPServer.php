@@ -12,12 +12,11 @@ namespace FastD\Servitization\Server;
 use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
+use FastD\Servitization\OnWorkerStart;
 use FastD\Swoole\Server\HTTP;
 use Psr\Http\Message\ServerRequestInterface;
-use FastD\Servitization\OnWorkerStart;
 use swoole_http_request;
 use swoole_http_response;
-use swoole_server;
 
 /**
  * Class HTTPServer.

@@ -58,6 +58,7 @@ class SeedRun extends Migrate
                 'charset' => config()->get('database.'.$name.'.charset', 'utf8'),
             ];
         }
+
         return new MConfig(array(
             'paths' => array(
                 'migrations' => $path,
