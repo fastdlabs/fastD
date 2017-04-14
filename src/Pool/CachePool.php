@@ -12,6 +12,10 @@ namespace FastD\Pool;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
+/**
+ * Class CachePool
+ * @package FastD\Pool
+ */
 class CachePool implements PoolInterface
 {
     /**
