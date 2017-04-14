@@ -13,8 +13,7 @@ use FastD\Pool\PoolInterface;
 use swoole_server;
 
 /**
- * Trait OnWorkerStart
- * @package FastD\Servitization
+ * Trait OnWorkerStart.
  */
 trait OnWorkerStart
 {

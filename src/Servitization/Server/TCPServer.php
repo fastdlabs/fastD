@@ -11,8 +11,8 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
-use FastD\Swoole\Server\TCP;
 use FastD\Servitization\OnWorkerStart;
+use FastD\Swoole\Server\TCP;
 use swoole_server;
 
 /**
