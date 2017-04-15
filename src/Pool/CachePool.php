@@ -38,24 +38,24 @@ class CachePool implements PoolInterface
     }
 
     /**
-     * @param $name
+     * @param $key
      *
      * @return AbstractAdapter
      */
-    public function getCache($name)
+    public function getCache($key)
     {
-        if (!isset($this->caches[$name])) {
-            $config = $this->config[$name];
+        if (!isset($this->caches[$key])) {
+            $config = $this->config[$key];
             switch ($config['adapter']) {
                 case RedisAdapter::class:
-                    $this->caches[$name] = new RedisAdapter(
+                    $this->caches[$key] = new RedisAdapter(
                         RedisAdapter::createConnection($config['params']['dsn']),
                         isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
                         isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
                     );
                     break;
                 default:
-                    $this->caches[$name] = new $config['adapter'](
+                    $this->caches[$key] = new $config['adapter'](
                         isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
                         isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
                         isset($config['params']['directory']) ? $config['params']['directory'] : app()->getPath().'/runtime/cache'
@@ -63,7 +63,7 @@ class CachePool implements PoolInterface
             }
         }
 
-        return $this->caches[$name];
+        return $this->caches[$key];
     }
 
     /**

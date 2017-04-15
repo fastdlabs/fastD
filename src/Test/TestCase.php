@@ -54,8 +54,10 @@ class TestCase extends WebTestCase
     {
         if ('GET' === $request->getMethod()) {
             $request->withQueryParams($params);
-        } else {
+        } elseif ('POST' === $request->getMethod()) {
             $request->withParsedBody($params);
+        } else {
+            $request->getBody()->write(http_build_query($params));
         }
         foreach ($headers as $name => $header) {
             $request->withAddedHeader($name, $header);

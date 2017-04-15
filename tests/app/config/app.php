@@ -14,11 +14,6 @@ return [
     'name' => 'fast-d',
 
     /*
-     * Application timezone
-     */
-    'timezone' => 'PRC',
-
-    /*
      * Application logger path
      */
     'log' => [
@@ -27,10 +22,9 @@ return [
     ],
 
     /*
-     * Bootstrap service
+     * Bootstrap default service provider
      */
     'services' => [
-        \FastD\ServiceProvider\ConfigServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
         \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\DatabaseServiceProvider::class,

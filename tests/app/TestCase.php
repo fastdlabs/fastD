@@ -1,7 +1,7 @@
 <?php
+namespace app;
 
 use FastD\Application;
-use FastD\Http\ServerRequest;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -17,10 +17,5 @@ class TestCase extends \FastD\Test\TestCase
         $app = new Application(__DIR__);
 
         return $app;
-    }
-
-    public function createRequest($method, $path, array $header = [], \Psr\Http\Message\StreamInterface $body = null, array $server = [])
-    {
-        return new ServerRequest($method, $path, $header, $body, $server);
     }
 }

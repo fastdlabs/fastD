@@ -9,8 +9,6 @@
 
 namespace FastD;
 
-use DateTime;
-use DateTimeZone;
 use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
@@ -18,6 +16,7 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -98,11 +97,8 @@ class Application extends Container
             $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
-            $this['datetime'] = new DateTime('now',
-                new DateTimeZone($config['timezone'])
-            );
-            $this->add('config', new Config($config));
 
+            $this->add('config', new Config($config));
             $this->registerServicesProviders($config['services']);
             unset($config);
             $this->booted = true;
@@ -114,6 +110,7 @@ class Application extends Container
      */
     protected function registerServicesProviders(array $services)
     {
+        $this->register(new ConfigServiceProvider());
         foreach ($services as $service) {
             $this->register(new $service());
         }
