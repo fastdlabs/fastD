@@ -45,8 +45,8 @@ class TestCase extends WebTestCase
 
     /**
      * @param ServerRequestInterface $request
-     * @param array $params
-     * @param array $headers
+     * @param array                  $params
+     * @param array                  $headers
      *
      * @return Response
      */
@@ -73,7 +73,7 @@ class TestCase extends WebTestCase
     {
         try {
             $connection = env('connection');
-            if ( ! $connection) {
+            if (!$connection) {
                 $connection = 'default';
             }
 

@@ -13,8 +13,7 @@ use FastD\Model\Database;
 use LogicException;
 
 /**
- * Class DatabasePool
- * @package FastD\Pool
+ * Class DatabasePool.
  */
 class DatabasePool implements PoolInterface
 {
@@ -45,8 +44,8 @@ class DatabasePool implements PoolInterface
      */
     public function getConnection($key)
     {
-        if ( ! isset($this->connections[$key])) {
-            if ( ! isset($this->config[$key])) {
+        if (!isset($this->connections[$key])) {
+            if (!isset($this->config[$key])) {
                 throw new LogicException(sprintf('Database %s not set', $key));
             }
             $config = $this->config[$key];
