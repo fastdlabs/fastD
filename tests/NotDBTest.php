@@ -11,7 +11,7 @@ class NotDBTest extends TestCase
 {
     public function testNotDatabaseSetting()
     {
-        if ([] == config()->get('database')) {
+        if ([] === config()->get('database')) {
             $this->expectException(LogicException::class);
             database();
         }
