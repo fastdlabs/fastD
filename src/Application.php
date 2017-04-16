@@ -169,10 +169,7 @@ class Application extends Container
             'error' => $error,
         ]);
 
-        return json('dev' === env('env') ? $error : [
-            'msg' => $error['msg'],
-            'code' => $error['code'],
-        ], $statusCode);
+        return json($error, $statusCode);
     }
 
     public function run()

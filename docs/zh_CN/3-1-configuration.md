@@ -21,9 +21,9 @@
 
 应用配置则是整体核心配置的集合，包括时区，环境，日志，服务提供器，中间件等等，可以通过自定义 [服务提供器](3-8-service-provider.md) 来读取具体的配置内容。
 
-具体内容请查看: [app.php](../../tests/app/config/app.php)
+具体内容请查看: [app.php](../../tests/app-default/config/app.php)
 
-用户自定义配置可以设置 [config.php](../../tests/app/config/config.php)，此处配置项会合并到 app.php 配置中，因为不能出现重名配置项。
+用户自定义配置可以设置 [config.php](../../tests/app-default/config/config.php)，此处配置项会合并到 app.php 配置中，因为不能出现重名配置项。
 
 **完整的配置项**
 
@@ -120,7 +120,7 @@ return [
 
 ##### 自定义配置项
 
-[database.php](../../tests/app/config/database.php) 与 [cache.php](../../tests/app/config/cache.php) 是框架默认提供的扩展配置，由 [DatabaseServiceProvider](../../src/ServiceProvider/DatabaseServiceProvider.php) 与 [CacheServiceProvider](../../src/ServiceProvider/CacheServiceProvider.php) 进行具体处理。
+[database.php](../../tests/app-default/config/database.php) 与 [cache.php](../../tests/app-default/config/cache.php) 是框架默认提供的扩展配置，由 [DatabaseServiceProvider](../../src/ServiceProvider/DatabaseServiceProvider.php) 与 [CacheServiceProvider](../../src/ServiceProvider/CacheServiceProvider.php) 进行具体处理。
 
 其中 database.php 与 cache.php 虽说是框架默认提供的，但是他们均属于自定义服务提供器之一。
 

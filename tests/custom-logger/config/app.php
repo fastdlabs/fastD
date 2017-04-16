@@ -17,7 +17,7 @@ return [
      * Application logger path
      */
     'log' => [
-        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR],
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR, ''],
         [\Monolog\Handler\StreamHandler::class, 'testCase.log'],
     ],
 
