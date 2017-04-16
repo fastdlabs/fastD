@@ -75,7 +75,7 @@ return [
 
 服务器内置 Process 进程，在启动服务器的时候会自动拉起进程，通过 [Swoole::addProcess](http://wiki.swoole.com/wiki/page/390.html) 实现。
 
-配置依然是 [server.php](../../tests/app-default/config/server.php)。
+配置依然是 [server.php](../../tests/config/server.php)。
 
 ```php
 return [
@@ -92,7 +92,7 @@ return [
 ];
 ```
 
-重写 `FastD\Swoole\Process` 的 `handle` 方法，`handle` 为进程具体执行的事务。示例: [DemoProcessor](../../tests/app-default/src/Processor/DemoProcessor.php)
+重写 `FastD\Swoole\Process` 的 `handle` 方法，`handle` 为进程具体执行的事务。示例: [DemoProcessor](../../tests/src/Processor/DemoProcessor.php)
 
 ##### 完整的配置
 

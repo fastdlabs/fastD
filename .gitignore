@@ -1,5 +1,5 @@
 /vendor
 /.idea
-/tests/app-default/runtime
+/tests/runtime
 composer.lock
 tests/storage

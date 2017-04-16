@@ -6,8 +6,9 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+
+use FastD\TestCase;
 use FastD\Application;
-use FastD\Test\TestCase;
 
 class IndexControllerTest extends TestCase
 {

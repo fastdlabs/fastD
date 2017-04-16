@@ -7,7 +7,8 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-class HelpersTest extends PHPUnit_Framework_TestCase
+
+class HelpersTest extends \PHPUnit_Framework_TestCase
 {
     public function testFunctionApp()
     {

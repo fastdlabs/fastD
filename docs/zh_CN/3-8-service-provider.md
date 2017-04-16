@@ -43,6 +43,6 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 
 若果掌握了解更多容器相关知识，相信可以很好地使用该框架。
 
-如果需要尝试添加或者修改服务提供器，可以参考 [DatabaseServiceProvider](../../src/ServiceProvider/DatabaseServiceProvider.php), [database.php](../../tests/app-default/config/database.php), [app.php](../../tests/app-default/config/app.php)
+如果需要尝试添加或者修改服务提供器，可以参考 [DatabaseServiceProvider](../../src/ServiceProvider/DatabaseServiceProvider.php), [database.php](../../tests/config/database.php), [app.php](../../tests/config/app.php)
 
 下一节: [Swoole服务器](3-9-swoole-server.md)

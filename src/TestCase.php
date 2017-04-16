@@ -7,11 +7,12 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Test;
+namespace FastD;
 
-use FastD\Application;
 use FastD\Http\Response;
 use FastD\Testing\WebTestCase;
+use PHPUnit_Extensions_Database_DataSet_ArrayDataSet;
+use PHPUnit_Extensions_Database_DataSet_CompositeDataSet;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
 use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
 use Psr\Http\Message\ServerRequestInterface;
@@ -94,13 +95,13 @@ class TestCase extends WebTestCase
     {
         $path = app()->getPath().'/database/dataset/*';
 
-        $composite = new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+        $composite = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
 
         foreach (glob($path) as $file) {
             $dataSet = load($file);
             $tableName = pathinfo($file, PATHINFO_FILENAME);
             $composite->addDataSet(
-                new \PHPUnit_Extensions_Database_DataSet_ArrayDataSet(
+                new PHPUnit_Extensions_Database_DataSet_ArrayDataSet(
                     [
                         $tableName => $dataSet,
                     ]

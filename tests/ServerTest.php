@@ -6,6 +6,7 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+
 use FastD\Server;
 
 class ServerTest extends TestCase

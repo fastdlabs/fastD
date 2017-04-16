@@ -21,6 +21,12 @@ abstract class Migration extends AbstractMigration
     {
         $table = $this->setUp();
         if (!$table->exists()) {
+            if (!$table->hasColumn('created')) {
+                $table->addColumn('created', 'datetime');
+            }
+            if (!$table->hasColumn('updated')) {
+                $table->addColumn('updated', 'datetime');
+            }
             $table->create();
         }
         $this->dataSet($table);

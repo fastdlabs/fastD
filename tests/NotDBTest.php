@@ -7,6 +7,7 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+
 class NotDBTest extends TestCase
 {
     public function testNotDatabaseSetting()

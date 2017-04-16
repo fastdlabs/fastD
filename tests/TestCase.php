@@ -1,5 +1,4 @@
 <?php
-namespace app;
 
 use FastD\Application;
 
@@ -10,7 +9,7 @@ use FastD\Application;
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-class TestCase extends \FastD\Test\TestCase
+class TestCase extends \FastD\TestCase
 {
     public function createApplication()
     {
