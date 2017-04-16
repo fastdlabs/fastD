@@ -64,7 +64,19 @@
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
-- [ ] [RPC服务](4-2-microservice.md)
+- [ ] --[RPC服务](4-2-microservice.md)--
+- [ ] FastD 与 ELK
+- [ ] FastD 与 QConf
+- [ ] FastD 与服务化
+
+周边开源
+--------
+
+- [ ] [UserD](https://github.com/JanHuang/userd) 开发中...
+- [ ] [MediaD](https://github.com/JanHuang/mediad) 开发中...
+- [ ] [PostsD](https://github.com/JanHuang/postsd) 开发中...
+- [ ] [TagD](https://github.com/JanHuang/tagd) 开发中...
+- [ ] [CommentD](https://github.com/JanHuang/commentd) 开发中...
 
 ### Support
 

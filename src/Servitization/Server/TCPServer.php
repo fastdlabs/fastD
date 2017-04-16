@@ -49,7 +49,7 @@ class TCPServer extends TCP
         try {
             $response = app()->handleRequest($request);
         } catch (\Exception $e) {
-            $response = app()->handleException($e);
+            $response = app()->handleException($request, $e);
         }
         $server->send($fd, (string) $response->getBody());
 

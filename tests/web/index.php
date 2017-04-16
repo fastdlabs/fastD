@@ -10,6 +10,6 @@ include __DIR__.'/../../vendor/autoload.php';
 
 use FastD\Application;
 
-$app = new Application(__DIR__.'/tests');
+$app = new Application(__DIR__.'/../../tests');
 
 $app->run();

@@ -19,8 +19,6 @@ use swoole_server;
  */
 class ManagerServer extends TCP
 {
-    use OnWorkerStart;
-
     /**
      * @param swoole_server $server
      * @param $fd
