@@ -10,7 +10,6 @@
 namespace FastD\Servitization\Server;
 
 use FastD\Application;
-use FastD\Servitization\OnWorkerStart;
 use FastD\Swoole\Server\TCP;
 use swoole_server;
 

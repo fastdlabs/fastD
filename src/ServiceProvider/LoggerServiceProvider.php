@@ -12,7 +12,6 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 
 /**

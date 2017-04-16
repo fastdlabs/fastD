@@ -192,7 +192,6 @@ class Application extends Container
     public function shutdown(RequestInterface $request, ResponseInterface $response)
     {
         logger()->info($request->getMethod().' '.request()->getUri()->getPath(), [
-            'ip' => get_local_ip(),
             'status' => $response->getStatusCode(),
             'get' => request()->getQueryParams(),
             'post' => request()->getParsedBody(),
