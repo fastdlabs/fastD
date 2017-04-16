@@ -21,6 +21,7 @@ class IndexController
 {
     /**
      * @param ServerRequest $request
+     *
      * @return JsonResponse
      */
     public function welcome(ServerRequest $request)

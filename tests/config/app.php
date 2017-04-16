@@ -21,7 +21,7 @@ return [
         [\Monolog\Handler\StreamHandler::class, 'access.log', \Monolog\Logger::INFO],
     ],
 
-    /**
+    /*
      * Exception handle
      */
     'exception' => [

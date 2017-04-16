@@ -143,7 +143,7 @@ class Application extends Container
 
     /**
      * @param RequestInterface $request
-     * @param Exception $e
+     * @param Exception        $e
      *
      * @return Http\JsonResponse
      */
@@ -185,8 +185,9 @@ class Application extends Container
     }
 
     /**
-     * @param RequestInterface $request
+     * @param RequestInterface  $request
      * @param ResponseInterface $response
+     *
      * @return int
      */
     public function shutdown(RequestInterface $request, ResponseInterface $response)

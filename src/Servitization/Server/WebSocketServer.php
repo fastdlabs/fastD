@@ -48,6 +48,7 @@ class WebSocketServer extends WebSocket
         }
         $server->push($frame->fd, (string) $response->getBody());
         app()->shutdown($request, $response);
+
         return 0;
     }
 }
