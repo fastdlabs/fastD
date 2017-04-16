@@ -11,7 +11,6 @@ namespace FastD\Servitization\Server;
 
 use FastD\Http\ServerRequest;
 use FastD\Packet\Json;
-use FastD\Pool\PoolInterface;
 use FastD\Servitization\OnWorkerStart;
 use FastD\Swoole\Server\UDP;
 use swoole_server;
