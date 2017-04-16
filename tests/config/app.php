@@ -21,6 +21,21 @@ return [
         [\Monolog\Handler\StreamHandler::class, 'testCase.log', \Monolog\Logger::INFO],
     ],
 
+    /**
+     * Exception handle
+     */
+    'exception' => [
+        'handle' => function (Exception $e) {
+            return [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ];
+        },
+    ],
+
     /*
      * Bootstrap default service provider
      */

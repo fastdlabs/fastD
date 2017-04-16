@@ -2,4 +2,3 @@
 /.idea
 /tests/runtime
 composer.lock
-tests/storage

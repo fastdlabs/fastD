@@ -23,25 +23,25 @@ class ApplicationTest extends TestCase
     public function testHandleRequest()
     {
         $app = $this->createApplication();
-        $response = $app->handleRequest($this->createRequest('GET', '/'));
+        $response = $app->handleRequest($this->request('GET', '/'));
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
     public function testHandleDynamicRequest()
     {
         $app = $this->createApplication();
-        $response = $app->handleRequest($this->createRequest('GET', '/foo/bar'));
+        $response = $app->handleRequest($this->request('GET', '/foo/bar'));
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
-        $response = $app->handleRequest($this->createRequest('GET', '/foo/foobar'));
+        $response = $app->handleRequest($this->request('GET', '/foo/foobar'));
         $this->assertEquals(json_encode(['foo' => 'foobar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
     public function testHandleMiddlewareRequest()
     {
         $app = $this->createApplication();
-        $response = $app->handleRequest($this->createRequest('POST', '/foo/bar'));
+        $response = $app->handleRequest($this->request('POST', '/foo/bar'));
         $this->assertEquals(json_encode(['foo' => 'middleware'], TestCase::JSON_OPTION), $response->getBody());
-        $response = $app->handleRequest($this->createRequest('POST', '/foo/not'));
+        $response = $app->handleRequest($this->request('POST', '/foo/not'));
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
@@ -63,11 +63,11 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $request = $this->createRequest('GET', '/');
+        $request = $this->request('GET', '/');
         $response = $app->handleRequest($request);
         $this->assertEquals(200, $response->getStatusCode());
 
-        $request = $this->createRequest('GET', '/not/found');
+        $request = $this->request('GET', '/not/found');
         $response = $app->handleRequest($request);
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
@@ -84,7 +84,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $response = $app->handleRequest($this->createRequest('GET', '/model'));
+        $response = $app->handleRequest($this->request('GET', '/model'));
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->isSuccessful($response);
@@ -94,7 +94,7 @@ class ApplicationTest extends TestCase
     {
         $app = $this->createApplication();
 
-        $response = $app->handleRequest($this->createRequest('GET', '/auth'));
+        $response = $app->handleRequest($this->request('GET', '/auth'));
 
         $this->assertEquals(401, $response->getStatusCode());
 
@@ -103,7 +103,7 @@ class ApplicationTest extends TestCase
             'code' => 401,
         ], TestCase::JSON_OPTION), (string) $response->getBody());
 
-        $response = $app->handleRequest($this->createRequest('GET', 'http://foo:bar@example.com/auth', [], null, [
+        $response = $app->handleRequest($this->request('GET', 'http://foo:bar@example.com/auth', [], null, [
             'PHP_AUTH_USER' => 'foo',
             'PHP_AUTH_PW' => 'bar',
         ]));

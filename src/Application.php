@@ -17,6 +17,8 @@ use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -123,12 +125,11 @@ class Application extends Container
      */
     public function handleRequest(ServerRequestInterface $request)
     {
+        $this->add('request', $request);
         try {
-            $this->add('request', $request);
-
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            return $this->handleException($exception);
+            return $this->handleException($request, $exception);
         }
     }
 
@@ -141,37 +142,37 @@ class Application extends Container
     }
 
     /**
+     * @param RequestInterface $request
      * @param Exception $e
      *
-     * @return Response
+     * @return Http\JsonResponse
      */
-    public function handleException($e)
+    public function handleException(RequestInterface $request, Exception $e)
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        $error = [
-            'msg' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => explode("\n", $e->getTraceAsString()),
-        ];
-
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
-            $statusCode = 500;
+            $statusCode = 502;
         }
 
-        logger()->addError(request()->getMethod().' '.request()->getUri()->getPath(), [
-            'status' => $statusCode,
+        $handle = config()->get('exception.handle');
+
+        $response = json($handle($e), $statusCode);
+
+        logger()->error($request->getMethod().' '.request()->getUri()->getPath(), [
+            'ip' => get_local_ip(),
+            'status' => $response->getStatusCode(),
             'get' => request()->getQueryParams(),
             'post' => request()->getParsedBody(),
-            'ip' => function_exists('swoole_get_local_ip') ? get_local_ip() : 'unknown',
-            'error' => $error,
+            'trace' => explode("\n", $e->getTraceAsString()),
         ]);
 
-        return json($error, $statusCode);
+        return $response;
     }
 
+    /**
+     * @return int
+     */
     public function run()
     {
         $request = ServerRequest::createServerRequestFromGlobals();
@@ -179,5 +180,24 @@ class Application extends Container
         $response = $this->handleRequest($request);
 
         $this->handleResponse($response);
+
+        return $this->shutdown($request, $response);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return int
+     */
+    public function shutdown(RequestInterface $request, ResponseInterface $response)
+    {
+        logger()->info($request->getMethod().' '.request()->getUri()->getPath(), [
+            'ip' => get_local_ip(),
+            'status' => $response->getStatusCode(),
+            'get' => request()->getQueryParams(),
+            'post' => request()->getParsedBody(),
+        ]);
+
+        return 0;
     }
 }

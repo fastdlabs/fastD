@@ -23,13 +23,13 @@ class IndexControllerTest extends TestCase
 
         $response = $this->app->handleRequest($request);
 
-        $this->json($response, ['foo' => 'bar']);
+        $this->equalsJson($response, ['foo' => 'bar']);
     }
 
     public function testDb()
     {
         $response = $this->app->handleRequest($this->request('GET', '/db'));
 
-        $this->status($response, 200);
+        $this->equalsStatus($response, 200);
     }
 }
