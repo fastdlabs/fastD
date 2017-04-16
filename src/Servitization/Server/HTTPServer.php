@@ -47,6 +47,7 @@ class HTTPServer extends HTTP
 
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
+        app()->shutdown($request, $response);
     }
 
     /**

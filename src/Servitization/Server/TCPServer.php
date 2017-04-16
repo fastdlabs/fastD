@@ -52,7 +52,7 @@ class TCPServer extends TCP
             $response = app()->handleException($request, $e);
         }
         $server->send($fd, (string) $response->getBody());
-
+        app()->shutdown($request, $response);
         return 0;
     }
 }

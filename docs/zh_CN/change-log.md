@@ -3,6 +3,7 @@
 ##### 3.1.0 release candidate 2
 
 * 增强日志配置，添加增加第4个参数，意为自定义日志格式，默认为空，实现原理: [点击](2-5-exception-logger-handling.md)
+* 增加错误输出配置，可以在生产环境隐藏 trace 输出
 * 修改单元测试命名空间，由 `FastD\Test\TestCase` 改为 `FastD\TestCase`
 * 新增增加应用 `shutdown` 方法，主要为了后期日志处理，统计埋点。
 * 更新文档
