@@ -12,16 +12,12 @@ class NotDBTest extends FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__ . '/app/default');
+        $app = new Application(__DIR__ . '/app/no-database');
 
         return $app;
     }
 
     public function testNotDatabaseSetting()
     {
-        if ([] === config()->get('database')) {
-            $this->expectException(LogicException::class);
-            database();
-        }
     }
 }

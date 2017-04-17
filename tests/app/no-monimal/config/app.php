@@ -27,9 +27,6 @@ return [
             return [
                 'msg' => $e->getMessage(),
                 'code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => explode("\n", $e->getTraceAsString()),
             ];
         },
     ],
@@ -39,9 +36,6 @@ return [
      */
     'services' => [
         \FastD\ServiceProvider\RouteServiceProvider::class,
-        \FastD\ServiceProvider\LoggerServiceProvider::class,
-        \FastD\ServiceProvider\DatabaseServiceProvider::class,
-        \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
 
     /*

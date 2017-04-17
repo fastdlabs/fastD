@@ -7,5 +7,10 @@
  * @see      http://www.fast-d.cn/
  */
 
-return [
-];
+use FastD\Pool\DatabasePool;
+
+class DatabasePoolTest extends PHPUnit_Framework_TestCase
+{
+    public function testPool()
+    {}
+}

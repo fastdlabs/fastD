@@ -22,4 +22,9 @@ class NoLoggerTest extends TestCase
     {
         $this->assertEquals('fast-d', $this->app->getName());
     }
+
+    public function testLogger()
+    {
+        $this->assertEquals('fast-d', logger()->getName());
+    }
 }
