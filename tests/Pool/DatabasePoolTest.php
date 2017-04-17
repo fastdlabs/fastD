@@ -6,7 +6,6 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-
 use FastD\Pool\DatabasePool;
 
 class DatabasePoolTest extends PHPUnit_Framework_TestCase
@@ -37,7 +36,7 @@ class DatabasePoolTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function testGetNotExistsConnection()
     {

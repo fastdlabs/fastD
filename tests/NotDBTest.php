@@ -1,4 +1,5 @@
 <?php
+
 use FastD\Application;
 use ServiceProvider\FooServiceProvider;
 
@@ -49,7 +50,7 @@ class NotDBTest extends FastD\TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function testCacheServiceProvider()
     {
@@ -66,7 +67,7 @@ class NotDBTest extends FastD\TestCase
     {
         $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
-        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/error.log'));
+        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
 
     public function testHandleResponse()
@@ -82,8 +83,8 @@ class NotDBTest extends FastD\TestCase
     public function testApplicationShutdown()
     {
         $this->app->shutdown($this->request('GET', '/'), json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]));
-        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/access.log'));
+        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/access.log'));
     }
 }

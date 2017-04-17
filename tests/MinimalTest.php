@@ -1,7 +1,7 @@
 <?php
+
 use FastD\Application;
 use ServiceProvider\FooServiceProvider;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -59,7 +59,7 @@ class MinimalTest extends \FastD\TestCase
     {
         $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
-        $this->assertFalse(file_exists(app()->getPath() . '/runtime/logs/error.log'));
+        $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
 
     /**
@@ -91,8 +91,8 @@ class MinimalTest extends \FastD\TestCase
     public function testApplicationShutdown()
     {
         $this->app->shutdown($this->request('GET', '/'), json([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]));
-        $this->assertFalse(file_exists(app()->getPath() . '/runtime/logs/access.log'));
+        $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/access.log'));
     }
 }

@@ -13,7 +13,7 @@ class IndexControllerTest extends TestCase
 {
     public function createApplication()
     {
-        return new Application(__DIR__ . '/../../default');
+        return new Application(__DIR__.'/../../default');
     }
 
     public function testSayHello()
@@ -32,7 +32,6 @@ class IndexControllerTest extends TestCase
         $this->equalsStatus($response, 200);
     }
 
-
     public function testHandleDynamicRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/foo/bar'));
@@ -48,8 +47,6 @@ class IndexControllerTest extends TestCase
         $response = $this->app->handleRequest($this->request('POST', '/foo/not'));
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
-
-
 
     public function testModel()
     {

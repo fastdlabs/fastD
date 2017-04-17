@@ -169,7 +169,8 @@ class Application extends Container
                 'line' => $e->getLine(),
                 'trace' => explode("\n", $e->getTraceAsString()),
             ]);
-        } catch (ServiceNotFoundException $e) {}
+        } catch (ServiceNotFoundException $e) {
+        }
 
         return $response;
     }
@@ -189,8 +190,8 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface  $request
-     * @param ResponseInterface $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface      $response
      *
      * @return int
      */
@@ -203,8 +204,10 @@ class Application extends Container
                 'get' => $request->getQueryParams(),
                 'post' => $request->getParsedBody(),
             ]);
+
             return 0;
-        } catch (ServiceNotFoundException $e) {}
+        } catch (ServiceNotFoundException $e) {
+        }
 
         return 0;
     }
