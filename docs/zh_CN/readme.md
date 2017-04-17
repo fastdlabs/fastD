@@ -67,6 +67,7 @@
 - [ ] --[RPC服务](4-2-microservice.md)--
 - [ ] [FastD 与 LogStash](4-3-fastd-logstash.md) (未开放)
 - [ ] [FastD 与 QConf](4-4-fastd-qconf.md) (未开放)
+- [ ] [FastD 与 LogViewer](4-5-fastd-log-viewer.md) (未开放)
 - [ ] FastD 服务化
 - [ ] FastD 管理
 

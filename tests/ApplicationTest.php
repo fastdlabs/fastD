@@ -48,7 +48,6 @@ class ApplicationTest extends TestCase
         $request = $this->request('GET', '/not/found');
         $response = $this->app->handleRequest($request);
         $this->assertEquals(404, $response->getStatusCode());
-//        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
 
     public function testCacheServiceProvider()
@@ -62,52 +61,26 @@ class ApplicationTest extends TestCase
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
     }
 
-    public function testHandleDynamicRequest()
+    public function testHandleException()
     {
-        $response = $this->app->handleRequest($this->request('GET', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
-        $response = $this->app->handleRequest($this->request('GET', '/foo/foobar'));
-        $this->assertEquals(json_encode(['foo' => 'foobar'], TestCase::JSON_OPTION), $response->getBody());
+        $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
+        $this->equalsStatus($response, 502);
     }
 
-    public function testHandleMiddlewareRequest()
+    public function testHandleResponse()
     {
-        $response = $this->app->handleRequest($this->request('POST', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'middleware'], TestCase::JSON_OPTION), $response->getBody());
-        $response = $this->app->handleRequest($this->request('POST', '/foo/not'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
-    }
-
-
-
-    public function testModel()
-    {
-        $response = $this->app->handleRequest($this->request('GET', '/model'));
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->isSuccessful($response);
-    }
-
-    public function testAuth()
-    {
-        $response = $this->app->handleRequest($this->request('GET', '/auth'));
-
-        $this->assertEquals(401, $response->getStatusCode());
-
-        $this->assertEquals(json_encode([
-            'msg' => 'not allow access',
-            'code' => 401,
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
-
-        $response = $this->app->handleRequest($this->request('GET', 'http://foo:bar@example.com/auth', [
-            'PHP_AUTH_USER' => 'foo',
-            'PHP_AUTH_PW' => 'bar',
-        ]));
-
-        $this->assertEquals(200, $response->getStatusCode());
-
-        $this->assertEquals(json_encode([
+        $response = json([
             'foo' => 'bar',
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
+        ]);
+
+        $this->app->handleResponse($response);
+        $this->expectOutputString((string) $response->getBody());
+    }
+
+    public function testApplicationShutdown()
+    {
+        $this->app->shutdown($this->request('GET', '/'), json([
+            'foo' => 'bar'
+        ]));
     }
 }

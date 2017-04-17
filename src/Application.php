@@ -17,7 +17,6 @@ use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -159,11 +158,13 @@ class Application extends Container
 
         $response = json($handle($e), $statusCode);
 
-        logger()->error($request->getMethod().' '.request()->getUri()->getPath(), [
+        logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
             'ip' => get_local_ip(),
             'status' => $response->getStatusCode(),
             'get' => $request->getQueryParams(),
             'post' => $request->getParsedBody(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
             'trace' => explode("\n", $e->getTraceAsString()),
         ]);
 
@@ -192,7 +193,7 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        logger()->info($request->getMethod().' '.request()->getUri()->getPath(), [
+        logger()->info($request->getMethod().' '.$request->getUri()->getPath(), [
             'ip' => get_local_ip(),
             'status' => $response->getStatusCode(),
             'get' => $request->getQueryParams(),
