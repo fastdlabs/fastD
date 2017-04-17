@@ -24,9 +24,9 @@ class Database extends Medoo
     /**
      * Database constructor.
      *
-     * @param null $options
+     * @param array $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = null)
     {
         $this->config = $options;
 

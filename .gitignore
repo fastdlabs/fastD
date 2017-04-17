@@ -1,4 +1,4 @@
 /vendor
 /.idea
-/tests/runtime
+/tests/app/runtime
 composer.lock

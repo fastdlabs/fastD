@@ -21,11 +21,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "": "tests/src"
-        },
-        "files": [
-            "tests/TestCase.php"
-        ]
+            "": "tests/app/src"
+        }
     },
     "require": {
         "php": ">=5.6",

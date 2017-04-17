@@ -13,7 +13,7 @@ class IndexControllerTest extends TestCase
 {
     public function createApplication()
     {
-        return new Application(getcwd().'/tests');
+        return new Application(__DIR__ . '/../..');
     }
 
     public function testSayHello()

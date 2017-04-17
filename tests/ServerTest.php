@@ -6,10 +6,18 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+use FastD\Application;
 use FastD\Server;
 
-class ServerTest extends TestCase
+class ServerTest extends FastD\TestCase
 {
+    public function createApplication()
+    {
+        $app = new Application(__DIR__ . '/app');
+
+        return $app;
+    }
+
     public function createServer()
     {
         return new Server($this->createApplication());
