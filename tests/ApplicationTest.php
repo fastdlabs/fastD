@@ -15,12 +15,12 @@ class ApplicationTest extends TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__ . '/app');
+        $app = new Application(__DIR__.'/app/default');
 
         return $app;
     }
 
-    public function testApplicationInitialize()
+    public function testApplicationBootstrap()
     {
         $app = $this->createApplication();
 

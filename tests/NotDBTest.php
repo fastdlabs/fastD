@@ -12,7 +12,7 @@ class NotDBTest extends FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__ . '/app');
+        $app = new Application(__DIR__ . '/app/default');
 
         return $app;
     }
