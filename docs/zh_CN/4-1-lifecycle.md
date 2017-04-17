@@ -38,8 +38,6 @@
 
 # 架构与理念
 
-FastD 的理念是，核心在于整合各方的资源，作为内核，周边可以通过 ServiceProvider 进行组装，强化，每个 ServiceProvider 相当于零件，在不需要的时候可以拆卸，在需要的时候，可以组装。
-
-
+提供一个主干，让开发者灵活拆卸零件(ServiceProvider)，让项目，功能更加独立和灵活。
 
 下一节: [RPC服务](4-2-microservice.md)

@@ -35,3 +35,20 @@ return [
 2. 调整内置服务器命名空间及对象名, 
 
 3. 将目录 `Http/Controller` 改为 `Controller`，命名空间也改为 `Controller`
+
+4. 应用日志配置修改为数组: 
+
+```php
+<?php
+
+return [
+    // ...
+    'log' => [
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR],
+        [\Monolog\Handler\StreamHandler::class, 'access.log', \Monolog\Logger::INFO],
+    ],
+    // ...
+];
+```
+
+5. 单元测试基类命名空间修改 `FastD\Test\TestCase` => `FastD\TestCase`

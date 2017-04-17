@@ -4,6 +4,9 @@
 
 <p align="center">
 <a href="https://travis-ci.org/JanHuang/fastD"><img src="https://travis-ci.org/JanHuang/fastD.svg?branch=master" /></a>
+<a href="https://scrutinizer-ci.com/g/JanHuang/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/JanHuang/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
+<a href="https://scrutinizer-ci.com/g/JanHuang/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/JanHuang/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
+<a href="https://styleci.io/repos/35930132"><img src="https://styleci.io/repos/35930132/shield?branch=3.1" alt="StyleCI"></a>
 <a href="https://packagist.org/packages/fastd/fastd"><img src="https://poser.pugx.org/fastd/fastd/v/stable" /></a>
 <a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg" /></a>
 <a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D1.9.6-8892BF.svg" /></a>
@@ -32,6 +35,7 @@
 - [x] [关于 FastD](1-1-about-fastd.md)
 - [x] [安装 FastD](1-2-installing.md)
 - [x] [目录结构](1-3-directory-structure.md)
+- [x] [框架执行流程图](1-4-flow.md)
 
 
 基础入门
@@ -64,7 +68,7 @@
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
-- [ ] --[RPC服务](4-2-microservice.md)--
+- [ ] ~~[RPC服务](4-2-microservice.md)~~
 - [ ] [FastD 与 LogStash](4-3-fastd-logstash.md) (未开放)
 - [ ] [FastD 与 QConf](4-4-fastd-qconf.md) (未开放)
 - [ ] [FastD 与 LogViewer](4-5-fastd-log-viewer.md) (未开放)

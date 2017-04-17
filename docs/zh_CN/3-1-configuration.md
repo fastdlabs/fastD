@@ -35,27 +35,34 @@ return [
      */
     'name' => 'dobee',
 
-    /**
-     * Run environment
-     */
-    'env' => env('env'),
-
-    /**
-     * Application timezone
-     */
-    'timezone' => 'PRC',
-
-    /**
+    /*
      * Application logger path
      */
     'log' => [
-        'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR]
+    ],
+
+    /*
+     * Exception handle
+     */
+    'exception' => [
+        'handle' => function (Exception $e) {
+            return [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ];
+        },
     ],
 
     /**
      * Bootstrap service.
      */
     'providers' => [
+        \FastD\ServiceProvider\RouteServiceProvider::class,
+        \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
     ],
@@ -99,7 +106,7 @@ return [
 ```php
 <?php
 return [
-    'host' => 'http://0.0.0.0:9527',
+    'host' => 'http://'.get_local_ip().':9527',
     'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => '',
@@ -112,7 +119,7 @@ return [
     'listeners' => [
         [
             'class' => \FastD\Servitization\Server\TCPServer::class,
-            'host' => 'tcp://127.0.0.1:9528',
+            'host' => 'tcp://'.get_local_ip().':9528',
         ],
     ],
 ];

@@ -15,30 +15,27 @@
 
 FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性能有要求的 API 场景，并且灵活的扩展性可以让开发者们更容易地建造自己的服务 (基于Swoole)，
 
-### Requirements
+### 要求
 
 * PHP >= 5.6
 * ext-curl
 * ext-pdo
 * ext-swoole
 
-### Documentation
+### 文档
 
 * [中文文档](docs/zh_CN/readme.md)
 
-### Related Projects
+### 相关项目
 
 * [Dobee API Framework](https://github.com/JanHuang/dobee)
-
-### Peripheries
-
 * [userd](https://github.com/JanHuang/userd)
 * [mediad](https://github.com/JanHuang/mediad)
 * [postsd](https://github.com/JanHuang/postsd)
 * [tagd](https://github.com/JanHuang/tagd)
 * [commentd](https://github.com/JanHuang/commentd)
 
-### Contributors
+### 贡献
 
 * [yyz26371945](https://github.com/yyz26371945)
 * [RunnerLee](https://github.com/RunnerLee)
@@ -50,7 +47,7 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)。
 * 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)。
 
-### Support
+### 联系
 
 如果你在使用中遇到问题，请联系: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com). 微博: [编码侠](http://weibo.com/ecbboyjan)
 

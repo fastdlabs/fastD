@@ -2,7 +2,7 @@
 
 框架模式使用 [medoo](https://github.com/catfan/Medoo) 框架，提供最简便的操作。如果想使用 ORM 的朋友可以尝试添加 [ServiceProvider](3-8-service-provider.md)，作为框架的一个扩充。
 
-> 3.1 版本开始，支持二维数组定义
+> 3.1 版本开始，一维数组结构改为二维数组配置
 
 ### 基础 medoo 使用
 
@@ -57,13 +57,14 @@ $ php bin/console seed:create Hello
 <?php
 
 use FastD\Model\Migration;
+use Phinx\Db\Table;
 
 class Hello extends Migration
 {
     /**
      * Set up database table schema
      */
-    public function up()
+    public function setUp()
     {
         // create table
         $table = $this->table('demo');
@@ -71,10 +72,14 @@ class Hello extends Migration
             ->addColumn('created', 'datetime')
             ->create();
     }
+    
+    public function dataSet(Table $table) {
+        
+    }
 }
 ```
 
-通过实现 up 方法，添加数据库结构，方便表结构迁移。
+通过实现 setUp 方法，添加数据库结构，方便表结构迁移。
 
 编写完成初步的表结构，运行命令: 
 
@@ -83,5 +88,100 @@ $ php bin/console seed:run
 ```
 
 自动构建数据表，但是需要先手动创建数据库。具体操作可参考: [phinx](https://tsy12321.gitbooks.io/phinx-doc/writing-migrations-working-with-tables.html)
+
+### 连接池
+
+当实现 Swoole 服务的时候，数据库会启动一个连接池，在 `onWorkerStart` 启动时候连接数据库，并且在操作时候，检查连接是否断开，实现断线重连机制，断线重连注意事项: [MySQL断线重连](https://wiki.swoole.com/wiki/page/350.html)
+
+实现原理: 
+
+框架提供 `PoolInterface` 接口类，实现 `initPool` 方法。
+
+```php
+<?php
+
+namespace FastD\Pool;
+
+use FastD\Model\Database;
+
+/**
+ * Class DatabasePool.
+ */
+class DatabasePool implements PoolInterface
+{
+    /**
+     * @var Database[]
+     */
+    protected $connections = [];
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * Database constructor.
+     *
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param $key
+     *
+     * @return Database
+     */
+    public function getConnection($key)
+    {
+        if (!isset($this->connections[$key])) {
+            if (!isset($this->config[$key])) {
+                throw new \LogicException(sprintf('No set %s database', $key));
+            }
+            $config = $this->config[$key];
+            $this->connections[$key] = new Database(
+                [
+                    'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
+                    'database_name' => $config['name'],
+                    'server' => $config['host'],
+                    'username' => $config['user'],
+                    'password' => $config['pass'],
+                    'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
+                    'port' => isset($config['port']) ? $config['port'] : 3306,
+                    'prefix' => isset($config['prefix']) ? $config['prefix'] : '',
+                ]
+            );
+        }
+
+        return $this->connections[$key];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function initPool()
+    {
+        foreach ($this->config as $name => $config) {
+            $this->getConnection($name);
+        }
+    }
+}
+```
+
+```php
+<?php
+// ...
+public function onWorkerStart()
+{
+    foreach (app() as $service) {
+        if ($service instanceof FastD\Pool\PoolInterface) {
+            $service->initPool();
+        }
+    }
+}
+// ...
+```
 
 下一节: [缓存](3-4-cache.md)

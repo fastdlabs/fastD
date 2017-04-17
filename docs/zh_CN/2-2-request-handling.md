@@ -6,7 +6,7 @@ FastD 默认内置 HTTP、TCP、UDP、WebSocket 协议，由 [Swoole](http://www
 
 Http 请求处理来源于 [Http](https://github.com/JanHuang/http) 组件，由其提供强大的 Http 解析预处理，支持 Swoole.
 
-当用户发起一个 Http 请求的时候，Http 组件会将请求封装成一个 ServerRequestInterface 实现类，实现 PSR7 标准，并且将对象传递到控制器中。
+当用户发起一个 Http 请求的时候，[Http](https://github.com/JanHuang/http) 组件会将请求封装成一个 ServerRequestInterface 实现类，实现 [PSR7](http://www.php-fig.org/psr/psr-7/) 标准，并且将对象传递到控制器中。
 
 > 由于 Http 解析是通过 parse_url 进行解析的，因此您需要配置好你的虚拟域名(virtual-host)进行访问，否则会提示 route 404 not found
 

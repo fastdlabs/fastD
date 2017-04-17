@@ -11,24 +11,23 @@
 
 namespace FastD\ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Pool\DatabasePool;
 
+/**
+ * Class DatabaseServiceProvider.
+ */
 class DatabaseServiceProvider implements ServiceProviderInterface
 {
-    protected $db;
-
+    /**
+     * @param Container $container
+     */
     public function register(Container $container)
     {
-        $config = load(app()->getAppPath() . '/config/database.php');
+        $config = config()->get('database', []);
 
-        $container->add('database', function () use ($config) {
-            if (null === $this->db) {
-                $this->db = new \Medoo($config);
-            }
-            return $this->db;
-        });
+        $container->add('database', new DatabasePool($config));
 
         unset($config);
     }

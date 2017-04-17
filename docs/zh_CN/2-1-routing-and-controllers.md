@@ -125,7 +125,7 @@ class IndexController
 
 ##### 示例
 
-**config/app.php**
+**config/routes.php**
 
 ```php
 route()->get('/hello/{name}', 'IndexController@sayHello');

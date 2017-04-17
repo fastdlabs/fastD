@@ -1,6 +1,6 @@
 # 异常与日志处理
 
-框架中提供基础错误处理，没有实现 `set_error_handle` 也不建议，因为 Swoole 的特殊性，没有全局注册处理。可以集中式处理各种异常。日志存储在 `runtime/logs` 中。
+框架中提供基础错误处理，可以集中式处理各种异常。日志存储在 `runtime/logs` 中，可以通过业务需求，讲日志集中发送到一个日志服务器中，FastD 正在研发解决方案，敬请期待: [LogViewer](4-5-fastd-log-viewer.md)
 
 ### 异常
 
@@ -21,9 +21,44 @@ HTTP 404 Not Found
 }
 ```
 
+当我们框架执行出现异常时候，并且不希望将敏感信息输出到客户端，那么可以通过 `config/app.php` 进行配置屏蔽，如: 
+
+```php
+<?php
+
+return [
+    // ...
+    'exception' => [
+        'handle' => function (Exception $e) {
+            return [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                // 'file' => $e->getFile(),
+                // 'line' => $e->getLine(),
+                // 'trace' => explode("\n", $e->getTraceAsString()),
+            ];
+        },
+    ],
+    // ...
+];
+```
+
+实现原理非常简单: 
+
+```php
+<?php
+
+// ...
+$handle = config()->get('exception.handle');
+$response = json($handle($e), $statusCode);
+// ...
+```
+
 ### 日志处理
 
 日志服务依赖于 [monolog](https://github.com/Seldaek/monolog)，当应用程序发生异常时，程序会将异常信息记录在日志中。
+
+> 3.1 开始日志配置增强至数组处理，支持自定义日志格式和传输
 
 配置: 
 
@@ -31,9 +66,25 @@ HTTP 404 Not Found
 <?php
 return [
     'log' => [
-        'error' => \Monolog\Handler\StreamHandler::class, // 错误日志
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR]
     ],
 ];
+```
+
+数组接受 4 个参数，分别解析成: handler, log file, level, formatter
+
+实现原理: 
+
+```php
+<?php
+$logger = new \Monolog\Logger(app()->getName());
+list($handle, $name, $level, $format) = array_pad([\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR], 4, null);
+
+if (is_string($handle)) {
+    $handle = new $handle($path.'/'.$name, $level);
+}
+null !== $format && $handle->setFormatter(is_string($format) ? new \Monolog\Formatter\LineFormatter($format) : $format);
+$logger->pushHandler($handle);
 ```
 
 ### 集中式日志处理
@@ -46,7 +97,7 @@ return [
 <?php
 return [
     'log' => [
-        'error' => new \Monolog\Handler\SocketHandler('schema://host:port'),
+        [new \Monolog\Handler\SocketHandler('schema://host:port'), 'error.log', \Monolog\Logger::ERROR]
     ],
 ];
 ```
