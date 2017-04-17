@@ -65,6 +65,7 @@ class ApplicationTest extends TestCase
     {
         $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
+        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/error.log'));
     }
 
     public function testHandleResponse()
@@ -82,5 +83,6 @@ class ApplicationTest extends TestCase
         $this->app->shutdown($this->request('GET', '/'), json([
             'foo' => 'bar'
         ]));
+        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/access.log'));
     }
 }

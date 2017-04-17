@@ -1,7 +1,7 @@
 <?php
 use FastD\Application;
-use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -10,11 +10,11 @@ use ServiceProvider\FooServiceProvider;
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-class NoLoggerTest extends TestCase
+class MinimalTest extends \FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__.'/app/no-logger');
+        $app = new Application(__DIR__.'/app/minimal');
 
         return $app;
     }
@@ -49,14 +49,6 @@ class NoLoggerTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testCacheServiceProvider()
-    {
-        $item = cache()->getItem('cache');
-        $item->set('hello world');
-        cache()->save($item);
-        $this->assertEquals('hello world', $item->get());
-    }
-
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
@@ -68,6 +60,22 @@ class NoLoggerTest extends TestCase
         $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
         $this->assertFalse(file_exists(app()->getPath() . '/runtime/logs/error.log'));
+    }
+
+    /**
+     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+     */
+    public function testCache()
+    {
+        cache();
+    }
+
+    /**
+     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+     */
+    public function testDatabase()
+    {
+        database();
     }
 
     public function testHandleResponse()

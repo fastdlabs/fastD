@@ -44,6 +44,9 @@ class DatabasePool implements PoolInterface
     public function getConnection($key)
     {
         if (!isset($this->connections[$key])) {
+            if (!isset($this->config[$key])) {
+                throw new \LogicException(sprintf('No set %s database', $key));
+            }
             $config = $this->config[$key];
             $this->connections[$key] = new Database(
                 [

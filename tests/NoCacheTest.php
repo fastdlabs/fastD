@@ -1,6 +1,5 @@
 <?php
 use FastD\Application;
-use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
 
 /**
@@ -10,11 +9,11 @@ use ServiceProvider\FooServiceProvider;
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-class NoLoggerTest extends TestCase
+class NoCacheTest extends \FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__.'/app/no-logger');
+        $app = new Application(__DIR__.'/app/no-cache');
 
         return $app;
     }
@@ -49,12 +48,12 @@ class NoLoggerTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
+    /**
+     * @expectedException LogicException
+     */
     public function testCacheServiceProvider()
     {
-        $item = cache()->getItem('cache');
-        $item->set('hello world');
-        cache()->save($item);
-        $this->assertEquals('hello world', $item->get());
+        cache();
     }
 
     public function testHandleRequest()
@@ -67,7 +66,7 @@ class NoLoggerTest extends TestCase
     {
         $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
-        $this->assertFalse(file_exists(app()->getPath() . '/runtime/logs/error.log'));
+        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/error.log'));
     }
 
     public function testHandleResponse()
@@ -85,6 +84,6 @@ class NoLoggerTest extends TestCase
         $this->app->shutdown($this->request('GET', '/'), json([
             'foo' => 'bar'
         ]));
-        $this->assertFalse(file_exists(app()->getPath() . '/runtime/logs/access.log'));
+        $this->assertTrue(file_exists(app()->getPath() . '/runtime/logs/access.log'));
     }
 }

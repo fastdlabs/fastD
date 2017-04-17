@@ -12,6 +12,7 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 /**
@@ -26,11 +27,15 @@ class LoggerServiceProvider implements ServiceProviderInterface
     {
         $logger = new Logger(app()->getName());
 
-        $logs = config()->get('log');
+        $handlers = config()->get('log');
         $path = app()->getPath().'/runtime/logs';
 
-        foreach ($logs as $logHandle) {
-            list($handle, $name, $level, $format) = array_pad($logHandle, 4, null);
+        if (empty($handlers)) {
+            $logger->pushHandler(new StreamHandler('php://temp'), Logger::DEBUG);
+        }
+
+        foreach ($handlers as $handler) {
+            list($handle, $name, $level, $format) = array_pad($handler, 4, null);
             if (is_string($handle)) {
                 $handle = new $handle($path.'/'.$name, $level);
             }

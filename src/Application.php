@@ -12,6 +12,7 @@ namespace FastD;
 use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
+use FastD\Container\Exceptions\ServiceNotFoundException;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
@@ -157,16 +158,18 @@ class Application extends Container
         $handle = config()->get('exception.handle');
 
         $response = json($handle($e), $statusCode);
-
-        logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
-            'ip' => get_local_ip(),
-            'status' => $response->getStatusCode(),
-            'get' => $request->getQueryParams(),
-            'post' => $request->getParsedBody(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => explode("\n", $e->getTraceAsString()),
-        ]);
+        // minimal mode
+        try {
+            logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
+                'ip' => get_local_ip(),
+                'status' => $response->getStatusCode(),
+                'get' => $request->getQueryParams(),
+                'post' => $request->getParsedBody(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ]);
+        } catch (ServiceNotFoundException $e) {}
 
         return $response;
     }
@@ -193,12 +196,15 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        logger()->info($request->getMethod().' '.$request->getUri()->getPath(), [
-            'ip' => get_local_ip(),
-            'status' => $response->getStatusCode(),
-            'get' => $request->getQueryParams(),
-            'post' => $request->getParsedBody(),
-        ]);
+        try {
+            logger()->info($request->getMethod().' '.$request->getUri()->getPath(), [
+                'ip' => get_local_ip(),
+                'status' => $response->getStatusCode(),
+                'get' => $request->getQueryParams(),
+                'post' => $request->getParsedBody(),
+            ]);
+            return 0;
+        } catch (ServiceNotFoundException $e) {}
 
         return 0;
     }

@@ -45,6 +45,9 @@ class CachePool implements PoolInterface
     public function getCache($key)
     {
         if (!isset($this->caches[$key])) {
+            if (!isset($this->config[$key])) {
+                throw new \LogicException(sprintf('No set %s cache', $key));
+            }
             $config = $this->config[$key];
             switch ($config['adapter']) {
                 case RedisAdapter::class:
