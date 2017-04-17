@@ -142,12 +142,12 @@ class Application extends Container
     }
 
     /**
-     * @param RequestInterface $request
-     * @param Exception        $e
+     * @param ServerRequestInterface $request
+     * @param Exception              $e
      *
      * @return Http\JsonResponse
      */
-    public function handleException(RequestInterface $request, Exception $e)
+    public function handleException(ServerRequestInterface $request, Exception $e)
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
@@ -162,8 +162,8 @@ class Application extends Container
         logger()->error($request->getMethod().' '.request()->getUri()->getPath(), [
             'ip' => get_local_ip(),
             'status' => $response->getStatusCode(),
-            'get' => request()->getQueryParams(),
-            'post' => request()->getParsedBody(),
+            'get' => $request->getQueryParams(),
+            'post' => $request->getParsedBody(),
             'trace' => explode("\n", $e->getTraceAsString()),
         ]);
 
@@ -185,18 +185,18 @@ class Application extends Container
     }
 
     /**
-     * @param RequestInterface  $request
+     * @param ServerRequestInterface  $request
      * @param ResponseInterface $response
      *
      * @return int
      */
-    public function shutdown(RequestInterface $request, ResponseInterface $response)
+    public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
         logger()->info($request->getMethod().' '.request()->getUri()->getPath(), [
             'ip' => get_local_ip(),
             'status' => $response->getStatusCode(),
-            'get' => request()->getQueryParams(),
-            'post' => request()->getParsedBody(),
+            'get' => $request->getQueryParams(),
+            'post' => $request->getParsedBody(),
         ]);
 
         return 0;
