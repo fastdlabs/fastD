@@ -38,7 +38,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     public function testFunctionRequest()
     {
-//        $this->assertNull(request());
+        //        $this->assertNull(request());
     }
 
     public function testFunctionDatabase()
