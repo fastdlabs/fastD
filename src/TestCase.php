@@ -99,6 +99,9 @@ class TestCase extends WebTestCase
 
         foreach (glob($path) as $file) {
             $dataSet = load($file);
+            if (empty($dataSet)) {
+                $dataSet = [];
+            }
             $tableName = pathinfo($file, PATHINFO_FILENAME);
             $composite->addDataSet(
                 new PHPUnit_Extensions_Database_DataSet_ArrayDataSet(
