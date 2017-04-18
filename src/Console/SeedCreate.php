@@ -24,7 +24,7 @@ class SeedCreate extends Create
         $database = config()->get('database');
         $env = [];
         $keys = array_keys($database);
-        $default = $keys[0];
+        $default = isset($keys[0]) ? $keys[0] : '';
         foreach ($database as $name => $config) {
             $env[$name] = [
                 'adapter' => 'mysql',

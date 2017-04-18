@@ -1,5 +1,9 @@
 # 修改日志
 
+#### 3.1.0 release candidate 3
+
+* 修复单元测试数据重置 bug
+
 ##### 3.1.0 release candidate 2
 
 * 增强日志配置，添加增加第4个参数，意为自定义日志格式，默认为空，实现原理: [点击](2-5-exception-logger-handling.md)
