@@ -53,15 +53,20 @@ class TestCase extends WebTestCase
      */
     public function handleRequest(ServerRequestInterface $request, array $params = [], array $headers = [])
     {
-        if ('GET' === $request->getMethod()) {
-            $request->withQueryParams($params);
-        } elseif ('POST' === $request->getMethod()) {
-            $request->withParsedBody($params);
-        } else {
-            $request->getBody()->write(http_build_query($params));
+        if (!empty($params)) {
+            if ('GET' === $request->getMethod()) {
+                $request->withQueryParams($params);
+            } elseif ('POST' === $request->getMethod()) {
+                $request->withParsedBody($params);
+            } else {
+                $request->getBody()->write(http_build_query($params));
+            }
         }
-        foreach ($headers as $name => $header) {
-            $request->withAddedHeader($name, $header);
+
+        if (!empty($headers)) {
+            foreach ($headers as $name => $header) {
+                $request->withAddedHeader($name, $header);
+            }
         }
 
         return $this->app->handleRequest($request);
