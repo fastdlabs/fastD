@@ -165,6 +165,8 @@ class Application extends Container
                 'status' => $response->getStatusCode(),
                 'get' => $request->getQueryParams(),
                 'post' => $request->getParsedBody(),
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'trace' => explode("\n", $e->getTraceAsString()),
