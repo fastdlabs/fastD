@@ -14,12 +14,6 @@ return [
     'name' => 'fast-d',
 
     /*
-     * Application logger path
-     */
-    'log' => [
-    ],
-
-    /*
      * Exception handle
      */
     'exception' => [

@@ -10,6 +10,8 @@
 namespace FastD\Model;
 
 use Medoo\Medoo;
+use PDO;
+use PDOException;
 
 /**
  * Class Database.
@@ -31,6 +33,9 @@ class Database extends Medoo
         $this->config = $options;
 
         parent::__construct($this->config);
+
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
     /**
@@ -42,30 +47,21 @@ class Database extends Medoo
     }
 
     /**
-     * check database gone away.
-     */
-    public function checkGoneAway()
-    {
-        list(, $code) = $this->pdo->errorInfo();
-        if (2006 === $code || 2013 === $code) {
-            $this->reconnect();
-        }
-    }
-
-    /**
      * @param $query
      *
      * @return bool|\PDOStatement
      */
     public function query($query)
     {
-        $result = parent::query($query);
-        if (false === $result) {
-            $this->checkGoneAway();
-            $result = parent::query($query);
+        try {
+            return parent::query($query);
+        } catch (PDOException $e) {
+            if('HY000' !== $e->getCode()) {
+                throw $e;
+            }
+            $this->reconnect();
+            return parent::query($query);
         }
-
-        return $result;
     }
 
     /**
@@ -75,12 +71,14 @@ class Database extends Medoo
      */
     public function exec($query)
     {
-        $result = parent::exec($query);
-        if (false === $result) {
-            $this->checkGoneAway();
-            $result = parent::exec($query);
+        try {
+            return parent::exec($query);
+        } catch (PDOException $e) {
+            if('HY000' !== $e->getCode()) {
+                throw $e;
+            }
+            $this->reconnect();
+            return parent::exec($query);
         }
-
-        return $result;
     }
 }
