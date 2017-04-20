@@ -39,7 +39,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
             if (is_string($handle)) {
                 $handle = new $handle($path.'/'.$name, $level);
             }
-            null !== $format && $handle->setFormatter(is_string($format) ? new LineFormatter($format) : $format);
+            null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
             $logger->pushHandler($handle);
         }
 
