@@ -158,6 +158,7 @@ class Application extends Container
         $handle = config()->get('exception.handle');
 
         $response = json($handle($e), $statusCode);
+
         // minimal mode
         try {
             logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
@@ -209,8 +210,7 @@ class Application extends Container
 
             return 0;
         } catch (ServiceNotFoundException $e) {
+            return 0;
         }
-
-        return 0;
     }
 }
