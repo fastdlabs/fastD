@@ -6,10 +6,11 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-include __DIR__.'/../../../vendor/autoload.php';
 
-use FastD\Application;
+namespace Middleware;
 
-$app = new Application(__DIR__.'/../default');
 
-$app->run();
+class CacheMiddleware
+{
+
+}

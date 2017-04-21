@@ -73,5 +73,8 @@ return [
                 ],
             ]
         ),
+        'common.cache' => [
+            \FastD\Middleware\CacheMiddleware::class,
+        ]
     ],
 ];
