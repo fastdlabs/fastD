@@ -137,13 +137,12 @@ class Migration extends Manager
             $migrations = array();
 
             $version = date('Ymd');
-            $versionIncrementSeed = mt_rand(1000, 9999 - count($phpFiles));
 
-            foreach ($phpFiles as $filePath) {
+            foreach ($phpFiles as $index => $filePath) {
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $migration = new $class($version.(++$versionIncrementSeed), $this->getInput(), $this->getOutput());
+                $migration = new $class($version . str_pad($index, 4, '0', STR_PAD_LEFT), $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
                     throw new \InvalidArgumentException(sprintf(

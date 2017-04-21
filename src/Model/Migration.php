@@ -11,6 +11,7 @@ namespace FastD\Model;
 
 use Phinx\Db\Table;
 use Phinx\Migration\AbstractMigration;
+use Phinx\Db\Table\Column;
 
 /**
  * Class Migration.
@@ -21,12 +22,24 @@ abstract class Migration extends AbstractMigration
     {
         $table = $this->setUp();
         if (!$table->exists()) {
-            if (!$table->hasColumn('created')) {
-                $table->addColumn('created', 'datetime');
-            }
-            if (!$table->hasColumn('updated')) {
-                $table->addColumn('updated', 'datetime');
-            }
+
+            $hasCreatedColumn = $hasUpdatedColumn = false;
+            array_map(
+                function (Column $column) use (&$hasCreatedColumn, &$hasUpdatedColumn) {
+                    if ('created' === $column->getName()) {
+                        $hasCreatedColumn = true;
+                        return;
+                    }
+                    if ('updated' === $column->getName()) {
+                        $hasUpdatedColumn = true;
+                        return;
+                    }
+                },
+                $table->getPendingColumns()
+            );
+            !$hasCreatedColumn && $table->addColumn('created', 'datetime');
+            !$hasUpdatedColumn && $table->addColumn('updated', 'datetime');
+
             $table->create();
         }
         $this->dataSet($table);
