@@ -24,22 +24,27 @@ class CacheMiddleware extends Middleware
     /**
      * @param ServerRequestInterface $request
      * @param DelegateInterface $next
-     * @return mixed|ResponseInterface
+     * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
     {
-        $key = $request->getUri()->getPath();
-        $key = md5($key);
-        $cache = cache()->getItem($key);
-        if ($cache->isHit()) {
-            $value = $cache->get();
-            return (new Response($value))->withHeader('cache', '1');
+        $action = $request->getMethod();
+        if ('GET' === $action) {
+            $key = md5($request->getUri()->getPath());
+            $cache = cache()->getItem($key);
+            if ($cache->isHit()) {
+                $value = $cache->get();
+                return (new Response($value, Response::HTTP_NOT_MODIFIED))
+                    ->withHeader('X-Cache', $key);
+            }
+            $response = $next->next($request);
+            $cache->set((string) $response->getBody());
+
+            $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
+            $cache->expiresAt($expireAt);
+            cache()->save($cache);
+            return $response->withExpires($expireAt);
         }
-        $date = new DateObject(date('Y-m-d H:i:s', time() + 5));
-        $response = $next->next($request);
-        $cache->set((string) $response->getBody());
-        $cache->expiresAt($date);
-        cache()->save($cache);
-        return $response->withExpires($date);
+        return $next->next($request);
     }
 }

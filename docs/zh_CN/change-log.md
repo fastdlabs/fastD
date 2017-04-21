@@ -1,5 +1,10 @@
 # 修改日志
 
+#### 3.1.0 released candidate 4
+
+* 新增通用缓存中间件
+* bug fixed
+
 #### 3.1.0 release candidate 3
 
 * 修复单元测试数据重置 bug
