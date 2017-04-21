@@ -11,6 +11,7 @@ namespace FastD\Middleware;
 
 
 use FastD\Http\Response;
+use FastD\Packet\Json;
 use FastD\Utils\DateObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,8 +34,8 @@ class CacheMiddleware extends Middleware
             $key = md5($request->getUri()->getPath());
             $cache = cache()->getItem($key);
             if ($cache->isHit()) {
-                $value = $cache->get();
-                return (new Response($value, Response::HTTP_NOT_MODIFIED))
+                $value = Json::decode($cache->get());
+                return json($value)
                     ->withHeader('X-Cache', $key);
             }
             $response = $next->next($request);
