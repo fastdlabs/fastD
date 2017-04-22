@@ -101,7 +101,7 @@ class Server
     {
         $processes = config()->get('server.processes', []);
         foreach ($processes as $process) {
-            $this->server->process(new $process());
+            $this->server->process(new $process(app()->getName() . ' process'));
         }
 
         return $this;
