@@ -92,9 +92,9 @@ class {$name} extends Model
 
     public function create(array \$data)
     {
-        \$id = \$this->db->insert(static::TABLE, \$data);
+        \$this->db->insert(static::TABLE, \$data);
 
-        return \$this->find(\$id);
+        return \$this->find(\$this->db->id());
     }
 
     public function delete(\$id)
