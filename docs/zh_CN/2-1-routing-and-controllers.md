@@ -76,7 +76,7 @@ return [
 ];
 ```
 
-健名 `basic.auth` 即是中间件名字，可以通过 
+键名 `basic.auth` 即是中间件名字，可以通过 
 
 ```php
 route()->post('/', 'IndexController@sayHello')->withMiddleware('basic.auth');
