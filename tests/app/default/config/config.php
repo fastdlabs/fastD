@@ -10,7 +10,7 @@
 return [
     'common' => [
         'cache' => [
-            'lifetime' => 10
+            'lifetime' => 10,
         ],
-    ]
+    ],
 ];

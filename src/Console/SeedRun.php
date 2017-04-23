@@ -142,7 +142,7 @@ class Migration extends Manager
                 $class = pathinfo($filePath, PATHINFO_FILENAME);
                 $fileNames[$class] = basename($filePath);
                 require_once $filePath;
-                $migration = new $class($version . str_pad($index, 4, '0', STR_PAD_LEFT), $this->getInput(), $this->getOutput());
+                $migration = new $class($version.str_pad($index, 4, '0', STR_PAD_LEFT), $this->getInput(), $this->getOutput());
 
                 if (!($migration instanceof AbstractMigration)) {
                     throw new \InvalidArgumentException(sprintf(
