@@ -10,8 +10,8 @@
 namespace FastD\Model;
 
 use Phinx\Db\Table;
-use Phinx\Migration\AbstractMigration;
 use Phinx\Db\Table\Column;
+use Phinx\Migration\AbstractMigration;
 
 /**
  * Class Migration.
@@ -22,20 +22,22 @@ abstract class Migration extends AbstractMigration
     {
         $table = $this->setUp();
         if (!$table->exists()) {
-
             $hasAvailable = $hasCreatedColumn = $hasUpdatedColumn = false;
             array_map(
                 function (Column $column) use (&$hasCreatedColumn, &$hasUpdatedColumn) {
                     if ('is_available' === $column->getName()) {
                         $hasAvailable = true;
+
                         return;
                     }
                     if ('created' === $column->getName()) {
                         $hasCreatedColumn = true;
+
                         return;
                     }
                     if ('updated' === $column->getName()) {
                         $hasUpdatedColumn = true;
+
                         return;
                     }
                 },

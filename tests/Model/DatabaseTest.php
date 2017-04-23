@@ -1,4 +1,5 @@
 <?php
+
 use FastD\Application;
 
 /**
@@ -20,6 +21,7 @@ class DatabaseTest extends \FastD\TestCase
     public function createDatabase()
     {
         $config = config()->get('database.default');
+
         return new \FastD\Model\Database([
             'database_type' => isset($config['adapter']) ? $config['adapter'] : 'mysql',
             'database_name' => $config['name'],

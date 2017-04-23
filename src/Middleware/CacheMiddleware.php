@@ -9,22 +9,20 @@
 
 namespace FastD\Middleware;
 
-
-use FastD\Http\Response;
 use FastD\Packet\Json;
 use FastD\Utils\DateObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class CacheMiddleware
- * @package Middleware
+ * Class CacheMiddleware.
  */
 class CacheMiddleware extends Middleware
 {
     /**
      * @param ServerRequestInterface $request
-     * @param DelegateInterface $next
+     * @param DelegateInterface      $next
+     *
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
@@ -35,6 +33,7 @@ class CacheMiddleware extends Middleware
             $cache = cache()->getItem($key);
             if ($cache->isHit()) {
                 $value = Json::decode($cache->get());
+
                 return json($value)
                     ->withHeader('X-Cache', $key);
             }
@@ -44,8 +43,10 @@ class CacheMiddleware extends Middleware
             $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
             $cache->expiresAt($expireAt);
             cache()->save($cache);
+
             return $response->withExpires($expireAt);
         }
+
         return $next->next($request);
     }
 }
