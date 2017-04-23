@@ -76,7 +76,7 @@ return [
 ];
 ```
 
-健名 `basic.auth` 即是中间件名字，可以通过 
+键名 `basic.auth` 即是中间件名字，可以通过 
 
 ```php
 route()->post('/', 'IndexController@sayHello')->withMiddleware('basic.auth');
@@ -100,7 +100,7 @@ route()->group(['prefix' => '/v1', 'middleware' => 'demo'], function () {
 
 **控制器目前存放于 Http 目录中，3.1 版本后将统一控制器入口，同时为TCP、HTTP提供服务, 去除 Http 目录，保留 Controller 目录，其他结构不变**
 
-> 控制器无需继承任何对象，方法均有 [辅助函数](3-5-helpers.md) 提供
+> 控制器无需继承任何对象，方法均有 [辅助函数](3-7-helpers.md) 提供
 
 ```php
 namespace Controller;
