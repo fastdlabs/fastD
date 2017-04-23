@@ -23,9 +23,13 @@ abstract class Migration extends AbstractMigration
         $table = $this->setUp();
         if (!$table->exists()) {
 
-            $hasCreatedColumn = $hasUpdatedColumn = false;
+            $hasAvailable = $hasCreatedColumn = $hasUpdatedColumn = false;
             array_map(
                 function (Column $column) use (&$hasCreatedColumn, &$hasUpdatedColumn) {
+                    if ('is_available' === $column->getName()) {
+                        $hasAvailable = true;
+                        return;
+                    }
                     if ('created' === $column->getName()) {
                         $hasCreatedColumn = true;
                         return;
@@ -37,6 +41,7 @@ abstract class Migration extends AbstractMigration
                 },
                 $table->getPendingColumns()
             );
+            !$hasAvailable && $table->addColumn('is_available', 'boolean');
             !$hasCreatedColumn && $table->addColumn('created', 'datetime');
             !$hasUpdatedColumn && $table->addColumn('updated', 'datetime');
 

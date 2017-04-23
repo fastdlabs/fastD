@@ -82,9 +82,7 @@ class {$name} extends Model
     public function patch(\$id, array \$data)
     {
         \$affected = \$this->db->update(static::TABLE, \$data, [
-            'OR' => [
-                'id' => \$id,
-            ]
+            'id' => \$id,
         ]);
 
         return \$this->find(\$id);
