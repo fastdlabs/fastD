@@ -27,14 +27,17 @@ abstract class Migration extends AbstractMigration
                 function (Column $column) use (&$hasCreatedColumn, &$hasAvailable, &$hasUpdatedColumn) {
                     if ('is_available' === $column->getName()) {
                         $hasAvailable = true;
+
                         return;
                     }
                     if ('created' === $column->getName()) {
                         $hasCreatedColumn = true;
+
                         return;
                     }
                     if ('updated' === $column->getName()) {
                         $hasUpdatedColumn = true;
+
                         return;
                     }
                 },
