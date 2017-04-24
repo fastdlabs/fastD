@@ -24,10 +24,9 @@ abstract class Migration extends AbstractMigration
         if (!$table->exists()) {
             $hasAvailable = $hasCreatedColumn = $hasUpdatedColumn = false;
             array_map(
-                function (Column $column) use (&$hasCreatedColumn, &$hasUpdatedColumn) {
+                function (Column $column) use (&$hasCreatedColumn, &$hasAvailable, &$hasUpdatedColumn) {
                     if ('is_available' === $column->getName()) {
                         $hasAvailable = true;
-
                         return;
                     }
                     if ('created' === $column->getName()) {
