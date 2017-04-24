@@ -43,8 +43,8 @@ abstract class Migration extends AbstractMigration
                 $table->getPendingColumns()
             );
             !$hasAvailable && $table->addColumn('is_available', 'boolean');
-            !$hasCreatedColumn && $table->addColumn('created', 'datetime');
-            !$hasUpdatedColumn && $table->addColumn('updated', 'datetime');
+            !$hasCreatedColumn && $table->addColumn('created_at', 'datetime');
+            !$hasUpdatedColumn && $table->addColumn('updated_at', 'datetime');
 
             $table->create();
         }
