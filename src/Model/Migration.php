@@ -31,12 +31,10 @@ abstract class Migration extends AbstractMigration
                     }
                     if ('created' === $column->getName()) {
                         $hasCreatedColumn = true;
-
                         return;
                     }
                     if ('updated' === $column->getName()) {
                         $hasUpdatedColumn = true;
-
                         return;
                     }
                 },
