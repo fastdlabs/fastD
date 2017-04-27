@@ -7,17 +7,13 @@
  * @see      http://www.fast-d.cn/
  */
 
-use FastD\Pool\CachePool;
-
 class CachePoolTest extends PHPUnit_Framework_TestCase
 {
     public function testCacheConnection()
     {
-
     }
 
     public function testCachePool()
     {
-
     }
 }
