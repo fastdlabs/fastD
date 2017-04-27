@@ -41,8 +41,8 @@ class LoggerServiceProvider implements ServiceProviderInterface
                     $handle = new $handle($path.'/'.$name, $level);
                 }
                 null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
+                $logger->pushHandler($handle);
             }
-            $logger->pushHandler($handle);
         }
 
         $container->add('logger', $logger);
