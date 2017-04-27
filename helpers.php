@@ -58,6 +58,25 @@ function request()
 }
 
 /**
+ * @param $statusCode
+ * @return Response
+ */
+function response($statusCode)
+{
+    return new Response('', $statusCode);
+}
+
+/**
+ * @param $message
+ * @param $statusCode
+ * @throws Exception
+ */
+function abort($message, $statusCode)
+{
+    throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
+}
+
+/**
  * @param array $content
  * @param int   $statusCode
  * @param array $headers
