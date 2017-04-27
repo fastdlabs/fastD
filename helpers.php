@@ -58,12 +58,13 @@ function request()
 }
 
 /**
+ * @param $message
  * @param $statusCode
  * @return Response
  */
-function response($statusCode)
+function response($message, $statusCode)
 {
-    return new Response('', $statusCode);
+    return new Response($message, $statusCode);
 }
 
 /**
@@ -85,8 +86,6 @@ function abort($message, $statusCode)
  */
 function json(array $content = [], $statusCode = Response::HTTP_OK, array $headers = [])
 {
-    $headers['X-Version'] = Application::VERSION;
-
     return new JsonResponse($content, $statusCode, $headers);
 }
 
