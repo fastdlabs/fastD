@@ -159,7 +159,6 @@ class Application extends Container
 
         $response = json($handle($e), $statusCode);
 
-        // minimal mode
         try {
             logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
                 'ip' => get_local_ip(),
@@ -172,10 +171,10 @@ class Application extends Container
                 'line' => $e->getLine(),
                 'trace' => explode("\n", $e->getTraceAsString()),
             ]);
+            return $response;
         } catch (ServiceNotFoundException $e) {
+            return $response;
         }
-
-        return $response;
     }
 
     /**

@@ -24,6 +24,11 @@ class Database extends Medoo
     protected $config = [];
 
     /**
+     * @var PDO
+     */
+    protected $pdo;
+
+    /**
      * Database constructor.
      *
      * @param array $options

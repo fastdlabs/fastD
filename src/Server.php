@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use FastD\Pool\PoolInterface;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
 use swoole_server;
@@ -48,7 +49,6 @@ class Server
 
         $this->initListeners();
         $this->initProcesses();
-        $this->initConnectionPool();
     }
 
     /**
@@ -65,16 +65,6 @@ class Server
     public function bootstrap()
     {
         return $this->server->bootstrap();
-    }
-
-    /**
-     * 初始化连接池.
-     *
-     * @return $this
-     */
-    public function initConnectionPool()
-    {
-        return $this;
     }
 
     /**

@@ -11,6 +11,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Monolog\Handler\AbstractHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -35,10 +36,12 @@ class LoggerServiceProvider implements ServiceProviderInterface
 
         foreach ($handlers as $handler) {
             list($handle, $name, $level, $format) = array_pad($handler, 4, null);
-            if (is_string($handle)) {
-                $handle = new $handle($path.'/'.$name, $level);
+            if ($handle instanceof AbstractHandler) {
+                if (is_string($handle)) {
+                    $handle = new $handle($path.'/'.$name, $level);
+                }
+                null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
             }
-            null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
             $logger->pushHandler($handle);
         }
 

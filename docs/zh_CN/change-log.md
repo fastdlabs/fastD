@@ -5,7 +5,7 @@
 * 新增通用缓存中间件
 * bug fixed
 * 内置migration `is_available`, `created_at`, `updated_at` 三个数据库标准字段,
-* 新增 abort 终端函数
+* 新增 abort 中断函数
 
 #### 3.1.0 release candidate 3
 
