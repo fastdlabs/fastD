@@ -36,6 +36,7 @@ class CacheMiddleware extends Middleware
         $cache = cache()->getItem($key);
         if ($cache->isHit()) {
             $value = Json::decode($cache->get());
+
             return json($value)
                 ->withHeader('X-Cache', $key);
         }
