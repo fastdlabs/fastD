@@ -60,6 +60,7 @@ function request()
 /**
  * @param $message
  * @param $statusCode
+ *
  * @return Response
  */
 function response($message, $statusCode)
@@ -70,6 +71,7 @@ function response($message, $statusCode)
 /**
  * @param $message
  * @param $statusCode
+ *
  * @throws Exception
  */
 function abort($message, $statusCode)
