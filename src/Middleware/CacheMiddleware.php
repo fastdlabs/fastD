@@ -28,25 +28,24 @@ class CacheMiddleware extends Middleware
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
     {
         $action = $request->getMethod();
-        if ('GET' === $action) {
-            $key = md5($request->getUri()->getPath());
-            $cache = cache()->getItem($key);
-            if ($cache->isHit()) {
-                $value = Json::decode($cache->get());
-
-                return json($value)
-                    ->withHeader('X-Cache', $key);
-            }
-            $response = $next->next($request);
-            $cache->set((string) $response->getBody());
-
-            $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
-            $cache->expiresAt($expireAt);
-            cache()->save($cache);
-
-            return $response->withExpires($expireAt);
+        if ('GET' !== $action) {
+            return $next->next($request);
         }
 
-        return $next->next($request);
+        $key = md5($request->getUri()->getPath());
+        $cache = cache()->getItem($key);
+        if ($cache->isHit()) {
+            $value = Json::decode($cache->get());
+            return json($value)
+                ->withHeader('X-Cache', $key);
+        }
+        $response = $next->next($request);
+        $cache->set((string) $response->getBody());
+
+        $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
+        $cache->expiresAt($expireAt);
+        cache()->save($cache);
+
+        return $response->withExpires($expireAt);
     }
 }
