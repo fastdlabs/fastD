@@ -171,6 +171,7 @@ class Application extends Container
                 'line' => $e->getLine(),
                 'trace' => explode("\n", $e->getTraceAsString()),
             ]);
+
             return $response;
         } catch (ServiceNotFoundException $e) {
             return $response;
