@@ -26,7 +26,7 @@ class Database extends Medoo
     /**
      * @var PDO
      */
-    protected $pdo;
+    public $pdo;
 
     /**
      * Database constructor.
