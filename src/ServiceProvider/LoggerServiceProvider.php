@@ -27,19 +27,19 @@ class LoggerServiceProvider implements ServiceProviderInterface
     {
         $logger = new Logger(app()->getName());
 
-        $handlers = config()->get('log');
+        $handlers = config()->get('log', null);
         $path = app()->getPath().'/runtime/logs';
 
         if (empty($handlers)) {
-            $logger->pushHandler(new StreamHandler('php://temp'), Logger::DEBUG);
+            $handlers[] = [new StreamHandler('php://temp'), Logger::DEBUG];
         }
 
         foreach ($handlers as $handler) {
             list($handle, $name, $level, $format) = array_pad($handler, 4, null);
+            if (is_string($handle)) {
+                $handle = new $handle($path.'/'.$name, $level);
+            }
             if ($handle instanceof AbstractHandler) {
-                if (is_string($handle)) {
-                    $handle = new $handle($path.'/'.$name, $level);
-                }
                 null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
                 $logger->pushHandler($handle);
             }
