@@ -47,7 +47,7 @@ class Client
             $output = new ConsoleOutput();
         }
 
-        $helper = new QuestionHelper(array(new FormatterHelper()));
+        $helper = new QuestionHelper();
         $question = new Question('Continue with this action <info>[get /hello foo:bar] ? </info>', false);
 
         $action = $helper->ask($input, $output, $question);

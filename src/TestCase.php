@@ -14,7 +14,6 @@ use FastD\Testing\WebTestCase;
 use PHPUnit_Extensions_Database_DataSet_ArrayDataSet;
 use PHPUnit_Extensions_Database_DataSet_CompositeDataSet;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
-use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -75,7 +74,7 @@ class TestCase extends WebTestCase
     /**
      * Returns the test database connection.
      *
-     * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection|null
      */
     protected function getConnection()
     {
