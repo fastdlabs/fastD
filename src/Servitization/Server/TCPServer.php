@@ -28,7 +28,7 @@ class TCPServer extends TCP
      * @param $data
      * @param $from_id
      *
-     * @return integer
+     * @return int
      */
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {

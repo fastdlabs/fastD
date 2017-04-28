@@ -27,7 +27,7 @@ class WebSocketServer extends WebSocket
      * @param swoole_server          $server
      * @param swoole_websocket_frame $frame
      *
-     * @return integer
+     * @return int
      */
     public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
     {
