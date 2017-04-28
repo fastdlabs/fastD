@@ -11,7 +11,6 @@ namespace FastD;
 
 use Exception;
 use FastD\Swoole\Client as SwooleClient;
-use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
