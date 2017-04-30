@@ -7,6 +7,9 @@
  * @see      http://www.fast-d.cn/
  */
 
+/**
+ * Class CachePoolTest
+ */
 class CachePoolTest extends PHPUnit_Framework_TestCase
 {
     public function testCacheConnection()
