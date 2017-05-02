@@ -17,7 +17,7 @@ return [
      * Application logger
      */
     'log' => [
-        \FastD\Logger\AccessHandler::class
+        [\FastD\Logger\AccessHandler::class, 'info.log'],
     ],
 
     /*

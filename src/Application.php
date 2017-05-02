@@ -14,11 +14,10 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
-use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -129,12 +128,11 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
-        $this->add('response', new JsonResponse([]));
 
         try {
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            return $this->handleException($request, $exception);
+            return $this->handleException($exception);
         }
     }
 
@@ -143,17 +141,20 @@ class Application extends Container
      */
     public function handleResponse(Response $response)
     {
+        $this->add('response', $response);
+
         $response->send();
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param Exception              $e
+     * @param Exception $e
      *
      * @return Http\JsonResponse
      */
-    public function handleException(ServerRequestInterface $request, Exception $e)
+    public function handleException(Exception $e)
     {
+        $this->add('exception', $e);
+
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
@@ -162,11 +163,7 @@ class Application extends Container
 
         $handle = config()->get('exception.response');
 
-        $response = json($handle($e), $statusCode);
-
-        logger()->error(null);
-
-        return $response;
+        return json($handle($e), $statusCode);
     }
 
     /**
@@ -191,10 +188,11 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        logger()->info(null);
+        logger()->log($response->getStatusCode(), $request->getMethod() . ' ' . $request->getUri()->getPath());
 
         $this->offsetUnset('request');
         $this->offsetUnset('response');
+        $this->offsetUnset('exception');
         unset($request, $response);
 
         return 0;

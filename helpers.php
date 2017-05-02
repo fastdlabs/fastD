@@ -14,9 +14,9 @@ use FastD\Http\Response;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
-use FastD\Packet\Json;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
@@ -29,18 +29,11 @@ function app()
 }
 
 /**
- * @param $prefix
- * @param $callback
- *
  * @return RouteCollection
  */
-function route($prefix = null, callable $callback = null)
+function route()
 {
-    if (null === $prefix) {
-        return app()->get('router');
-    }
-
-    return app()->get('router')->group($prefix, $callback);
+    return app()->get('router');
 }
 
 /**
@@ -60,30 +53,30 @@ function request()
 }
 
 /**
- * @param $statusCode
- * @return JsonResponse
+ * @return ResponseInterface
  */
-function response($statusCode = 200)
+function response()
 {
-    if (!app()->has('response')) {
-        app()->add('response', new JsonResponse([], $statusCode));
-    }
-
     return app()->get('response');
+}
+
+/**
+ * @return Exception
+ */
+function exception()
+{
+    return app()->get('exception');
 }
 
 /**
  * @param array $content
  * @param int   $statusCode
  *
- * @return JsonResponse
+ * @return ResponseInterface
  */
 function json(array $content = [], $statusCode = Response::HTTP_OK)
 {
-    return response()
-        ->withContent(Json::encode($content))
-        ->withStatus($statusCode)
-        ;
+    return new JsonResponse($content, $statusCode);
 }
 
 /**

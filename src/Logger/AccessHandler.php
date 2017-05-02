@@ -10,22 +10,18 @@
 namespace FastD\Logger;
 
 
-use Monolog\Handler\AbstractProcessingHandler;
 
 /**
  * Class AccessHandler
  * @package FastD\Logger
  */
-class AccessHandler extends AbstractProcessingHandler
+class AccessHandler extends HandlerAbstract
 {
     /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
+     * @return array
      */
-    protected function write(array $record = [])
+    protected function logContextFormat()
     {
-
+        return [];
     }
 }

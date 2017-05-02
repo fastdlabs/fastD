@@ -10,34 +10,16 @@
 namespace FastD\Logger;
 
 
-use Monolog\Handler\AbstractProcessingHandler;
-
 /**
  * Class ErrorHandler
  * @package FastD\Logger
  */
-class ErrorHandler extends AbstractProcessingHandler
+class ErrorHandler extends HandlerAbstract
 {
-    /**
-     * Writes the record down to the log of the implementing handler
-     *
-     * @param  array $record
-     * @return void
-     */
-    protected function write(array $record = [])
+    protected function logContextFormat()
     {
-        $record = array_merge(
-            $record,
-            [
-                'message' => request()->getMethod() . ' ' . request()->getUri()->getPath(),
-                'context' => [
-                    'ip' => get_local_ip(),
-                    'status' => response()->getStatusCode(),
-                    'get' => $request->getQueryParams(),
-                    'post' => $request->getParsedBody(),
-                ],
-            ]
-        );
-        print_r($record);
+        return [
+
+        ];
     }
 }
