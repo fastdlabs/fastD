@@ -39,6 +39,5 @@ class LoggerServiceProvider implements ServiceProviderInterface
                 Logger()->pushHandler($handle);
             }
         }
-
     }
 }
