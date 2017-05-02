@@ -66,6 +66,9 @@ class NoCacheTest extends \FastD\TestCase
     public function testHandleException()
     {
         $response = $this->app->handleException(new LogicException('handle exception'));
+        $this->app->add('response', $response);
+        $this->app->add('request', new \FastD\Http\ServerRequest('GET', '/'));
+        $this->app->shutdown(new \FastD\Http\ServerRequest('GET', '/'), $response);
         $this->equalsStatus($response, 502);
         $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
