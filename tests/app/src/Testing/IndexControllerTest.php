@@ -51,7 +51,6 @@ class IndexControllerTest extends TestCase
     public function testModel()
     {
         $response = $this->app->handleRequest($this->request('GET', '/model'));
-
         $this->assertEquals(200, $response->getStatusCode());
         $this->isSuccessful($response);
     }

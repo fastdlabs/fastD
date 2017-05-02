@@ -58,7 +58,6 @@ class ApplicationTest extends TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        echo (string) $response->getBody();
         $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), (string) $response->getBody());
     }
 

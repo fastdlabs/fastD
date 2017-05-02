@@ -9,6 +9,7 @@
 
 namespace FastD\Logger;
 
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger as MonoLogger;
 
 /**
@@ -35,6 +36,10 @@ class Logger extends MonoLogger
      */
     public function addRecord($level, $message, array $context = array())
     {
+        if (!$this->handlers) {
+            $this->pushHandler(new StreamHandler('php://temp'));
+        }
+
         return parent::addRecord($this->convertStatusCodeToLevel($level), $message, $context);
     }
 }

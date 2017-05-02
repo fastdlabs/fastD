@@ -27,8 +27,6 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $handlers = config()->get('log', []);
         $path = app()->getPath().'/runtime/logs';
 
-        empty($handlers) && logger()->pushHandler(new StreamHandler('php://temp'));
-
         foreach ($handlers as $handler) {
             list($handle, $name, $level, $format) = array_pad($handler, 4, null);
             if (is_string($handle)) {

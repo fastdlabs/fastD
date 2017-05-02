@@ -1,4 +1,7 @@
 <?php
+use FastD\Application;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -7,8 +10,15 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-class HelpersTest extends \PHPUnit_Framework_TestCase
+class HelpersTest extends \FastD\TestCase
 {
+    public function createApplication()
+    {
+        $app = new Application(__DIR__.'/app/no-logger');
+
+        return $app;
+    }
+
     public function testFunctionApp()
     {
         $this->assertEquals('fast-d', app()->getName());
@@ -16,9 +26,10 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
 
     public function testFunctionLogger()
     {
-        $logFile = app()->getPath().'/runtime/logs/testCase.log';
+        $logFile = app()->getPath().'/runtime/logs/demo.log';
+        logger()->pushHandler(new StreamHandler($logFile));
         logger()->notice('hello world');
-//        $this->assertTrue(file_exists($logFile));
+        $this->assertTrue(file_exists($logFile));
         unset($logFile);
     }
 

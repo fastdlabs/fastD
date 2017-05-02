@@ -130,7 +130,9 @@ class Application extends Container
         $this->add('request', $request);
 
         try {
-            return $this->get('dispatcher')->dispatch($request);
+            $response = $this->get('dispatcher')->dispatch($request);
+            $this->add('response', $response);
+            return $response;
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -141,8 +143,6 @@ class Application extends Container
      */
     public function handleResponse(Response $response)
     {
-        $this->add('response', $response);
-
         $response->send();
     }
 
