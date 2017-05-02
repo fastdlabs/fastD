@@ -15,7 +15,6 @@ use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
@@ -52,7 +51,7 @@ function request()
 }
 
 /**
- * @return ResponseInterface
+ * @return Response
  */
 function response()
 {
@@ -71,7 +70,7 @@ function exception()
  * @param array $content
  * @param int   $statusCode
  *
- * @return ResponseInterface
+ * @return Response
  */
 function json(array $content = [], $statusCode = Response::HTTP_OK)
 {

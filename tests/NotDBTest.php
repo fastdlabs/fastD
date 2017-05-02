@@ -65,7 +65,7 @@ class NotDBTest extends FastD\TestCase
 
     public function testHandleException()
     {
-        $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
+        $response = $this->app->handleException(new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
         $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }

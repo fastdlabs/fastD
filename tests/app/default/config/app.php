@@ -18,6 +18,7 @@ return [
      */
     'log' => [
         [\FastD\Logger\AccessHandler::class, 'info.log'],
+        [\FastD\Logger\ErrorHandler::class, 'error.log', \FastD\Logger\Logger::ERROR],
     ],
 
     /*

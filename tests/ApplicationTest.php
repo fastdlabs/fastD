@@ -43,12 +43,11 @@ class ApplicationTest extends TestCase
     {
         $request = $this->request('GET', '/');
         $response = $this->app->handleRequest($request);
-        echo $response;
-//        $this->assertEquals(200, $response->getStatusCode());
-//
-//        $request = $this->request('GET', '/not/found');
-//        $response = $this->app->handleRequest($request);
-//        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $request = $this->request('GET', '/not/found');
+        $response = $this->app->handleRequest($request);
+        $this->assertEquals(404, $response->getStatusCode());
     }
 
     public function testCacheServiceProvider()
@@ -59,13 +58,13 @@ class ApplicationTest extends TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-//        echo (string) $response->getBody();
-//        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), (string) $response->getBody());
+        echo (string) $response->getBody();
+        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), (string) $response->getBody());
     }
 
     public function testHandleException()
     {
-        $response = $this->app->handleException($this->request('GET', '/'), new LogicException('handle exception'));
+        $response = $this->app->handleException(new LogicException('handle exception'));
         $this->equalsStatus($response, 502);
         $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
     }
@@ -82,9 +81,8 @@ class ApplicationTest extends TestCase
 
     public function testApplicationShutdown()
     {
-        $this->app->shutdown($this->request('GET', '/'), json([
-            'foo' => 'bar',
-        ]));
-        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/access.log'));
+        $request = $this->request('GET', '/');
+        $response = $this->handleRequest($request);
+        $this->app->shutdown($request, $response);
     }
 }
