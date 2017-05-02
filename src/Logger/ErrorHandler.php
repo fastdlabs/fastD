@@ -9,17 +9,14 @@
 
 namespace FastD\Logger;
 
-
 /**
- * Class ErrorHandler
- * @package FastD\Logger
+ * Class ErrorHandler.
  */
 class ErrorHandler extends HandlerAbstract
 {
     protected function logContextFormat()
     {
         return [
-
         ];
     }
 }

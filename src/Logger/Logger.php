@@ -9,28 +9,28 @@
 
 namespace FastD\Logger;
 
-
 use Monolog\Logger as MonoLogger;
 
 /**
- * Class Logger
- * @package FastD\Logger
+ * Class Logger.
  */
 class Logger extends MonoLogger
 {
     /**
      * @param $levelCode
+     *
      * @return int
      */
     protected function convertStatusCodeToLevel($levelCode)
     {
-        return ($levelCode >= 200 && $levelCode < 300) ? Logger::INFO : Logger::ERROR;
+        return ($levelCode >= 200 && $levelCode < 300) ? self::INFO : self::ERROR;
     }
 
     /**
-     * @param int $level
+     * @param int    $level
      * @param string $message
-     * @param array $context
+     * @param array  $context
+     *
      * @return bool
      */
     public function addRecord($level, $message, array $context = array())

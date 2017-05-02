@@ -8,7 +8,7 @@
  */
 
 /**
- * Class CachePoolTest
+ * Class CachePoolTest.
  */
 class CachePoolTest extends PHPUnit_Framework_TestCase
 {

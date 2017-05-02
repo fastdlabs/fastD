@@ -9,11 +9,8 @@
 
 namespace FastD\Logger;
 
-
-
 /**
- * Class AccessHandler
- * @package FastD\Logger
+ * Class AccessHandler.
  */
 class AccessHandler extends HandlerAbstract
 {
