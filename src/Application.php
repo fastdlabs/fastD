@@ -132,6 +132,7 @@ class Application extends Container
         try {
             $response = $this->get('dispatcher')->dispatch($request);
             $this->add('response', $response);
+
             return $response;
         } catch (Exception $exception) {
             return $this->handleException($exception);

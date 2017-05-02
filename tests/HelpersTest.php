@@ -1,4 +1,5 @@
 <?php
+
 use FastD\Application;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
