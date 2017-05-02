@@ -12,12 +12,13 @@ namespace FastD;
 use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
-use FastD\Container\Exceptions\ServiceNotFoundException;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\HttpException;
+use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -31,7 +32,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.1.0 (release candidate)';
+    const VERSION = '3.1.0';
 
     /**
      * @var Application
@@ -101,6 +102,8 @@ class Application extends Container
             $this->name = $config['name'];
 
             $this->add('config', new Config($config));
+            $this->add('logger', new Logger(app()->getName()));
+
             $this->registerServicesProviders($config['services']);
             unset($config);
             $this->booted = true;
@@ -126,6 +129,8 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
+        $this->add('response', new JsonResponse([]));
+
         try {
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
@@ -155,27 +160,13 @@ class Application extends Container
             $statusCode = 502;
         }
 
-        $handle = config()->get('exception.handle');
+        $handle = config()->get('exception.response');
 
         $response = json($handle($e), $statusCode);
 
-        try {
-            logger()->error($request->getMethod().' '.$request->getUri()->getPath(), [
-                'ip' => get_local_ip(),
-                'status' => $response->getStatusCode(),
-                'get' => $request->getQueryParams(),
-                'post' => $request->getParsedBody(),
-                'msg' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => explode("\n", $e->getTraceAsString()),
-            ]);
+        logger()->error(null);
 
-            return $response;
-        } catch (ServiceNotFoundException $e) {
-            return $response;
-        }
+        return $response;
     }
 
     /**
@@ -200,17 +191,12 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        try {
-            logger()->info($request->getMethod().' '.$request->getUri()->getPath(), [
-                'ip' => get_local_ip(),
-                'status' => $response->getStatusCode(),
-                'get' => $request->getQueryParams(),
-                'post' => $request->getParsedBody(),
-            ]);
+        logger()->info(null);
 
-            return 0;
-        } catch (ServiceNotFoundException $e) {
-            return 0;
-        }
+        $this->offsetUnset('request');
+        $this->offsetUnset('response');
+        unset($request, $response);
+
+        return 0;
     }
 }

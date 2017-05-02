@@ -6,6 +6,7 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
@@ -13,6 +14,7 @@ use FastD\Http\Response;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
+use FastD\Packet\Json;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -58,14 +60,30 @@ function request()
 }
 
 /**
- * @param $message
  * @param $statusCode
- *
- * @return Response
+ * @return JsonResponse
  */
-function response($message, $statusCode)
+function response($statusCode = 200)
 {
-    return new Response($message, $statusCode);
+    if (!app()->has('response')) {
+        app()->add('response', new JsonResponse([], $statusCode));
+    }
+
+    return app()->get('response');
+}
+
+/**
+ * @param array $content
+ * @param int   $statusCode
+ *
+ * @return JsonResponse
+ */
+function json(array $content = [], $statusCode = Response::HTTP_OK)
+{
+    return response()
+        ->withContent(Json::encode($content))
+        ->withStatus($statusCode)
+        ;
 }
 
 /**
@@ -77,18 +95,6 @@ function response($message, $statusCode)
 function abort($message, $statusCode)
 {
     throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
-}
-
-/**
- * @param array $content
- * @param int   $statusCode
- * @param array $headers
- *
- * @return JsonResponse
- */
-function json(array $content = [], $statusCode = Response::HTTP_OK, array $headers = [])
-{
-    return new JsonResponse($content, $statusCode, $headers);
 }
 
 /**

@@ -11,9 +11,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use Monolog\Handler\AbstractHandler;
 use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 
 /**
  * Class LoggerServiceProvider.
@@ -25,26 +23,12 @@ class LoggerServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        $logger = new Logger(app()->getName());
+        $handlers = config()->get('log', []);
 
-        $handlers = config()->get('log', null);
-        $path = app()->getPath().'/runtime/logs';
-
-        if (empty($handlers)) {
-            $handlers[] = [new StreamHandler('php://temp'), Logger::DEBUG];
-        }
+        empty($handlers) && \logger()->pushHandler(new StreamHandler('php://temp'));
 
         foreach ($handlers as $handler) {
-            list($handle, $name, $level, $format) = array_pad($handler, 4, null);
-            if (is_string($handle)) {
-                $handle = new $handle($path.'/'.$name, $level);
-            }
-            if ($handle instanceof AbstractHandler) {
-                null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
-                $logger->pushHandler($handle);
-            }
+            logger()->pushHandler(new $handler());
         }
-
-        $container->add('logger', $logger);
     }
 }

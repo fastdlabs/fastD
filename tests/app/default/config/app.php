@@ -14,18 +14,17 @@ return [
     'name' => 'fast-d',
 
     /*
-     * Application logger path
+     * Application logger
      */
     'log' => [
-        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR],
-        [\Monolog\Handler\StreamHandler::class, 'access.log', \Monolog\Logger::INFO],
+        \FastD\Logger\AccessHandler::class
     ],
 
     /*
      * Exception handle
      */
     'exception' => [
-        'handle' => function (Exception $e) {
+        'response' => function (Exception $e) {
             return [
                 'msg' => $e->getMessage(),
                 'code' => $e->getCode(),
