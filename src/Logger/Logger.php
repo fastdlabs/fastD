@@ -36,7 +36,7 @@ class Logger extends MonoLogger
      */
     public function addRecord($level, $message, array $context = array())
     {
-        if (!$this->handlers) {
+        if (empty($this->handlers)) {
             $this->pushHandler(new StreamHandler('php://temp'));
         }
 

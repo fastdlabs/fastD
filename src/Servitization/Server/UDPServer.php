@@ -43,7 +43,7 @@ class UDPServer extends UDP
         try {
             $response = app()->handleRequest($request);
         } catch (\Exception $e) {
-            $response = app()->handleException($request, $e);
+            $response = app()->handleException($e);
         }
         $server->sendto($clientInfo['address'], $clientInfo['port'], (string) $response->getBody());
         app()->shutdown($request, $response);

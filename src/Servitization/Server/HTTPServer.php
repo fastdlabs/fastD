@@ -42,7 +42,7 @@ class HTTPServer extends HTTP
                 $swooleResponse->cookie($key, $cookieParam);
             }
         } catch (Exception $e) {
-            $response = app()->handleException($request, $e);
+            $response = app()->handleException($e);
         }
 
         $swooleResponse->status($response->getStatusCode());
