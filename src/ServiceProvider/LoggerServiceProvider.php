@@ -12,7 +12,6 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use Monolog\Handler\AbstractHandler;
-use Monolog\Handler\StreamHandler;
 
 /**
  * Class LoggerServiceProvider.
