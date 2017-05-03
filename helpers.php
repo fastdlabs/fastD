@@ -78,12 +78,12 @@ function json(array $content = [], $statusCode = Response::HTTP_OK)
 }
 
 /**
- * @param $message
  * @param $statusCode
+ * @param $message
  *
  * @throws Exception
  */
-function abort($message, $statusCode)
+function abort($statusCode, $message = null)
 {
     throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
 }
