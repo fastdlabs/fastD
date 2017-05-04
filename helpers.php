@@ -134,3 +134,19 @@ function server()
 {
     return app()->get('server');
 }
+
+function event()
+{
+
+}
+
+function async()
+{
+
+}
+
+function pipe()
+{}
+
+function timer()
+{}
