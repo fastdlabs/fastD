@@ -40,6 +40,11 @@ class Router extends RouteCollection
         return parent::patch($path, $this->concat($callback), $defaults);
     }
 
+    public function put($path, $callback, array $defaults = [])
+    {
+        return parent::put($path, $this->concat($callback), $defaults);
+    }
+
     public function delete($path, $callback, array $defaults = [])
     {
         return parent::delete($path, $this->concat($callback), $defaults);
