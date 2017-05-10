@@ -46,11 +46,7 @@ class TCPServer extends TCP
                 $request->withParsedBody($data['args']);
             }
         }
-        try {
-            $response = app()->handleRequest($request);
-        } catch (\Exception $e) {
-            $response = app()->handleException($e);
-        }
+        $response = app()->handleRequest($request);
         $server->send($fd, (string) $response->getBody());
         app()->shutdown($request, $response);
 

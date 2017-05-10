@@ -41,11 +41,7 @@ class WebSocketServer extends WebSocket
                 $request->withParsedBody($data['args']);
             }
         }
-        try {
-            $response = app()->handleRequest($request);
-        } catch (\Exception $e) {
-            $response = app()->handleException($e);
-        }
+        $response = app()->handleRequest($request);
         $server->push($frame->fd, (string) $response->getBody());
         app()->shutdown($request, $response);
 

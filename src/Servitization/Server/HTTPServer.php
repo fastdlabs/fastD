@@ -33,16 +33,12 @@ class HTTPServer extends HTTP
     {
         $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
 
-        try {
-            $response = $this->doRequest($request);
-            foreach ($response->getHeaders() as $key => $header) {
-                $swooleResponse->header($key, $response->getHeaderLine($key));
-            }
-            foreach ($response->getCookieParams() as $key => $cookieParam) {
-                $swooleResponse->cookie($key, $cookieParam);
-            }
-        } catch (Exception $e) {
-            $response = app()->handleException($e);
+        $response = $this->doRequest($request);
+        foreach ($response->getHeaders() as $key => $header) {
+            $swooleResponse->header($key, $response->getHeaderLine($key));
+        }
+        foreach ($response->getCookieParams() as $key => $cookieParam) {
+            $swooleResponse->cookie($key, $cookieParam);
         }
 
         $swooleResponse->status($response->getStatusCode());
