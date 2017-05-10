@@ -11,6 +11,7 @@ namespace FastD\ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\AbstractHandler;
 
 /**
@@ -32,7 +33,10 @@ class LoggerServiceProvider implements ServiceProviderInterface
                 $handle = new $handle($path.'/'.$name, $level);
             }
             if ($handle instanceof AbstractHandler) {
-                null !== $format && $handle->setFormatter(is_string($format) ? new $format() : $format);
+                if (null === $format) {
+                    $format = new LineFormatter();
+                }
+                $handle->setFormatter(is_string($format) ? new $format() : $format);
                 Logger()->pushHandler($handle);
             }
         }
