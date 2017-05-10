@@ -53,39 +53,39 @@ class Database extends Medoo
 
     /**
      * @param $query
-     *
+     * @param array $map
      * @return bool|\PDOStatement
      */
-    public function query($query)
+    public function query($query, $map = [])
     {
         try {
-            return parent::query($query);
+            return parent::query($query, $map);
         } catch (PDOException $e) {
             if ('HY000' !== $e->getCode()) {
                 throw $e;
             }
             $this->reconnect();
 
-            return parent::query($query);
+            return parent::query($query, $map);
         }
     }
 
     /**
      * @param $query
-     *
-     * @return bool|int
+     * @param array $map
+     * @return bool|\PDOStatement
      */
-    public function exec($query)
+    public function exec($query, $map = [])
     {
         try {
-            return parent::exec($query);
+            return parent::exec($query, $map);
         } catch (PDOException $e) {
             if ('HY000' !== $e->getCode()) {
                 throw $e;
             }
             $this->reconnect();
 
-            return parent::exec($query);
+            return parent::exec($query, $map);
         }
     }
 }
