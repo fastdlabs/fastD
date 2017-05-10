@@ -39,7 +39,7 @@
         "fastd/testing": "^0.3",
         "fastd/migration": "dev-develop",
         "runner/validation": "^1.0",
-        "catfan/Medoo": "~1.0",
+        "catfan/Medoo": "~1.2.0",
         "symfony/cache": "~3.2",
         "monolog/monolog": "~1.0"
     },
