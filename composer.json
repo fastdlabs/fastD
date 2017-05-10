@@ -4,7 +4,9 @@
     "license": "MIT",
     "description": "FastD",
     "minimum-stability": "stable",
-    "keywords": ["FastD"],
+    "keywords": [
+        "FastD"
+    ],
     "authors": [
         {
             "name": "janhuang",
