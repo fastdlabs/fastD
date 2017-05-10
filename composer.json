@@ -35,7 +35,7 @@
         "fastd/swoole": "^2.0",
         "fastd/utils": "^0.1",
         "fastd/testing": "^0.3",
-        "catfan/Medoo": "~1.0",
+        "catfan/Medoo": "~1.2.0",
         "symfony/cache": "~3.2.0",
         "monolog/monolog": "~1.0",
         "robmorgan/phinx": "~0.8.0"
