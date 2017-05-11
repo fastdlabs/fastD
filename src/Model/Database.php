@@ -53,6 +53,7 @@ class Database extends Medoo
 
     /**
      * @param $query
+     *
      * @return bool|\PDOStatement
      */
     public function query($query)
@@ -71,6 +72,7 @@ class Database extends Medoo
 
     /**
      * @param $query
+     *
      * @return bool|\PDOStatement
      */
     public function exec($query)
