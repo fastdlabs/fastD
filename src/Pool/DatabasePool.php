@@ -58,6 +58,8 @@ class DatabasePool implements PoolInterface
                     'charset' => isset($config['charset']) ? $config['charset'] : 'utf8',
                     'port' => isset($config['port']) ? $config['port'] : 3306,
                     'prefix' => isset($config['prefix']) ? $config['prefix'] : '',
+                    'option' => isset($config['option']) ? $config['option'] : [],
+                    'command' => isset($config['command']) ? $config['command'] : [],
                 ]
             );
         }
