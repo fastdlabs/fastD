@@ -9,7 +9,6 @@
 
 namespace FastD\Servitization\Server;
 
-use Exception;
 use FastD\Http\Response;
 use FastD\Http\SwooleServerRequest;
 use FastD\Servitization\OnWorkerStart;
