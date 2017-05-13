@@ -29,7 +29,7 @@ HTTP 404 Not Found
 return [
     // ...
     'exception' => [
-        'handle' => function (Exception $e) {
+        'response' => function (Exception $e) {
             return [
                 'msg' => $e->getMessage(),
                 'code' => $e->getCode(),
