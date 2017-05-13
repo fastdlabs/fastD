@@ -5,6 +5,8 @@
 > 3.1 开始，FastD\Test\TestCase 改为 FastD\TestCase
 
 ```php
+<?php
+
 use FastD\TestCase;
 
 

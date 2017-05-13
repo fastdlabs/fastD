@@ -7,6 +7,8 @@
 所有命令行文件存放在 `src/Console` 目录中，命令行对象需要继承 `Symfony\Component\Console\Command\Command`, 在启动 Console 控制台对象的时候，程序会自动扫描目录下所有命令行文件，并且进行处理。
  
 ```php
+<?php
+
 namespace Console;
 
 use Symfony\Component\Console\Command\Command;
