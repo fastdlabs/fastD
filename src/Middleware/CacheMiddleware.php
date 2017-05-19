@@ -29,7 +29,7 @@ class CacheMiddleware extends Middleware
     {
         $action = $request->getMethod();
         if ('GET' !== $action) {
-            return $next->next($request);
+            return $next->process($request);
         }
 
         $key = md5($request->getUri()->getPath());
@@ -40,7 +40,7 @@ class CacheMiddleware extends Middleware
             return json($value)
                 ->withHeader('X-Cache', $key);
         }
-        $response = $next->next($request);
+        $response = $next->process($request);
         $cache->set((string) $response->getBody());
 
         $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
