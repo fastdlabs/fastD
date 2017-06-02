@@ -1,8 +1,8 @@
 <?php
 
 use FastD\Application;
-use ServiceProvider\FooServiceProvider;
 use FastD\Http\JsonResponse;
+use ServiceProvider\FooServiceProvider;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>

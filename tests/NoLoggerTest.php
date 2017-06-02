@@ -1,9 +1,9 @@
 <?php
 
 use FastD\Application;
+use FastD\Http\JsonResponse;
 use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
-use FastD\Http\JsonResponse;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
