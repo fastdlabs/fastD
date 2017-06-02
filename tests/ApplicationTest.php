@@ -10,6 +10,7 @@ use FastD\Application;
 use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use FastD\Http\JsonResponse;
 
 class ApplicationTest extends TestCase
 {
@@ -58,7 +59,7 @@ class ApplicationTest extends TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), (string) $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), (string) $response->getBody());
     }
 
     public function testHandleException()

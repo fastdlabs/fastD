@@ -13,7 +13,7 @@ return [
         'name' => 'ci',
         'host' => '127.0.0.1',
         'user' => 'root',
-        'pass' => '',
+        'pass' => '123456',
         'charset' => 'utf8',
         'port' => 3306,
     ],

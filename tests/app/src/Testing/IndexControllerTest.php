@@ -8,6 +8,7 @@
  */
 use FastD\Application;
 use FastD\TestCase;
+use FastD\Http\JsonResponse;
 
 class IndexControllerTest extends TestCase
 {
@@ -35,17 +36,17 @@ class IndexControllerTest extends TestCase
     public function testHandleDynamicRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), $response->getBody());
         $response = $this->app->handleRequest($this->request('GET', '/foo/foobar'));
-        $this->assertEquals(json_encode(['foo' => 'foobar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'foobar'], JsonResponse::JSON_OPTIONS), $response->getBody());
     }
 
     public function testHandleMiddlewareRequest()
     {
         $response = $this->app->handleRequest($this->request('POST', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'middleware'], TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'middleware'], JsonResponse::JSON_OPTIONS), $response->getBody());
         $response = $this->app->handleRequest($this->request('POST', '/foo/not'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), $response->getBody());
     }
 
     public function testModel()
@@ -64,7 +65,7 @@ class IndexControllerTest extends TestCase
         $this->assertEquals(json_encode([
             'msg' => 'not allow access',
             'code' => 401,
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
+        ], JsonResponse::JSON_OPTIONS), (string) $response->getBody());
 
         $response = $this->app->handleRequest($this->request('GET', 'http://foo:bar@example.com/auth', [
             'PHP_AUTH_USER' => 'foo',
@@ -75,6 +76,6 @@ class IndexControllerTest extends TestCase
 
         $this->assertEquals(json_encode([
             'foo' => 'bar',
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
+        ], JsonResponse::JSON_OPTIONS), (string) $response->getBody());
     }
 }

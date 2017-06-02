@@ -2,6 +2,7 @@
 
 use FastD\Application;
 use ServiceProvider\FooServiceProvider;
+use FastD\Http\JsonResponse;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -60,7 +61,7 @@ class NoCacheTest extends \FastD\TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], FastD\TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), $response->getBody());
     }
 
     public function testHandleException()
