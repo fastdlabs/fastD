@@ -7,8 +7,8 @@
  * @see      http://www.fast-d.cn/
  */
 use FastD\Application;
-use FastD\TestCase;
 use FastD\Http\JsonResponse;
+use FastD\TestCase;
 
 class IndexControllerTest extends TestCase
 {

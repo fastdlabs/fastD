@@ -1,8 +1,8 @@
 <?php
 
 use FastD\Application;
-use ServiceProvider\FooServiceProvider;
 use FastD\Http\JsonResponse;
+use ServiceProvider\FooServiceProvider;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -53,7 +53,7 @@ class MinimalTest extends \FastD\TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), (string)$response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), (string) $response->getBody());
     }
 
     public function testHandleException()

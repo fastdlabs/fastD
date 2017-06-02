@@ -7,10 +7,10 @@
  * @see      http://www.fast-d.cn/
  */
 use FastD\Application;
+use FastD\Http\JsonResponse;
 use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use FastD\Http\JsonResponse;
 
 class ApplicationTest extends TestCase
 {
