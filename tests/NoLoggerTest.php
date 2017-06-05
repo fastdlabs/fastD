@@ -1,6 +1,7 @@
 <?php
 
 use FastD\Application;
+use FastD\Http\JsonResponse;
 use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
 
@@ -61,7 +62,7 @@ class NoLoggerTest extends TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], FastD\TestCase::JSON_OPTION), $response->getBody());
+        $this->assertEquals(json_encode(['foo' => 'bar'], JsonResponse::JSON_OPTIONS), $response->getBody());
     }
 
     public function testHandleException()
