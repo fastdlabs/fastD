@@ -41,6 +41,8 @@ class Database extends Medoo
 
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
     }
 
     /**
@@ -87,5 +89,18 @@ class Database extends Medoo
 
             return parent::exec($query);
         }
+    }
+
+    public function has($table, $join, $where = null)
+    {
+        $column = null;
+
+        $query = $this->query('SELECT EXISTS(' . $this->selectContext($table, $join, $column, $where, 1) . ')');
+
+        if ($query && intval($query->fetchColumn()) === 1) {
+            return true;
+        }
+
+        return false;
     }
 }

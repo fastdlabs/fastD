@@ -40,4 +40,21 @@ class DatabaseTest extends \FastD\TestCase
         $tables = $database->query('show tables;')->fetchAll();
         $this->assertTrue(true);
     }
+
+    public function testInsert()
+    {
+        database()->insert('hello', [
+            'content' => 'hello world',
+            'user' => 'foo',
+            'created' => date('Y-m-d H:i:s'),
+        ]);
+        $row = database()->get('hello', '*', [
+            'id' => database()->id(),
+        ]);
+        $this->assertInternalType('integer', $row['id']);
+
+        $this->assertSame(true, database()->has('hello', [
+            'id' => $row['id'],
+        ]));
+    }
 }
