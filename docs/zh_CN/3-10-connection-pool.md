@@ -4,7 +4,7 @@
 
 #### 连接池实现
 
-在 Server `onWokerStart` 回调中，程序会调用 `app()` 函数递归所有服务，若服务实现自 `FastD\Pool\PoolInterface` 接口，那么在 Server 启动的时候，就会自动调用 `initPool` 方法，在该方法下执行连接，连接玩除非 Worker 中断，否则会一直连接。
+在 Server `onWokerStart` 回调中，程序会调用 `app()` 函数递归所有服务，若服务实现自 `FastD\Pool\PoolInterface` 接口，那么在 Server 启动的时候，就会自动调用 `initPool` 方法，在该方法下执行连接，连接后除非 Worker 中断，否则会一直连接。
 
 ```php
 <?php
