@@ -16,7 +16,6 @@ class ApplicationTest extends TestCase
     public function createApplication()
     {
         $app = new Application(__DIR__.'/app/default');
-
         return $app;
     }
 
@@ -58,7 +57,7 @@ class ApplicationTest extends TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), (string) $response->getBody());
+        $this->equalsJson($response, ['foo' => 'bar']);
     }
 
     public function testHandleException()

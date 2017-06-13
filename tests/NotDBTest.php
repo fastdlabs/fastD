@@ -60,7 +60,7 @@ class NotDBTest extends FastD\TestCase
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], FastD\TestCase::JSON_OPTION), $response->getBody());
+        $this->equalsJson($response, ['foo' => 'bar']);
     }
 
     public function testHandleException()

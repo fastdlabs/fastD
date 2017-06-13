@@ -35,17 +35,17 @@ class IndexControllerTest extends TestCase
     public function testHandleDynamicRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->equalsJson($response, ['foo' => 'bar']);
         $response = $this->app->handleRequest($this->request('GET', '/foo/foobar'));
-        $this->assertEquals(json_encode(['foo' => 'foobar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->equalsJson($response, ['foo' => 'foobar']);
     }
 
     public function testHandleMiddlewareRequest()
     {
         $response = $this->app->handleRequest($this->request('POST', '/foo/bar'));
-        $this->assertEquals(json_encode(['foo' => 'middleware'], TestCase::JSON_OPTION), $response->getBody());
+        $this->equalsJson($response, ['foo' => 'middleware']);
         $response = $this->app->handleRequest($this->request('POST', '/foo/not'));
-        $this->assertEquals(json_encode(['foo' => 'bar'], TestCase::JSON_OPTION), $response->getBody());
+        $this->equalsJson($response, ['foo' => 'bar']);
     }
 
     public function testModel()
@@ -61,10 +61,10 @@ class IndexControllerTest extends TestCase
 
         $this->assertEquals(401, $response->getStatusCode());
 
-        $this->assertEquals(json_encode([
+        $this->equalsJson($response, [
             'msg' => 'not allow access',
             'code' => 401,
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
+        ]);
 
         $response = $this->app->handleRequest($this->request('GET', 'http://foo:bar@example.com/auth', [
             'PHP_AUTH_USER' => 'foo',
@@ -73,8 +73,8 @@ class IndexControllerTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
 
-        $this->assertEquals(json_encode([
+        $this->equalsJson($response, [
             'foo' => 'bar',
-        ], TestCase::JSON_OPTION), (string) $response->getBody());
+        ]);
     }
 }
