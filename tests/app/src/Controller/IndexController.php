@@ -26,6 +26,9 @@ class IndexController
      */
     public function welcome(ServerRequest $request)
     {
+        logger()->info('xxx', [
+
+        ]);
         return json([
             'foo' => 'bar',
         ]);
