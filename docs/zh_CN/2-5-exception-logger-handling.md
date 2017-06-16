@@ -49,7 +49,7 @@ return [
 <?php
 
 // ...
-$handle = config()->get('exception.handle');
+$handle = config()->get('exception.response');
 $response = json($handle($e), $statusCode);
 // ...
 ```
