@@ -175,9 +175,16 @@ class Application extends Container
      */
     public function handleException(Exception $e)
     {
-        $this->add('exception', $e);
+        try {
+            $trace = call_user_func(config()->get('exception.log'), $e);
+        } catch (Exception $exception) {
+            $trace = [
+                'original' => explode("\n", $e->getTraceAsString()),
+                'handler'  => explode("\n", $exception->getTraceAsString()),
+            ];
+        }
 
-        logger()->log(Logger::ERROR, $e->getMessage(), call_user_func(config()->get('exception.log'), $e));
+        logger()->log(Logger::ERROR, $e->getMessage(), $trace);
     }
 
     /**
