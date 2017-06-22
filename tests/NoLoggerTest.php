@@ -66,7 +66,7 @@
 
         public function testHandleException()
         {
-            $response = $this->app->handleException(new LogicException('handle exception'));
+            $response = $this->app->renderException(new LogicException('handle exception'));
             $this->equalsStatus($response, 502);
             $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }

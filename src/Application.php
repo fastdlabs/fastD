@@ -10,6 +10,9 @@
 namespace FastD;
 
 use Exception;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Throwable;
+use ErrorException;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
@@ -96,6 +99,9 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
+
+            $this->registerExceptionHandler();
+
             $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
@@ -120,6 +126,17 @@ class Application extends Container
         }
     }
 
+    protected function registerExceptionHandler()
+    {
+        error_reporting(-1);
+
+        set_exception_handler([$this, 'handleException']);
+
+        set_error_handler(function ($level, $message, $file = '', $line = 0, $context = []) {
+            throw new ErrorException($message, 0, $level, $file, $line);
+        });
+    }
+
     /**
      * @param ServerRequestInterface $request
      *
@@ -131,12 +148,18 @@ class Application extends Container
 
         try {
             $response = $this->get('dispatcher')->dispatch($request);
-            $this->add('response', $response);
-
-            return $response;
         } catch (Exception $exception) {
-            return $this->handleException($exception);
+            $this->handleException($exception);
+            $response = $this->renderException($exception);
+        } catch (Throwable $exception) {
+            $exception = new FatalThrowableError($exception);
+            $this->handleException($exception);
+            $response = $this->renderException($exception);
         }
+
+        $this->add('response', $response);
+
+        return $response;
     }
 
     /**
@@ -149,22 +172,28 @@ class Application extends Container
 
     /**
      * @param Exception $e
-     *
-     * @return Http\JsonResponse
      */
     public function handleException(Exception $e)
     {
         $this->add('exception', $e);
 
+        logger()->log(Logger::ERROR, $e->getMessage(), call_user_func(config()->get('exception.log'), $e));
+    }
+
+    /**
+     * @param Exception $e
+     *
+     * @return Response
+     */
+    public function renderException(Exception $e)
+    {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 502;
         }
 
-        $handle = config()->get('exception.response');
-
-        return json($handle($e), $statusCode);
+        return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
     }
 
     /**
@@ -189,8 +218,6 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        logger()->log($response->getStatusCode(), $request->getMethod().' '.$request->getUri()->getPath());
-
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');

@@ -65,7 +65,7 @@
 
         public function testHandleException()
         {
-            $response = $this->app->handleException(new LogicException('handle exception'));
+            $response = $this->app->renderException(new LogicException('handle exception'));
             $this->app->add('response', $response);
             $this->app->add('request', new \FastD\Http\ServerRequest('GET', '/'));
             $this->app->shutdown(new \FastD\Http\ServerRequest('GET', '/'), $response);
