@@ -17,8 +17,8 @@ return [
      * Application logger
      */
     'log' => [
-        [\FastD\Logger\AccessHandler::class, 'info.log'],
-        [\FastD\Logger\ErrorHandler::class, 'error.log', \FastD\Logger\Logger::ERROR],
+        [\Monolog\Handler\StreamHandler::class, 'info.log'],
+        [\Monolog\Handler\StreamHandler::class, 'error.log', \FastD\Logger\Logger::ERROR],
     ],
 
     /*
@@ -26,6 +26,15 @@ return [
      */
     'exception' => [
         'response' => function (Exception $e) {
+            return [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ];
+        },
+        'log' => function (Exception $e) {
             return [
                 'msg' => $e->getMessage(),
                 'code' => $e->getCode(),

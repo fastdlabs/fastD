@@ -34,6 +34,15 @@ return [
                 'trace' => explode("\n", $e->getTraceAsString()),
             ];
         },
+        'log' => function (Exception $e) {
+            return [
+                'msg' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ];
+        },
     ],
 
     /*

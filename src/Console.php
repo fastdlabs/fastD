@@ -16,6 +16,9 @@ use FastD\Console\RouteDump;
 use FastD\Console\SeedCreate;
 use FastD\Console\SeedRun;
 use Symfony\Component\Console\Application as Symfony;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
  * Class AppConsole.
@@ -58,5 +61,18 @@ class Console extends Symfony
                 $this->add(new $command());
             }
         }
+    }
+
+    public function doRun(InputInterface $input, OutputInterface $output)
+    {
+        try {
+            return parent::doRun($input, $output);
+        } catch (\Exception $exception) {
+            app()->handleException($exception);
+        } catch (\Throwable $exception) {
+            app()->handleException(new FatalThrowableError($exception));
+        }
+
+        throw $exception;
     }
 }

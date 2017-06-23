@@ -47,6 +47,8 @@
             $request = $this->request('GET', '/not/found');
             $response = $this->app->handleRequest($request);
             $this->assertEquals(404, $response->getStatusCode());
+            $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
+            unlink(app()->getPath().'/runtime/logs/error.log');
         }
 
         /**
@@ -65,7 +67,9 @@
 
         public function testHandleException()
         {
-            $response = $this->app->handleException(new LogicException('handle exception'));
+            $exception = new LogicException('handle exception');
+            $this->app->handleException($exception);
+            $response = $this->app->renderException($exception);
             $this->app->add('response', $response);
             $this->app->add('request', new \FastD\Http\ServerRequest('GET', '/'));
             $this->app->shutdown(new \FastD\Http\ServerRequest('GET', '/'), $response);
