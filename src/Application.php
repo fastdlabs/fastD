@@ -9,10 +9,8 @@
 
 namespace FastD;
 
-use Exception;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Throwable;
 use ErrorException;
+use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
@@ -23,6 +21,8 @@ use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Throwable;
 
 /**
  * Class Application.
@@ -99,7 +99,6 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-
             $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
@@ -180,11 +179,11 @@ class Application extends Container
         } catch (Exception $exception) {
             $trace = [
                 'original' => explode("\n", $e->getTraceAsString()),
-                'handler'  => explode("\n", $exception->getTraceAsString()),
+                'handler' => explode("\n", $exception->getTraceAsString()),
             ];
         }
 
-        /**
+        /*
          * TODO 如果在是在 console, 并且在 bootstrap 中发生异常, 将只会保存日志而没有抛出任何异常
          */
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
