@@ -48,6 +48,7 @@
             $request = $this->request('GET', '/not/found');
             $response = $this->app->handleRequest($request);
             $this->assertEquals(404, $response->getStatusCode());
+            $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }
 
         public function testCacheServiceProvider()
