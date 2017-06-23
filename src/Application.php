@@ -128,7 +128,7 @@ class Application extends Container
 
     protected function registerExceptionHandler()
     {
-        error_reporting(config()->get('error_reporting_level', -1));
+        error_reporting(-1);
 
         set_exception_handler([$this, 'handleException']);
 
