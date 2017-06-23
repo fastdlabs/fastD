@@ -128,7 +128,7 @@ class Application extends Container
 
     protected function registerExceptionHandler()
     {
-        error_reporting(-1);
+        error_reporting(config()->get('error_reporting_level', -1));
 
         set_exception_handler([$this, 'handleException']);
 
@@ -184,6 +184,9 @@ class Application extends Container
             ];
         }
 
+        /**
+         * TODO 如果在是在 console, 并且在 bootstrap 中发生异常, 将只会保存日志而没有抛出任何异常
+         */
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
     }
 
