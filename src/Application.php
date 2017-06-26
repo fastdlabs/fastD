@@ -170,10 +170,13 @@ class Application extends Container
     }
 
     /**
-     * @param Exception $e
+     * @param $e
      */
-    public function handleException(Exception $e)
+    public function handleException($e)
     {
+        if (!$e instanceof Exception) {
+            $e = new FatalThrowableError($e);
+        }
         try {
             $trace = call_user_func(config()->get('exception.log'), $e);
         } catch (Exception $exception) {

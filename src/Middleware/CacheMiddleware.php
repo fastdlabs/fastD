@@ -9,6 +9,7 @@
 
 namespace FastD\Middleware;
 
+use FastD\Http\Response;
 use FastD\Packet\Json;
 use FastD\Utils\DateObject;
 use Psr\Http\Message\ResponseInterface;
@@ -27,25 +28,32 @@ class CacheMiddleware extends Middleware
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
     {
-        $action = $request->getMethod();
-        if ('GET' !== $action) {
+        if ('GET' !== $request->getMethod()) {
             return $next->process($request);
         }
 
-        $key = md5($request->getUri()->getPath());
+        $key = md5($request->getUri()->getPath() . http_build_query($request->getQueryParams()));
         $cache = cache()->getItem($key);
         if ($cache->isHit()) {
-            $value = Json::decode($cache->get());
-
-            return json($value)
-                ->withHeader('X-Cache', $key);
+            list($content, $headers) = $cache->get();
+            return new Response($content, Response::HTTP_OK, $headers);
         }
+
         $response = $next->process($request);
-        $cache->set((string) $response->getBody());
+        if (Response::HTTP_OK !== $response->getStatusCode()) {
+            return $response;
+        }
+
+        $response->withHeader('X-Cache', $key);
+
+        $cache->set([
+            (string) $response->getBody(),
+            $response->getHeaders(),
+        ]);
 
         $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
-        $cache->expiresAt($expireAt);
-        cache()->save($cache);
+
+        cache()->save($cache->expiresAt($expireAt));
 
         return $response->withExpires($expireAt);
     }

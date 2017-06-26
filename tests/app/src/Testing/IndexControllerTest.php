@@ -18,10 +18,11 @@
 
         public function testSayHello()
         {
-            $request = $this->request('GET', '/');
-
-            $response = $this->app->handleRequest($request);
-
+            $response = $this->app->handleRequest($this->request('GET', '/'));
+            $this->equalsJson($response, ['foo' => 'bar']);
+            $response = $this->app->handleRequest($this->request('GET', '/?foo=var'));
+            $this->equalsJson($response, ['foo' => 'var']);
+            $response = $this->app->handleRequest($this->request('GET', '/?foo=bar'));
             $this->equalsJson($response, ['foo' => 'bar']);
         }
 
