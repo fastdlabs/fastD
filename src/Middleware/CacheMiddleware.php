@@ -44,17 +44,17 @@ class CacheMiddleware extends Middleware
             return $response;
         }
 
-        $response->withHeader('X-Cache', $key);
+        $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
+
+        $response->withHeader('X-Cache', $key)->withExpires($expireAt);
 
         $cache->set([
             (string) $response->getBody(),
             $response->getHeaders(),
         ]);
 
-        $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
-
         cache()->save($cache->expiresAt($expireAt));
 
-        return $response->withExpires($expireAt);
+        return $response;
     }
 }
