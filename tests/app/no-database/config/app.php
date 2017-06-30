@@ -17,8 +17,8 @@ return [
      * Application logger path
      */
     'log' => [
-        [\Monolog\Handler\StreamHandler::class, \Monolog\Formatter\LineFormatter::class, 'error.log', \Monolog\Logger::ERROR],
-        [\Monolog\Handler\StreamHandler::class, \Monolog\Formatter\LineFormatter::class, 'access.log', \Monolog\Logger::INFO],
+        [\Monolog\Handler\StreamHandler::class, \Monolog\Formatter\LineFormatter::class, app()->getPath(). '/runtime/logs/error.log', \Monolog\Logger::ERROR],
+        [\Monolog\Handler\StreamHandler::class, \Monolog\Formatter\LineFormatter::class, app()->getPath(). '/runtime/logs/access.log', \Monolog\Logger::INFO],
     ],
 
     /*
