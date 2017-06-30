@@ -16,14 +16,13 @@ use Monolog\Handler\AbstractHandler;
 
 /**
  * Class LoggerServiceProvider
- *
- * @package ServiceProvider
  */
 class LoggerServiceProvider implements ServiceProviderInterface
 {
 
     /**
      * @param Container $container
+     * 
      * @return mixed
      */
     public function register(Container $container)
