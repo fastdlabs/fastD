@@ -17,8 +17,8 @@ return [
      * Application logger
      */
     'log' => [
-        [\FastD\Logger\AccessHandler::class, 'info.log'],
-        [\FastD\Logger\ErrorHandler::class, 'error.log', \FastD\Logger\Logger::ERROR],
+        [\FastD\Logger\AccessHandler::class, \Monolog\Formatter\LineFormatter::class, 'info.log'],
+        [\FastD\Logger\ErrorHandler::class, \Monolog\Formatter\LineFormatter::class, 'error.log', \FastD\Logger\Logger::ERROR],
     ],
 
     /*
