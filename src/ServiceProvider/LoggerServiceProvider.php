@@ -15,29 +15,38 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\AbstractHandler;
 
 /**
- * Class LoggerServiceProvider.
+ * Class LoggerServiceProvider
+ *
+ * @package ServiceProvider
  */
 class LoggerServiceProvider implements ServiceProviderInterface
 {
+
     /**
      * @param Container $container
+     * @return mixed
      */
     public function register(Container $container)
     {
-        $handlers = config()->get('log', []);
-        $path = app()->getPath().'/runtime/logs';
+        $handlerDefines = config()->get('log', []);
 
-        foreach ($handlers as $handler) {
-            list($handle, $name, $level, $format) = array_pad($handler, 4, null);
-            if (is_string($handle)) {
-                $handle = new $handle($path.'/'.$name, $level);
+        foreach ($handlerDefines as $handlerDefine) {
+            $handler = array_shift($handlerDefine);
+            $formatter = array_shift($handlerDefine);
+
+            if (is_string($handler)) {
+                $reflection = new \ReflectionClass($handler);
+                $parameters = $reflection->getConstructor()->getParameters();
+                $args = array_pad($handlerDefine, count($parameters), null);
+                $handler = $reflection->newInstanceArgs($args);
             }
-            if ($handle instanceof AbstractHandler) {
-                if (null === $format) {
-                    $format = new LineFormatter();
+
+            if ($handler instanceof AbstractHandler) {
+                if (is_null($formatter)) {
+                    $formatter = new LineFormatter();
                 }
-                $handle->setFormatter(is_string($format) ? new $format() : $format);
-                Logger()->pushHandler($handle);
+                $handler->setFormatter(is_string($formatter) ? new $formatter() : $formatter);
+                logger()->pushHandler($handler);
             }
         }
     }

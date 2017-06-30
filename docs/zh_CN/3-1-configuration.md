@@ -39,7 +39,12 @@ return [
      * Application logger path
      */
     'log' => [
-        [\Monolog\Handler\StreamHandler::class, 'error.log', \Monolog\Logger::ERROR]
+        [
+            \Monolog\Handler\StreamHandler::class,
+            \Monolog\Formatter\LineFormatter::class,
+            app()->getPath() . '/runtime/logs/error.log',
+            \Monolog\Logger::ERROR,
+        ],
     ],
 
     /*
