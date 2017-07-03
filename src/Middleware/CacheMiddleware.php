@@ -10,7 +10,6 @@
 namespace FastD\Middleware;
 
 use FastD\Http\Response;
-use FastD\Packet\Json;
 use FastD\Utils\DateObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
