@@ -32,7 +32,7 @@ class CacheMiddleware extends Middleware
             return $next->process($request);
         }
 
-        $key = md5($request->getUri()->getPath() . http_build_query($request->getQueryParams()));
+        $key = md5($request->getUri()->getPath().http_build_query($request->getQueryParams()));
         $cache = cache()->getItem($key);
         if ($cache->isHit()) {
             list($content, $headers) = $cache->get();
