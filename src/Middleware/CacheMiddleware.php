@@ -36,6 +36,7 @@ class CacheMiddleware extends Middleware
         $cache = cache()->getItem($key);
         if ($cache->isHit()) {
             list($content, $headers) = $cache->get();
+
             return new Response($content, Response::HTTP_OK, $headers);
         }
 
