@@ -18,7 +18,6 @@ class ErrorHandler extends HandlerAbstract
     {
         return [
             'ip' => get_local_ip(),
-            'status' => response()->getStatusCode(),
             'get' => request()->getQueryParams(),
             'post' => request()->getParsedBody(),
             'msg' => exception()->getMessage(),

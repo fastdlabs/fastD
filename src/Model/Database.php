@@ -9,9 +9,9 @@
 
 namespace FastD\Model;
 
+use Exception;
 use Medoo\Medoo;
 use PDO;
-use PDOException;
 
 /**
  * Class Database.
@@ -41,6 +41,8 @@ class Database extends Medoo
 
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
     }
 
     /**
@@ -60,10 +62,7 @@ class Database extends Medoo
     {
         try {
             return parent::query($query);
-        } catch (PDOException $e) {
-            if ('HY000' !== $e->getCode()) {
-                throw $e;
-            }
+        } catch (Exception $e) {
             $this->reconnect();
 
             return parent::query($query);
@@ -79,13 +78,23 @@ class Database extends Medoo
     {
         try {
             return parent::exec($query);
-        } catch (PDOException $e) {
-            if ('HY000' !== $e->getCode()) {
-                throw $e;
-            }
+        } catch (Exception $e) {
             $this->reconnect();
 
             return parent::exec($query);
         }
+    }
+
+    public function has($table, $join, $where = null)
+    {
+        $column = null;
+
+        $query = $this->query('SELECT EXISTS('.$this->selectContext($table, $join, $column, $where, 1).')');
+
+        if ($query && intval($query->fetchColumn()) === 1) {
+            return true;
+        }
+
+        return false;
     }
 }

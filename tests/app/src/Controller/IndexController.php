@@ -30,7 +30,7 @@ class IndexController
 
         ]);
         return json([
-            'foo' => 'bar',
+            'foo' => $request->getParam('foo', 'bar'),
         ]);
     }
 

@@ -8,6 +8,8 @@ services:
 
 before_install:
   - pecl install swoole
+  - mysql -e 'SET @@GLOBAL.wait_timeout=3'
+  - mysql -e 'SET @@GLOBAL.interactive_timeout=3'
   - mysql -e 'CREATE DATABASE IF NOT EXISTS ci;'
   - mysql -e 'use ci;'
   - mysql -e 'CREATE TABLE `ci`.`hello` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` varchar(255) NOT NULL,`user` varchar(255) NOT NULL,`created` datetime NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;'

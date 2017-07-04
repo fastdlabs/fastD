@@ -38,7 +38,7 @@ class RouteDump extends Command
     {
         $table = new Table($output);
         $rows = [];
-        $table->setHeaders(array('Name', 'Path', 'Method', 'Callback', 'Middleware'));
+        $table->setHeaders(array('Path', 'Method', 'Callback', 'Middleware'));
         foreach (route()->aliasMap as $routes) {
             foreach ($routes as $route) {
                 $m = [];
@@ -55,7 +55,6 @@ class RouteDump extends Command
                     $m[] = get_class($middleware);
                 }
                 $rows[] = [
-                    $route->getName(),
                     $route->getPath(),
                     $route->getMethod(),
                     $route->getCallback(),
