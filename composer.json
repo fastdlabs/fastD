@@ -31,18 +31,18 @@
         "fastd/container": "dev-develop",
         "fastd/testing": "dev-develop",
         "fastd/config": "dev-develop",
-        "fastd/swoole": "^2.0",
+        "fastd/swoole": "dev-develop",
         "fastd/middleware": "dev-develop",
         "fastd/http": "dev-develop",
         "fastd/routing": "dev-develop",
         "fastd/utils": "dev-develop",
         "fastd/migration": "dev-develop",
+        "fastd/query-builder": "dev-develop",
         "symfony/cache": "~3.2",
         "monolog/monolog": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.0",
-        "phpunit/dbunit": "^2.0"
+        "phpunit/phpunit": "^6.0"
     },
     "bin": [
         "console",
