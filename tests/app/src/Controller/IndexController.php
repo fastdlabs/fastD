@@ -26,6 +26,8 @@ class IndexController
      */
     public function welcome(ServerRequest $request)
     {
+        event()->emit('start');
+
         return json([
             'foo' => $request->getParam('foo', 'bar'),
         ]);

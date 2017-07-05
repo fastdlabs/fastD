@@ -14,11 +14,13 @@ use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Event\AbstractEventDispatcher;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use FastD\Swoole\EventLoop;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -34,7 +36,7 @@ class Application extends Container
      *
      * @const string
      */
-    const VERSION = '3.1.0';
+    const VERSION = '3.2.0-dev';
 
     /**
      * @var Application
@@ -89,6 +91,14 @@ class Application extends Container
     }
 
     /**
+     * @return bool
+     */
+    public function isFPM()
+    {
+        return 'fpm' === config()->get('mode');
+    }
+
+    /**
      * @return string
      */
     public function getPath()
@@ -112,6 +122,14 @@ class Application extends Container
             unset($config);
             $this->booted = true;
         }
+    }
+
+    /**
+     * @param array $events
+     */
+    protected function registerEvents(array $events)
+    {
+
     }
 
     /**

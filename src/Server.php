@@ -9,8 +9,11 @@
 
 namespace FastD;
 
+use FastD\Event\AbstractEventDispatcher;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
+use FastD\Swoole\EventLoop;
+use FastD\Swoole\Process;
 use swoole_server;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -48,6 +51,7 @@ class Server
 
         $this->initListeners();
         $this->initProcesses();
+        $this->initEvents();
     }
 
     /**
@@ -64,6 +68,22 @@ class Server
     public function bootstrap()
     {
         return $this->server->bootstrap();
+    }
+
+    /**
+     *
+     */
+    public function initEvents()
+    {
+        $this->server->process(new Process('events', function () {
+            $eventLoop = new EventLoop();
+            $eventDispatcher = new AbstractEventDispatcher(STDIN);
+            $eventLoop->set($eventDispatcher);
+            app()->add('event', $eventLoop);
+            foreach (config()->get('events') as $name => $event) {
+                $eventDispatcher->addEvent($name, $event);
+            }
+        }));
     }
 
     /**

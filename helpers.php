@@ -8,6 +8,7 @@
  */
 use FastD\Application;
 use FastD\Config\Config;
+use FastD\Event\AbstractEventDispatcher;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Model\Database;
@@ -133,4 +134,13 @@ function model($name, $key = 'default')
 function server()
 {
     return app()->get('server');
+}
+
+/**
+ * @param $event
+ * @return AbstractEventDispatcher
+ */
+function event()
+{
+    return app()->get('event');
 }

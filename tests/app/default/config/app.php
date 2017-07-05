@@ -45,6 +45,10 @@ return [
         },
     ],
 
+    'events' => [
+        'start' => \Event\StartEvent::class,
+    ],
+
     /*
      * Bootstrap default service provider
      */

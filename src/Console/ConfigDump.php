@@ -40,7 +40,7 @@ class ConfigDump extends Command
             $file = app()->getPath().'/config/'.$input->getArgument('name').'.php';
             $file = str_replace('.php.php', '.php', $file);
             $config = load($file);
-            $output->write('<comment>'.Yaml::dump($config).'</comment>');
+            $output->write('<comment>'.json_encode($config, JSON_PRETTY_PRINT).'</comment>');
 
             return 0;
         }
