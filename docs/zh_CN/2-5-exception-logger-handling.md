@@ -6,7 +6,7 @@
 
 根据配置, 框架中的异常会通过 `json` 的形式返回到客户端, 并记录到日志.
 
-引用配置中异常处理配置示例:
+应用基础配置中异常处理配置示例:
 ```php
 'exception' => [
     'response' => function (Exception $e) {
