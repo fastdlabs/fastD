@@ -48,6 +48,7 @@
             $request = $this->request('GET', '/not/found');
             $response = $this->app->handleRequest($request);
             $this->assertEquals(404, $response->getStatusCode());
+            $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }
 
         public function testCacheServiceProvider()
@@ -66,7 +67,7 @@
 
         public function testHandleException()
         {
-            $response = $this->app->handleException(new LogicException('handle exception'));
+            $response = $this->app->renderException(new LogicException('handle exception'));
             $this->equalsStatus($response, 502);
             $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }

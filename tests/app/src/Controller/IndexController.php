@@ -27,7 +27,7 @@ class IndexController
     public function welcome(ServerRequest $request)
     {
         return json([
-            'foo' => 'bar',
+            'foo' => $request->getParam('foo', 'bar'),
         ]);
     }
 

@@ -37,6 +37,7 @@ class DatabaseTest extends \FastD\TestCase
     public function testGoneAwayConnection()
     {
         $database = $this->createDatabase();
+        sleep(4);
         $tables = $database->query('show tables;')->fetchAll();
         $this->assertTrue(true);
     }
