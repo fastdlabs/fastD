@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use Adinf\RagnarSDK\RagnarSDK;
 use ErrorException;
 use Exception;
 use FastD\Config\Config;
@@ -59,6 +60,11 @@ class Application extends Container
     protected $booted = false;
 
     /**
+     * @var array
+     */
+    protected $point;
+
+    /**
      * AppKernel constructor.
      *
      * @param $path
@@ -91,11 +97,13 @@ class Application extends Container
     }
 
     /**
+     * Swoole mode.
+     *
      * @return bool
      */
-    public function isFPM()
+    public function isSwoole()
     {
-        return 'fpm' === config()->get('mode');
+        return 'swoole' === config()->get('mode');
     }
 
     /**
@@ -108,8 +116,8 @@ class Application extends Container
 
     public function bootstrap()
     {
-        if (!$this->booted) {
-            $this->registerExceptionHandler();
+        if ( ! $this->booted) {
+//            $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
 
@@ -119,6 +127,8 @@ class Application extends Container
             $this->add('logger', new Logger(app()->getName()));
 
             $this->registerServicesProviders($config['services']);
+            RagnarSDK::init($this->name);
+            $this->point = RagnarSDK::digLogStart(__FILE__, __LINE__, $this->name);
             unset($config);
             $this->booted = true;
         }
@@ -192,7 +202,7 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        if (!$e instanceof Exception) {
+        if ( ! $e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
         try {
@@ -219,7 +229,7 @@ class Application extends Container
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        if (!array_key_exists($statusCode, Response::$statusTexts)) {
+        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 502;
         }
 
@@ -242,12 +252,13 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ResponseInterface $response
      *
      * @return int
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
+        RagnarSDK::digLogEnd($this->point, ['response' => $response->getStatusCode()]);
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
