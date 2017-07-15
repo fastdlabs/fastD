@@ -71,22 +71,6 @@ class Server
     }
 
     /**
-     *
-     */
-    public function initEvents()
-    {
-        $this->server->process(new Process('events', function () {
-            $eventLoop = new EventLoop();
-            $eventDispatcher = new AbstractEventDispatcher(STDIN);
-            $eventLoop->set($eventDispatcher);
-            app()->add('event', $eventLoop);
-            foreach (config()->get('events') as $name => $event) {
-                $eventDispatcher->addEvent($name, $event);
-            }
-        }));
-    }
-
-    /**
      * @return $this
      */
     public function initListeners()

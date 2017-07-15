@@ -19,6 +19,26 @@ use FastD\Http\ServerRequest;
  */
 class IndexController
 {
+    public function onRequest()
+    {
+
+    }
+
+    public function onHandleAfter()
+    {
+
+    }
+
+    public function onHandleBefore()
+    {
+
+    }
+
+    public function onResponse()
+    {
+
+    }
+
     /**
      * @param ServerRequest $request
      *
@@ -26,8 +46,6 @@ class IndexController
      */
     public function welcome(ServerRequest $request)
     {
-        event()->emit('start');
-
         return json([
             'foo' => $request->getParam('foo', 'bar'),
         ]);

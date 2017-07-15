@@ -97,16 +97,6 @@ class Application extends Container
     }
 
     /**
-     * Swoole mode.
-     *
-     * @return bool
-     */
-    public function isSwoole()
-    {
-        return 'swoole' === config()->get('mode');
-    }
-
-    /**
      * @return string
      */
     public function getPath()
