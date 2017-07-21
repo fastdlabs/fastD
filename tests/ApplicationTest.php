@@ -82,7 +82,7 @@ class ApplicationTest extends TestCase
         ]);
 
         $this->app->handleResponse($response);
-        $this->expectOutputString((string)$response->getBody());
+        $this->expectOutputString((string) $response->getBody());
     }
 
     public function testApplicationShutdown()
@@ -97,7 +97,7 @@ class ApplicationTest extends TestCase
         $request = $this->request('GET', '/model');
         $response = $this->handleRequest($request);
         $this->equalsJsonResponseHasKey($response, [
-            'model', 'db'
+            'model', 'db',
         ]);
         $this->app->shutdown($request, $response);
     }

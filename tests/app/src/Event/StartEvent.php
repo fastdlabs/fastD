@@ -9,13 +9,13 @@
 
 namespace Event;
 
-
 use FastD\Event\AbstractEvent;
 
 class StartEvent extends AbstractEvent
 {
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function handle(array $data = [])

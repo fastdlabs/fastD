@@ -9,20 +9,17 @@
 
 namespace FastD;
 
-use Adinf\RagnarSDK\RagnarSDK;
 use ErrorException;
 use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Event\AbstractEventDispatcher;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\Ragnar\Ragnar;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Swoole\EventLoop;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -107,8 +104,8 @@ class Application extends Container
 
     public function bootstrap()
     {
-        if ( ! $this->booted) {
-//            $this->registerExceptionHandler();
+        if (!$this->booted) {
+            //            $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
 
@@ -140,7 +137,6 @@ class Application extends Container
      */
     protected function registerEvents(array $events)
     {
-
     }
 
     /**
@@ -192,7 +188,7 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        if ( ! $e instanceof Exception) {
+        if (!$e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
         try {
@@ -219,7 +215,7 @@ class Application extends Container
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
+        if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 502;
         }
 
@@ -242,7 +238,7 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface      $response
      *
      * @return int
      */
