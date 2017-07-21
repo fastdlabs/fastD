@@ -204,9 +204,6 @@ class Application extends Container
             ];
         }
 
-        /*
-         * TODO 如果在是在 console, 并且在 bootstrap 中发生异常, 将只会保存日志而没有抛出任何异常
-         */
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
     }
 
@@ -248,7 +245,12 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->get('apm')->digLogEnd('handle_shutdown')->persist();
+        $this->get('apm')->digLogEnd([
+            'action' => 'shutdown',
+            'url' => (string) $request->getUri(),
+            'status_code' => $response->getStatusCode(),
+            'headers' => $response->getHeaders()
+        ])->persist();
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
