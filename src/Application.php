@@ -253,8 +253,11 @@ class Application extends Container
     {
         $this->get('apm')->digLogEnd([
             'action' => 'shutdown',
-            'url' => (string)$request->getUri(),
+            'host' => $request->getUri()->getHost(),
+            'port' => $request->getUri()->getPort(),
+            'path' => (string)$request->getUri(),
         ])->persist();
+
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
