@@ -209,7 +209,7 @@ class Application extends Container
         $this->get('apm')->log(Ragnar::LOG_TYPE_EXCEPTION, $e->getFile(), $e->getLine(), 'exception', [
             'msg' => $e->getMessage(),
             'code' => $e->getCode(),
-            'trace' => explode("\n", $e->getTraceAsString())
+            'trace' => explode("\n", $e->getTraceAsString()),
         ]);
     }
 
