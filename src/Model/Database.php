@@ -96,6 +96,8 @@ class Database extends Medoo
             $this->reconnect();
 
             $result =parent::exec($query);
+        } finally {
+
         }
 
         RagnarSDK::digLogEnd($start, array(

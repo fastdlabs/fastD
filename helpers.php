@@ -69,7 +69,7 @@ function exception()
 
 /**
  * @param array $content
- * @param int   $statusCode
+ * @param int $statusCode
  *
  * @return Response
  */
@@ -137,10 +137,18 @@ function server()
 }
 
 /**
- * @param $event
  * @return AbstractEventDispatcher
  */
 function event()
 {
     return app()->get('event');
 }
+
+/**
+ * @return \FastD\Ragnar\Ragnar
+ */
+function apm()
+{
+    return app()->get('apm');
+}
+

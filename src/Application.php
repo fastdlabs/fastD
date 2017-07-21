@@ -20,6 +20,7 @@ use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
+use FastD\Ragnar\Ragnar;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use FastD\Swoole\EventLoop;
 use Psr\Http\Message\ResponseInterface;
@@ -114,14 +115,24 @@ class Application extends Container
             $this->name = $config['name'];
 
             $this->add('config', new Config($config));
-            $this->add('logger', new Logger(app()->getName()));
+            $this->add('logger', new Logger($this->name));
+            $this->add('apm', new Ragnar($this->name));
 
             $this->registerServicesProviders($config['services']);
-            RagnarSDK::init($this->name);
-            $this->point = RagnarSDK::digLogStart(__FILE__, __LINE__, $this->name);
             unset($config);
             $this->booted = true;
         }
+    }
+
+    protected function registerExceptionHandler()
+    {
+        error_reporting(-1);
+
+        set_exception_handler([$this, 'handleException']);
+
+        set_error_handler(function ($level, $message, $file = '', $line = 0, $context = []) {
+            throw new ErrorException($message, 0, $level, $file, $line);
+        });
     }
 
     /**
@@ -143,17 +154,6 @@ class Application extends Container
         }
     }
 
-    protected function registerExceptionHandler()
-    {
-        error_reporting(-1);
-
-        set_exception_handler([$this, 'handleException']);
-
-        set_error_handler(function ($level, $message, $file = '', $line = 0, $context = []) {
-            throw new ErrorException($message, 0, $level, $file, $line);
-        });
-    }
-
     /**
      * @param ServerRequestInterface $request
      *
@@ -162,7 +162,7 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
-
+        $this->get('apm')->withServer($request)->digLogStart(__FILE__, __LINE__, 'handle_request');
         try {
             $response = $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
@@ -248,7 +248,7 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        RagnarSDK::digLogEnd($this->point, ['response' => $response->getStatusCode()]);
+        $this->get('apm')->digLogEnd('handle_shutdown')->persist();
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
