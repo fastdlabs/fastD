@@ -9,10 +9,8 @@
 
 namespace FastD\Event;
 
-
 /**
- * Class EventDispatcher
- * @package FastD\Event
+ * Class EventDispatcher.
  */
 abstract class AbstractEventDispatcher
 {
@@ -33,12 +31,14 @@ abstract class AbstractEventDispatcher
     /**
      * @param $event
      * @param array $data
+     *
      * @return mixed
      */
     abstract public function emit($event, array $data = []);
 
     /**
      * @param $event
+     *
      * @return AbstractEvent
      */
     protected function findEvent($event)

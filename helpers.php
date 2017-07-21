@@ -69,7 +69,7 @@ function exception()
 
 /**
  * @param array $content
- * @param int $statusCode
+ * @param int   $statusCode
  *
  * @return Response
  */
@@ -151,4 +151,3 @@ function apm()
 {
     return app()->get('apm');
 }
-

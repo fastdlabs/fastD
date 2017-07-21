@@ -9,10 +9,8 @@
 
 namespace FastD;
 
-use FastD\Event\AbstractEventDispatcher;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
-use FastD\Swoole\EventLoop;
 use FastD\Swoole\Process;
 use swoole_server;
 use Symfony\Component\Console\Input\InputInterface;
