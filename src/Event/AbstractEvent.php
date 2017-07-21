@@ -9,10 +9,8 @@
 
 namespace FastD\Event;
 
-
 /**
- * Class AbstractEvent
- * @package FastD\Event
+ * Class AbstractEvent.
  */
 abstract class AbstractEvent
 {
@@ -23,6 +21,7 @@ abstract class AbstractEvent
 
     /**
      * AbstractEvent constructor.
+     *
      * @param $name
      */
     public function __construct($name)
@@ -32,6 +31,7 @@ abstract class AbstractEvent
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     abstract public function handle(array $data = []);

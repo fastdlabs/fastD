@@ -9,12 +9,12 @@
 
 namespace FastD\Event;
 
-
 class SwooleEventDispatcher extends AbstractEventDispatcher
 {
     /**
      * @param $event
      * @param array $data
+     *
      * @return mixed
      */
     public function emit($event, array $data = [])
