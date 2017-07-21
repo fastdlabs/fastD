@@ -9,7 +9,6 @@
 
 namespace FastD\Model;
 
-use Adinf\RagnarSDK\RagnarConst;
 use Adinf\RagnarSDK\RagnarSDK;
 use Exception;
 use Medoo\Medoo;
@@ -62,7 +61,7 @@ class Database extends Medoo
      */
     public function query($query)
     {
-        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, "mysql");
+        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, 'mysql');
 
         try {
             $result = parent::query($query);
@@ -72,10 +71,10 @@ class Database extends Medoo
             $result = parent::query($query);
         }
         RagnarSDK::digLogEnd($start, array(
-            "sql" => $query,
-            "data" => "sql的参数",
-            "op" => "select\delete\update\...",
-            "fun" => "execute_sql",
+            'sql' => $query,
+            'data' => 'sql的参数',
+            'op' => "select\delete\update\...",
+            'fun' => 'execute_sql',
         ));
 
         return $result;
@@ -88,23 +87,22 @@ class Database extends Medoo
      */
     public function exec($query)
     {
-        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, "mysql");
+        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, 'mysql');
 
         try {
             $result = parent::exec($query);
         } catch (Exception $e) {
             $this->reconnect();
 
-            $result =parent::exec($query);
+            $result = parent::exec($query);
         } finally {
-
         }
 
         RagnarSDK::digLogEnd($start, array(
-            "sql" => $query,
-            "data" => "sql的参数",
-            "op" => "select\delete\update\...",
-            "fun" => "execute_sql",
+            'sql' => $query,
+            'data' => 'sql的参数',
+            'op' => "select\delete\update\...",
+            'fun' => 'execute_sql',
         ));
 
         return $result;

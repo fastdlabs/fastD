@@ -21,22 +21,18 @@ class IndexController
 {
     public function onRequest()
     {
-
     }
 
     public function onHandleAfter()
     {
-
     }
 
     public function onHandleBefore()
     {
-
     }
 
     public function onResponse()
     {
-
     }
 
     /**

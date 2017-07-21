@@ -9,20 +9,17 @@
 
 namespace FastD;
 
-use Adinf\RagnarSDK\RagnarSDK;
 use ErrorException;
 use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Event\AbstractEventDispatcher;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\Ragnar\Ragnar;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Swoole\EventLoop;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -108,7 +105,7 @@ class Application extends Container
     public function bootstrap()
     {
         if ( ! $this->booted) {
-//            $this->registerExceptionHandler();
+            //            $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
 
@@ -130,7 +127,7 @@ class Application extends Container
 
         set_exception_handler([$this, 'handleException']);
 
-        set_error_handler(function ($level, $message, $file = '', $line = 0, $context = []) {
+        set_error_handler(function ($level, $message, $file = '', $line = 0) {
             throw new ErrorException($message, 0, $level, $file, $line);
         });
     }
@@ -140,7 +137,6 @@ class Application extends Container
      */
     protected function registerEvents(array $events)
     {
-
     }
 
     /**
@@ -162,7 +158,7 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
-        $this->get('apm')->withServer($request)->digLogStart(__FILE__, __LINE__, 'handle_request');
+        $this->get('apm')->withServer($request)->digLogStart(__FILE__, __LINE__, 'request');
         try {
             $response = $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
@@ -185,6 +181,11 @@ class Application extends Container
     public function handleResponse(Response $response)
     {
         $response->send();
+
+        $this->get('apm')->log(Ragnar::LOG_TYPE_INFO, __FILE__, __LINE__, 'response', [
+            'status_code' => $response->getStatusCode(),
+            'headers' => $response->getHeaders(),
+        ]);
     }
 
     /**
@@ -205,6 +206,11 @@ class Application extends Container
         }
 
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
+        $this->get('apm')->log(Ragnar::LOG_TYPE_EXCEPTION, $e->getFile(), $e->getLine(), 'exception', [
+            'msg' => $e->getMessage(),
+            'code' => $e->getCode(),
+            'trace' => explode("\n", $e->getTraceAsString()),
+        ]);
     }
 
     /**
@@ -247,9 +253,7 @@ class Application extends Container
     {
         $this->get('apm')->digLogEnd([
             'action' => 'shutdown',
-            'url' => (string) $request->getUri(),
-            'status_code' => $response->getStatusCode(),
-            'headers' => $response->getHeaders()
+            'url' => (string)$request->getUri(),
         ])->persist();
         $this->offsetUnset('request');
         $this->offsetUnset('response');
