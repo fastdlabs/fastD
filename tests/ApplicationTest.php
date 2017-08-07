@@ -101,4 +101,11 @@ class ApplicationTest extends TestCase
         ]);
         $this->app->shutdown($request, $response);
     }
+
+    public function testApplicationEventController()
+    {
+        $request = $this->request('GET', '/event');
+        $response = $this->handleRequest($request);
+        echo $response;
+    }
 }

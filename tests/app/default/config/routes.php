@@ -6,3 +6,4 @@ route()->get('/db', 'IndexController@db');
 route()->post('/foo/{name}', 'IndexController@middleware')->withAddMiddleware(new \Middleware\FooMiddleware());
 route()->get('/model', 'IndexController@model');
 route()->get('/auth', 'IndexController@auth')->withAddMiddleware('basic.auth');
+route()->get('/event', \Controller\EventController::class);

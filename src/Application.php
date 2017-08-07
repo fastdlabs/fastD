@@ -180,6 +180,8 @@ class Application extends Container
      */
     public function handleResponse(Response $response)
     {
+        $response->withHeaders($this->get('apm')->getHeaders());
+
         $response->send();
 
         $this->get('apm')->log(Ragnar::LOG_TYPE_INFO, __FILE__, __LINE__, 'response', [
@@ -255,6 +257,7 @@ class Application extends Container
             'action' => 'shutdown',
             'url' => (string) $request->getUri(),
         ])->persist();
+
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
