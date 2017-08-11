@@ -26,20 +26,21 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 * [中文文档](docs/zh_CN/readme.md)
 
+### 系列文章
+
+* [FastD 最佳实践一: 构建 API](https://fastdlabs.com/blog/9)
+* [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
+
 ### 相关项目
 
 * [Dobee API Framework](https://github.com/JanHuang/dobee)
-* [UserD](https://github.com/JanHuang/userd)
-* [MediaD](https://github.com/JanHuang/mediad)
-* [PostsD](https://github.com/JanHuang/postsd)
-* [TagD](https://github.com/JanHuang/tagd)
-* [CommentD](https://github.com/JanHuang/commentd)
 
 ### 贡献
 
 * [yyz26371945](https://github.com/yyz26371945)
 * [RunnerLee](https://github.com/RunnerLee)
 * [zqhong](https://github.com/zqhong)
+* [xsharp](https://github.com/xsharp)
 
 非常欢迎感兴趣，愿意参与其中，共同打造更好PHP生态，Swoole生态的开发者。
 
