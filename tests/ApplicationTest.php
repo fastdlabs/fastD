@@ -91,21 +91,4 @@ class ApplicationTest extends TestCase
         $response = $this->handleRequest($request);
         $this->app->shutdown($request, $response);
     }
-
-    public function testApplicationDigPoint()
-    {
-        $request = $this->request('GET', '/model');
-        $response = $this->handleRequest($request);
-//        $this->equalsJsonResponseHasKey($response, [
-//            'model', 'db',
-//        ]);
-        $this->app->shutdown($request, $response);
-    }
-
-    public function testApplicationEventController()
-    {
-        $request = $this->request('GET', '/event');
-        $response = $this->handleRequest($request);
-        echo $response;
-    }
 }

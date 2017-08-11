@@ -96,5 +96,7 @@ class Client
             echo $e->getMessage();
             throw $e;
         }
+
+        return 0;
     }
 }

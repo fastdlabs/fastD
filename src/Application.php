@@ -18,7 +18,6 @@ use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
-use FastD\Ragnar\Ragnar;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -104,8 +103,8 @@ class Application extends Container
 
     public function bootstrap()
     {
-        if (!$this->booted) {
-            //            $this->registerExceptionHandler();
+        if ( ! $this->booted) {
+            $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
 
@@ -113,7 +112,6 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
-            $this->add('apm', new Ragnar($this->name));
 
             $this->registerServicesProviders($config['services']);
             unset($config);
@@ -158,7 +156,6 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
-        $this->get('apm')->withServer($request)->digLogStart(__FILE__, __LINE__, 'request');
         try {
             $response = $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
@@ -180,14 +177,7 @@ class Application extends Container
      */
     public function handleResponse(Response $response)
     {
-        $response->withHeaders($this->get('apm')->getHeaders());
-
         $response->send();
-
-        $this->get('apm')->log(Ragnar::LOG_TYPE_INFO, __FILE__, __LINE__, 'response', [
-            'status_code' => $response->getStatusCode(),
-            'headers' => $response->getHeaders(),
-        ]);
     }
 
     /**
@@ -195,7 +185,7 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        if (!$e instanceof Exception) {
+        if ( ! $e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
         try {
@@ -208,11 +198,6 @@ class Application extends Container
         }
 
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
-        $this->get('apm')->log(Ragnar::LOG_TYPE_EXCEPTION, $e->getFile(), $e->getLine(), 'exception', [
-            'msg' => $e->getMessage(),
-            'code' => $e->getCode(),
-            'trace' => explode("\n", $e->getTraceAsString()),
-        ]);
     }
 
     /**
@@ -224,7 +209,7 @@ class Application extends Container
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        if (!array_key_exists($statusCode, Response::$statusTexts)) {
+        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 502;
         }
 
@@ -247,19 +232,12 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ResponseInterface $response
      *
      * @return int
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $this->get('apm')->digLogEnd([
-            'action' => 'shutdown',
-            'host' => $request->getUri()->getHost(),
-            'port' => $request->getUri()->getPort(),
-            'path' => (string)$request->getUri(),
-        ])->persist();
-
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
