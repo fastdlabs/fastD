@@ -9,7 +9,6 @@
 
 namespace FastD\Model;
 
-use Adinf\RagnarSDK\RagnarSDK;
 use Exception;
 use Medoo\Medoo;
 use PDO;
@@ -61,51 +60,33 @@ class Database extends Medoo
      */
     public function query($query)
     {
-        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, 'mysql');
-
         try {
-            $result = parent::query($query);
+            return parent::query($query);
         } catch (Exception $e) {
             $this->reconnect();
 
-            $result = parent::query($query);
+            return parent::query($query);
+        } finally {
+            throw new \PDOException(sprintf('Query "%s" error.', $query));
         }
-        RagnarSDK::digLogEnd($start, array(
-            'sql' => $query,
-            'data' => 'sql的参数',
-            'op' => "select\delete\update\...",
-            'fun' => 'execute_sql',
-        ));
-
-        return $result;
     }
 
     /**
      * @param $query
-     *
-     * @return bool|\PDOStatement
+     * @return bool|int
+     * @throws \ErrorException
      */
     public function exec($query)
     {
-        $start = RagnarSDK::digLogStart(__FILE__, __LINE__, 'mysql');
-
         try {
-            $result = parent::exec($query);
+            return parent::exec($query);
         } catch (Exception $e) {
             $this->reconnect();
 
-            $result = parent::exec($query);
+            return parent::exec($query);
         } finally {
+            throw new \PDOException(sprintf('Query "%s" error.', $query));
         }
-
-        RagnarSDK::digLogEnd($start, array(
-            'sql' => $query,
-            'data' => 'sql的参数',
-            'op' => "select\delete\update\...",
-            'fun' => 'execute_sql',
-        ));
-
-        return $result;
     }
 
     public function has($table, $join, $where = null)
