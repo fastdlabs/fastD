@@ -30,6 +30,7 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 * [FastD 最佳实践一: 构建 API](https://fastdlabs.com/blog/9)
 * [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
+* [FastD 最佳实践三: 构建API网关](https://fastdlabs.com/blog/11)
 
 ### 相关项目
 
