@@ -143,11 +143,3 @@ function event()
 {
     return app()->get('event');
 }
-
-/**
- * @return \FastD\Ragnar\Ragnar
- */
-function apm()
-{
-    return app()->get('apm');
-}

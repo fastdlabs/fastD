@@ -14,6 +14,7 @@ use Exception;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Event\EventDispatcher;
 use FastD\Http\HttpException;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
@@ -112,6 +113,7 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
+            $this->add('event', new EventDispatcher());
 
             $this->registerServicesProviders($config['services']);
             unset($config);
@@ -128,13 +130,6 @@ class Application extends Container
         set_error_handler(function ($level, $message, $file = '', $line = 0) {
             throw new ErrorException($message, 0, $level, $file, $line);
         });
-    }
-
-    /**
-     * @param array $events
-     */
-    protected function registerEvents(array $events)
-    {
     }
 
     /**
