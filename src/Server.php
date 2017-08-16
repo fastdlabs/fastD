@@ -49,7 +49,6 @@ class Server
 
         $this->initListeners();
         $this->initProcesses();
-        $this->initEvents();
     }
 
     /**
