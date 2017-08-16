@@ -8,12 +8,12 @@
  */
 use FastD\Application;
 use FastD\Config\Config;
-use FastD\Event\AbstractEventDispatcher;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
+use FastD\Model\Table;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -118,6 +118,16 @@ function database($key = 'default')
 }
 
 /**
+ * @param $table
+ * @param string $key
+ * @return Table
+ */
+function table($table, $key = 'default')
+{
+    return new Table(database($key), $table);
+}
+
+/**
  * @param $name
  * @param $key
  *
@@ -134,12 +144,4 @@ function model($name, $key = 'default')
 function server()
 {
     return app()->get('server');
-}
-
-/**
- * @return AbstractEventDispatcher
- */
-function event()
-{
-    return app()->get('event');
 }
