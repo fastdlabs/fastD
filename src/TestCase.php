@@ -98,7 +98,7 @@ class TestCase extends WebTestCase
     protected function getDataSet()
     {
         $path = app()->getPath().'/database/dataset/*';
-        
+
         $composite = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
 
         foreach (glob($path) as $file) {
