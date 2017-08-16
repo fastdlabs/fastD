@@ -94,6 +94,7 @@ class Client
             $this->execute($input, $output);
         } catch (Exception $e) {
             echo $e->getMessage();
+
             throw $e;
         }
     }
