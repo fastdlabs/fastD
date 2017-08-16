@@ -176,12 +176,15 @@ class Server
                 } else {
                     $this->start();
                 }
+
                 break;
             case 'stop':
                 $this->stop();
+
                 break;
             case 'reload':
                 $this->reload();
+
                 break;
             case 'status':
             default:

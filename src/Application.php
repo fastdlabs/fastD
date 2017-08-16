@@ -177,6 +177,7 @@ class Application extends Container
         if (!$e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
+
         try {
             $trace = call_user_func(config()->get('exception.log'), $e);
         } catch (Exception $exception) {
