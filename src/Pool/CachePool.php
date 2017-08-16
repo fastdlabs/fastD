@@ -56,6 +56,7 @@ class CachePool implements PoolInterface
                         isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
                         isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
                     );
+
                     break;
                 default:
                     $this->caches[$key] = new $config['adapter'](

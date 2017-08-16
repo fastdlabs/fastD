@@ -42,9 +42,11 @@ class ManagerServer extends TCP
             case 'quit':
                 $server->send($fd, 'connection closed');
                 $server->close($fd);
+
                 break;
             case 'reload':
                 $this->getSwoole()->reload();
+
                 break;
             case 'status':
             default:
@@ -54,6 +56,7 @@ class ManagerServer extends TCP
                     $status .= '['.date('Y-m-d H:i:s').']: '.$key.': '.$value.PHP_EOL;
                 }
                 $server->send($fd, $status);
+
                 break;
         }
     }
