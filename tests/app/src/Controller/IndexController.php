@@ -29,18 +29,6 @@ class IndexController
         $request->send();
     }
 
-    public function onHandleAfter()
-    {
-    }
-
-    public function onHandleBefore()
-    {
-    }
-
-    public function onResponse()
-    {
-    }
-
     /**
      * @param ServerRequest $request
      *
@@ -103,5 +91,10 @@ class IndexController
         return json([
             'foo' => 'bar',
         ]);
+    }
+
+    public function abort()
+    {
+        abort(400);
     }
 }

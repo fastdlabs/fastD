@@ -34,10 +34,10 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 周边
 
-- [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
-- [x] [FastD Viewer](https://github.com/JanHuang/viewer)
-- [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)
-- [x] [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+* [FastD ServiceProvider](https://github.com/linghit/service-provider)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
 
 ### 相关项目
 

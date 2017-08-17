@@ -30,11 +30,6 @@ use Throwable;
  */
 class Application extends Container
 {
-    /**
-     * The FastD version.
-     *
-     * @const string
-     */
     const VERSION = '3.2.0-dev';
 
     /**
@@ -56,11 +51,6 @@ class Application extends Container
      * @var bool
      */
     protected $booted = false;
-
-    /**
-     * @var array
-     */
-    protected $point;
 
     /**
      * AppKernel constructor.
@@ -113,7 +103,6 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
-            $this->add('event', new EventDispatcher());
 
             $this->registerServicesProviders($config['services']);
             unset($config);

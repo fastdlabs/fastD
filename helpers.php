@@ -14,6 +14,7 @@ use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Model\Table;
+use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -65,6 +66,16 @@ function response()
 function exception()
 {
     return app()->get('exception');
+}
+
+/**
+ * @param array $content
+ * @param int $statusCode
+ * @return Response
+ */
+function binary(array $content, $statusCode = Response::HTTP_OK)
+{
+    return new Response(Swoole::encode($content), $statusCode);
 }
 
 /**

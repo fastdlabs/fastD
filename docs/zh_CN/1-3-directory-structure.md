@@ -28,6 +28,7 @@ runtime                 程序运行数据目录
     pid                 服务器 pid 文件目录
     logs                日志目录
     cache               文件缓存目录
+    process             进程 pid 文件目录
 ```
 
 源代码均放置在 src 目录，如果目录并不能满足业务需求，可以通过调整 `composer.json` 文件进行适配。

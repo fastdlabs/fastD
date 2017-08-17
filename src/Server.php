@@ -11,7 +11,6 @@ namespace FastD;
 
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
-use FastD\Swoole\Process;
 use swoole_server;
 use Symfony\Component\Console\Input\InputInterface;
 

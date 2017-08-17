@@ -66,7 +66,7 @@ return [
     /**
      * Bootstrap service.
      */
-    'providers' => [
+    'services' => [
         \FastD\ServiceProvider\RouteServiceProvider::class,
         \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
