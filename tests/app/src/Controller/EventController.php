@@ -9,7 +9,6 @@
 
 namespace Controller;
 
-
 use FastD\Event\AbstractEvent;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,10 +16,12 @@ use Psr\Http\Message\ServerRequestInterface;
 class EventController extends AbstractEvent
 {
     public function onRequest(ServerRequestInterface $request)
-    {}
+    {
+    }
 
     public function onResponse(ResponseInterface $response)
-    {}
+    {
+    }
 
     /**
      * @param array $data

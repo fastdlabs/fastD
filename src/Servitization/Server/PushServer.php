@@ -9,10 +9,8 @@
 
 namespace Servitization\Server;
 
-
 use FastD\Servitization\Server\TCPServer;
 
 class PushServer extends TCPServer
 {
-
 }

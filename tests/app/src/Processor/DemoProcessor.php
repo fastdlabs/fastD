@@ -9,7 +9,6 @@
 
 namespace Processor;
 
-
 use FastD\Swoole\Process;
 use swoole_process;
 
@@ -19,8 +18,8 @@ class DemoProcessor extends Process
     {
         timer_tick(1000, function ($id) {
             static $index = 0;
-            $index++;
-            echo $index . PHP_EOL;
+            ++$index;
+            echo $index.PHP_EOL;
             if ($index === 3) {
                 timer_clear($id);
             }

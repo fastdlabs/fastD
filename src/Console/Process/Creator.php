@@ -9,7 +9,6 @@
 
 namespace FastD\Console\Process;
 
-
 use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,14 +17,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Process
- * @package FastD\Console
+ * Class Process.
  */
 class Creator extends Command
 {
-    /**
-     * @return void
-     */
     protected function configure()
     {
         $this->setName('process:create');
@@ -36,8 +31,9 @@ class Creator extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,11 +41,11 @@ class Creator extends Command
         $process = $input->getArgument('process');
         $process = str_replace(':', '\\', $process);
         $name = $input->getOption('name');
-        if ( ! class_exists($process)) {
+        if (!class_exists($process)) {
             throw new \RuntimeException(sprintf('Class "%s" is not found.', $process));
         }
         $process = new $process($name);
-        if ( ! ($process instanceof Process)) {
+        if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
@@ -61,13 +57,14 @@ class Creator extends Command
         file_put_contents($file, $pid);
         $output->writeln(sprintf('Process %s is started, pid: %s', $name, $pid));
         $output->writeln(sprintf('Pid file save is %s', $file));
+
         return $pid;
     }
 
     protected function targetDirectory()
     {
         $path = app()->getPath().'/runtime/process';
-        if ( ! file_exists($path)) {
+        if (!file_exists($path)) {
             mkdir($path, true, 0755);
         }
 

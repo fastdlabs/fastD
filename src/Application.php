@@ -104,7 +104,7 @@ class Application extends Container
 
     public function bootstrap()
     {
-        if ( ! $this->booted) {
+        if (!$this->booted) {
             $this->registerExceptionHandler();
 
             $config = load($this->path.'/config/app.php');
@@ -151,6 +151,7 @@ class Application extends Container
     public function handleRequest(ServerRequestInterface $request)
     {
         $this->add('request', $request);
+
         try {
             $response = $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
@@ -180,7 +181,7 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        if ( ! $e instanceof Exception) {
+        if (!$e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
 
@@ -205,7 +206,7 @@ class Application extends Container
     {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        if ( ! array_key_exists($statusCode, Response::$statusTexts)) {
+        if (!array_key_exists($statusCode, Response::$statusTexts)) {
             $statusCode = 502;
         }
 
@@ -228,7 +229,7 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface      $response
      *
      * @return int
      */
