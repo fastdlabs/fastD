@@ -10,7 +10,9 @@
 namespace Controller;
 
 use FastD\Http\JsonResponse;
+use FastD\Http\Request;
 use FastD\Http\ServerRequest;
+use FastD\Http\Uri;
 
 /**
  * @SWG\Info(title="演示API", version="0.1")
@@ -19,8 +21,12 @@ use FastD\Http\ServerRequest;
  */
 class IndexController
 {
-    public function onRequest()
+    public function onRequest(Request $request)
     {
+        $request = clone $request;
+        $request->withUri(new Uri());
+        $request->withMethod('GET');
+        $request->send();
     }
 
     public function onHandleAfter()

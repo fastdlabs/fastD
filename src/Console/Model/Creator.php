@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD\Console\Model;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class ModelCreate.
  */
-class ModelCreate extends Command
+class Creator extends Command
 {
     public function configure()
     {

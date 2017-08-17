@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD\Console\Migration;
 
 use Phinx\Config\Config as MConfig;
 use Phinx\Console\Command\Migrate;

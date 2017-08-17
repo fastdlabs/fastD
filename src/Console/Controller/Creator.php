@@ -7,14 +7,14 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD\Console\Controller;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ControllerCreate extends Command
+class Creator extends Command
 {
     public function configure()
     {

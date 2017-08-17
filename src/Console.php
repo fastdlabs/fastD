@@ -9,13 +9,8 @@
 
 namespace FastD;
 
-use FastD\Console\ConfigDump;
-use FastD\Console\ControllerCreate;
-use FastD\Console\ModelCreate;
-use FastD\Console\Process;
-use FastD\Console\RouteDump;
-use FastD\Console\SeedCreate;
-use FastD\Console\SeedRun;
+
+use FastD\Console\Process\Creator;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,13 +31,7 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
-            new ModelCreate(),
-            new ControllerCreate(),
-            new RouteDump(),
-            new ConfigDump(),
-            new SeedCreate(),
-            new SeedRun(),
-            new Process(),
+            new Creator(),
         ]);
 
         $this->registerCommands();

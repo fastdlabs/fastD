@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD\Console\Config;
 
 use FastD\Utils\FileObject;
 use Symfony\Component\Console\Command\Command;
@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Config.
  */
-class ConfigDump extends Command
+class Dumper extends Command
 {
     public function configure()
     {

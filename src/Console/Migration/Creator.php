@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console;
+namespace FastD\Console\Migration;
 
 use Phinx\Config\Config as MConfig;
 use Phinx\Console\Command\Create;
@@ -15,7 +15,7 @@ use Phinx\Util\Util;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SeedCreate extends Create
+class Creator extends Create
 {
     public function getConfig()
     {
