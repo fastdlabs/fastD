@@ -12,6 +12,11 @@
 
 ## 开发 FastD 扩展包
 
-相信使用过 Symfony，Laravel 的朋友都知道，如果框架支持扩展包开发，或者有良好的扩展包生态支持，那么在开发上，可以说是如鱼得水，在 2.0 版本中，也是支持扩展包开发的。 
+相信使用过 Symfony，Laravel 的朋友都知道，如果框架支持扩展包开发，或者有良好的扩展包生态支持，那么在开发上，可以说是如鱼得水，在 2.0 版本中，也是支持扩展包开发的。
+ 
+* [FastD ServiceProvider](https://github.com/linghit/service-provider)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
 
 下一节: [理念与架构](4-1-lifecycle.md)
