@@ -19,7 +19,7 @@ use PDO;
 class Database extends Medoo
 {
     /**
-     * @var array|null
+     * @var array
      */
     protected $config = [];
 
@@ -66,8 +66,6 @@ class Database extends Medoo
             $this->reconnect();
 
             return parent::query($query);
-        } finally {
-            throw new \PDOException(sprintf('Query "%s" error.', $query));
         }
     }
 
@@ -84,11 +82,15 @@ class Database extends Medoo
             $this->reconnect();
 
             return parent::exec($query);
-        } finally {
-            throw new \PDOException(sprintf('Query "%s" error.', $query));
         }
     }
 
+    /**
+     * @param $table
+     * @param $join
+     * @param null $where
+     * @return bool
+     */
     public function has($table, $join, $where = null)
     {
         $column = null;

@@ -12,6 +12,7 @@ namespace FastD;
 use FastD\Console\ConfigDump;
 use FastD\Console\ControllerCreate;
 use FastD\Console\ModelCreate;
+use FastD\Console\Process;
 use FastD\Console\RouteDump;
 use FastD\Console\SeedCreate;
 use FastD\Console\SeedRun;
@@ -41,6 +42,7 @@ class Console extends Symfony
             new ConfigDump(),
             new SeedCreate(),
             new SeedRun(),
+            new Process(),
         ]);
 
         $this->registerCommands();

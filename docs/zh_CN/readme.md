@@ -60,31 +60,19 @@
 - [x] [辅助函数](3-7-helpers.md)
 - [x] [服务提供器](3-8-service-provider.md)
 - [x] [Swoole服务器](3-9-swoole-server.md)
-- [x] [连接池](3-10-connection-pool.md)
-- [x] [扩展](3-11-extend.md)
+- [x] [Swoole进程管理](3-10-swoole-processor.md)
+- [x] [连接池](3-11-connection-pool.md)
+- [x] [扩展](3-12-extend.md)
 
 架构
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
-- [ ] ~~[RPC服务](4-2-microservice.md)~~
-- [ ] [FastD 与 LogStash](4-3-fastd-logstash.md) (未开放)
-- [ ] [FastD 与 QConf](4-4-fastd-qconf.md) (未开放)
-- [ ] [FastD 与 LogViewer](4-5-fastd-log-viewer.md) (未开放)
-- [ ] FastD 服务化
-- [ ] FastD 管理
-- [x] 特性功能演示
-    - [ ] [Queue]()
 
 周边开源
 --------
 
 - [x] [Dobee API Framework](https://github.com/JanHuang/dobee)
-- [x] [UserD](https://github.com/JanHuang/userd) 开发中...
-- [x] [MediaD](https://github.com/JanHuang/mediad) 开发中...
-- [x] [PostsD](https://github.com/JanHuang/postsd) 开发中...
-- [x] [TagD](https://github.com/JanHuang/tagd) 开发中...
-- [x] [CommentD](https://github.com/JanHuang/commentd) 开发中...
 
 ### Support
 
