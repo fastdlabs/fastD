@@ -120,6 +120,7 @@ function database($key = 'default')
 /**
  * @param $table
  * @param string $key
+ *
  * @return Table
  */
 function table($table, $key = 'default')

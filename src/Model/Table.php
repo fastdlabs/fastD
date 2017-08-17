@@ -9,8 +9,6 @@
 
 namespace FastD\Model;
 
-
 class Table
 {
-
 }

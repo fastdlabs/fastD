@@ -9,7 +9,6 @@
 
 namespace FastD;
 
-
 use FastD\Console\Process\Creator;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;

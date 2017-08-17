@@ -71,7 +71,9 @@ class Database extends Medoo
 
     /**
      * @param $query
+     *
      * @return bool|int
+     *
      * @throws \ErrorException
      */
     public function exec($query)
@@ -89,6 +91,7 @@ class Database extends Medoo
      * @param $table
      * @param $join
      * @param null $where
+     *
      * @return bool
      */
     public function has($table, $join, $where = null)

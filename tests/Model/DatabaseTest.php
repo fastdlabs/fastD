@@ -48,7 +48,7 @@ class DatabaseTest extends \FastD\TestCase
             'user' => 'foo',
             'created' => date('Y-m-d H:i:s'),
         ]);
-        
+
         $row = database()->get('hello', '*', [
             'id' => database()->id(),
         ]);
