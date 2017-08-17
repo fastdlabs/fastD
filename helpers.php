@@ -70,7 +70,8 @@ function exception()
 
 /**
  * @param array $content
- * @param int $statusCode
+ * @param int   $statusCode
+ *
  * @return Response
  */
 function binary(array $content, $statusCode = Response::HTTP_OK)

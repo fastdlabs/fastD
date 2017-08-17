@@ -38,8 +38,8 @@ class FooServiceProvider implements ServiceProviderInterface
         $container->add('foo', new Foo());
         config()->merge([
             'consoles' => [
-                DemoConsole::class
-            ]
+                DemoConsole::class,
+            ],
         ]);
     }
 }

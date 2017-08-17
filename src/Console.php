@@ -54,9 +54,11 @@ class Console extends Symfony
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
+     *
      * @throws \Throwable
      */
     public function doRun(InputInterface $input, OutputInterface $output)
