@@ -67,8 +67,6 @@ class Console extends Symfony
             return parent::doRun($input, $output);
         } catch (\Exception $exception) {
             app()->handleException($exception);
-        } catch (\Throwable $exception) {
-            app()->handleException(new FatalThrowableError($exception));
         }
 
         throw $exception;

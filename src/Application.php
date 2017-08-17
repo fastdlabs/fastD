@@ -145,10 +145,6 @@ class Application extends Container
         } catch (Exception $exception) {
             $this->handleException($exception);
             $response = $this->renderException($exception);
-        } catch (Throwable $exception) {
-            $exception = new FatalThrowableError($exception);
-            $this->handleException($exception);
-            $response = $this->renderException($exception);
         }
 
         $this->add('response', $response);
