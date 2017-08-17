@@ -63,13 +63,17 @@
 - [x] [Swoole进程管理](3-10-swoole-processor.md)
 - [x] [连接池](3-11-connection-pool.md)
 - [x] [扩展](3-12-extend.md)
+    - [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
+    - [x] [FastD Viewer](https://github.com/JanHuang/viewer)
+    - [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+    - [x] [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
 
 架构
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
 
-周边开源
+周边
 --------
 
 - [x] [Dobee API Framework](https://github.com/JanHuang/dobee)

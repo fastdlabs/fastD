@@ -32,6 +32,13 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
 * [FastD 最佳实践三: 构建API网关](https://fastdlabs.com/blog/11)
 
+### 周边
+
+- [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
+- [x] [FastD Viewer](https://github.com/JanHuang/viewer)
+- [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+- [x] [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+
 ### 相关项目
 
 * [Dobee API Framework](https://github.com/JanHuang/dobee)
