@@ -21,6 +21,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class TestCase extends WebTestCase
 {
+    protected $connection = 'default';
+
     /**
      * @var Application
      */
@@ -79,12 +81,7 @@ class TestCase extends WebTestCase
     protected function getConnection()
     {
         try {
-            $connection = env('connection');
-            if (!$connection) {
-                $connection = 'default';
-            }
-
-            return $this->createDefaultDBConnection(database($connection)->pdo);
+            return $this->createDefaultDBConnection(database($this->connection)->pdo);
         } catch (\Exception $exception) {
             return null;
         }
@@ -97,11 +94,15 @@ class TestCase extends WebTestCase
      */
     protected function getDataSet()
     {
-        $path = app()->getPath().'/database/dataset/*';
+        $path = app()->getPath().'/database/dataset/'.$this->connection;
+
+        if (!file_exists($path) && !empty($this->connection)) {
+            $path = dirname($path);
+        }
 
         $composite = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
 
-        foreach (glob($path) as $file) {
+        foreach (glob($path.'/*') as $file) {
             $dataSet = load($file);
             if (empty($dataSet)) {
                 $dataSet = [];
