@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use FastD\Process\Queue;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
 use swoole_server;
@@ -107,6 +108,20 @@ class Server
     }
 
     /**
+     * @return $this
+     */
+    public function useQueue()
+    {
+        $queue = new Queue();
+
+        app()->add('queue', $queue);
+
+        $this->server->process($queue);
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function start()
@@ -167,6 +182,10 @@ class Server
     {
         if ($input->hasParameterOption(['--daemon', '-d'], true)) {
             $this->daemon();
+        }
+
+        if ($input->hasParameterOption(['--queue', '-q'], true)) {
+            $this->useQueue();
         }
 
         switch ($input->getArgument('action')) {

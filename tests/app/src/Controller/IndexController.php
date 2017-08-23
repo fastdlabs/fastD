@@ -97,4 +97,13 @@ class IndexController
     {
         abort(400);
     }
+
+    public function queue()
+    {
+        queue()->push('demo queue');
+
+        return json([
+            'msg' => 'hello queue'
+        ]);
+    }
 }

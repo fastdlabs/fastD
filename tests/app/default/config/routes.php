@@ -7,3 +7,4 @@ route()->post('/foo/{name}', 'IndexController@middleware')->withAddMiddleware(ne
 route()->get('/model', 'IndexController@model');
 route()->get('/auth', 'IndexController@auth')->withAddMiddleware('basic.auth');
 route()->get('/event', \Controller\EventController::class);
+route()->get('/queue', 'IndexController@queue');

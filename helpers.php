@@ -6,6 +6,7 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
+
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
@@ -15,6 +16,7 @@ use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Model\Table;
 use FastD\Packet\Swoole;
+use FastD\Process\Queue;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -157,4 +159,12 @@ function model($name, $key = 'default')
 function server()
 {
     return app()->get('server');
+}
+
+/**
+ * @return Queue
+ */
+function queue()
+{
+    return app()->get('queue');
 }
