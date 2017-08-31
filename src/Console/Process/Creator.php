@@ -46,7 +46,7 @@ class Creator extends Command
         }
         $process = new $process($name);
         if (!($process instanceof Process)) {
-            throw new \RuntimeException('Process must be instance \FastD\Swoole\Process');
+            throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
             $process->daemon();
