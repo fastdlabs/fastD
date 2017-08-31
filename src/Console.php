@@ -10,6 +10,7 @@
 namespace FastD;
 
 use FastD\Console\Processor;
+use FastD\Console\Queue;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,7 +30,8 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
-            new Processor()
+            new Processor(),
+            new Queue()
         ]);
 
         $this->registerCommands();

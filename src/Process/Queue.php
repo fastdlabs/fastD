@@ -10,19 +10,20 @@
 namespace FastD\Process;
 
 
+use FastD\Swoole\Queue as Q;
 use swoole_process;
 
 /**
  * Class Queue
  * @package FastD\Process
  */
-class Queue extends \FastD\Swoole\Queue
+class Queue extends Q
 {
     public function handle(swoole_process $process)
     {
         while (true) {
             $recv = $process->pop();
-            echo "From Master: $recv\n";
+            $process->write($recv);
         }
     }
 }
