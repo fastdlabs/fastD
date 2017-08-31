@@ -9,11 +9,10 @@
 
 namespace FastD;
 
-use FastD\Console\Process\Creator;
+use FastD\Console\Processor;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
  * Class AppConsole.
@@ -30,7 +29,7 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
-            new Creator(),
+            new Processor()
         ]);
 
         $this->registerCommands();
