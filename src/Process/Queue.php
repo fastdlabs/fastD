@@ -23,7 +23,6 @@ class Queue extends Q
     {
         while (true) {
             $recv = $process->pop();
-            $process->write($recv);
         }
     }
 }
