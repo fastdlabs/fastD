@@ -30,14 +30,13 @@ class Processor extends Command
         $this->setName('process');
         $this->addArgument('process', InputArgument::OPTIONAL);
         $this->addOption('path', '-p', InputOption::VALUE_OPTIONAL, 'set process pid path.');
-        $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'set process name.', app()->getName());
         $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'set process daemonize.');
         $this->addOption('list', '-l', InputOption::VALUE_NONE, 'show all processes.');
         $this->setDescription('Create new processor.');
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int
@@ -59,23 +58,24 @@ class Processor extends Command
         if (!class_exists($processor)) {
             throw new \RuntimeException(sprintf('Class "%s" is not found.', $process));
         }
-        $name = $input->getOption('name');
-        $process = new $processor($name);
+
+        $process = new $processor($process);
         if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
-//            $process->daemon();
+            $process->daemon();
         }
 
         $path = $this->targetDirectory($input);
-        $file = $path.'/'.$name.'.pid';
+        $file = $path . '/' . $process->getName() . '.pid';
 
         $pid = $process->start();
         file_put_contents($file, $pid);
 
-        $output->writeln(sprintf('Process %s is started, pid: %s', $name, $pid));
+        $output->writeln(sprintf('Process %s is started, pid: %s', $process->getName(), $pid));
         $output->writeln(sprintf('Pid file save is %s', $file));
+
         $process->wait(function ($ret) use ($output) {
             $output->writeln(sprintf('Pid %s exit.', $ret['pid']));
         });
@@ -89,15 +89,14 @@ class Processor extends Command
      */
     protected function targetDirectory(InputInterface $input)
     {
-        $pid = $input->getParameterOption(['--path', '-p']);
+        $path = $input->getParameterOption(['--path', '-p']);
 
-        if (empty($pid)) {
-            $path = app()->getPath().'/runtime/process';
-        } else {
-            $path = dirname($pid);
+        if (empty($path)) {
+            $path = app()->getPath() . '/runtime/process';
         }
+
         if (!file_exists($path)) {
-            mkdir($path, true, 0755);
+            mkdir($path, 0755, true);
         }
 
         return $path;
@@ -111,11 +110,29 @@ class Processor extends Command
     protected function showProcesses(InputInterface $input, OutputInterface $output)
     {
         $table = new Table($output);
+        $path = $input->getParameterOption(['--path', '-p']);
         $table->setHeaders(array('Process', 'Pid', 'Status', 'Start At', 'Runtime'));
         $rows = [];
         foreach (config()->get('processes', []) as $name => $processor) {
+            $pidFile = $path . '/' . $name . '.pid';
+            $startAt = null;
+            $pid = null;
+            $isRunning = false;
+            $runtime = null;
+            if (file_exists($pidFile)) {
+                $startAt = date('Y m d H:i:s', filemtime($pidFile));
+                $pid = file_get_contents($pidFile);
+                $isRunning = process_kill($pid, 0) ? true : false;
+                if ($isRunning) {
+                    $runtime = (time() - filemtime($pidFile)) . 's';
+                }
+            }
             $rows[] = [
-                $name, '', '', '',
+                $name,
+                $pid,
+                ($isRunning ? 'running' : 'stopped'),
+                $startAt,
+                $runtime,
             ];
         }
         $table->setRows($rows);
