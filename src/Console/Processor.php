@@ -65,7 +65,7 @@ class Processor extends Command
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
-            $process->daemon();
+//            $process->daemon();
         }
 
         $path = $this->targetDirectory($input);
@@ -76,6 +76,9 @@ class Processor extends Command
 
         $output->writeln(sprintf('Process %s is started, pid: %s', $name, $pid));
         $output->writeln(sprintf('Pid file save is %s', $file));
+        $process->wait(function ($ret) use ($output) {
+            $output->writeln(sprintf('Pid %s exit.', $ret['pid']));
+        });
 
         return $pid;
     }

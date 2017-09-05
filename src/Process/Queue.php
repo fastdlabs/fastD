@@ -19,10 +19,11 @@ use swoole_process;
  */
 class Queue extends Q
 {
+    protected $consumers = [];
+    protected $producers = [];
+
     public function handle(swoole_process $process)
     {
-        while (true) {
-            $recv = $process->pop();
-        }
+
     }
 }
