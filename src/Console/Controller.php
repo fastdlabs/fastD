@@ -7,18 +7,18 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console\Controller;
+namespace FastD\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Creator extends Command
+class Controller extends Command
 {
     public function configure()
     {
-        $this->setName('controller:create');
+        $this->setName('controller');
 
         $this->addArgument('name', InputArgument::REQUIRED);
     }

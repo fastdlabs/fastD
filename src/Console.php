@@ -9,8 +9,13 @@
 
 namespace FastD;
 
+use FastD\Console\Config;
+use FastD\Console\Controller;
+use FastD\Console\Model;
 use FastD\Console\Processor;
 use FastD\Console\Queue;
+use FastD\Console\Routing;
+use FastD\Console\Seeder;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,6 +35,11 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
+            new Seeder(),
+            new Model(),
+            new Controller(),
+            new Routing(),
+            new Config(),
             new Processor(),
             new Queue()
         ]);

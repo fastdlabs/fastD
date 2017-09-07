@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console\Routing;
+namespace FastD\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -17,12 +17,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Route.
  */
-class Dumper extends Command
+class Routing extends Command
 {
     public function configure()
     {
         $this
-            ->setName('route:dump')
+            ->setName('route')
             ->setHelp('Show all route')
             ->setDescription('Show you defined routes.')
         ;

@@ -94,8 +94,6 @@ class Application extends Container
     public function bootstrap()
     {
         if (!$this->booted) {
-            $this->registerExceptionHandler();
-
             $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
@@ -103,6 +101,7 @@ class Application extends Container
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
 
+            $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
             unset($config);
             $this->booted = true;

@@ -10,6 +10,7 @@
 namespace FastD\Process;
 
 
+use FastD\Server;
 use FastD\Swoole\Queue as Q;
 use swoole_process;
 
@@ -21,6 +22,12 @@ class Queue extends Q
 {
     public function handle(swoole_process $process)
     {
+        try {
+            $server = server();
+        } catch (\Exception $e) {
+//            $server = new Server();
+        }
+
         while (true) {
             $recv = $process->pop();
             $process->write($recv);

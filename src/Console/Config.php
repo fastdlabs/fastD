@@ -23,7 +23,7 @@ class Config extends Command
 {
     public function configure()
     {
-        $this->setName('config:dump');
+        $this->setName('config');
         $this->addArgument('name', InputArgument::OPTIONAL, 'file name');
     }
 

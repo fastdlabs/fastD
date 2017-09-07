@@ -7,7 +7,7 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Console\Migration;
+namespace FastD\Console;
 
 use Phinx\Config\Config as MConfig;
 use Phinx\Console\Command\Create;
@@ -15,12 +15,12 @@ use Phinx\Util\Util;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Creator extends Create
+class Seeder extends Create
 {
     public function getConfig()
     {
         $path = app()->getPath().'/database/schema';
-        $this->setName('seed:create');
+        $this->setName('seed');
         $database = config()->get('database');
         $env = [];
         $keys = array_keys($database);
