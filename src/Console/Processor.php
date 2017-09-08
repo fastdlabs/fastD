@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Processor extends Command
 {
     /**
-     * php bin/console process {name} {args} {options}
+     * php bin/console process {name} {args} {options}.
      */
     protected function configure()
     {
@@ -37,7 +37,7 @@ class Processor extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return int
@@ -52,17 +52,17 @@ class Processor extends Command
 
         $processes = config()->get('processes', []);
 
-        if ( ! isset($processes[$process])) {
+        if (!isset($processes[$process])) {
             throw new \RuntimeException(sprintf('Process %s cannot found', $process));
         }
 
         $processor = $processes[$process];
-        if ( ! class_exists($processor)) {
+        if (!class_exists($processor)) {
             throw new \RuntimeException(sprintf('Class "%s" is not found.', $process));
         }
         $name = $input->getOption('name');
         $process = new $processor($name);
-        if ( ! ($process instanceof Process)) {
+        if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
@@ -83,6 +83,7 @@ class Processor extends Command
 
     /**
      * @param InputInterface $input
+     *
      * @return string
      */
     protected function targetDirectory(InputInterface $input)
@@ -94,7 +95,7 @@ class Processor extends Command
         } else {
             $path = dirname($pid);
         }
-        if ( ! file_exists($path)) {
+        if (!file_exists($path)) {
             mkdir($path, true, 0755);
         }
 
@@ -102,8 +103,9 @@ class Processor extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function showProcesses(InputInterface $input, OutputInterface $output)
