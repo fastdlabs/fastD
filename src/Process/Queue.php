@@ -9,14 +9,12 @@
 
 namespace FastD\Process;
 
-
 use FastD\Server;
 use FastD\Swoole\Queue as Q;
 use swoole_process;
 
 /**
- * Class Queue
- * @package FastD\Process
+ * Class Queue.
  */
 class Queue extends Q
 {

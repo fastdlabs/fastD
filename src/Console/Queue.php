@@ -9,16 +9,14 @@
 
 namespace FastD\Console;
 
-
+use FastD\Process\Queue as SQ;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use FastD\Process\Queue as SQ;
 
 /**
- * Class Queue
- * @package FastD\Console
+ * Class Queue.
  */
 class Queue extends Command
 {
@@ -33,8 +31,9 @@ class Queue extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,12 +43,12 @@ class Queue extends Command
         switch ($input->getArgument('action')) {
             case 'start':
                 $queue->start();
+
                 break;
             case 'stop':
                 break;
             case 'status':
             default:
-
         }
         $queue->wait(function ($pid) {
             echo $pid;

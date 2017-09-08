@@ -22,7 +22,6 @@ use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Throwable;
 
 /**
  * Class Application.
