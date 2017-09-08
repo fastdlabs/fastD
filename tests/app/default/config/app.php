@@ -17,8 +17,17 @@ return [
      * Application logger
      */
     'log' => [
-        [\Monolog\Handler\StreamHandler::class, 'info.log'],
-        [\Monolog\Handler\StreamHandler::class, 'error.log', \FastD\Logger\Logger::ERROR],
+        [
+            \Monolog\Handler\StreamHandler::class,
+            'info.log',
+            \FastD\Logger\Logger::INFO,
+            \FastD\Logger\Formatter\StashFormatter::class
+        ],
+        [
+            \Monolog\Handler\StreamHandler::class,
+            'error.log',
+            \FastD\Logger\Logger::ERROR
+        ],
     ],
 
     /*

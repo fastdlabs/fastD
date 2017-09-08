@@ -29,7 +29,7 @@ class Processor extends Command
     {
         $this->setName('process');
         $this->addArgument('process', InputArgument::OPTIONAL);
-        $this->addOption('path', '-p', InputOption::VALUE_OPTIONAL, 'set process pid path.');
+        $this->addOption('pid', '-p', InputOption::VALUE_OPTIONAL, 'set process pid path.');
         $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'set process name.', app()->getName());
         $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'set process daemonize.');
         $this->addOption('list', '-l', InputOption::VALUE_NONE, 'show all processes.');
@@ -44,11 +44,12 @@ class Processor extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasParameterOption(['--list', '-l'])) {
+        $process = $input->getArgument('process');
+
+        if ($input->hasParameterOption(['--list', '-l']) || empty($process)) {
             return $this->showProcesses($input, $output);
         }
 
-        $process = $input->getArgument('process');
         $processes = config()->get('processes', []);
 
         if (!isset($processes[$process])) {

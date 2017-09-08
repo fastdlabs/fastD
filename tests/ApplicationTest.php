@@ -91,4 +91,18 @@ class ApplicationTest extends TestCase
         $response = $this->handleRequest($request);
         $this->app->shutdown($request, $response);
     }
+
+    public function testOrdinaryControllerLogic()
+    {
+        $request = $this->request('GET', '/');
+        $response = $this->handleRequest($request);
+        $this->equalsStatus($response, 200);
+    }
+
+    public function testAbortControllerLogic()
+    {
+        $request = $this->request('GET', '/abort');
+        $response = $this->handleRequest($request);
+        $this->equalsStatus($response, 400);
+    }
 }
