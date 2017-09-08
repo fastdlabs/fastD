@@ -19,6 +19,7 @@ use FastD\Console\Seeder;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use FastD\Migration\Migrate;
 
 /**
  * Class AppConsole.
@@ -35,13 +36,13 @@ class Console extends Symfony
         parent::__construct($app->getName(), Application::VERSION);
 
         $this->addCommands([
-            new Seeder(),
             new Model(),
             new Controller(),
             new Routing(),
             new Config(),
             new Processor(),
             new Queue(),
+            new Migrate(),
         ]);
 
         $this->registerCommands();
