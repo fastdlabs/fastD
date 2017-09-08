@@ -6,17 +6,15 @@
      * @see      https://www.github.com/janhuang
      * @see      http://www.fast-d.cn/
      */
-    
-    namespace FastD\Process;
-    
-    
-    use FastD\Server;
+
+namespace FastD\Process;
+
+use FastD\Server;
     use FastD\Swoole\Queue as Q;
     use swoole_process;
-    
+
     /**
-     * Class Queue
-     * @package FastD\Process
+     * Class Queue.
      */
     class Queue extends Q
     {
@@ -27,7 +25,7 @@
             } catch (\Exception $e) {
                 //            $server = new Server();
             }
-            
+
             while (true) {
                 $recv = $process->pop();
                 $process->write($recv);

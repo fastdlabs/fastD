@@ -103,7 +103,7 @@ class IndexController
         queue()->push('demo queue');
 
         return json([
-            'msg' => 'hello queue'
+            'msg' => 'hello queue',
         ]);
     }
 }

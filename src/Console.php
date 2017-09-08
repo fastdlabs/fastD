@@ -41,7 +41,7 @@ class Console extends Symfony
             new Routing(),
             new Config(),
             new Processor(),
-            new Queue()
+            new Queue(),
         ]);
 
         $this->registerCommands();

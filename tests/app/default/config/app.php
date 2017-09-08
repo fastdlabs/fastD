@@ -21,12 +21,12 @@ return [
             \Monolog\Handler\StreamHandler::class,
             'info.log',
             \FastD\Logger\Logger::INFO,
-            \FastD\Logger\Formatter\StashFormatter::class
+            \FastD\Logger\Formatter\StashFormatter::class,
         ],
         [
             \Monolog\Handler\StreamHandler::class,
             'error.log',
-            \FastD\Logger\Logger::ERROR
+            \FastD\Logger\Logger::ERROR,
         ],
     ],
 
