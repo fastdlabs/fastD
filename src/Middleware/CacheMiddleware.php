@@ -9,7 +9,7 @@
 
 namespace FastD\Middleware;
 
-use FastD\Packet\Json;
+use FastD\Http\Response;
 use FastD\Utils\DateObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,26 +27,34 @@ class CacheMiddleware extends Middleware
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
     {
-        $action = $request->getMethod();
-        if ('GET' !== $action) {
-            return $next->next($request);
+        if ('GET' !== $request->getMethod()) {
+            return $next->process($request);
         }
 
-        $key = md5($request->getUri()->getPath());
+        $key = md5($request->getUri()->getPath().http_build_query($request->getQueryParams()));
         $cache = cache()->getItem($key);
         if ($cache->isHit()) {
-            $value = Json::decode($cache->get());
+            list($content, $headers) = $cache->get();
 
-            return json($value)
-                ->withHeader('X-Cache', $key);
+            return new Response($content, Response::HTTP_OK, $headers);
         }
-        $response = $next->next($request);
-        $cache->set((string) $response->getBody());
+
+        $response = $next->process($request);
+        if (Response::HTTP_OK !== $response->getStatusCode()) {
+            return $response;
+        }
 
         $expireAt = DateObject::createFromTimestamp(time() + config()->get('common.cache.lifetime', 60));
-        $cache->expiresAt($expireAt);
-        cache()->save($cache);
 
-        return $response->withExpires($expireAt);
+        $response->withHeader('X-Cache', $key)->withExpires($expireAt);
+
+        $cache->set([
+            (string) $response->getBody(),
+            $response->getHeaders(),
+        ]);
+
+        cache()->save($cache->expiresAt($expireAt));
+
+        return $response;
     }
 }

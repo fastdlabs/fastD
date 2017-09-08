@@ -189,4 +189,4 @@ return [
 
 根据提示，输入具体操作的命令。
 
-下一节: [扩展](3-10-connection-pool.md)
+下一节: [连接池](3-10-connection-pool.md)

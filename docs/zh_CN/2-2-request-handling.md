@@ -11,6 +11,8 @@ Http 请求处理来源于 [Http](https://github.com/JanHuang/http) 组件，由
 > 由于 Http 解析是通过 parse_url 进行解析的，因此您需要配置好你的虚拟域名(virtual-host)进行访问，否则会提示 route 404 not found
 
 ```php
+<?php
+
 namespace Controller;
 
 
@@ -26,6 +28,28 @@ class IndexController
 ```
 
 由于 Http 组件实现 PSR7，所以用法是保持 PSR7 一致，操作可以根据 [Http](https://github.com/JanHuang/http) 进行查看
+
+如果在 logic 处理中需要中断执行，可以使用 `abort` 函数进行操作。
+
+```php
+<?php
+
+namespace Controller;
+
+
+use FastD\Http\ServerRequest;
+
+class IndexController
+{
+    public function sayHello(ServerRequest $serverRequest)
+    {
+        if (!empty($serverRequest->getQueryParams())) {
+            abort(400);
+        }
+        return json($serverRequest->getQueryParams());
+    }
+}
+```
 
 ### TCP
 

@@ -40,11 +40,7 @@ class UDPServer extends UDP
                 $request->withParsedBody($data['args']);
             }
         }
-        try {
-            $response = app()->handleRequest($request);
-        } catch (\Exception $e) {
-            $response = app()->handleException($e);
-        }
+        $response = app()->handleRequest($request);
         $server->sendto($clientInfo['address'], $clientInfo['port'], (string) $response->getBody());
         app()->shutdown($request, $response);
     }

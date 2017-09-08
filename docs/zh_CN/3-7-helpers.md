@@ -32,6 +32,10 @@ route("/", function () {
 
 框架中返回均需要返回 `Psr\Http\Message\ResponseInterface` 接口，在函数中，[JsonResponse](https://github.com/JanHuang/http/blob/master/src/JsonResponse.php) 继承 [Response](https://github.com/JanHuang/http/blob/master/src/Response.php) 并实现相关接口，因此返回响应必须要返回实现 `Psr\Http\Message\ResponseInterface` 实现类。
 
+#### abort($statusCode, $message = null)
+
+终端执行，抛出异常。异常输出控制请参考: [应用配置](3-1-configuration.md)
+
 #### logger(): \Monolog\Logger
 
 返回 monolog 对象，框架默认提供两种日志，一个是信息日志，一个是错误日志，分别在 [配置]() 中设置，如果需要操作日志并且创建更多日志，请使用该函数获取 Logger 对象，然后进行操作。
