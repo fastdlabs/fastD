@@ -9,17 +9,16 @@
 
 namespace FastD\Logger\Formatter;
 
-
 use FastD\Application;
 use Monolog\Formatter\LogstashFormatter;
 
 /**
- * Class StashFormatter
- * @package FastD\Logger\Formatter
+ * Class StashFormatter.
  */
 class StashFormatter extends LogstashFormatter
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(app()->getName(), get_local_ip(), null, 'fd_', Application::VERSION);
     }
 }

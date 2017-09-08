@@ -16,7 +16,6 @@ return [
         'task_worker_num' => 20,
     ],
     'processes' => [
-
     ],
     'listeners' => [
         [

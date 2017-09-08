@@ -6,7 +6,6 @@
  * @see      https://www.github.com/janhuang
  * @see      http://www.fast-d.cn/
  */
-
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
