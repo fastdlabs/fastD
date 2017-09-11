@@ -96,7 +96,7 @@ class Processor extends Command
             $path = dirname($pid);
         }
         if (!file_exists($path)) {
-            mkdir($path, true, 0755);
+            mkdir($path, 0755, true);
         }
 
         return $path;
