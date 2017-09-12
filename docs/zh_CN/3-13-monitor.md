@@ -16,3 +16,30 @@
 ![](../assets/elk.jpg)
 
 #### 使用
+
+设置 `app.php` 日志格式库 `\FastD\Logger\Formatter\StashFormatter::class`，对其日志进行统一处理即可完成配置。
+
+示例:
+ 
+```php
+<?php
+
+return [
+    // code ...
+    'log' => [
+        [
+            \Monolog\Handler\StreamHandler::class,
+            'info.log',
+            \FastD\Logger\Logger::INFO,
+            \FastD\Logger\Formatter\StashFormatter::class,
+        ],
+    ],
+    // code ...
+];
+```
+
+> 开启日志统一采集处理前提需要安装 ELK 日志分析系统。可参考: [](https://kibana.logstash.es/content/logstash/get-start/install.html)
+
+开启 `logstash` 对日志进行采集推送 `bin/logstash -f path/to/log`
+
+完成后，可以访问业务程序，产生日志对其进行测试。
