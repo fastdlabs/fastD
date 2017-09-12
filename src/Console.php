@@ -15,11 +15,10 @@ use FastD\Console\Model;
 use FastD\Console\Processor;
 use FastD\Console\Queue;
 use FastD\Console\Routing;
-use FastD\Console\Seeder;
+use FastD\Migration\Migrate;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use FastD\Migration\Migrate;
 
 /**
  * Class AppConsole.
