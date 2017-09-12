@@ -38,7 +38,7 @@ return [
 ];
 ```
 
-> 开启日志统一采集处理前提需要安装 ELK 日志分析系统。可参考: [](https://kibana.logstash.es/content/logstash/get-start/install.html)
+> 开启日志统一采集处理前提需要安装 ELK 日志分析系统。可参考: [ELK中文指南](https://kibana.logstash.es/content/logstash/get-start/install.html)
 
 开启 `logstash` 对日志进行采集推送 `bin/logstash -f path/to/log`
 
