@@ -96,5 +96,6 @@ return [
         'common.cache' => [
             \FastD\Middleware\CacheMiddleware::class,
         ],
+        'validator' => [\Middleware\LoginSucessValidator::class]
     ],
 ];

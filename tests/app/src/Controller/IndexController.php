@@ -11,6 +11,7 @@ namespace Controller;
 
 use FastD\Http\JsonResponse;
 use FastD\Http\Request;
+use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Http\Uri;
 
@@ -32,13 +33,13 @@ class IndexController
     /**
      * @param ServerRequest $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function welcome(ServerRequest $request)
     {
         return json([
             'foo' => $request->getParam('foo', 'bar'),
-        ]);
+        ])->withCookie('uid',100,900);
     }
 
     /**

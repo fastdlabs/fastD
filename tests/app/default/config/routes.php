@@ -8,3 +8,4 @@ route()->get('/model', 'IndexController@model');
 route()->get('/auth', 'IndexController@auth')->withAddMiddleware('basic.auth');
 route()->get('/queue', 'IndexController@queue');
 route()->get('/abort', 'IndexController@abort');
+route()->post('/abc', 'WelcomeController@welcome')->withMiddleware('validator');
