@@ -9,7 +9,6 @@
 
 namespace FastD\Console;
 
-
 use FastD\Migration\Migrate;
 
 class Migration extends Migrate
