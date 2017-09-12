@@ -63,6 +63,7 @@
 - [x] [Swoole进程管理](3-10-swoole-processor.md)
 - [x] [连接池](3-11-connection-pool.md)
 - [x] [扩展](3-12-extend.md)
+- [x] [监控](3-13-monitor.md)
     - [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
     - [x] [FastD Viewer](https://github.com/JanHuang/viewer)
     - [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)

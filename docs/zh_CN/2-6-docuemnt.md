@@ -222,6 +222,6 @@ class User
 
 效果: 
 
-[![效果](doc.png)]
+[![效果](../assets/doc.png)]
 
 下一节: [应用配置](3-1-configuration.md)
