@@ -22,6 +22,7 @@ use FastD\ServiceProvider\ConfigServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Throwable;
 
 /**
  * Class Application.
@@ -138,14 +139,22 @@ class Application extends Container
     {
         $this->add('request', $request);
 
-        $response = $this->get('dispatcher')->dispatch($request);
+        try {
+            $response = $this->get('dispatcher')->dispatch($request);
+            logger()->log(Logger::INFO, $response->getStatusCode().' '.$response->getReasonPhrase(), [
+                'method' => $request->getMethod(),
+                'path' => $request->getUri()->getPath(),
+            ]);
+        } catch (Exception $exception) {
+            $this->handleException($exception);
+            $response = $this->renderException($exception);
+        } catch (Throwable $exception) {
+            $exception = new FatalThrowableError($exception);
+            $this->handleException($exception);
+            $response = $this->renderException($exception);
+        }
 
         $this->add('response', $response);
-
-        logger()->log(Logger::INFO, $response->getStatusCode().' '.$response->getReasonPhrase(), [
-            'method' => $request->getMethod(),
-            'path' => $request->getUri()->getPath(),
-        ]);
 
         return $response;
     }
@@ -202,12 +211,7 @@ class Application extends Container
     {
         $request = ServerRequest::createServerRequestFromGlobals();
 
-        try {
-            $response = $this->handleRequest($request);
-        } catch (Exception $exception) {
-            $this->handleException($exception);
-            $response = $this->renderException($exception);
-        }
+        $response = $this->handleRequest($request);
 
         $this->handleResponse($response);
 

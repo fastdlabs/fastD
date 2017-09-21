@@ -48,8 +48,8 @@ class ApplicationTest extends TestCase
         $request = $this->request('GET', '/not/found');
         $response = $this->app->handleRequest($request);
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
-        unlink(app()->getPath().'/runtime/logs/error.log');
+        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/info.log'));
+        unlink(app()->getPath().'/runtime/logs/info.log');
     }
 
     public function testCacheServiceProvider()
@@ -72,7 +72,7 @@ class ApplicationTest extends TestCase
         $this->app->add('request', new \FastD\Http\ServerRequest('GET', '/'));
         $this->app->shutdown(new \FastD\Http\ServerRequest('GET', '/'), $response);
         $this->equalsStatus($response, 502);
-        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
+        $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/info.log'));
     }
 
     public function testHandleResponse()
