@@ -19,6 +19,7 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -138,14 +139,14 @@ class Application extends Container
     {
         $this->add('request', $request);
 
-        try {
-            $response = $this->get('dispatcher')->dispatch($request);
-        } catch (Exception $exception) {
-            $this->handleException($exception);
-            $response = $this->renderException($exception);
-        }
+        $response = $this->get('dispatcher')->dispatch($request);
 
         $this->add('response', $response);
+
+        logger()->log(Logger::INFO, $response->getStatusCode().' '.$response->getReasonPhrase(), [
+            'method' => $request->getMethod(),
+            'path' => $request->getUri()->getPath(),
+        ]);
 
         return $response;
     }
@@ -202,7 +203,12 @@ class Application extends Container
     {
         $request = ServerRequest::createServerRequestFromGlobals();
 
-        $response = $this->handleRequest($request);
+        try {
+            $response = $this->handleRequest($request);
+        } catch (Exception $exception) {
+            $this->handleException($exception);
+            $response = $this->renderException($exception);
+        }
 
         $this->handleResponse($response);
 
@@ -217,7 +223,6 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
-        logger()->log($response->getStatusCode(), $request->getMethod().' '.$request->getUri()->getPath());
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
