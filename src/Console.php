@@ -14,7 +14,6 @@ use FastD\Console\Controller;
 use FastD\Console\Migration;
 use FastD\Console\Model;
 use FastD\Console\Processor;
-use FastD\Console\Queue;
 use FastD\Console\Routing;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,6 +33,14 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
+        $this->registerCommands();
+    }
+
+    /**
+     * Scan commands.
+     */
+    public function registerCommands()
+    {
         $this->addCommands([
             new Model(),
             new Controller(),
@@ -43,14 +50,6 @@ class Console extends Symfony
             new Migration(),
         ]);
 
-        $this->registerCommands();
-    }
-
-    /**
-     * Scan commands.
-     */
-    public function registerCommands()
-    {
         foreach (config()->get('consoles', []) as $console) {
             $this->add(new $console());
         }
