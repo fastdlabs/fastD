@@ -9,7 +9,7 @@ use Monolog\Logger;
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 class HelpersTest extends \FastD\TestCase
 {
