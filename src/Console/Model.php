@@ -22,6 +22,7 @@ class Model extends Command
     public function configure()
     {
         $this->setName('model');
+        $this->setDescription('Automate create base CURD model class.');
         $this->addArgument('name', InputArgument::REQUIRED);
     }
 

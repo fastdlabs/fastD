@@ -66,6 +66,7 @@ return [
      * Consoles
      */
     'consoles' => [
+        \Console\Demo::class
     ],
 
     /*

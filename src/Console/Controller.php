@@ -19,7 +19,7 @@ class Controller extends Command
     public function configure()
     {
         $this->setName('controller');
-
+        $this->setDescription('Automate create base controller class.');
         $this->addArgument('name', InputArgument::REQUIRED);
     }
 

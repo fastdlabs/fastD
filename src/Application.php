@@ -28,7 +28,7 @@ use Symfony\Component\Debug\Exception\FatalThrowableError;
  */
 class Application extends Container
 {
-    const VERSION = '3.2.0-dev';
+    const VERSION = '3.2.0';
 
     /**
      * @var Application

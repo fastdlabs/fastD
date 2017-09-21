@@ -25,6 +25,7 @@ class Config extends Command
     {
         $this->setName('config');
         $this->addArgument('name', InputArgument::OPTIONAL, 'file name');
+        $this->setDescription('Dump application config information.');
     }
 
     /**
