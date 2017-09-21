@@ -23,11 +23,6 @@ return [
             \FastD\Logger\Logger::INFO,
             \FastD\Logger\Formatter\StashFormatter::class,
         ],
-        [
-            \Monolog\Handler\StreamHandler::class,
-            'error.log',
-            \FastD\Logger\Logger::ERROR,
-        ],
     ],
 
     /*
@@ -63,6 +58,7 @@ return [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
         \FastD\ServiceProvider\ProcessorServiceProvider::class,
+        \FastD\ServiceProvider\MoltenServiceProvider::class,
         \ServiceProvider\FooServiceProvider::class,
     ],
 

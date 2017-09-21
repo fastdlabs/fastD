@@ -2,3 +2,4 @@
 /.idea
 /tests/app/*/runtime
 composer.lock
+seed
