@@ -46,12 +46,12 @@ class StashFormatter extends LogstashFormatter
         }
         if (!empty($record['extra'])) {
             foreach ($record['extra'] as $key => $val) {
-                $message[$this->extraPrefix . $key] = $val;
+                $message[$this->extraPrefix.$key] = $val;
             }
         }
         if (!empty($record['context'])) {
             foreach ($record['context'] as $key => $val) {
-                $message[$this->contextPrefix . $key] = $val;
+                $message[$this->contextPrefix.$key] = $val;
             }
         }
 

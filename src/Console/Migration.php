@@ -15,8 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Migration
- * @package FastD\Console
+ * Class Migration.
  */
 class Migration extends Migrate
 {

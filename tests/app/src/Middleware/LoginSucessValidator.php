@@ -9,7 +9,6 @@
 
 namespace Middleware;
 
-
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
@@ -19,19 +18,22 @@ class LoginSucessValidator extends Middleware
 {
     /**
      * @param ServerRequestInterface $request
-     * @param DelegateInterface $next
+     * @param DelegateInterface      $next
+     *
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)
     {
         $_SessionKey = $request->getParam('_SessionKey');
-        if(empty($_SessionKey)){
+        if (empty($_SessionKey)) {
             $_data = array(
                 'status' => 0,
                 'msg' => '参数错误',
             );
+
             return json($_data);
         }
+
         return $next->process($request);
     }
 }
