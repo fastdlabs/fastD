@@ -66,7 +66,7 @@ return [
      * Consoles
      */
     'consoles' => [
-        \Console\Demo::class
+        \Console\Demo::class,
     ],
 
     /*
@@ -93,6 +93,6 @@ return [
         'common.cache' => [
             \FastD\Middleware\CacheMiddleware::class,
         ],
-        'validator' => [\Middleware\LoginSucessValidator::class]
+        'validator' => [\Middleware\LoginSucessValidator::class],
     ],
 ];
