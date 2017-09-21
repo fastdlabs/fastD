@@ -28,21 +28,17 @@ class StashFormatter extends LogstashFormatter
         }
         $message = array(
             '@timestamp' => $record['datetime'],
-            '@version' => 1,
+            '@version' => version(),
             'host' => $this->systemName,
         );
         if (isset($record['message'])) {
             $message['message'] = $record['message'];
         }
         if (isset($record['channel'])) {
-            $message['type'] = $record['channel'];
             $message['channel'] = $record['channel'];
         }
         if (isset($record['level_name'])) {
             $message['level'] = $record['level_name'];
-        }
-        if ($this->applicationName) {
-            $message['type'] = $this->applicationName;
         }
         if (!empty($record['extra'])) {
             foreach ($record['extra'] as $key => $val) {

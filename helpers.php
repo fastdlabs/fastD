@@ -30,6 +30,14 @@ function app()
 }
 
 /**
+ * @return string
+ */
+function version()
+{
+    return Application::VERSION;
+}
+
+/**
  * @return RouteCollection
  */
 function route()

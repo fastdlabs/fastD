@@ -217,6 +217,7 @@ class Application extends Container
      */
     public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
     {
+        logger()->log($response->getStatusCode(), $request->getMethod().' '.$request->getUri()->getPath());
         $this->offsetUnset('request');
         $this->offsetUnset('response');
         $this->offsetUnset('exception');
