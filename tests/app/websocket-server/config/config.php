@@ -8,4 +8,9 @@
  */
 
 return [
+    'common' => [
+        'cache' => [
+            'lifetime' => 10,
+        ],
+    ],
 ];

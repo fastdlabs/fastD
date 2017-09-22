@@ -19,18 +19,6 @@ return [
     ],
     'listeners' => [
         [
-            'class' => \FastD\Servitization\Server\UDPServer::class,
-            'host' => 'udp://0.0.0.0:9528',
-            'options' => [
-            ],
-        ],
-        [
-            'class' => \FastD\Servitization\Server\TCPServer::class,
-            'host' => 'tcp://0.0.0.0:9529',
-            'options' => [
-            ],
-        ],
-        [
             'class' => \FastD\Servitization\Server\ManagerServer::class,
             'host' => 'tcp://0.0.0.0:9530',
         ],

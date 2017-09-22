@@ -8,4 +8,10 @@
  */
 
 return [
+    'default' => [
+        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'params' => [
+            'lifetime' => 60,
+        ],
+    ],
 ];

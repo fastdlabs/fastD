@@ -14,9 +14,15 @@ return [
     'name' => 'fast-d',
 
     /*
-     * Application logger path
+     * Application logger
      */
     'log' => [
+        [
+            \Monolog\Handler\StreamHandler::class,
+            'info.log',
+            \FastD\Logger\Logger::INFO,
+            \FastD\Logger\Formatter\StashFormatter::class,
+        ],
     ],
 
     /*
@@ -51,12 +57,16 @@ return [
         \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
+        \FastD\ServiceProvider\ProcessorServiceProvider::class,
+        \FastD\ServiceProvider\MoltenServiceProvider::class,
+        \ServiceProvider\FooServiceProvider::class,
     ],
 
     /*
      * Consoles
      */
     'consoles' => [
+        \Console\Demo::class,
     ],
 
     /*
@@ -80,5 +90,9 @@ return [
                 ],
             ]
         ),
+        'common.cache' => [
+            \FastD\Middleware\CacheMiddleware::class,
+        ],
+        'validator' => [\Middleware\LoginSucessValidator::class],
     ],
 ];

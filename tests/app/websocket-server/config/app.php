@@ -14,6 +14,18 @@ return [
     'name' => 'fast-d',
 
     /*
+     * Application logger
+     */
+    'log' => [
+        [
+            \Monolog\Handler\StreamHandler::class,
+            'info.log',
+            \FastD\Logger\Logger::INFO,
+            \FastD\Logger\Formatter\StashFormatter::class,
+        ],
+    ],
+
+    /*
      * Exception handle
      */
     'exception' => [
@@ -21,6 +33,9 @@ return [
             return [
                 'msg' => $e->getMessage(),
                 'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
             ];
         },
         'log' => function (Exception $e) {
@@ -39,12 +54,19 @@ return [
      */
     'services' => [
         \FastD\ServiceProvider\RouteServiceProvider::class,
+        \FastD\ServiceProvider\LoggerServiceProvider::class,
+        \FastD\ServiceProvider\DatabaseServiceProvider::class,
+        \FastD\ServiceProvider\CacheServiceProvider::class,
+        \FastD\ServiceProvider\ProcessorServiceProvider::class,
+        \FastD\ServiceProvider\MoltenServiceProvider::class,
+        \ServiceProvider\FooServiceProvider::class,
     ],
 
     /*
      * Consoles
      */
     'consoles' => [
+        \Console\Demo::class,
     ],
 
     /*
@@ -68,5 +90,9 @@ return [
                 ],
             ]
         ),
+        'common.cache' => [
+            \FastD\Middleware\CacheMiddleware::class,
+        ],
+        'validator' => [\Middleware\LoginSucessValidator::class],
     ],
 ];

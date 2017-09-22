@@ -160,12 +160,26 @@ function model($name, $key = 'default')
     return ModelFactory::createModel($name, $key);
 }
 
+function client()
+{
+
+}
+
 /**
  * @return \swoole_server
  */
 function server()
 {
     return app()->get('server');
+}
+
+/**
+ * @param $fd
+ * @return Response
+ */
+function message($fd)
+{
+
 }
 
 /**
