@@ -64,20 +64,34 @@
 - [x] [连接池](3-11-connection-pool.md)
 - [x] [扩展](3-12-extend.md)
 - [x] [监控](3-13-monitor.md)
-    - [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
-    - [x] [FastD Viewer](https://github.com/JanHuang/viewer)
-    - [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)
-    - [x] [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
 
 架构
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
 
-周边
---------
+### 系列文章
 
-- [x] [Dobee API Framework](https://github.com/JanHuang/dobee)
+* [FastD 最佳实践一: 构建 API](https://fastdlabs.com/blog/9)
+* [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
+* [FastD 最佳实践三: 构建API网关](https://fastdlabs.com/blog/11)
+* [FastD 最佳实践四: 构建系统可视化监控](https://runnerlee.com/2017/08/18/influxdb-telegraf-grafana-monitor)
+* [FastD 最佳实践五: 构建ELK日志分析系统](http://fastdlabs.com/blog/13)
+* [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://fastdlabs.com/blog/14)
+
+### 周边
+
+* [FastD ServiceProvider](https://github.com/linghit/service-provider)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
+* [Queue](https://github.com/RunnerLee/queue)
+* [Validator](https://github.com/RunnerLee/validator)
+
+### 相关项目
+
+* [Dobee API Framework](https://github.com/JanHuang/dobee)
 
 ### Support
 

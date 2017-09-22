@@ -34,6 +34,7 @@ $ pecl install swoole
 
 ```
 $ composer create-project "fastd/dobee" dobee -vvv 
+$ cd dobee && composer install -vvv
 ```
 
 
