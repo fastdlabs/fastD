@@ -50,7 +50,10 @@ class Console extends Symfony
             new Migration(),
         ]);
 
-        foreach (config()->get('consoles', []) as $console) {
+        $consoles = config()->get('consoles', []);
+        $consoles = array_unique($consoles);
+
+        foreach ($consoles as $console) {
             $this->add(new $console());
         }
 

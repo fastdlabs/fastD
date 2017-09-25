@@ -4,11 +4,5 @@
  * @copyright 2017
  *
  * @see      https://www.github.com/janhuang
- * @see      https://fastdlabs.com
+ * @see      http://www.fast-d.cn/
  */
-
-namespace FastD\Model;
-
-class Table
-{
-}

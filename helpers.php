@@ -13,9 +13,7 @@ use FastD\Http\Response;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
-use FastD\Model\Table;
 use FastD\Packet\Swoole;
-use FastD\Process\Queue;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -67,14 +65,6 @@ function request()
 function response()
 {
     return app()->get('response');
-}
-
-/**
- * @return Exception
- */
-function exception()
-{
-    return app()->get('exception');
 }
 
 /**
@@ -139,17 +129,6 @@ function database($key = 'default')
 }
 
 /**
- * @param $table
- * @param string $key
- *
- * @return Table
- */
-function table($table, $key = 'default')
-{
-    return new Table(database($key), $table);
-}
-
-/**
  * @param $name
  * @param $key
  *
@@ -180,12 +159,4 @@ function server()
 function message($fd)
 {
 
-}
-
-/**
- * @return Queue
- */
-function queue()
-{
-    return app()->get('queue');
 }

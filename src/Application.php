@@ -29,7 +29,7 @@ use Throwable;
  */
 class Application extends Container
 {
-    const VERSION = '3.2.0';
+    const VERSION = 'v3.2.0';
 
     /**
      * @var Application
@@ -146,12 +146,10 @@ class Application extends Container
                 'path' => $request->getUri()->getPath(),
             ]);
         } catch (Exception $exception) {
-            $this->handleException($exception);
-            $response = $this->renderException($exception);
+            $response = $this->handleException($exception);
         } catch (Throwable $exception) {
             $exception = new FatalThrowableError($exception);
-            $this->handleException($exception);
-            $response = $this->renderException($exception);
+            $response = $this->handleException($exception);
         }
 
         $this->add('response', $response);
@@ -169,6 +167,7 @@ class Application extends Container
 
     /**
      * @param $e
+     * @return Response
      */
     public function handleException($e)
     {
@@ -186,15 +185,7 @@ class Application extends Container
         }
 
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
-    }
 
-    /**
-     * @param Exception $e
-     *
-     * @return Response
-     */
-    public function renderException(Exception $e)
-    {
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
