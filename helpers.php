@@ -141,7 +141,6 @@ function model($name, $key = 'default')
 
 function client()
 {
-
 }
 
 /**
@@ -154,9 +153,9 @@ function server()
 
 /**
  * @param $fd
+ *
  * @return Response
  */
 function message($fd)
 {
-
 }

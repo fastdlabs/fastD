@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2017
  *
