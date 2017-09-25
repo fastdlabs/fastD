@@ -84,7 +84,7 @@ class HelpersTest extends \FastD\TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      */
     public function testFunctionAbort()
     {
