@@ -168,6 +168,7 @@ class Application extends Container
 
     /**
      * @param $e
+     *
      * @return Response
      */
     public function handleException($e)

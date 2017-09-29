@@ -38,7 +38,7 @@ class ApplicationTest extends TestCase
         $consoles = config()->get('consoles');
         $consoles = array_unique($consoles);
         $this->assertEquals([
-            'Console\Demo', 'ServiceProvider\DemoConsole'
+            'Console\Demo', 'ServiceProvider\DemoConsole',
         ], $consoles);
     }
 
