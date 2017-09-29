@@ -19,6 +19,6 @@ abstract class AbstractProcessor extends Command
 {
     protected function configure()
     {
-        $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'set process daemonize.');
+        $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'Daemonize process.');
     }
 }
