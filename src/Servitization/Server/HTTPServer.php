@@ -27,6 +27,7 @@ class HTTPServer extends HTTP
     /**
      * @param swoole_http_request  $swooleRequet
      * @param swoole_http_response $swooleResponse
+     * @return int
      */
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
     {
@@ -43,6 +44,8 @@ class HTTPServer extends HTTP
         $swooleResponse->status($response->getStatusCode());
         $swooleResponse->end((string) $response->getBody());
         app()->shutdown($request, $response);
+
+        return 0;
     }
 
     /**

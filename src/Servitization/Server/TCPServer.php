@@ -34,7 +34,6 @@ class TCPServer extends TCP
     {
         if ('quit' === $data) {
             $server->close($fd);
-
             return 0;
         }
         $data = Json::decode($data);
@@ -47,6 +46,9 @@ class TCPServer extends TCP
             }
         }
         $response = app()->handleRequest($request);
+        if (null !== $response->getFileDescriptor()) {
+            $fd = $response->getFileDescriptor();
+        }
         $server->send($fd, (string) $response->getBody());
         app()->shutdown($request, $response);
 

@@ -22,14 +22,6 @@ use FastD\Http\Uri;
  */
 class IndexController
 {
-    public function onRequest(Request $request)
-    {
-        $request = clone $request;
-        $request->withUri(new Uri());
-        $request->withMethod('GET');
-        $request->send();
-    }
-
     /**
      * @param ServerRequest $request
      *
@@ -38,8 +30,11 @@ class IndexController
     public function welcome(ServerRequest $request)
     {
         return json([
-            'foo' => $request->getParam('foo', 'bar'),
-        ])->withCookie('uid', 100, 900);
+                'foo' => $request->getParam('foo', 'bar'),
+            ])
+            ->withCookie('uid', 100, 900)
+            ->withFileDescriptor(1)
+            ;
     }
 
     /**

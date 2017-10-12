@@ -9,9 +9,9 @@
 
 return [
     'default' => [
-        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
         'params' => [
-            'lifetime' => 60,
+            'dsn' => 'redis://localhost:3306/db',
         ],
     ],
 ];
