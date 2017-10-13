@@ -14,7 +14,7 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 
 /**
- * Class IndexController
+ * Class IndexController.
  */
 class IndexController
 {
