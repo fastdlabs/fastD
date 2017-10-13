@@ -32,32 +32,35 @@ class Demo extends Command
 
 更多请查看: [console](http://symfony.com/doc/current/console.html)
 
-### 命令列表
+#### 注册命令行
 
-包含框架内置所有的初始化命令。
+在默认情况下，命令行一般会存储在 `src/Console` 目录中，对于一些特殊情况，例如我需要在扩展包中注册命令行，就需要手动注册命令行了。
 
-##### config:dump
+框架本身提供两种注册方式，一种是配置文件注册，另外一种是通过在服务提供者 `register` 方法中手动注册。
 
-打印配置文件信息
+```php
+class FooServiceProvider implements ServiceProviderInterface
+{
+    public function register(Container $container)
+    {
+        $container->add('foo', new Foo());
+        config()->merge([
+            'consoles' => [
+                DemoConsole::class
+            ]
+        ]);
+    }
+}
+```
 
-##### controller:create
+代码解析: 
 
-创建增删改查控制器
+在系统中，命令行 application 会执行如下代码，用于注册用户自定义命令，而命令来至于配置，那么只需要我们将命令行对象添加到配置中，即可达成注册的效果.
 
-##### model:create
-
-创建增删改查模型
-
-##### route:dump
-
-列表打印所有路由
-
-##### seed:create
-
-创建数据库种子文件
-
-##### seed:run
-
-执行数据库种子文件
+```php
+foreach (config()->get('consoles', []) as $console) {
+    $this->add(new $console());
+}
+```
 
 下一节: [单元测试](3-6-testcase.md)

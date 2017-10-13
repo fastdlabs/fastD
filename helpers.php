@@ -4,7 +4,7 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 use FastD\Application;
 use FastD\Config\Config;
@@ -13,6 +13,7 @@ use FastD\Http\Response;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
+use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,6 +25,14 @@ use Symfony\Component\Cache\Adapter\AbstractAdapter;
 function app()
 {
     return Application::$app;
+}
+
+/**
+ * @return string
+ */
+function version()
+{
+    return Application::VERSION;
 }
 
 /**
@@ -59,11 +68,14 @@ function response()
 }
 
 /**
- * @return Exception
+ * @param array $content
+ * @param int   $statusCode
+ *
+ * @return Response
  */
-function exception()
+function binary(array $content, $statusCode = Response::HTTP_OK)
 {
-    return app()->get('exception');
+    return new Response(Swoole::encode($content), $statusCode);
 }
 
 /**
@@ -127,10 +139,23 @@ function model($name, $key = 'default')
     return ModelFactory::createModel($name, $key);
 }
 
+function client()
+{
+}
+
 /**
  * @return \swoole_server
  */
 function server()
 {
     return app()->get('server');
+}
+
+/**
+ * @param $fd
+ *
+ * @return Response
+ */
+function message($fd)
+{
 }

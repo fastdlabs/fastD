@@ -18,4 +18,11 @@ FastD 提供灵活配置的核心，由于为了性能，提供的组件当不�
 - [x] ext-pdo
 - [x] ext-swoole
 
+#### 相关扩展
+
+- [x] [FastD ServiceProvider](https://github.com/linghit/service-provider)
+- [x] [FastD Viewer](https://github.com/JanHuang/viewer)
+- [x] [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+- [x] [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+
 下一节: [安装](1-2-installing.md)

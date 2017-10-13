@@ -28,7 +28,11 @@ route("/", function () {
 
 返回 PSR7 ServerRequestInterface 对象, 具体操作可以查看: [HTTP](https://github.com/JanHuang/http)
 
-#### json(array $content = [], $statusCode = Response::HTTP_OK, array $headers = []): \FastD\Http\JsonResponse
+#### json(array $content = [], $statusCode = Response::HTTP_OK): \FastD\Http\JsonResponse
+
+框架中返回均需要返回 `Psr\Http\Message\ResponseInterface` 接口，在函数中，[JsonResponse](https://github.com/JanHuang/http/blob/master/src/JsonResponse.php) 继承 [Response](https://github.com/JanHuang/http/blob/master/src/Response.php) 并实现相关接口，因此返回响应必须要返回实现 `Psr\Http\Message\ResponseInterface` 实现类。
+
+#### binary(array $content = [], $statusCode = Response::HTTP_OK, array $headers = []): \FastD\Http\Response
 
 框架中返回均需要返回 `Psr\Http\Message\ResponseInterface` 接口，在函数中，[JsonResponse](https://github.com/JanHuang/http/blob/master/src/JsonResponse.php) 继承 [Response](https://github.com/JanHuang/http/blob/master/src/Response.php) 并实现相关接口，因此返回响应必须要返回实现 `Psr\Http\Message\ResponseInterface` 实现类。
 

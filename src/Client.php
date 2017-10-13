@@ -4,7 +4,7 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 namespace FastD;
@@ -97,5 +97,7 @@ class Client
 
             throw $e;
         }
+
+        return 0;
     }
 }

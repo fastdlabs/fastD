@@ -181,6 +181,10 @@ return [
 
 即可实现 task 服务器
 
+### WebSocket 服务器
+
+
+
 ### Swoole 客户端
 
 除了提供 Swoole Server 以外，还提供一个远程操作的 Client 连接端客户，在服务器启动后，可以通过客户端，对远程服务器进行管理。
@@ -189,4 +193,4 @@ return [
 
 根据提示，输入具体操作的命令。
 
-下一节: [连接池](3-10-connection-pool.md)
+下一节: [Swoole进程管理](3-10-swoole-processor.md)

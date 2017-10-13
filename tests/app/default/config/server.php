@@ -4,7 +4,7 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 return [
@@ -16,20 +16,9 @@ return [
         'task_worker_num' => 20,
     ],
     'processes' => [
+        \Processor\DemoProcessor::class
     ],
     'listeners' => [
-        [
-            'class' => \FastD\Servitization\Server\UDPServer::class,
-            'host' => 'udp://0.0.0.0:9528',
-            'options' => [
-            ],
-        ],
-        [
-            'class' => \FastD\Servitization\Server\TCPServer::class,
-            'host' => 'tcp://0.0.0.0:9529',
-            'options' => [
-            ],
-        ],
         [
             'class' => \FastD\Servitization\Server\ManagerServer::class,
             'host' => 'tcp://0.0.0.0:9530',

@@ -4,7 +4,7 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 namespace FastD\Model;
@@ -19,7 +19,7 @@ use PDO;
 class Database extends Medoo
 {
     /**
-     * @var array|null
+     * @var array
      */
     protected $config = [];
 
@@ -72,7 +72,9 @@ class Database extends Medoo
     /**
      * @param $query
      *
-     * @return bool|\PDOStatement
+     * @return bool|int
+     *
+     * @throws \ErrorException
      */
     public function exec($query)
     {
@@ -85,6 +87,13 @@ class Database extends Medoo
         }
     }
 
+    /**
+     * @param $table
+     * @param $join
+     * @param null $where
+     *
+     * @return bool
+     */
     public function has($table, $join, $where = null)
     {
         $column = null;

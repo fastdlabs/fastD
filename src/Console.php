@@ -4,21 +4,20 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 namespace FastD;
 
-use FastD\Console\ConfigDump;
-use FastD\Console\ControllerCreate;
-use FastD\Console\ModelCreate;
-use FastD\Console\RouteDump;
-use FastD\Console\SeedCreate;
-use FastD\Console\SeedRun;
+use FastD\Console\Config;
+use FastD\Console\Controller;
+use FastD\Console\Migration;
+use FastD\Console\Model;
+use FastD\Console\Processor;
+use FastD\Console\Routing;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 /**
  * Class AppConsole.
@@ -34,15 +33,6 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
-        $this->addCommands([
-            new ModelCreate(),
-            new ControllerCreate(),
-            new RouteDump(),
-            new ConfigDump(),
-            new SeedCreate(),
-            new SeedRun(),
-        ]);
-
         $this->registerCommands();
     }
 
@@ -51,7 +41,19 @@ class Console extends Symfony
      */
     public function registerCommands()
     {
-        foreach (config()->get('consoles', []) as $console) {
+        $this->addCommands([
+            new Model(),
+            new Controller(),
+            new Routing(),
+            new Config(),
+            new Processor(),
+            new Migration(),
+        ]);
+
+        $consoles = config()->get('consoles', []);
+        $consoles = array_unique($consoles);
+
+        foreach ($consoles as $console) {
             $this->add(new $console());
         }
 
@@ -63,14 +65,20 @@ class Console extends Symfony
         }
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int
+     *
+     * @throws \Throwable
+     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $exception) {
             app()->handleException($exception);
-        } catch (\Throwable $exception) {
-            app()->handleException(new FatalThrowableError($exception));
         }
 
         throw $exception;

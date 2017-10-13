@@ -60,31 +60,38 @@
 - [x] [辅助函数](3-7-helpers.md)
 - [x] [服务提供器](3-8-service-provider.md)
 - [x] [Swoole服务器](3-9-swoole-server.md)
-- [x] [连接池](3-10-connection-pool.md)
-- [x] [扩展](3-11-extend.md)
+- [x] [Swoole进程管理](3-10-swoole-processor.md)
+- [x] [连接池](3-11-connection-pool.md)
+- [x] [扩展](3-12-extend.md)
+- [x] [监控](3-13-monitor.md)
 
 架构
 ---------
 
 - [x] [生命周期](4-1-lifecycle.md)
-- [ ] ~~[RPC服务](4-2-microservice.md)~~
-- [ ] [FastD 与 LogStash](4-3-fastd-logstash.md) (未开放)
-- [ ] [FastD 与 QConf](4-4-fastd-qconf.md) (未开放)
-- [ ] [FastD 与 LogViewer](4-5-fastd-log-viewer.md) (未开放)
-- [ ] FastD 服务化
-- [ ] FastD 管理
-- [x] 特性功能演示
-    - [ ] [Queue]()
 
-周边开源
---------
+### 系列文章
 
-- [x] [Dobee API Framework](https://github.com/JanHuang/dobee)
-- [x] [UserD](https://github.com/JanHuang/userd) 开发中...
-- [x] [MediaD](https://github.com/JanHuang/mediad) 开发中...
-- [x] [PostsD](https://github.com/JanHuang/postsd) 开发中...
-- [x] [TagD](https://github.com/JanHuang/tagd) 开发中...
-- [x] [CommentD](https://github.com/JanHuang/commentd) 开发中...
+* [FastD 最佳实践一: 构建 API](https://fastdlabs.com/blog/9)
+* [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
+* [FastD 最佳实践三: 构建API网关](https://fastdlabs.com/blog/11)
+* [FastD 最佳实践四: 构建系统可视化监控](https://runnerlee.com/2017/08/18/influxdb-telegraf-grafana-monitor)
+* [FastD 最佳实践五: 构建ELK日志分析系统](http://fastdlabs.com/blog/13)
+* [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://fastdlabs.com/blog/14)
+
+### 周边
+
+* [FastD ServiceProvider](https://github.com/linghit/service-provider)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
+* [Queue](https://github.com/RunnerLee/queue)
+* [Validator](https://github.com/RunnerLee/validator)
+
+### 相关项目
+
+* [Dobee API Framework](https://github.com/JanHuang/dobee)
 
 ### Support
 

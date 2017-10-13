@@ -4,7 +4,7 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 namespace FastD\Servitization\Server;
@@ -43,5 +43,7 @@ class UDPServer extends UDP
         $response = app()->handleRequest($request);
         $server->sendto($clientInfo['address'], $clientInfo['port'], (string) $response->getBody());
         app()->shutdown($request, $response);
+
+        return 0;
     }
 }

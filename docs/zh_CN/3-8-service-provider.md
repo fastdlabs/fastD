@@ -22,6 +22,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     * @return mixed
      */
     public function register(Container $container)
     {

@@ -17,14 +17,14 @@ $ chown +x /usr/local/bin/composer
 :soon:国内镜像，加速 composer 安装
 
 ```
-composer config -g repo.packagist composer https://packagist.phpcomposer.com
+composer config -g repo.packagist composer https://packagist.laravel-china.org
 ```
 
-更多使用方式请前往: [Composer国内镜像](https://pkg.phpcomposer.com/)
+更多使用方式请前往: [Composer国内镜像](https://laravel-china.org/composer)
 
 ##### 2 安装 Swoole 扩展
 
-:bangbang:推荐使用1.9.6以上版本
+:bangbang:推荐使用1.9.9以上版本
 
 ```
 $ pecl install swoole
@@ -34,6 +34,7 @@ $ pecl install swoole
 
 ```
 $ composer create-project "fastd/dobee" dobee -vvv 
+$ cd dobee && composer install -vvv
 ```
 
 

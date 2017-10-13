@@ -7,7 +7,7 @@ use FastD\Application;
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 class DatabaseTest extends \FastD\TestCase
 {
@@ -37,7 +37,7 @@ class DatabaseTest extends \FastD\TestCase
     public function testGoneAwayConnection()
     {
         $database = $this->createDatabase();
-        $tables = $database->query('show tables;')->fetchAll();
+        $database->query('show tables;')->fetchAll();
         $this->assertTrue(true);
     }
 
@@ -48,6 +48,7 @@ class DatabaseTest extends \FastD\TestCase
             'user' => 'foo',
             'created' => date('Y-m-d H:i:s'),
         ]);
+
         $row = database()->get('hello', '*', [
             'id' => database()->id(),
         ]);

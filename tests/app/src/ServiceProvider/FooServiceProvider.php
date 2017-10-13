@@ -4,17 +4,26 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 namespace ServiceProvider;
 
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use Symfony\Component\Console\Command\Command;
 
 class Foo
 {
     public $name = 'foo';
+}
+
+class DemoConsole extends Command
+{
+    protected function configure()
+    {
+        $this->setName('app:demo:console');
+    }
 }
 
 class FooServiceProvider implements ServiceProviderInterface
@@ -27,5 +36,10 @@ class FooServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container->add('foo', new Foo());
+        config()->merge([
+            'consoles' => [
+                DemoConsole::class,
+            ],
+        ]);
     }
 }

@@ -5,7 +5,7 @@
  * @copyright 2016
  *
  * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @link      https://fastdlabs.com
  */
 
 set_time_limit(0);
@@ -43,7 +43,8 @@ use Symfony\Component\Console\Input\InputOption;
 $input = new ArgvInput(null, new InputDefinition([
     new InputArgument('action', InputArgument::OPTIONAL, 'The server action', 'status'),
     new InputOption('daemon', 'd', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
-    new InputOption('t', 't', InputOption::VALUE_OPTIONAL, 'Web root relative path')
+    new InputOption('t', 't', InputOption::VALUE_OPTIONAL, 'Web root relative path'),
+    new InputOption('queue', 'q', InputOption::VALUE_NONE, 'Use queue')
 ]));
 
 $path = $input->getOption('t');

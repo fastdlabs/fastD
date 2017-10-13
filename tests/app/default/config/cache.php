@@ -4,14 +4,14 @@
  * @copyright 2016
  *
  * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see      https://fastdlabs.com
  */
 
 return [
     'default' => [
-        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
         'params' => [
-            'lifetime' => 60,
+            'dsn' => 'redis://localhost:3306/db',
         ],
     ],
 ];

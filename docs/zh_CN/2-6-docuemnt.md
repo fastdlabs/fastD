@@ -21,7 +21,7 @@ php bin/console doc
  * @copyright 2016
  *
  * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @link      https://fastdlabs.com
  */
 
 namespace Http\Controller;
@@ -156,7 +156,7 @@ class IndexController
  * @copyright 2016
  *
  * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @link      https://fastdlabs.com
  */
 
 namespace Document;
@@ -222,6 +222,6 @@ class User
 
 效果: 
 
-[![效果](doc.png)]
+[![效果](../assets/doc.png)]
 
 下一节: [应用配置](3-1-configuration.md)

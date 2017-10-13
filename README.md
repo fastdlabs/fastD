@@ -24,7 +24,7 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 文档
 
-* [中文文档](docs/zh_CN/readme.md)
+* [中文文档](https://fastdlabs.com/#/zh-cn/readme)
 
 ### 系列文章
 
@@ -34,6 +34,16 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * [FastD 最佳实践四: 构建系统可视化监控](https://runnerlee.com/2017/08/18/influxdb-telegraf-grafana-monitor)
 * [FastD 最佳实践五: 构建ELK日志分析系统](http://fastdlabs.com/blog/13)
 * [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://fastdlabs.com/blog/14)
+
+### 周边
+
+* [FastD ServiceProvider](https://github.com/linghit/service-provider)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
+* [Queue](https://github.com/RunnerLee/queue)
+* [Validator](https://github.com/RunnerLee/validator)
 
 ### 相关项目
 

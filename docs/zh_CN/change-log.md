@@ -1,5 +1,16 @@
 # 修改日志
 
+#### 3.2
+
+* 新增进程管理命令，新增 process.php 配置文件
+* 调整注册命令行
+* 新增 `binary`, `version` 等辅助函数
+* 优化 application 日志处理
+* 新增 `FastD\Logger\Formatter\StashForamtter` 日志格式，支持 `logstash`。点击前往: [教程](http://fastdlabs.com/blog/13)
+* 新增 `FastD\ServiceProvider\MoltenServiceProvider`，支持 `zipkin` 调用链。点击前往: [教程](http://fastdlabs.com/blog/14)
+* 替换 migration 为 [fastd/migration](https://github.com/JanHuang/migration)
+
+
 #### 3.1.0 released candidate 4
 
 * 新增通用缓存中间件
