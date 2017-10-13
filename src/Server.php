@@ -47,6 +47,8 @@ class Server
             config()->get('server.options', [])
         );
 
+        $application->add('server', $this->server);
+
         $this->initListeners();
         $this->initProcesses();
     }
@@ -112,13 +114,7 @@ class Server
      */
     public function useQueue()
     {
-        $queue = new Queue();
-
-        app()->add('queue', $queue);
-
-        $this->server->process($queue);
-
-        return $this;
+        
     }
 
     /**
@@ -126,9 +122,7 @@ class Server
      */
     public function start()
     {
-        $server = $this->bootstrap();
-
-        app()->add('server', $server->getSwoole());
+        $this->bootstrap();
 
         return $this->server->start();
     }

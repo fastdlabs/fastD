@@ -10,14 +10,10 @@
 namespace Controller;
 
 use FastD\Http\JsonResponse;
-use FastD\Http\Request;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Http\Uri;
 
 /**
- * @SWG\Info(title="演示API", version="0.1")
- *
  * Class IndexController
  */
 class IndexController

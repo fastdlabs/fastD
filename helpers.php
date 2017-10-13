@@ -144,7 +144,7 @@ function client()
 }
 
 /**
- * @return \swoole_server
+ * @return \FastD\Swoole\Server
  */
 function server()
 {
@@ -152,10 +152,9 @@ function server()
 }
 
 /**
- * @param $fd
- *
- * @return Response
+ * @return swoole_server
  */
-function message($fd)
+function swoole()
 {
+    return server()->getSwoole();
 }
