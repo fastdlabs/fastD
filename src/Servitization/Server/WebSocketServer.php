@@ -42,7 +42,11 @@ class WebSocketServer extends WebSocket
             }
         }
         $response = app()->handleRequest($request);
-        $server->push(null !== ($fd = $response->getFileDescriptor()) ? $fd : $frame->fd, (string) $response->getBody());
+        $fd = null !== ($fd = $response->getFileDescriptor()) ? $fd : $frame->fd;
+        if (false === $server->connection_info($fd)) {
+            return -1;
+        }
+        $server->push($fd, (string) $response->getBody());
         app()->shutdown($request, $response);
 
         return 0;

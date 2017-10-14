@@ -49,6 +49,9 @@ class TCPServer extends TCP
         if (null !== $response->getFileDescriptor()) {
             $fd = $response->getFileDescriptor();
         }
+        if (false === $server->connection_info($fd)) {
+            return -1;
+        }
         $server->send($fd, (string) $response->getBody());
         app()->shutdown($request, $response);
 
