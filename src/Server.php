@@ -114,7 +114,6 @@ class Server
      */
     public function useQueue()
     {
-        
     }
 
     /**
