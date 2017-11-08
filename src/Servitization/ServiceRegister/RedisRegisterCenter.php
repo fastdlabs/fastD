@@ -11,22 +11,19 @@ namespace FastD\Servitization\ServiceRegister;
 
 
 use FastD\Http\Response;
-use FastD\Servitization\Server\HTTPServer;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class RedisRegisterCenter
  * @package FastD\Servitization\ServiceRegister
  */
-class RedisRegisterCenter extends HTTPServer implements RegisterCenterInterface
+class RedisRegisterCenter implements RegisterCenterInterface
 {
     protected $redis;
 
     public function __construct()
     {
         $host = config()->get('rpc.register.host', '0.0.0.0:9555');
-
-        parent::__construct('register', $host);
     }
 
     public function set()

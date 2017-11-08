@@ -10,11 +10,13 @@
 namespace FastD\Servitization\ServiceRegister;
 
 
+use FastD\Servitization\Server\HTTPServer;
+
 /**
  * Class Register
  * @package FastD\Servitization\ServiceRegister
  */
-class Register implements RegisterInterface
+class Register extends HTTPServer implements RegisterInterface
 {
     /**
      * @var RegisterCenterInterface
