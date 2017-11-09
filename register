@@ -32,3 +32,10 @@ if (!defined('COMPOSER_INSTALL')) {
 }
 
 include COMPOSER_INSTALL;
+
+
+$app = new \FastD\Application(__DIR__ . '/tests/app/default');
+
+$register = new \FastD\RegisterCenter($app);
+
+$register->start();

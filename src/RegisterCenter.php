@@ -15,13 +15,15 @@ use FastD\Servitization\ServiceRegister\Register;
 
 class RegisterCenter
 {
-    public function __construct()
+    protected $register;
+
+    public function __construct(Application $application)
     {
-        // $register = new Register(new RedisRegisterCenter());
+        $this->register = new Register(new RedisRegisterCenter());
     }
 
     public function start()
     {
-
+        $this->register->start();
     }
 }

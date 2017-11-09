@@ -30,7 +30,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
             'database' => load($dir.'/database.php'),
             'cache' => load($dir.'/cache.php'),
         ]);
-
         if (file_exists(app()->getPath() . '/.env.yml')) {
             config()->merge(load(app()->getPath().'/.env.yml'));
         }

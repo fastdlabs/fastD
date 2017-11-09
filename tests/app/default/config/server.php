@@ -12,8 +12,8 @@ return [
     'class' => \FastD\Servitization\Server\HTTPServer::class,
     'options' => [
         'pid_file' => __DIR__.'/../runtime/pid/'.app()->getName().'.pid',
-        'worker_num' => 10,
-        'task_worker_num' => 20,
+        'worker_num' => 1,
+        'task_worker_num' => 1,
     ],
     'processes' => [
         \Processor\DemoProcessor::class,

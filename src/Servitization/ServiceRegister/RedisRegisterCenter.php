@@ -12,6 +12,7 @@ namespace FastD\Servitization\ServiceRegister;
 
 use FastD\Http\Response;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 /**
  * Class RedisRegisterCenter
@@ -23,25 +24,24 @@ class RedisRegisterCenter implements RegisterCenterInterface
 
     public function __construct()
     {
-        $host = config()->get('rpc.register.host', '0.0.0.0:9555');
-    }
+        $host = config()->get('rpc.register.params.dsn', 'redis://127.0.0.1:6379/1');
 
-    public function set()
-    {
-        // TODO: Implement set() method.
-    }
-
-    public function get()
-    {
-        // TODO: Implement get() method.
+        $this->redis = RedisAdapter::createConnection($host);
     }
 
     /**
-     * @param ServerRequestInterface $serverRequest
-     * @return Response
+     *
      */
-    public function doRequest(ServerRequestInterface $serverRequest)
+    public function set()
     {
-        // TODO: Implement doRequest() method.
+
+    }
+
+    /**
+     *
+     */
+    public function get()
+    {
+
     }
 }

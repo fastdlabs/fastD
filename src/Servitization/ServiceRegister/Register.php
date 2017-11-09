@@ -10,6 +10,7 @@
 namespace FastD\Servitization\ServiceRegister;
 
 
+use FastD\Http\ServerRequest;
 use FastD\Servitization\Server\HTTPServer;
 
 /**
@@ -30,22 +31,42 @@ class Register extends HTTPServer implements RegisterInterface
     public function __construct(RegisterCenterInterface $registerCenter)
     {
         $this->registerCenter = $registerCenter;
+
+        $host = config()->get('rpc.register.host');
+
+        parent::__construct('register', $host, []);
+
+        route()->get('/services', [$this, 'query']);
+        route()->post('/publish', [$this, 'publish']);
     }
 
     /**
-     * @param null $service
-     * @return mixed
+     * @param ServerRequest $request
+     * @return \FastD\Http\Response
      */
-    public function query($service = null)
+    public function query(ServerRequest $request)
     {
-
+        return json([
+            'for' => 'abc'
+        ]);
     }
 
     /**
-     * @return mixed
+     * @param ServerRequest $request
+     * @return \FastD\Http\Response
      */
-    public function publish()
+    public function publish(ServerRequest $request)
     {
+        $post = $request->getParsedBody();
 
+
+
+        return json([
+            'service' => $post['service'],
+            'scheme' => $post['sock'],
+            'host' => $post['host'],
+            'port' => $post['port'],
+            'created_at' => time(),
+        ]);
     }
 }

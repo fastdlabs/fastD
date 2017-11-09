@@ -9,6 +9,9 @@
 
 namespace FastD\Servitization\ServiceRegister;
 
+use FastD\Http\ServerRequest;
+use Psr\Http\Message\ResponseInterface;
+
 
 /**
  * Interface RegisterInterface
@@ -17,13 +20,14 @@ namespace FastD\Servitization\ServiceRegister;
 interface RegisterInterface
 {
     /**
-     * @param null $service
-     * @return mixed
+     * @param ServerRequest $request
+     * @return ResponseInterface
      */
-    public function query($service = null);
+    public function query(ServerRequest $request);
 
     /**
-     * @return mixed
+     * @param ServerRequest $request
+     * @return ResponseInterface
      */
-    public function publish();
+    public function publish(ServerRequest $request);
 }
