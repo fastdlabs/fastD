@@ -36,6 +36,11 @@ class Register extends HTTPServer implements RegisterInterface
 
         parent::__construct('register', $host, []);
 
+        route()->staticRoutes = [];
+        route()->dynamicRoutes = [];
+        route()->aliasMap = [];
+        route()->regexes = [];
+
         route()->get('/services', [$this, 'query']);
         route()->post('/publish', [$this, 'publish']);
     }
