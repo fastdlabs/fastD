@@ -30,18 +30,22 @@ class RedisRegisterCenter implements RegisterCenterInterface
     }
 
     /**
-     *
+     * @param $key
+     * @param $hash
+     * @param $value
+     * @return mixed
      */
-    public function set()
+    public function set($key, $hash, $value)
     {
-
+        return $this->redis->hSet($key, $hash, $value);
     }
 
     /**
-     *
+     * @param $key
+     * @return mixed
      */
-    public function get()
+    public function get($key)
     {
-
+        return $this->redis->hGetAll($key);
     }
 }

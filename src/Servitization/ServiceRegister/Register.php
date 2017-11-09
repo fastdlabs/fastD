@@ -46,9 +46,13 @@ class Register extends HTTPServer implements RegisterInterface
      */
     public function query(ServerRequest $request)
     {
-        return json([
-            'for' => 'abc'
-        ]);
+        $nodes = $this->registerCenter->get('nodes');
+
+        foreach ($nodes as $key => $node) {
+            $nodes[$key] = json_decode($node, true);
+        }
+
+        return json($nodes);
     }
 
     /**
@@ -59,7 +63,7 @@ class Register extends HTTPServer implements RegisterInterface
     {
         $post = $request->getParsedBody();
 
-
+        $this->registerCenter->set('nodes', $post['host'], json_encode($post));
 
         return json([
             'service' => $post['service'],

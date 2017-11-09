@@ -12,7 +12,7 @@ namespace FastD\Servitization\ServiceRegister;
 
 interface RegisterCenterInterface
 {
-    public function set();
+    public function set($key, $hash, $value);
 
-    public function get();
+    public function get($key);
 }
