@@ -20,8 +20,14 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
  */
 class RedisRegisterCenter implements RegisterCenterInterface
 {
+    /**
+     * @var \Predis\Client|\Redis
+     */
     protected $redis;
 
+    /**
+     * RedisRegisterCenter constructor.
+     */
     public function __construct()
     {
         $host = config()->get('rpc.register.params.dsn', 'redis://127.0.0.1:6379/1');

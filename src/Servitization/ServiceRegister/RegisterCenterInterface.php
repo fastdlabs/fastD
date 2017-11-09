@@ -10,9 +10,23 @@
 namespace FastD\Servitization\ServiceRegister;
 
 
+/**
+ * Interface RegisterCenterInterface
+ * @package FastD\Servitization\ServiceRegister
+ */
 interface RegisterCenterInterface
 {
+    /**
+     * @param $key
+     * @param $hash
+     * @param $value
+     * @return mixed
+     */
     public function set($key, $hash, $value);
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function get($key);
 }
