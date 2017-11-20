@@ -19,16 +19,6 @@ use Monolog\Logger as MonoLogger;
 class Logger extends MonoLogger
 {
     /**
-     * @param $levelCode
-     *
-     * @return int
-     */
-    protected function convertStatusCodeToLevel($levelCode)
-    {
-        return ($levelCode >= 200 && $levelCode < 300) ? self::INFO : self::ERROR;
-    }
-
-    /**
      * @param int    $level
      * @param string $message
      * @param array  $context
@@ -43,6 +33,6 @@ class Logger extends MonoLogger
             $this->pushHandler($emptyHandler);
         }
 
-        return parent::addRecord($this->convertStatusCodeToLevel($level), $message, $context);
+        return parent::addRecord($level, $message, $context);
     }
 }
