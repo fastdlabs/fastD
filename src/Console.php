@@ -48,7 +48,6 @@ class Console extends Symfony
             new Controller(),
             new Routing(),
             new Config(),
-            new Processor(),
             new Migration(),
         ]);
 

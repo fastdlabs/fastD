@@ -57,7 +57,6 @@ return [
         \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
-        \FastD\ServiceProvider\ProcessorServiceProvider::class,
         \FastD\ServiceProvider\MoltenServiceProvider::class,
         \ServiceProvider\FooServiceProvider::class,
     ],

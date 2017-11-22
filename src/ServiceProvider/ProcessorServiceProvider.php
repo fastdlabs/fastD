@@ -12,8 +12,10 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
+
 /**
- * Class ProcessorServiceProvider.
+ * Class ProcessorServiceProvider
+ * @package FastD\ServiceProvider
  */
 class ProcessorServiceProvider implements ServiceProviderInterface
 {

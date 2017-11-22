@@ -49,7 +49,7 @@ $input = new ArgvInput(null, new InputDefinition([
 
 $path = $input->getOption('t');
 if (!$path) {
-    $path = getcwd();
+    $path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
 }
 
 $server = new Server(new Application($path));
