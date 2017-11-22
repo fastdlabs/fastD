@@ -24,6 +24,10 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 文档
 
+![fastd](fastd.png)
+
+我们希望不仅仅是提供一个开发框架，更希望能够将自己的经验整理成解决方案，开发套件分享和贡献给社区。
+
 * [中文文档](https://fastdlabs.com/#/zh-cn/readme)
 
 ### 系列文章

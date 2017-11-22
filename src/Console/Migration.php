@@ -19,6 +19,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Migration extends Migrate
 {
+    public function __construct()
+    {
+        parent::__construct([
+            'seed_path' => app()->getPath() . '/database/seed',
+            'data_set_path' => app()->getPath() . '/database/dataset',
+        ]);
+    }
+
     public function configure()
     {
         parent::configure();

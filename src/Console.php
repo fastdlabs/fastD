@@ -33,6 +33,8 @@ class Console extends Symfony
     {
         parent::__construct($app->getName(), Application::VERSION);
 
+        restore_exception_handler();
+
         $this->registerCommands();
     }
 
