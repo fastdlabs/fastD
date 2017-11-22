@@ -68,6 +68,14 @@ function response()
 }
 
 /**
+ * @return \Exception
+ */
+function exception()
+{
+    return app()->get('exception');
+}
+
+/**
  * @param array $content
  * @param int   $statusCode
  *
