@@ -13,7 +13,7 @@ class ModelTest extends \FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__.'/../app/default');
+        $app = new Application(__DIR__.'/../../app');
 
         return $app;
     }
