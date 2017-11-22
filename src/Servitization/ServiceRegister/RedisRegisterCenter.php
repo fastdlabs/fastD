@@ -3,20 +3,16 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2017
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Servitization\ServiceRegister;
 
-
-use FastD\Http\Response;
-use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 /**
- * Class RedisRegisterCenter
- * @package FastD\Servitization\ServiceRegister
+ * Class RedisRegisterCenter.
  */
 class RedisRegisterCenter implements RegisterCenterInterface
 {
@@ -39,6 +35,7 @@ class RedisRegisterCenter implements RegisterCenterInterface
      * @param $key
      * @param $hash
      * @param $value
+     *
      * @return mixed
      */
     public function set($key, $hash, $value)
@@ -48,6 +45,7 @@ class RedisRegisterCenter implements RegisterCenterInterface
 
     /**
      * @param $key
+     *
      * @return mixed
      */
     public function get($key)

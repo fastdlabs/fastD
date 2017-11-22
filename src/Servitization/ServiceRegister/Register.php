@@ -3,19 +3,17 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2017
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @see      https://www.github.com/janhuang
+ * @see      http://www.fast-d.cn/
  */
 
 namespace FastD\Servitization\ServiceRegister;
-
 
 use FastD\Http\ServerRequest;
 use FastD\Servitization\Server\HTTPServer;
 
 /**
- * Class Register
- * @package FastD\Servitization\ServiceRegister
+ * Class Register.
  */
 class Register extends HTTPServer implements RegisterInterface
 {
@@ -26,6 +24,7 @@ class Register extends HTTPServer implements RegisterInterface
 
     /**
      * Register constructor.
+     *
      * @param RegisterCenterInterface $registerCenter
      */
     public function __construct(RegisterCenterInterface $registerCenter)
@@ -47,6 +46,7 @@ class Register extends HTTPServer implements RegisterInterface
 
     /**
      * @param ServerRequest $request
+     *
      * @return \FastD\Http\Response
      */
     public function query(ServerRequest $request)
@@ -62,6 +62,7 @@ class Register extends HTTPServer implements RegisterInterface
 
     /**
      * @param ServerRequest $request
+     *
      * @return \FastD\Http\Response
      */
     public function publish(ServerRequest $request)

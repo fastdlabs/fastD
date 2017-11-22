@@ -7,9 +7,6 @@
  * @see      http://www.fast-d.cn/
  */
 
-use FastD\Console;
-
 class ConsoleTest extends PHPUnit_Framework_TestCase
 {
-
 }

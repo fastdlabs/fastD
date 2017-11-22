@@ -9,7 +9,6 @@
 
 namespace FastD\ServiceProvider;
 
-
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 
@@ -20,6 +19,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Container $container
+     *
      * @return mixed
      */
     public function register(Container $container)
@@ -30,7 +30,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
             'database' => load($dir.'/database.php'),
             'cache' => load($dir.'/cache.php'),
         ]);
-        if (file_exists(app()->getPath() . '/.env.yml')) {
+        if (file_exists(app()->getPath().'/.env.yml')) {
             config()->merge(load(app()->getPath().'/.env.yml'));
         }
     }

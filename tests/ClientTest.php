@@ -7,9 +7,6 @@
  * @see      http://www.fast-d.cn/
  */
 
-use FastD\Client;
-
 class ClientTest extends PHPUnit_Framework_TestCase
 {
-
 }
