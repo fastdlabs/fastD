@@ -55,33 +55,33 @@ class Routing extends Command
     /**
      * @param $method
      * @param $path
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function test($method, $path, InputInterface $input, OutputInterface $output)
     {
         $request = new ServerRequest($method, $path, [
-            'User-Agent' => 'FastD Console/' . version(),
+            'User-Agent' => 'FastD Console/'.version(),
         ]);
 
         $response = app()->handleRequest($request);
 
         $output->writeln(sprintf('Method: <info>%s</info>', $method));
-        $output->writeln(sprintf('Path: <info>%s</info>', $path) . PHP_EOL);
+        $output->writeln(sprintf('Path: <info>%s</info>', $path).PHP_EOL);
 
         $headersLIne = '';
 
         foreach ($response->getHeaders() as $name => $header) {
-            $headersLIne .= $name . ': ' . $response->getHeaderLine($name) . PHP_EOL;
+            $headersLIne .= $name.': '.$response->getHeaderLine($name).PHP_EOL;
         }
 
         $body = (string) $response->getBody();
         $body = json_encode(json_decode($body, true), JSON_PRETTY_PRINT);
-        $output->writeln($headersLIne. PHP_EOL . $body);
+        $output->writeln($headersLIne.PHP_EOL.$body);
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function render(InputInterface $input, OutputInterface $output)
