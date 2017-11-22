@@ -9,7 +9,7 @@
 
 namespace FastD\Console;
 
-use FastD\Swoole\Process;
+use FastD\Swoole\Process as SwooleProcess;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Process.
  */
-class Processor extends Command
+class Process extends Command
 {
     /**
      * php bin/console process {name} {args} {options}.
@@ -44,25 +44,27 @@ class Processor extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $process = $input->getArgument('process');
+        $processName = $input->getArgument('process');
 
-        if ($input->hasParameterOption(['--list', '-l']) || empty($process)) {
+        if ($input->hasParameterOption(['--list', '-l']) || empty($processName)) {
             return $this->showProcesses($input, $output);
         }
 
         $processes = config()->get('processes', []);
 
-        if (!isset($processes[$process])) {
-            throw new \RuntimeException(sprintf('Process %s cannot found', $process));
+        if (!isset($processes[$processName])) {
+            throw new \RuntimeException(sprintf('Process %s cannot found', $processName));
         }
 
-        $processor = $processes[$process];
-        if (!class_exists($processor)) {
-            throw new \RuntimeException(sprintf('Class "%s" is not found.', $process));
+        $config = $processes[$processName];
+        if (!class_exists($config['process'])) {
+            throw new \RuntimeException(sprintf('Class "%s" is not found.', $processName));
         }
         $name = $input->getOption('name');
-        $process = new $processor($name);
-        if (!($process instanceof Process)) {
+        $process = $config['process'];
+        $options = $config['options'];
+        $process = new $process($name);
+        if (!($process instanceof SwooleProcess)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
@@ -70,13 +72,13 @@ class Processor extends Command
         }
 
         $path = $this->targetDirectory($input);
-        $file = $path.'/'.$name.'.pid';
+        $file = $path.'/'.$processName.'.pid';
 
         $pid = $process->start();
         file_put_contents($file, $pid);
 
-        $output->writeln(sprintf('Process %s is started, pid: %s', $name, $pid));
-        $output->writeln(sprintf('Pid file save is %s', $file));
+        $output->writeln(sprintf('Process <info>%s</info> is started, pid: <info>%s</info>', $name, $pid));
+        $output->writeln(sprintf('Pid file save in: <info>%s</info>', $file));
 
         return $pid;
     }

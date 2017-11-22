@@ -9,22 +9,38 @@
 
 namespace FastD;
 
+use FastD\Console\Process;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-use FastD\ServiceProvider\ProcessorServiceProvider;
 
 /**
  * Class Processor
  * @package FastD
  */
-class Processor
+class Processor extends Console
 {
-    public function __construct(Application $application)
+    public function registerCommands()
     {
-        $application->register(new ProcessorServiceProvider());
+        $command = new Process();
+
+        $this->add($command);
+
+        $path = app()->getPath().'/config/process.php';
+
+        if (file_exists($path)) {
+            config()->set('processes', include $path);
+        }
     }
 
-    public function run()
+    public function run(InputInterface $input = null, OutputInterface $output = null)
     {
+        $argv = $_SERVER['argv'];
+        $script = array_shift($argv);
+        array_unshift($argv, 'process');
+        array_unshift($argv, $script);
 
+        return parent::run(new ArgvInput($argv), $output);
     }
 }

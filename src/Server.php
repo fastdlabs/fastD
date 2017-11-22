@@ -9,7 +9,6 @@
 
 namespace FastD;
 
-use FastD\Process\Queue;
 use FastD\ServiceProvider\SwooleServiceProvider;
 use FastD\Servitization\Server\HTTPServer;
 use swoole_server;

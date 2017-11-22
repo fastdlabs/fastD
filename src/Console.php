@@ -9,11 +9,11 @@
 
 namespace FastD;
 
+
 use FastD\Console\Config;
 use FastD\Console\Controller;
 use FastD\Console\Migration;
 use FastD\Console\Model;
-use FastD\Console\Processor;
 use FastD\Console\Routing;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;

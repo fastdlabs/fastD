@@ -52,6 +52,6 @@ if (!$path) {
     $path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
 }
 
-$server = new Processor(new Application($path));
+$processor = new Processor(new Application($path));
 
-$server->run($input);
+$processor->run($input);
