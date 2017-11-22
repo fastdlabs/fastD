@@ -36,11 +36,22 @@ class Config extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getArgument('name')) {
-            $file = app()->getPath().'/config/'.$input->getArgument('name').'.php';
-            $file = str_replace('.php.php', '.php', $file);
-            $config = load($file);
-            $output->write('<comment>'.json_encode($config, JSON_PRETTY_PRINT).'</comment>');
+        if (($name = $input->getArgument('name'))) {
+            if ('php' == pathinfo($name, PATHINFO_EXTENSION)) {
+                $file = app()->getPath().'/config/'.$name;
+                $config = load($file);
+                $config = json_encode($config, JSON_PRETTY_PRINT);
+            } else {
+                $config = config()->get($name, null);
+                if (null === $config) {
+                    throw new \LogicException(sprintf('Config "%s" is not configure.', $name));
+                }
+
+                $config = [$name => $config];
+                $config = json_encode($config, JSON_PRETTY_PRINT);
+            }
+
+            $output->write('<comment>'.$config.'</comment>');
 
             return 0;
         }
