@@ -7,9 +7,9 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Console;
+namespace FastD\Process;
 
-use FastD\Swoole\Process as SwooleProcess;
+use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Process.
  */
-class Process extends Command
+class ProcessManager extends Command
 {
     /**
      * php bin/console process {name} {args} {options}.
@@ -64,7 +64,7 @@ class Process extends Command
         $process = $config['process'];
         $options = $config['options'];
         $process = new $process($name);
-        if (!($process instanceof SwooleProcess)) {
+        if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {

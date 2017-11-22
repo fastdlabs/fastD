@@ -9,7 +9,7 @@
 
 namespace FastD;
 
-use FastD\Console\Process;
+use FastD\Process\ProcessManager;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,7 +23,7 @@ class Processor extends Console
 {
     public function registerCommands()
     {
-        $command = new Process();
+        $command = new ProcessManager();
 
         $this->add($command);
 
