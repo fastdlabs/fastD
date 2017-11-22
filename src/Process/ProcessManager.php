@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProcessManager extends Command
 {
+    protected $pidPath;
+
     /**
      * php bin/console process {name} {args} {options}.
      */
@@ -44,6 +46,8 @@ class ProcessManager extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $path = $this->targetDirectory($input);
+
         $processName = $input->getArgument('process');
 
         if ($input->hasParameterOption(['--list', '-l']) || empty($processName)) {
@@ -58,7 +62,7 @@ class ProcessManager extends Command
 
         $config = $processes[$processName];
         if (!class_exists($config['process'])) {
-            throw new \RuntimeException(sprintf('Class "%s" is not found.', $processName));
+            throw new \RuntimeException(sprintf('Process class "%s" is not found.', $processName));
         }
         $name = $input->getOption('name');
         $process = $config['process'];
@@ -68,10 +72,9 @@ class ProcessManager extends Command
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
         if ($input->hasParameterOption(['--daemon', '-d'])) {
-            $process->daemon();
+//            $process->daemon();
         }
 
-        $path = $this->targetDirectory($input);
         $file = $path.'/'.$processName.'.pid';
 
         $pid = $process->start();
@@ -101,7 +104,7 @@ class ProcessManager extends Command
             mkdir($path, 0755, true);
         }
 
-        return $path;
+        return $this->pidPath = $path;
     }
 
     /**
@@ -116,11 +119,14 @@ class ProcessManager extends Command
         $table->setHeaders(array('Process', 'Pid', 'Status', 'Start At', 'Runtime'));
         $rows = [];
         foreach (config()->get('processes', []) as $name => $processor) {
+            $pidFile = $this->pidPath . '/' . $name. '.pid';
+            $pid = file_exists($pidFile) ? (int)file_get_contents($pidFile) : '';
             $rows[] = [
                 $name,
-                '',
-                '',
-                '',
+                $pid,
+                process_kill($pid, 0) ? 'running' : '',
+                date('Y-m-d H:i:s', filemtime($pidFile)),
+                time() - filemtime($pidFile),
             ];
         }
         $table->setRows($rows);

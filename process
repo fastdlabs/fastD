@@ -35,7 +35,6 @@ include COMPOSER_INSTALL;
 
 use FastD\Application;
 use FastD\Processor;
-use FastD\Server;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
