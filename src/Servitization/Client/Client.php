@@ -9,18 +9,18 @@
 
 namespace FastD\Servitization\Client;
 
-
 /**
- * Class Consumer
- * @package FastD\Servitization\Client
+ * Class Consumer.
  */
 class Client extends \FastD\Swoole\Client
 {
     public function single()
-    {}
+    {
+    }
 
     public function multi()
-    {}
+    {
+    }
 
     public function async()
     {
@@ -28,6 +28,5 @@ class Client extends \FastD\Swoole\Client
 
     public function promise(array $urls)
     {
-
     }
 }

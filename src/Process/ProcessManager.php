@@ -93,11 +93,10 @@ class ProcessManager extends Command
                 $process->wait(function ($ret) use ($name) {
                     return $this->finish($name, $ret['pid'], $ret['code'], $ret['signal']);
                 });
+
                 break;
             case 'status':
             default:
-
-
         }
 
         return 0;
@@ -146,6 +145,7 @@ class ProcessManager extends Command
 
     /**
      * @param $name
+     *
      * @return array
      */
     protected function getProcessInfo($name)
@@ -153,6 +153,7 @@ class ProcessManager extends Command
         $pidFile = $this->pidPath.'/'.$name.'.pid';
         $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
         $isRunning = process_kill($pid, 0);
+
         return [
             $name,
             $isRunning ? $pid : '',
