@@ -35,7 +35,7 @@ class ProcessManager extends Command
     {
         $this->setName('process');
         $this->addArgument('process', InputArgument::OPTIONAL, 'process name');
-        $this->addArgument('action', InputArgument::OPTIONAL, 'process action, <comment>status|start|stop|reload</comment>', 'status');
+        $this->addArgument('action', InputArgument::OPTIONAL, 'process action, <comment>status|start|stop</comment>', 'status');
         $this->addOption('pid', '-p', InputOption::VALUE_OPTIONAL, 'set process pid path.');
         $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'set process name.', null);
         $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'set process daemonize.');
@@ -84,19 +84,25 @@ class ProcessManager extends Command
             $process->daemon();
         }
 
-        $file = $path . '/' . $processName . '.pid';
+        $pidFile = $path . '/' . $processName . '.pid';
 
         switch ($input->getArgument('action')) {
             case 'start':
                 $pid = $process->start();
-                file_put_contents($file, $pid);
+                file_put_contents($pidFile, $pid);
                 $output->writeln(sprintf('process <info>%s</info> pid: <info>%s</info>', $process->getName(), $pid));
-                $output->writeln(sprintf('pid: <info>%s</info>', $file));
+                $output->writeln(sprintf('pid: <info>%s</info>', $pidFile));
 
                 $process->wait(function ($ret) use ($name) {
                     return $this->finish($name, $ret['pid'], $ret['code'], $ret['signal']);
                 });
 
+                break;
+            case 'stop':
+                $pid = (int) file_get_contents($pidFile);
+                if ($process->kill($pid, SIGTERM)) {
+                    $output->writeln(sprintf('process %s pid %s is killed', $process->getName(), $pid));
+                }
                 break;
             case 'status':
             default:
