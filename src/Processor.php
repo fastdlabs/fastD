@@ -34,6 +34,11 @@ class Processor extends Console
         }
     }
 
+    /**
+     * @param InputInterface|null $input
+     * @param OutputInterface|null $output
+     * @return int
+     */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
         $argv = $_SERVER['argv'];

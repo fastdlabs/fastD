@@ -20,7 +20,7 @@ class DemoProcessor extends Process
             static $index = 0;
             ++$index;
             echo $index.PHP_EOL;
-            if (100 === $index) {
+            if (3 === $index) {
                 timer_clear($id);
             }
         });

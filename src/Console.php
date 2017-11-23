@@ -76,6 +76,9 @@ class Console extends Symfony
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        app()->add('input', $input);
+        app()->add('output', $output);
+        
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $exception) {
