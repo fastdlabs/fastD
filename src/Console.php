@@ -9,7 +9,6 @@
 
 namespace FastD;
 
-
 use FastD\Console\Config;
 use FastD\Console\Controller;
 use FastD\Console\Migration;
@@ -78,7 +77,7 @@ class Console extends Symfony
     {
         app()->add('input', $input);
         app()->add('output', $output);
-        
+
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $exception) {

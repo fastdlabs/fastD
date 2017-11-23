@@ -22,8 +22,8 @@ class Migration extends Migrate
     public function __construct()
     {
         parent::__construct([
-            'seed_path' => app()->getPath() . '/database/seed',
-            'data_set_path' => app()->getPath() . '/database/dataset',
+            'seed_path' => app()->getPath().'/database/seed',
+            'data_set_path' => app()->getPath().'/database/dataset',
         ]);
     }
 

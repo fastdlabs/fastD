@@ -9,7 +9,6 @@
 
 namespace FastD\Process;
 
-
 use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -130,8 +129,8 @@ class ProcessManager extends Command
         $table->setHeaders(['Process', 'Pid', 'Status', 'Start At', 'Runtime']);
         $rows = [];
         foreach (config()->get('processes', []) as $name => $processor) {
-            $pidFile = $this->pidPath . '/' . $name. '.pid';
-            $pid = file_exists($pidFile) ? (int)file_get_contents($pidFile) : '';
+            $pidFile = $this->pidPath.'/'.$name.'.pid';
+            $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
             $rows[] = [
                 $name,
                 $pid,
