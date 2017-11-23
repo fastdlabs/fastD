@@ -86,23 +86,21 @@ class ProcessManager extends Command
         switch ($input->getArgument('action')) {
             case 'start':
                 $pid = $process->start();
+                file_put_contents($file, $pid);
+                $output->writeln(sprintf('process <info>%s</info> pid: <info>%s</info>', $process->getName(), $pid));
+                $output->writeln(sprintf('pid: <info>%s</info>', $file));
+
+                $process->wait(function ($ret) use ($name) {
+                    return $this->finish($name, $ret['pid'], $ret['code'], $ret['signal']);
+                });
                 break;
             case 'status':
             default:
 
+
         }
 
-
-        file_put_contents($file, $pid);
-
-        $output->writeln(sprintf('process <info>%s</info> pid: <info>%s</info>', $process->getName(), $pid));
-        $output->writeln(sprintf('pid: <info>%s</info>', $file));
-
-        $process->wait(function ($ret) use ($name) {
-            return $this->finish($name, $ret['pid'], $ret['code'], $ret['signal']);
-        });
-
-        return $pid;
+        return 0;
     }
 
     /**
@@ -138,21 +136,30 @@ class ProcessManager extends Command
         $table->setHeaders(['Process', 'Pid', 'Status', 'Start At', 'Runtime']);
         $rows = [];
         foreach (config()->get('processes', []) as $name => $processor) {
-            $pidFile = $this->pidPath.'/'.$name.'.pid';
-            $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
-            $isRunning = process_kill($pid, 0);
-            $rows[] = [
-                $name,
-                $isRunning ? $pid : '',
-                $isRunning ? 'running' : 'stopped',
-                $isRunning ? date('Y-m-d H:i:s', filemtime($pidFile)) : '',
-                $isRunning ? time() - filemtime($pidFile) : '',
-            ];
+            $rows[] = $this->getProcessInfo($name);
         }
         $table->setRows($rows);
         $table->render();
 
         return 0;
+    }
+
+    /**
+     * @param $name
+     * @return array
+     */
+    protected function getProcessInfo($name)
+    {
+        $pidFile = $this->pidPath.'/'.$name.'.pid';
+        $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
+        $isRunning = process_kill($pid, 0);
+        return [
+            $name,
+            $isRunning ? $pid : '',
+            $isRunning ? 'running' : 'stopped',
+            $isRunning ? date('Y-m-d H:i:s', filemtime($pidFile)) : '',
+            $isRunning ? time() - filemtime($pidFile) : '',
+        ];
     }
 
     /**
