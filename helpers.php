@@ -149,9 +149,6 @@ function model($name, $key = 'default')
     return ModelFactory::createModel($name, $key);
 }
 
-/**
- *
- */
 function client()
 {
 }
