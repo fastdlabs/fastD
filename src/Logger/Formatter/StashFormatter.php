@@ -23,6 +23,7 @@ class StashFormatter extends LogstashFormatter
 
     /**
      * @param array $record
+     *
      * @return array
      */
     public function formatV1(array $record)

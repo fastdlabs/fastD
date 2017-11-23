@@ -9,8 +9,6 @@
 
 namespace Console;
 
-
 class Client
 {
-
 }
