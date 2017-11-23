@@ -12,6 +12,7 @@ namespace FastD\Process;
 use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,7 +43,7 @@ class ProcessManager extends Command
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int
@@ -67,6 +68,7 @@ class ProcessManager extends Command
         if (!class_exists($config['process'])) {
             throw new \RuntimeException(sprintf('Process class "%s" is not found.', $processName));
         }
+
         $name = $input->getOption('name');
         if (empty($name)) {
             $name = $processName;
@@ -74,6 +76,7 @@ class ProcessManager extends Command
         $process = $config['process'];
         $options = $config['options'];
         $process = new $process($name);
+
         if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
         }
@@ -81,7 +84,7 @@ class ProcessManager extends Command
             $process->daemon();
         }
 
-        $file = $path.'/'.$processName.'.pid';
+        $file = $path . '/' . $processName . '.pid';
 
         switch ($input->getArgument('action')) {
             case 'start':
@@ -97,6 +100,20 @@ class ProcessManager extends Command
                 break;
             case 'status':
             default:
+                $table = new Table($output);
+                $info = $this->getProcessInfo($name);
+                $rows = [
+                    ['name', $process->getName()],
+                    ['class', get_class($process)],
+                    ['status', $info[2]],
+                    ['pid', $info[1]],
+                ];
+                foreach ($options as $key => $value) {
+                    $rows[] = [$key, $value];
+                }
+                $table->setRows($rows);
+                $table->setStyle('compact');
+                $table->render();
         }
 
         return 0;
@@ -112,7 +129,7 @@ class ProcessManager extends Command
         $pid = $input->getParameterOption(['--path', '-p']);
 
         if (empty($pid)) {
-            $path = app()->getPath().'/runtime/process';
+            $path = app()->getPath() . '/runtime/process';
         } else {
             $path = dirname($pid);
         }
@@ -124,7 +141,7 @@ class ProcessManager extends Command
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int
@@ -150,9 +167,12 @@ class ProcessManager extends Command
      */
     protected function getProcessInfo($name)
     {
-        $pidFile = $this->pidPath.'/'.$name.'.pid';
-        $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
-        $isRunning = process_kill($pid, 0);
+        $pidFile = $this->pidPath . '/' . $name . '.pid';
+        $pid = file_exists($pidFile) ? (int)file_get_contents($pidFile) : '';
+        $isRunning = false;
+        if (is_numeric($pid)) {
+            $isRunning = process_kill($pid, 0);
+        }
 
         return [
             $name,

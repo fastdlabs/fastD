@@ -35,10 +35,6 @@ include COMPOSER_INSTALL;
 
 use FastD\Application;
 use FastD\Processor;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputOption;
 
 $path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
 
