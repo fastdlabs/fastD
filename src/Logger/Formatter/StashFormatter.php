@@ -21,6 +21,10 @@ class StashFormatter extends LogstashFormatter
         parent::__construct(app()->getName(), get_local_ip(), null, null, self::V1);
     }
 
+    /**
+     * @param array $record
+     * @return array
+     */
     public function formatV1(array $record)
     {
         if (empty($record['datetime'])) {

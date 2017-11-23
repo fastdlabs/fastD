@@ -7,6 +7,10 @@
  * @see      http://www.fast-d.cn/
  */
 
-class ClientTest extends PHPUnit_Framework_TestCase
+namespace Console;
+
+
+class Client
 {
+
 }

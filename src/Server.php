@@ -109,13 +109,6 @@ class Server
     }
 
     /**
-     * @return $this
-     */
-    public function useQueue()
-    {
-    }
-
-    /**
      * @return int
      */
     public function start()
@@ -174,10 +167,6 @@ class Server
     {
         if ($input->hasParameterOption(['--daemon', '-d'], true)) {
             $this->daemon();
-        }
-
-        if ($input->hasParameterOption(['--queue', '-q'], true)) {
-            $this->useQueue();
         }
 
         switch ($input->getArgument('action')) {

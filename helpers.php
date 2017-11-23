@@ -164,6 +164,11 @@ function server()
     return app()->get('server');
 }
 
+function task()
+{
+
+}
+
 /**
  * @return swoole_server
  */
