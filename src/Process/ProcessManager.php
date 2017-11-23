@@ -33,11 +33,11 @@ class ProcessManager extends Command
     protected function configure()
     {
         $this->setName('process');
-        $this->addArgument('process', InputArgument::OPTIONAL);
+        $this->addArgument('process', InputArgument::OPTIONAL, 'process name');
+        $this->addArgument('action', InputArgument::OPTIONAL, 'process action, <comment>status|start|stop|reload</comment>', 'status');
         $this->addOption('pid', '-p', InputOption::VALUE_OPTIONAL, 'set process pid path.');
         $this->addOption('name', null, InputOption::VALUE_OPTIONAL, 'set process name.', null);
         $this->addOption('daemon', '-d', InputOption::VALUE_NONE, 'set process daemonize.');
-        $this->addOption('list', '-l', InputOption::VALUE_NONE, 'show all processes.');
         $this->setDescription('Create new processor.');
     }
 
@@ -83,7 +83,16 @@ class ProcessManager extends Command
 
         $file = $path.'/'.$processName.'.pid';
 
-        $pid = $process->start();
+        switch ($input->getArgument('action')) {
+            case 'start':
+                $pid = $process->start();
+                break;
+            case 'status':
+            default:
+
+        }
+
+
         file_put_contents($file, $pid);
 
         $output->writeln(sprintf('process <info>%s</info> pid: <info>%s</info>', $process->getName(), $pid));

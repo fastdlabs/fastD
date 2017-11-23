@@ -40,13 +40,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
-$input = new ArgvInput(null, new InputDefinition([
-    new InputArgument('action', InputArgument::OPTIONAL, 'The server action', 'status'),
-    new InputOption('daemon', 'd', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
-]));
-
 $path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
 
 $processor = new Processor(new Application($path));
 
-$processor->run($input);
+$processor->run();
