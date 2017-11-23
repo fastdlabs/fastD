@@ -132,12 +132,13 @@ class ProcessManager extends Command
         foreach (config()->get('processes', []) as $name => $processor) {
             $pidFile = $this->pidPath . '/' . $name. '.pid';
             $pid = file_exists($pidFile) ? (int)file_get_contents($pidFile) : '';
+            $isRunning = process_kill($pid, 0);
             $rows[] = [
                 $name,
-                $pid,
-                process_kill($pid, 0) ? 'running' : '',
-                date('Y-m-d H:i:s', filemtime($pidFile)),
-                time() - filemtime($pidFile),
+                $isRunning ? $pid : '',
+                $isRunning ? 'running' : 'stopped',
+                $isRunning ? date('Y-m-d H:i:s', filemtime($pidFile)) : '',
+                $isRunning ? time() - filemtime($pidFile) : '',
             ];
         }
         $table->setRows($rows);
