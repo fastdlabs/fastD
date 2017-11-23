@@ -14,10 +14,8 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 /**
- * Class Processor
- * @package FastD
+ * Class Processor.
  */
 class Processor extends Console
 {
@@ -35,8 +33,9 @@ class Processor extends Console
     }
 
     /**
-     * @param InputInterface|null $input
+     * @param InputInterface|null  $input
      * @param OutputInterface|null $output
+     *
      * @return int
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
