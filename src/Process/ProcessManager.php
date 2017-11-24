@@ -12,7 +12,6 @@ namespace FastD\Process;
 use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -43,7 +42,7 @@ class ProcessManager extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return int
@@ -84,7 +83,7 @@ class ProcessManager extends Command
             $process->daemon();
         }
 
-        $pidFile = $path . '/' . $processName . '.pid';
+        $pidFile = $path.'/'.$processName.'.pid';
 
         switch ($input->getArgument('action')) {
             case 'start':
@@ -103,6 +102,7 @@ class ProcessManager extends Command
                 if ($process->kill($pid, SIGTERM)) {
                     $output->writeln(sprintf('process %s pid %s is killed', $process->getName(), $pid));
                 }
+
                 break;
             case 'status':
             default:
@@ -135,7 +135,7 @@ class ProcessManager extends Command
         $pid = $input->getParameterOption(['--path', '-p']);
 
         if (empty($pid)) {
-            $path = app()->getPath() . '/runtime/process';
+            $path = app()->getPath().'/runtime/process';
         } else {
             $path = dirname($pid);
         }
@@ -147,7 +147,7 @@ class ProcessManager extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return int
@@ -173,8 +173,8 @@ class ProcessManager extends Command
      */
     protected function getProcessInfo($name)
     {
-        $pidFile = $this->pidPath . '/' . $name . '.pid';
-        $pid = file_exists($pidFile) ? (int)file_get_contents($pidFile) : '';
+        $pidFile = $this->pidPath.'/'.$name.'.pid';
+        $pid = file_exists($pidFile) ? (int) file_get_contents($pidFile) : '';
         $isRunning = false;
         if (is_numeric($pid)) {
             $isRunning = process_kill($pid, 0);
