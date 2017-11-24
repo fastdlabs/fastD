@@ -39,7 +39,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 
 $input = new ArgvInput(null, new InputDefinition([
-    new InputArgument('schema', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post'),
+    new InputArgument('uri', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post'),
 ]));
 
 $server = new Client();

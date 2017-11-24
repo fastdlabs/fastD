@@ -13,7 +13,6 @@ use FastD\Console\Config;
 use FastD\Console\Controller;
 use FastD\Console\Migration;
 use FastD\Console\Model;
-use FastD\Console\Processor;
 use FastD\Console\Routing;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +30,21 @@ class Console extends Symfony
      */
     public function __construct(Application $app)
     {
-        parent::__construct($app->getName(), Application::VERSION);
+        $version = Application::VERSION;
+
+        parent::__construct(<<<EOF
+                    
+           ______           __  ____        
+          / ____/___ ______/ /_/ __ \       
+         / /_  / __ `/ ___/ __/ / / /       
+        / __/ / /_/ (__  ) /_/ /_/ /        
+       /_/    \__,_/____/\__/_____/          
+                                       <info>{$version}</info>
+                                                                        
+EOF
+);
+
+        restore_exception_handler();
 
         $this->registerCommands();
     }
@@ -46,7 +59,6 @@ class Console extends Symfony
             new Controller(),
             new Routing(),
             new Config(),
-            new Processor(),
             new Migration(),
         ]);
 
@@ -75,6 +87,9 @@ class Console extends Symfony
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        app()->add('input', $input);
+        app()->add('output', $output);
+
         try {
             return parent::doRun($input, $output);
         } catch (\Exception $exception) {

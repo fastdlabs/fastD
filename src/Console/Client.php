@@ -1,12 +1,14 @@
 <?php
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2016
+ * @copyright 2017
  *
  * @see      https://www.github.com/janhuang
- * @see      https://fastdlabs.com
+ * @see      http://www.fast-d.cn/
  */
 
-return [
+namespace Console;
 
-];
+class Client
+{
+}

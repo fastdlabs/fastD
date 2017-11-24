@@ -1,8 +1,8 @@
 server {
     listen    80;
     index index.php;
-    server_name fastdlabs.com;
-    root dobee;
+    server_name fastd;
+    root dobee/web;
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
     }

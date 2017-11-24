@@ -18,6 +18,8 @@ use FastD\Routing\RouteCollection;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @return Application
@@ -65,6 +67,14 @@ function request()
 function response()
 {
     return app()->get('response');
+}
+
+/**
+ * @return \Exception
+ */
+function exception()
+{
+    return app()->get('exception');
 }
 
 /**
@@ -151,10 +161,34 @@ function server()
     return app()->get('server');
 }
 
+function task()
+{
+}
+
 /**
  * @return swoole_server
  */
 function swoole()
 {
     return server()->getSwoole();
+}
+
+/**
+ * Get cli argvInput object.
+ *
+ * @return InputInterface
+ */
+function input()
+{
+    return app()->get('input');
+}
+
+/**
+ * Get cli console output object.
+ *
+ * @return OutputInterface
+ */
+function output()
+{
+    return app()->get('output');
 }

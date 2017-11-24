@@ -9,9 +9,12 @@
 
 namespace FastD\Console;
 
+use FastD\Http\ServerRequest;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -25,6 +28,10 @@ class Routing extends Command
             ->setName('route')
             ->setHelp('Show all route')
             ->setDescription('Show you defined routes.')
+            ->addArgument('method', InputArgument::OPTIONAL, 'Route request method.')
+            ->addArgument('path', InputArgument::OPTIONAL, 'Route path.')
+            ->addOption('data', 'd', InputOption::VALUE_OPTIONAL, 'Path request data.')
+            ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Test all routes')
         ;
     }
 
@@ -35,6 +42,49 @@ class Routing extends Command
      * @return mixed
      */
     public function execute(InputInterface $input, OutputInterface $output)
+    {
+        if (empty($path = $input->getArgument('path'))) {
+            $this->render($input, $output);
+        } else {
+            $this->test($input->getArgument('method'), $path, $input, $output);
+        }
+
+        return 0;
+    }
+
+    /**
+     * @param $method
+     * @param $path
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function test($method, $path, InputInterface $input, OutputInterface $output)
+    {
+        $request = new ServerRequest($method, $path, [
+            'User-Agent' => 'FastD Console/'.version(),
+        ]);
+
+        $response = app()->handleRequest($request);
+
+        $output->writeln(sprintf('Method: <info>%s</info>', $method));
+        $output->writeln(sprintf('Path: <info>%s</info>', $path).PHP_EOL);
+
+        $headersLIne = '';
+
+        foreach ($response->getHeaders() as $name => $header) {
+            $headersLIne .= $name.': '.$response->getHeaderLine($name).PHP_EOL;
+        }
+
+        $body = (string) $response->getBody();
+        $body = json_encode(json_decode($body, true), JSON_PRETTY_PRINT);
+        $output->writeln($headersLIne.PHP_EOL.$body);
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function render(InputInterface $input, OutputInterface $output)
     {
         $table = new Table($output);
         $rows = [];

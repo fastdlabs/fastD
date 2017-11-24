@@ -9,7 +9,7 @@
 
 return [
     'default' => [
-        'adapter' => \Symfony\Component\Cache\Adapter\RedisAdapter::class,
+        'adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
         'params' => [
             'dsn' => 'redis://localhost:3306/db',
         ],

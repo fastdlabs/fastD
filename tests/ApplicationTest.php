@@ -15,7 +15,7 @@ class ApplicationTest extends TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__.'/app/default');
+        $app = new Application(__DIR__.'/../app');
 
         return $app;
     }
@@ -48,6 +48,7 @@ class ApplicationTest extends TestCase
         $this->assertNull(config()->get('foo'));
         $this->assertFalse(config()->has('not_exists_key'));
         $this->assertEquals(config()->get('foo', 'default'), 'default');
+        $this->assertEquals(config()->get('env.foo'), 'bar');
     }
 
     public function testLoggerServiceProvider()

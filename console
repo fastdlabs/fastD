@@ -36,6 +36,15 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$console = new Console(new Application(getcwd()));
+/**
+ * This code
+ *
+ * __DIR__ . '/app'
+ *
+ * is test code.
+ */
+$path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
+
+$console = new Console(new Application($path));
 
 $console->run();

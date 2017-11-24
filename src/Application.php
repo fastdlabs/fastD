@@ -185,6 +185,8 @@ class Application extends Container
             ];
         }
 
+        $this->add('exception', $e);
+
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
 
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();

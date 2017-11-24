@@ -8,5 +8,9 @@
  */
 
 return [
-    'demo' => \Processor\DemoProcessor::class,
+    'demo' => [
+        'process' => \Processor\DemoProcessor::class,
+        'options' => [
+        ],
+    ],
 ];
