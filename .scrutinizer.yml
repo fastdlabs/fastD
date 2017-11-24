@@ -7,10 +7,11 @@ tools:
     php_pdepend: true
     php_loc:
         enabled: true
-        excluded_dirs: [vendor, tests, src/Console, src/Processor.php]
+        excluded_dirs: [app, vendor, tests, src/Console, src/Processor.php]
 filter:
     excluded_paths:
         - 'tests/*'
+        - 'app/*'
 build:
     project_setup:
         before:
