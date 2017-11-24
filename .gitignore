@@ -3,3 +3,4 @@
 /app/runtime
 composer.lock
 seed
+src/ServiceProvider/encryption

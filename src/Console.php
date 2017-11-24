@@ -30,7 +30,19 @@ class Console extends Symfony
      */
     public function __construct(Application $app)
     {
-        parent::__construct($app->getName(), Application::VERSION);
+        $version = Application::VERSION;
+
+        parent::__construct(<<<EOF
+                    
+           ______           __  ____        
+          / ____/___ ______/ /_/ __ \       
+         / /_  / __ `/ ___/ __/ / / /       
+        / __/ / /_/ (__  ) /_/ /_/ /        
+       /_/    \__,_/____/\__/_____/          
+                                       <info>{$version}</info>
+                                                                        
+EOF
+);
 
         restore_exception_handler();
 

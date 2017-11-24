@@ -26,7 +26,7 @@ class HelpersTest extends \FastD\TestCase
 
     public function testFunctionVersion()
     {
-        $this->assertEquals('3.2.0', version());
+        $this->assertEquals('v3.2.0', version());
     }
 
     public function testFunctionRoute()
