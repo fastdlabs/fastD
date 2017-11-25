@@ -11,7 +11,7 @@ return [
     'demo' => [
         'process' => \Processor\DemoProcessor::class,
         'options' => [
-            'foo' => 'bar'
+            'foo' => 'bar',
         ],
     ],
 ];

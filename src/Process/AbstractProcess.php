@@ -9,12 +9,10 @@
 
 namespace FastD\Process;
 
-
 use FastD\Swoole\Process;
 
 /**
- * Class AbstractProcess
- * @package FastD\Process
+ * Class AbstractProcess.
  */
 abstract class AbstractProcess extends Process
 {
@@ -22,6 +20,7 @@ abstract class AbstractProcess extends Process
 
     /**
      * @param array $options
+     *
      * @return $this
      */
     public function configure(array $options = [])
