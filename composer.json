@@ -32,7 +32,7 @@
         "fastd/basic-authenticate": "~0.1.0",
         "fastd/config": "^3.0",
         "fastd/routing": "^3.0",
-        "fastd/swoole": "^2.0",
+        "fastd/swoole": "^2.0@beta",
         "fastd/utils": "^0.1",
         "fastd/testing": "^0.3",
         "catfan/Medoo": "~1.2.0",

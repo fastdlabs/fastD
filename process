@@ -36,7 +36,7 @@ include COMPOSER_INSTALL;
 use FastD\Application;
 use FastD\Processor;
 
-$path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
+$path = file_exists('./app') ? './app' : getcwd();
 
 $processor = new Processor(new Application($path));
 

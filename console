@@ -43,7 +43,7 @@ include COMPOSER_INSTALL;
  *
  * is test code.
  */
-$path = file_exists(__DIR__ . '/app') ? __DIR__ . '/app' : getcwd();
+$path = file_exists('./app') ? './app' : getcwd();
 
 $console = new Console(new Application($path));
 

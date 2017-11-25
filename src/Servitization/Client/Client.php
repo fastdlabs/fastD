@@ -14,12 +14,12 @@ namespace FastD\Servitization\Client;
  */
 class Client extends \FastD\Swoole\Client
 {
-    public function single()
-    {
-    }
+    public function withMethod()
+    {}
 
-    public function multi()
+    public function send()
     {
+
     }
 
     public function async()
