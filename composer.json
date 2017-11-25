@@ -3,7 +3,7 @@
     "type": "library",
     "license": "MIT",
     "description": "FastD",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "keywords": ["FastD"],
     "authors": [
         {
@@ -48,6 +48,7 @@
     "bin": [
         "console",
         "client",
-        "server"
+        "server",
+        "process"
     ]
 }
