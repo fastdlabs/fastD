@@ -218,8 +218,8 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response      $response
+     * @param ServerRequestInterface                                       $request
+     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
      *
      * @return int
      */
