@@ -7,8 +7,29 @@
  * @see      http://www.fast-d.cn/
  */
 
-namespace Console;
+namespace FastD\Console;
 
-class Client
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * Class Client
+ * @package FastD\Console
+ */
+class Client extends Command
 {
+    protected function configure()
+    {
+        $this->setName('client');
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+
+    }
 }

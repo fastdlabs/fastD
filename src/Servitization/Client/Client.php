@@ -14,19 +14,5 @@ namespace FastD\Servitization\Client;
  */
 class Client extends \FastD\Swoole\Client
 {
-    public function withMethod()
-    {
-    }
 
-    public function send()
-    {
-    }
-
-    public function async()
-    {
-    }
-
-    public function promise(array $urls)
-    {
-    }
 }
