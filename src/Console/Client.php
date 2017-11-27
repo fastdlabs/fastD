@@ -30,6 +30,8 @@ class Client extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $response = client()->send();
 
+        print_r($response);
     }
 }

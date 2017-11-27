@@ -9,6 +9,7 @@
 
 namespace FastD;
 
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -17,6 +18,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Client extends Console
 {
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        $this->add(new \FastD\Console\Client());
+
+        $app->add('client', new \FastD\Swoole\Client());
+    }
+
     /**
      * @param InputInterface|null  $input
      * @param OutputInterface|null $output

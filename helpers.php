@@ -15,6 +15,7 @@ use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
+use FastD\Servitization\Client\Client;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
@@ -149,8 +150,19 @@ function model($name, $key = 'default')
     return ModelFactory::createModel($name, $key);
 }
 
-function client()
+/**
+ * @param null $uri
+ * @param bool $async
+ * @param bool $keep
+ * @return Client
+ */
+function client($uri = null, $async = false, $keep = true)
 {
+    if (null !== $uri) {
+        return new Client($uri, $async, $keep);
+    }
+
+    return app()->get('client');
 }
 
 /**
