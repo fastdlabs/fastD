@@ -91,6 +91,9 @@ class Application extends Container
         return $this->path;
     }
 
+    /**
+     * Application bootstrap.
+     */
     public function bootstrap()
     {
         if (!$this->booted) {
@@ -192,13 +195,15 @@ class Application extends Container
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
-            $statusCode = 502;
+            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
     }
 
     /**
+     * Started application.
+     *
      * @return int
      */
     public function run()
