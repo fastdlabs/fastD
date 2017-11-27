@@ -133,7 +133,7 @@ class Application extends Container
     /**
      * @param ServerRequestInterface $request
      *
-     * @return Response
+     * @return Response|\Symfony\Component\HttpFoundation\Response
      */
     public function handleRequest(ServerRequestInterface $request)
     {
@@ -141,7 +141,7 @@ class Application extends Container
 
         try {
             $response = $this->get('dispatcher')->dispatch($request);
-            logger()->log(Logger::INFO, $response->getStatusCode().' '.$response->getReasonPhrase(), [
+            logger()->log(Logger::INFO, $response->getStatusCode(), [
                 'method' => $request->getMethod(),
                 'path' => $request->getUri()->getPath(),
             ]);
@@ -158,9 +158,9 @@ class Application extends Container
     }
 
     /**
-     * @param Response $response
+     * @param Response|\Symfony\Component\HttpFoundation\Response $response
      */
-    public function handleResponse(Response $response)
+    public function handleResponse($response)
     {
         $response->send();
     }
@@ -214,11 +214,11 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response      $response
      *
      * @return int
      */
-    public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
+    public function shutdown(ServerRequestInterface $request, $response)
     {
         $this->offsetUnset('request');
         $this->offsetUnset('response');

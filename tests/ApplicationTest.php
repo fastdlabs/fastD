@@ -140,4 +140,10 @@ class ApplicationTest extends TestCase
             unlink($logFile);
         }
     }
+
+    public function testSymfonyResponse()
+    {
+        app()->handleResponse(new \Symfony\Component\HttpFoundation\Response('hello'));
+        $this->expectOutputString('hello');
+    }
 }
