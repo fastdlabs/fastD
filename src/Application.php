@@ -222,7 +222,9 @@ class Application extends Container
     {
         $this->offsetUnset('request');
         $this->offsetUnset('response');
-        $this->offsetUnset('exception');
+        if ($this->offsetExists('exception')) {
+            $this->offsetUnset('exception');
+        }
         unset($request, $response);
 
         return 0;
