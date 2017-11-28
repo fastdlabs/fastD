@@ -19,6 +19,7 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use FastD\Servitization\Client\Client;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -91,6 +92,9 @@ class Application extends Container
         return $this->path;
     }
 
+    /**
+     * Application bootstrap.
+     */
     public function bootstrap()
     {
         if (!$this->booted) {
@@ -100,6 +104,7 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
+            $this->add('client', new Client());
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
@@ -133,7 +138,7 @@ class Application extends Container
     /**
      * @param ServerRequestInterface $request
      *
-     * @return Response
+     * @return Response|\Symfony\Component\HttpFoundation\Response
      */
     public function handleRequest(ServerRequestInterface $request)
     {
@@ -141,7 +146,7 @@ class Application extends Container
 
         try {
             $response = $this->get('dispatcher')->dispatch($request);
-            logger()->log(Logger::INFO, $response->getStatusCode().' '.$response->getReasonPhrase(), [
+            logger()->log(Logger::INFO, $response->getStatusCode(), [
                 'method' => $request->getMethod(),
                 'path' => $request->getUri()->getPath(),
             ]);
@@ -158,9 +163,9 @@ class Application extends Container
     }
 
     /**
-     * @param Response $response
+     * @param Response|\Symfony\Component\HttpFoundation\Response $response
      */
-    public function handleResponse(Response $response)
+    public function handleResponse($response)
     {
         $response->send();
     }
@@ -192,13 +197,15 @@ class Application extends Container
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
-            $statusCode = 502;
+            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
     }
 
     /**
+     * Started application.
+     *
      * @return int
      */
     public function run()
@@ -213,16 +220,18 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ServerRequestInterface                                       $request
+     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
      *
      * @return int
      */
-    public function shutdown(ServerRequestInterface $request, ResponseInterface $response)
+    public function shutdown(ServerRequestInterface $request, $response)
     {
         $this->offsetUnset('request');
         $this->offsetUnset('response');
-        $this->offsetUnset('exception');
+        if ($this->offsetExists('exception')) {
+            $this->offsetUnset('exception');
+        }
         unset($request, $response);
 
         return 0;

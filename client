@@ -33,15 +33,11 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
+use FastD\Application;
 use FastD\Client;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
 
-$input = new ArgvInput(null, new InputDefinition([
-    new InputArgument('uri', InputArgument::REQUIRED, 'Swoole server address. example: tcp://host:post'),
-]));
+$path = file_exists('./app') ? './app' : getcwd();
 
-$server = new Client();
+$server = new Client(new Application($path));
 
-$server->execute($input);
+$server->run();

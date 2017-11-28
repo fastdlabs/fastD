@@ -9,24 +9,62 @@
 
 namespace FastD\Servitization\Client;
 
+use FastD\Http\Response;
+
 /**
  * Class Consumer.
  */
 class Client extends \FastD\Swoole\Client
 {
-    public function single()
+    /**
+     * @return string
+     */
+    public function getProtocol()
     {
+        return $this->scheme;
     }
 
-    public function multi()
+    /**
+     * @param string $data
+     *
+     * @return Response
+     */
+    public function send($data = '')
     {
+        $response = parent::send($data);
+
+        return $this->wrapResponse($response);
     }
 
-    public function async()
+    /**
+     * @param $response
+     *
+     * @return Response
+     */
+    protected function wrapResponse($response)
     {
-    }
+        $statusCode = 200;
+        $headers = [];
 
-    public function promise(array $urls)
-    {
+        if (false !== (strpos($response, "\r\n\r\n")) && false !== strpos($this->scheme, 'http')) {
+            list($responseHeaders, $response) = explode("\r\n\r\n", $response, 2);
+            $responseHeaders = preg_split('/\r\n/', $responseHeaders, null, PREG_SPLIT_NO_EMPTY);
+
+            $code = array_shift($responseHeaders);
+            list(, $statusCode) = explode(' ', $code);
+            $headers = [];
+            array_map(function ($headerLine) use (&$headers) {
+                list($key, $value) = explode(':', $headerLine, 2);
+                $headers[$key] = trim($value);
+                unset($headerLine, $key, $value);
+            }, $responseHeaders);
+
+            if (isset($headers['Content-Encoding'])) {
+                $response = zlib_decode($response);
+            }
+            unset($responseHeaders, $code);
+        }
+
+        return new Response($response, $statusCode, $headers);
     }
 }

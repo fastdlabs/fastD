@@ -73,8 +73,9 @@ class ProcessManager extends Command
             $name = $processName;
         }
         $process = $config['process'];
-        $options = $config['options'];
+        $options = isset($config['options']) ? (array) $config['options'] : [];
         $process = new $process($name);
+        $process->configure($options);
 
         if (!($process instanceof Process)) {
             throw new \RuntimeException('Process must be instance of \FastD\Swoole\Process');
@@ -108,14 +109,15 @@ class ProcessManager extends Command
             default:
                 $table = new Table($output);
                 $info = $this->getProcessInfo($name);
+                $table->setColumnWidth(0, 15);
                 $rows = [
-                    ['name', $process->getName()],
-                    ['class', get_class($process)],
-                    ['status', $info[2]],
-                    ['pid', $info[1]],
+                    ['name', sprintf('<info>%s</info>', $process->getName())],
+                    ['class', sprintf('<info>%s</info>', get_class($process))],
+                    ['status', sprintf('<info>%s</info>', $info[2])],
+                    ['pid', sprintf('<info>%s</info>', $info[1])],
                 ];
                 foreach ($options as $key => $value) {
-                    $rows[] = [$key, $value];
+                    $rows[] = ['options.'.$key, sprintf('<info>%s</info>', $value)];
                 }
                 $table->setRows($rows);
                 $table->setStyle('compact');
