@@ -26,6 +26,7 @@ class Client extends \FastD\Swoole\Client
 
     /**
      * @param string $data
+     *
      * @return Response
      */
     public function send($data = '')
@@ -37,6 +38,7 @@ class Client extends \FastD\Swoole\Client
 
     /**
      * @param $response
+     *
      * @return Response
      */
     protected function wrapResponse($response)
@@ -49,7 +51,7 @@ class Client extends \FastD\Swoole\Client
             $responseHeaders = preg_split('/\r\n/', $responseHeaders, null, PREG_SPLIT_NO_EMPTY);
 
             $code = array_shift($responseHeaders);
-            list(, $statusCode, ) = explode(' ', $code);
+            list(, $statusCode) = explode(' ', $code);
             $headers = [];
             array_map(function ($headerLine) use (&$headers) {
                 list($key, $value) = explode(':', $headerLine, 2);

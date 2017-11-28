@@ -9,7 +9,6 @@
 
 namespace FastD\Console;
 
-use FastD\Http\Response;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,8 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Client
- * @package FastD\Console
+ * Class Client.
  */
 class Client extends Command
 {
@@ -33,8 +31,9 @@ class Client extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -58,10 +57,10 @@ class Client extends Command
             $json = $response->getContents();
             $header = '';
             foreach ($response->getHeaders() as $key => $value) {
-                $header .= $key.': '.$response->getHeaderLine($key) . PHP_EOL;
+                $header .= $key.': '.$response->getHeaderLine($key).PHP_EOL;
             }
-            $response = $header . "\r\n" . json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
-        } else if (false !== strpos(client()->getProtocol(), 'http')) {
+            $response = $header."\r\n".json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
+        } elseif (false !== strpos(client()->getProtocol(), 'http')) {
             $response = (string) $response;
         } else {
             $response = $response->getContents();
