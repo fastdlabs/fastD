@@ -154,6 +154,7 @@ function model($name, $key = 'default')
  * @param null $uri
  * @param bool $async
  * @param bool $keep
+ *
  * @return Client
  */
 function client($uri = null, $async = false, $keep = true)
