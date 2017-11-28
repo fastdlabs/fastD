@@ -23,8 +23,6 @@ class Client extends Console
         parent::__construct($app);
 
         $this->add(new \FastD\Console\Client());
-
-        $app->add('client', new \FastD\Swoole\Client());
     }
 
     /**

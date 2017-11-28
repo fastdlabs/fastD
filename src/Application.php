@@ -19,6 +19,7 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
+use FastD\Servitization\Client\Client;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -103,6 +104,7 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
+            $this->add('client', new Client());
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);

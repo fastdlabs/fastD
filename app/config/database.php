@@ -8,7 +8,7 @@
  */
 
 return [
-    /*'default' => [
+    'default' => [
         'adapter' => 'mysql',
         'name' => 'ci',
         'host' => '127.0.0.1',
@@ -16,5 +16,5 @@ return [
         'pass' => '',
         'charset' => 'utf8',
         'port' => 3306,
-    ],*/
+    ],
 ];
