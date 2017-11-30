@@ -157,7 +157,7 @@ function model($name, $key = 'default')
  *
  * @return Client
  */
-function client($uri = null, $async = false, $keep = true)
+function client($uri = null, $async = false, $keep = false)
 {
     if (null !== $uri) {
         return new Client($uri, $async, $keep);
