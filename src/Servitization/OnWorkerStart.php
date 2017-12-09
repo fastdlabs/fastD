@@ -19,16 +19,20 @@ trait OnWorkerStart
 {
     /**
      * @param swoole_server $server
-     * @param int           $worker_id
+     * @param int $worker_id
      */
     public function onWorkerStart(swoole_server $server, $worker_id)
     {
         parent::onWorkerStart($server, $worker_id);
 
-        foreach (app() as $service) {
-            if ($service instanceof PoolInterface) {
-                $service->initPool();
+        try {
+            foreach (app() as $service) {
+                if ($service instanceof PoolInterface) {
+                    $service->initPool();
+                }
             }
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
         }
     }
 }
