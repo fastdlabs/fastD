@@ -33,10 +33,10 @@ class Processor extends Console
     }
 
     /**
-     * @param InputInterface|null  $input
+     * @param InputInterface|null $input
      * @param OutputInterface|null $output
-     *
      * @return int
+     * @throws \Exception
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
