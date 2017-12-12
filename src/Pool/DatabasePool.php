@@ -38,7 +38,7 @@ class DatabasePool implements PoolInterface
 
     /**
      * @param $key
-	 * @param $force
+     * @param $force
      *
      * @return Database
      */
