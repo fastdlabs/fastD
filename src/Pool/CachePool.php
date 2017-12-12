@@ -39,12 +39,13 @@ class CachePool implements PoolInterface
 
     /**
      * @param $key
+     * @param $force
      *
      * @return AbstractAdapter
      */
-    public function getCache($key)
+    public function getCache($key, $force = false)
     {
-        if (!isset($this->caches[$key])) {
+        if ($force || !isset($this->caches[$key])) {
             if (!isset($this->config[$key])) {
                 throw new \LogicException(sprintf('No set %s cache', $key));
             }
@@ -76,7 +77,7 @@ class CachePool implements PoolInterface
     public function initPool()
     {
         foreach ($this->config as $name => $config) {
-            $this->getCache($name);
+            $this->getCache($name, true);
         }
     }
 }
