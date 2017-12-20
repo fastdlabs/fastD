@@ -6,10 +6,10 @@
  * @see      https://www.github.com/janhuang
  * @see      https://fastdlabs.com
  */
-include __DIR__.'/../../../vendor/autoload.php';
+include __DIR__.'/../../vendor/autoload.php';
 
 use FastD\Application;
 
-$app = new Application(__DIR__.'/../default');
+$app = new Application(__DIR__.'/..');
 
 $app->run();

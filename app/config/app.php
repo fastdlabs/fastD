@@ -19,9 +19,13 @@ return [
     'log' => [
         [
             \Monolog\Handler\StreamHandler::class,
+            'error.log',
+            \FastD\Logger\Logger::ERROR,
+        ],
+        [
+            \Monolog\Handler\StreamHandler::class,
             'info.log',
             \FastD\Logger\Logger::INFO,
-            \FastD\Logger\Formatter\StashFormatter::class,
         ],
     ],
 
