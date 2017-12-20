@@ -25,9 +25,8 @@ class HTTPServer extends HTTP
     use OnWorkerStart;
 
     /**
-     * @param swoole_http_request  $swooleRequet
+     * @param swoole_http_request $swooleRequet
      * @param swoole_http_response $swooleResponse
-     *
      * @return int
      */
     public function onRequest(swoole_http_request $swooleRequet, swoole_http_response $swooleResponse)
