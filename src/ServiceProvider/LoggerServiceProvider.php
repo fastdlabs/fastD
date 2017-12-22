@@ -25,7 +25,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $handlers = config()->get('log', []);
-        $path = app()->getPath().'/runtime/logs';
+        $path = app()->getPath().'/runtime/logs/'.date('Ymd');
 
         foreach ($handlers as $handler) {
             list($handle, $name, $level, $format) = array_pad($handler, 4, null);
