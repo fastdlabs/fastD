@@ -108,6 +108,7 @@ class Application extends Container
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
+            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
             unset($config);
             $this->booted = true;
         }
