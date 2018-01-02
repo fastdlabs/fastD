@@ -9,7 +9,6 @@
 
 namespace Middleware;
 
-use FastD\Http\ServerRequest;
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;

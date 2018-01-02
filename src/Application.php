@@ -109,7 +109,7 @@ class Application extends Container
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
-            
+
             unset($config);
             $this->booted = true;
         }

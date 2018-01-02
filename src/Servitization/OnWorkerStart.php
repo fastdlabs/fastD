@@ -19,7 +19,7 @@ trait OnWorkerStart
 {
     /**
      * @param swoole_server $server
-     * @param int $worker_id
+     * @param int           $worker_id
      */
     public function onWorkerStart(swoole_server $server, $worker_id)
     {
@@ -32,7 +32,7 @@ trait OnWorkerStart
                 }
             }
         } catch (\Exception $e) {
-            echo $e->getMessage() . PHP_EOL;
+            echo $e->getMessage().PHP_EOL;
         }
     }
 }
