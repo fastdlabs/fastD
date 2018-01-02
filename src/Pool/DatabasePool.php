@@ -78,4 +78,3 @@ class DatabasePool implements PoolInterface
         }
     }
 }
-

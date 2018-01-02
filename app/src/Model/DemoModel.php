@@ -7,6 +7,7 @@ use FastD\Model\Model;
 class DemoModel extends Model
 {
     const TABLE = 'hello';
+
     const LIMIT = '15';
 
     public function select($page = 1)
