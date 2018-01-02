@@ -13,6 +13,11 @@ return [
      */
     'name' => 'fast-d',
 
+    /**
+     * The application timezone.
+     */
+    'timezone' => 'PRC',
+
     /*
      * Application logger
      */

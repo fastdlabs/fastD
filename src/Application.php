@@ -101,6 +101,7 @@ class Application extends Container
             $config = load($this->path.'/config/app.php');
 
             $this->name = $config['name'];
+            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
@@ -108,7 +109,7 @@ class Application extends Container
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
-            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
+            
             unset($config);
             $this->booted = true;
         }
