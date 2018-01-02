@@ -13,6 +13,9 @@ filter:
         - 'tests/*'
         - 'app/*'
 build:
+    environment:
+        php:
+            version: 7.1
     project_setup:
         before:
             - pecl install swoole
