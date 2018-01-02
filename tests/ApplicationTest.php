@@ -53,7 +53,7 @@ class ApplicationTest extends TestCase
 
     public function testLoggerServiceProvider()
     {
-        $logFile = app()->getPath().'/runtime/logs/info.log';
+        $logFile = app()->getPath().'/runtime/logs/'.date('Ymd').'/info.log';
 
         $request = $this->request('GET', '/');
         $response = $this->app->handleRequest($request);
@@ -91,7 +91,7 @@ class ApplicationTest extends TestCase
 
     public function testHandleException()
     {
-        $logFile = app()->getPath().'/runtime/logs/info.log';
+        $logFile = app()->getPath().'/runtime/logs/'.date('Ymd').'/info.log';
         $exception = new LogicException('handle exception');
         $response = $this->app->handleException($exception);
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $response);
