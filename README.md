@@ -4,9 +4,9 @@
 
 <p align="center">
 <a href="https://travis-ci.org/fastdlabs/fastD"><img src="https://travis-ci.org/fastdlabs/fastD.svg?branch=master" /></a>
-<a href="https://scrutinizer-ci.com/g/JanHuang/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/JanHuang/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
-<a href="https://scrutinizer-ci.com/g/JanHuang/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/JanHuang/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="https://styleci.io/repos/35930132"><img src="https://styleci.io/repos/35930132/shield?branch=3.1" alt="StyleCI"></a>
+<a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
+<a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
+<a href="https://styleci.io/repos/35930132"><img src="https://styleci.io/repos/35930132/shield?branch=3.2" alt="StyleCI"></a>
 <a href="https://fastdlabs.com/"><img src="https://poser.pugx.org/fastd/fastd/v/stable" /></a>
 <a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D5.6-8892BF.svg" /></a>
 <a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D1.9.6-8892BF.svg" /></a>
