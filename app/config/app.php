@@ -71,13 +71,6 @@ return [
     ],
 
     /*
-     * Consoles
-     */
-    'consoles' => [
-        \Console\Demo::class,
-    ],
-
-    /*
      * Http middleware
      */
     'middleware' => [
@@ -102,5 +95,6 @@ return [
             \FastD\Middleware\CacheMiddleware::class,
         ],
         'validator' => [\Middleware\LoginSucessValidator::class],
+        'session' => \Middleware\SessionMiddleware::class,
     ],
 ];
