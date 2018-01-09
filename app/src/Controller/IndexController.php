@@ -12,6 +12,7 @@ namespace Controller;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use Middleware\SessionMiddleware;
 
 /**
  * Class IndexController.
@@ -27,6 +28,7 @@ class IndexController
     {
         return json([
                 'foo' => $request->getParam('foo', 'bar'),
+                'session_id' => $request->getHeaderLine(SessionMiddleware::SESSION_ID_KEY)
             ])
             ->withCookie('uid', 100, 900)
             ->withFileDescriptor(1)
