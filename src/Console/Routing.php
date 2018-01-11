@@ -107,7 +107,7 @@ class Routing extends Command
                 $rows[] = [
                     $route->getPath(),
                     $route->getMethod(),
-                    $route->getCallback(),
+                    is_object($callback = $route->getCallback()) ? get_class($callback) : $callback,
                     implode(',', $m),
                 ];
             }
