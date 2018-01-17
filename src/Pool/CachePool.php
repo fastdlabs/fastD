@@ -64,6 +64,9 @@ class CachePool implements PoolInterface
                         isset($config['params']['directory']) ? $config['params']['directory'] : app()->getPath().'/runtime/cache'
                     );
             }
+            if (app()->has('logger') && $this->caches[$key] instanceof AbstractAdapter) {
+                $this->caches[$key]->setLogger(app()->get('logger'));
+            }
         }
 
         return $this->caches[$key];
