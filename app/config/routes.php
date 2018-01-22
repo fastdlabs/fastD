@@ -2,7 +2,7 @@
 
 route()->group([
     'prefix' => '',
-    'middleware' => ''
+    'middleware' => '',
 ], function () {
     route()->get('/', 'IndexController@welcome')->withMiddleware('common.cache');
     route()->get('/foo/{name}', 'IndexController@sayHello');
@@ -15,6 +15,3 @@ route()->group([
     route()->post('/abc', 'WelcomeController@welcome')->withMiddleware('validator');
     route()->get('/session', 'IndexController@welcome')->withAddMiddleware('session');
 });
-
-
-
