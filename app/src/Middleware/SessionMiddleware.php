@@ -9,15 +9,13 @@
 
 namespace Middleware;
 
-
 use FastD\Middleware\DelegateInterface;
 use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class SessionMiddleware
- * @package Middleware
+ * Class SessionMiddleware.
  */
 class SessionMiddleware extends Middleware
 {
@@ -25,7 +23,8 @@ class SessionMiddleware extends Middleware
 
     /**
      * @param ServerRequestInterface $request
-     * @param DelegateInterface $next
+     * @param DelegateInterface      $next
+     *
      * @return ResponseInterface
      */
     public function handle(ServerRequestInterface $request, DelegateInterface $next)

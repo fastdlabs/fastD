@@ -28,7 +28,7 @@ class IndexController
     {
         return json([
                 'foo' => $request->getParam('foo', 'bar'),
-                'session_id' => $request->getHeaderLine(SessionMiddleware::SESSION_ID_KEY)
+                'session_id' => $request->getHeaderLine(SessionMiddleware::SESSION_ID_KEY),
             ])
             ->withCookie('uid', 100, 900)
             ->withFileDescriptor(1)
