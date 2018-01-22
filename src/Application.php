@@ -202,7 +202,13 @@ class Application extends Container
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
+        $resposne = json(call_user_func(config()->get('exception.response'), $e), $statusCode);
+
+        if (!$this->isBooted()) {
+            $resposne->send();
+        }
+
+        return $resposne;
     }
 
     /**

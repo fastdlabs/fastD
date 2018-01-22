@@ -34,7 +34,14 @@ class TestCase extends WebTestCase
     public function setUp()
     {
         $this->app = $this->createApplication();
-        parent::setUp();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocal()
+    {
+        return 'prod' !== config()->get('env');
     }
 
     /**
