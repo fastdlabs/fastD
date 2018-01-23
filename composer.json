@@ -29,7 +29,7 @@
         "fastd/container": "^3.0",
         "fastd/http": "^3.0",
         "fastd/middleware": "^1.0",
-        "fastd/basic-authenticate": "^0.1",
+        "fastd/basic-authenticate": "^0.2",
         "fastd/config": "^3.0",
         "fastd/routing": "^3.0",
         "fastd/swoole": "^2.0",
