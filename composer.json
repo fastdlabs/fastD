@@ -31,7 +31,7 @@
         "fastd/middleware": "^1.0",
         "fastd/basic-authenticate": "^0.1",
         "fastd/config": "^3.0",
-        "fastd/routing": "v3.1.4",
+        "fastd/routing": "^3.0",
         "fastd/swoole": "^2.0",
         "fastd/utils": "^0.1",
         "fastd/testing": "^0.3",

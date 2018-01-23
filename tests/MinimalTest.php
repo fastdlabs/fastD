@@ -65,7 +65,7 @@
         }
 
         /**
-         * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+         * @expectedException \FastD\Container\NotFoundException
          */
         public function testCache()
         {
@@ -73,7 +73,7 @@
         }
 
         /**
-         * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+         * @expectedException \FastD\Container\NotFoundException
          */
         public function testDatabase()
         {

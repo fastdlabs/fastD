@@ -31,6 +31,6 @@ class FooMiddleware extends Middleware
             ]);
         }
 
-        return $delegate($serverRequest);
+        return $delegate->process($serverRequest);
     }
 }
