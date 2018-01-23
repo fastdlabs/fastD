@@ -25,34 +25,34 @@ class Router extends RouteCollection
         return $callback;
     }
 
-    public function get($path, $callback, array $defaults = [])
+    public function get($path, $callback, $middleware = [])
     {
-        return parent::get($path, $this->concat($callback), $defaults);
+        return parent::get($path, $this->concat($callback), $middleware);
     }
 
-    public function post($path, $callback, array $defaults = [])
+    public function post($path, $callback, $middleware = [])
     {
-        return parent::post($path, $this->concat($callback), $defaults);
+        return parent::post($path, $this->concat($callback), $middleware);
     }
 
-    public function patch($path, $callback, array $defaults = [])
+    public function patch($path, $callback, $middleware = [])
     {
-        return parent::patch($path, $this->concat($callback), $defaults);
+        return parent::patch($path, $this->concat($callback), $middleware);
     }
 
-    public function put($path, $callback, array $defaults = [])
+    public function put($path, $callback, $middleware = [])
     {
-        return parent::put($path, $this->concat($callback), $defaults);
+        return parent::put($path, $this->concat($callback), $middleware);
     }
 
-    public function delete($path, $callback, array $defaults = [])
+    public function delete($path, $callback, $middleware = [])
     {
-        return parent::delete($path, $this->concat($callback), $defaults);
+        return parent::delete($path, $this->concat($callback), $middleware);
     }
 
-    public function head($path, $callback, array $defaults = [])
+    public function head($path, $callback, $middleware = [])
     {
-        return parent::head($path, $this->concat($callback), $defaults);
+        return parent::head($path, $this->concat($callback), $middleware);
     }
 }
 
