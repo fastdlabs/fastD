@@ -91,7 +91,7 @@ class Database extends Medoo
 
         $query = $this->query('SELECT EXISTS('.$this->selectContext($table, $join, $column, $where, 1).')');
 
-        if ($query && intval($query->fetchColumn()) === 1) {
+        if ($query && 1 === intval($query->fetchColumn())) {
             return true;
         }
 
