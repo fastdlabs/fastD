@@ -14,7 +14,7 @@ before_install:
   - mysql -e 'use ci;'
   - mysql -e 'CREATE TABLE `ci`.`hello` (`id` int(11) NOT NULL AUTO_INCREMENT,`content` varchar(255) NOT NULL,`user` varchar(255) NOT NULL,`created` datetime NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;'
   - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+  - composer update
 
 script: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
