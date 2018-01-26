@@ -27,7 +27,9 @@ class TCPServer extends TCP
      * @param $fd
      * @param $data
      * @param $from_id
+     *
      * @return int|mixed
+     *
      * @throws \Exception
      * @throws \FastD\Packet\Exceptions\PacketException
      */

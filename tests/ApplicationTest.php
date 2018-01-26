@@ -9,7 +9,6 @@
 use FastD\Application;
 use FastD\TestCase;
 use ServiceProvider\FooServiceProvider;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class ApplicationTest extends TestCase
 {
@@ -57,7 +56,7 @@ class ApplicationTest extends TestCase
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
         $this->equalsJson($response, [
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 

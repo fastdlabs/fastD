@@ -14,10 +14,8 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Routing\RouteCollection;
 use FastD\Routing\RouteDispatcher;
 
-
 /**
- * Class RouteServiceProvider
- * @package FastD\ServiceProvider
+ * Class RouteServiceProvider.
  */
 class RouteServiceProvider implements ServiceProviderInterface
 {
