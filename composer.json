@@ -46,9 +46,9 @@
         "symfony/http-foundation": "^3.0"
     },
     "bin": [
-        "console",
-        "client",
-        "server",
-        "process"
+        "bin/console",
+        "bin/client",
+        "bin/server",
+        "bin/process"
     ]
 }
