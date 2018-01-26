@@ -24,24 +24,17 @@ class HelpersTest extends \FastD\TestCase
         $this->assertEquals('fast-d', app()->getName());
     }
 
-    public function testFunctionVersion()
-    {
-        $this->assertEquals('v3.2.0', version());
-    }
-
     public function testFunctionRoute()
     {
         $router = route();
         $map = $router->aliasMap;
         $this->assertArrayHasKey('GET', $map);
-        $this->assertArrayHasKey('POST', $map);
     }
 
     public function testFunctionConfig()
     {
         $this->assertEquals('fast-d', config()->get('name'));
         $this->assertArrayHasKey('database', config()->all());
-        $this->assertArrayHasKey('consoles', config()->all());
     }
 
     /**

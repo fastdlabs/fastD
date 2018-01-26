@@ -110,7 +110,6 @@ class Application extends Container
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
-            $this->add('client', new Client());
 
             $this->registerServicesProviders($config['services']);
 
