@@ -128,7 +128,7 @@ class Application extends Container
 
         set_exception_handler([$this, 'handleException']);
 
-        set_error_handler(function ($level, $message, $file = '', $line = 0) {
+        set_error_handler(function ($level, $message, $file, $line) {
             throw new ErrorException($message, 0, $level, $file, $line);
         });
     }
@@ -195,18 +195,33 @@ class Application extends Container
 
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
 
+        if (EnvironmentObject::make()->isCli()) {
+            throw $e;
+        }
+
         $status = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($status, Response::$statusTexts)) {
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        if (EnvironmentObject::make()->isCli()) {
-            throw $e;
-        }
-
         $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
         $this->handleResponse($resposne);
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
+     * @return int
+     */
+    public function shutdown(ServerRequestInterface $request, $response)
+    {
+        $this->offsetUnset('request');
+        $this->offsetUnset('response');
+
+        unset($request, $response);
+
+        return 0;
     }
 
     /**
@@ -222,21 +237,5 @@ class Application extends Container
         $this->handleResponse($response);
 
         return $this->shutdown($request, $response);
-    }
-
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
-     * @return int
-     */
-    public function shutdown(ServerRequestInterface $request, $response)
-    {
-        $this->offsetUnset('request');
-        $this->offsetUnset('response');
-
-        unset($request, $response);
-
-        return 0;
     }
 }

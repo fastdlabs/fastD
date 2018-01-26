@@ -26,9 +26,8 @@ class UDPServer extends UDP
      * @param swoole_server $server
      * @param $data
      * @param $clientInfo
-     *
      * @return int|mixed
-     *
+     * @throws \Exception
      * @throws \FastD\Packet\Exceptions\PacketException
      */
     public function doPacket(swoole_server $server, $data, $clientInfo)

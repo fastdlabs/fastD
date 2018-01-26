@@ -24,18 +24,12 @@ return [
     'services' => [
         \FastD\ServiceProvider\RouteServiceProvider::class,
         \FastD\ServiceProvider\LoggerServiceProvider::class,
-        \FastD\ServiceProvider\DatabaseServiceProvider::class,
-        \FastD\ServiceProvider\CacheServiceProvider::class,
-        \FastD\ServiceProvider\MoltenServiceProvider::class,
-        \ServiceProvider\FooServiceProvider::class,
     ],
 
     /*
      * Http middleware
      */
-    'middleware' => [
-        'validator' => [\Middleware\LoginSucessValidator::class],
-    ],
+    'middleware' => [],
 
     /*
      * Application logger
@@ -45,11 +39,6 @@ return [
             \Monolog\Handler\StreamHandler::class,
             'error.log',
             \FastD\Logger\Logger::ERROR,
-        ],
-        [
-            \Monolog\Handler\StreamHandler::class,
-            'info.log',
-            \FastD\Logger\Logger::INFO,
         ],
     ],
 

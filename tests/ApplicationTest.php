@@ -24,6 +24,7 @@ class ApplicationTest extends TestCase
     {
         $this->assertEquals('fast-d', $this->app->getName());
         $this->assertTrue($this->app->isBooted());
+        $this->assertEquals(date_default_timezone_get(), config()->get('timezone'));
     }
 
     public function testServiceProvider()
@@ -34,14 +35,13 @@ class ApplicationTest extends TestCase
 
     public function testServiceProviderAutomateConsole()
     {
-//        $this->app->register(new FooServiceProvider());
+        $this->app->register(new FooServiceProvider());
 
         $consoles = config()->get('consoles');
         $consoles = array_unique($consoles);
-
-//        $this->assertEquals([
-//            'Console\Demo', 'ServiceProvider\DemoConsole',
-//        ], $consoles);
+        $this->assertEquals([
+            'ServiceProvider\DemoConsole',
+        ], $consoles);
     }
 
     public function testConfigurationServiceProvider()
@@ -53,40 +53,22 @@ class ApplicationTest extends TestCase
         $this->assertEquals(config()->get('env.foo'), 'bar');
     }
 
-    public function testLoggerServiceProvider()
-    {
-        $logFile = app()->getPath().'/runtime/logs/'.date('Ymd').'/info.log';
-
-        $request = $this->request('GET', '/');
-        $response = $this->app->handleRequest($request);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertFileExists($logFile);
-
-//        $request = $this->request('GET', '/not/found');
-//        $response = $this->app->handleRequest($request);
-//        $this->assertEquals(404, $response->getStatusCode());
-//        $this->assertFileExists($logFile);
-    }
-
-    public function testCacheServiceProvider()
-    {
-        $this->assertInstanceOf(FilesystemAdapter::class, $this->app->get('cache')->getCache('default'));
-        $foo = cache()->getItem('foo');
-        if (!$foo->isHit()) {
-            $foo->set('bar');
-        }
-        $this->assertEquals('bar', $foo->get());
-    }
-
     public function testHandleRequest()
     {
         $response = $this->app->handleRequest($this->request('GET', '/'));
-
+        $this->equalsJson($response, [
+            'foo' => 'bar'
+        ]);
     }
 
     public function testHandleException()
     {
-
+        try {
+            $e = new Exception('exception');
+            $this->app->handleException($e);
+        } catch (Exception $e) {
+            $this->assertEquals('exception', $e->getMessage());
+        }
     }
 
     public function testHandleResponse()
@@ -99,32 +81,17 @@ class ApplicationTest extends TestCase
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $response);
     }
 
+    public function testSymfonyResponse()
+    {
+        $response = new \Symfony\Component\HttpFoundation\Response('foo');
+        $this->app->handleResponse($response);
+        $this->expectOutputString($response->getContent());
+    }
+
     public function testApplicationShutdown()
     {
         $request = $this->request('GET', '/');
         $response = $this->handleRequest($request);
         $this->app->shutdown($request, $response);
-    }
-
-    public function testOrdinaryControllerLogic()
-    {
-        $request = $this->request('GET', '/');
-        $response = $this->handleRequest($request);
-        $this->equalsStatus($response, 200);
-    }
-
-
-    public function tearDown()
-    {
-        $logFile = app()->getPath().'/runtime/logs/info.log';
-        if (file_exists($logFile)) {
-            unlink($logFile);
-        }
-    }
-
-    public function testSymfonyResponse()
-    {
-        app()->handleResponse(new \Symfony\Component\HttpFoundation\Response('hello'));
-        $this->expectOutputString('hello');
     }
 }

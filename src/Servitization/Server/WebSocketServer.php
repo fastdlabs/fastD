@@ -24,11 +24,10 @@ class WebSocketServer extends WebSocket
     use OnWorkerStart;
 
     /**
-     * @param swoole_server          $server
+     * @param swoole_server $server
      * @param swoole_websocket_frame $frame
-     *
      * @return int|mixed
-     *
+     * @throws \Exception
      * @throws \FastD\Packet\Exceptions\PacketException
      */
     public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
