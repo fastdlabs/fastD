@@ -45,7 +45,7 @@ class HelpersTest extends \FastD\TestCase
     }
 
     /**
-     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+     * @expectedException \FastD\Container\NotFoundException
      */
     public function testFunctionRequestInApplicationNotBootstrap()
     {
@@ -61,7 +61,7 @@ class HelpersTest extends \FastD\TestCase
     }
 
     /**
-     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+     * @expectedException \FastD\Container\NotFoundException
      */
     public function testFunctionResponseInApplicationNotBootstrapped()
     {

@@ -6,6 +6,7 @@
  * @see      https://www.github.com/janhuang
  * @see      https://fastdlabs.com
  */
+
 use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
@@ -68,14 +69,6 @@ function request()
 function response()
 {
     return app()->get('response');
-}
-
-/**
- * @return \Exception
- */
-function exception()
-{
-    return app()->get('exception');
 }
 
 /**
