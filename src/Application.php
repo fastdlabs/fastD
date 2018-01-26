@@ -19,7 +19,6 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Servitization\Client\Client;
 use FastD\Utils\EnvironmentObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -95,8 +94,6 @@ class Application extends Container
 
     /**
      * Application bootstrap.
-     *
-     * @return void
      */
     public function bootstrap()
     {
@@ -118,9 +115,6 @@ class Application extends Container
         }
     }
 
-    /**
-     * @return void
-     */
     protected function registerExceptionHandler()
     {
         error_reporting(-1);
@@ -134,7 +128,6 @@ class Application extends Container
 
     /**
      * @param ServiceProviderInterface[] $services
-     * @return void
      */
     protected function registerServicesProviders(array $services)
     {
@@ -146,7 +139,9 @@ class Application extends Container
 
     /**
      * @param ServerRequestInterface $request
+     *
      * @return Response|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws Exception
      */
     public function handleRequest(ServerRequestInterface $request)
@@ -156,6 +151,7 @@ class Application extends Container
         try {
             $response = $this->get('dispatcher')->dispatch($request);
             $this->add('response', $response);
+
             return $response;
         } catch (Exception $exception) {
             $this->handleException($exception);
@@ -175,6 +171,7 @@ class Application extends Container
 
     /**
      * @param $e
+     *
      * @throws FatalThrowableError
      */
     public function handleException($e)
@@ -209,8 +206,9 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface $request
+     * @param ServerRequestInterface                                       $request
      * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
+     *
      * @return int
      */
     public function shutdown(ServerRequestInterface $request, $response)
@@ -225,6 +223,7 @@ class Application extends Container
 
     /**
      * @return int
+     *
      * @throws Exception
      */
     public function run()

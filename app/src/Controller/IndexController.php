@@ -12,7 +12,6 @@ namespace Controller;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use Middleware\SessionMiddleware;
 
 /**
  * Class IndexController.

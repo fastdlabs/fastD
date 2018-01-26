@@ -33,7 +33,6 @@ return [
      * Http middleware
      */
     'middleware' => [
-
     ],
 
     /*
