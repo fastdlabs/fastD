@@ -145,13 +145,9 @@ class Application extends Container
      */
     public function handleRequest(ServerRequestInterface $request)
     {
-        $this->add('request', $request);
-
         try {
-            $response = $this->get('dispatcher')->dispatch($request);
-            $this->add('response', $response);
-
-            return $response;
+            $this->add('request', $request);
+            return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
             $this->handleException($exception);
         } catch (Throwable $exception) {

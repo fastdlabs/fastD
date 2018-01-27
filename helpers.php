@@ -67,6 +67,9 @@ function request()
  */
 function response()
 {
+    if (!app()->has('response')) {
+        app()->add('response', new Response());
+    }
     return app()->get('response');
 }
 
