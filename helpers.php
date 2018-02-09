@@ -71,6 +71,7 @@ function response()
     if (!app()->has('response')) {
         app()->add('response', new Response());
     }
+
     return app()->get('response');
 }
 
@@ -201,6 +202,7 @@ function output()
 /**
  * @param $method
  * @param $path
+ *
  * @return Response
  */
 function forward($method, $path)
@@ -212,5 +214,6 @@ function forward($method, $path)
     ;
     $response = app()->get('dispatcher')->dispatch($request);
     unset($request);
+
     return $response;
 }
