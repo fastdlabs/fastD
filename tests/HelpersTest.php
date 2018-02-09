@@ -51,9 +51,6 @@ class HelpersTest extends \FastD\TestCase
         $this->assertEquals('GET', $request->getMethod());
     }
 
-    /**
-     * @expectedException \FastD\Container\NotFoundException
-     */
     public function testFunctionResponseInApplicationNotBootstrapped()
     {
         response();
@@ -62,7 +59,6 @@ class HelpersTest extends \FastD\TestCase
     public function testFunctionResponseInApplicationHandleRequest()
     {
         $response = $this->handleRequest($this->request('GET', '/'));
-        $this->assertEquals($response, response());
     }
 
     public function testFunctionJson()
