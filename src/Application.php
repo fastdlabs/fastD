@@ -147,6 +147,7 @@ class Application extends Container
     {
         try {
             $this->add('request', $request);
+
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
             $this->handleException($exception);
