@@ -16,9 +16,10 @@ date_default_timezone_set('PRC');
 
 // autoload composer
 foreach ([
-             __DIR__ . '/../../autoload.php',
+             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../vendor/autoload.php',
              __DIR__ . '/../vendor/autoload.php',
-             __DIR__ . '/vendor/autoload.php'
+             __DIR__ . '/vendor/autoload.php',
          ] as $value) {
     if (file_exists($value)) {
         define('COMPOSER_INSTALL', $value);

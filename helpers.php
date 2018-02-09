@@ -10,6 +10,7 @@ use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
+use FastD\Http\Uri;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
@@ -195,4 +196,21 @@ function input()
 function output()
 {
     return app()->get('output');
+}
+
+/**
+ * @param $method
+ * @param $path
+ * @return Response
+ */
+function forward($method, $path)
+{
+    $request = clone app()->get('request');
+    $request
+        ->withMethod($method)
+        ->withUri(new Uri($path))
+    ;
+    $response = app()->get('dispatcher')->dispatch($request);
+    unset($request);
+    return $response;
 }
