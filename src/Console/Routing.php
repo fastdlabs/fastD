@@ -108,7 +108,7 @@ class Routing extends Command
                 $callback = $route->getCallback();
                 if (is_object($callback)) {
                     $callback = get_class($callback);
-                } else if (is_array($callback)) {
+                } elseif (is_array($callback)) {
                     if (is_object($callback[0])) {
                         $callback[0] = get_class($callback[0]);
                     }
