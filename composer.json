@@ -2,9 +2,10 @@
     "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "FastD",
+    "description": "The FastD High Performance API Framework",
     "minimum-stability": "stable",
-    "keywords": ["FastD"],
+    "keywords": ["Framework", "API", "Swoole", "FastD"],
+    "homepage": "https://fastdlabs.com",
     "authors": [
         {
             "name": "janhuang",
@@ -28,18 +29,16 @@
         "php": ">=5.6",
         "fastd/container": "^3.0",
         "fastd/http": "^3.0",
-        "fastd/middleware": "~1.0.0",
-        "fastd/basic-authenticate": "~0.1.0",
-        "fastd/config": "^3.0",
+        "fastd/middleware": "^1.0",
+        "fastd/config": "^3.2",
         "fastd/routing": "^3.0",
-        "fastd/swoole": "^2.2@beta",
-        "fastd/utils": "^0.1",
+        "fastd/swoole": "^2.0",
         "fastd/testing": "^0.3",
+        "fastd/migration": "^0.1",
+        "fastd/query-builder": "^2.0",
         "catfan/Medoo": "~1.2.0",
-        "symfony/cache": "~3.2.0",
-        "monolog/monolog": "~1.0",
-        "fastd/migration": "^0.1@beta",
-        "fastd/query-builder": "^2.0@beta"
+        "symfony/cache": "^3.0",
+        "monolog/monolog": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0",
@@ -47,9 +46,9 @@
         "symfony/http-foundation": "^3.0"
     },
     "bin": [
-        "console",
-        "client",
-        "server",
-        "process"
+        "bin/console",
+        "bin/client",
+        "bin/server",
+        "bin/process"
     ]
 }

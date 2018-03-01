@@ -25,10 +25,14 @@ trait OnWorkerStart
     {
         parent::onWorkerStart($server, $worker_id);
 
-        foreach (app() as $service) {
-            if ($service instanceof PoolInterface) {
-                $service->initPool();
+        try {
+            foreach (app() as $service) {
+                if ($service instanceof PoolInterface) {
+                    $service->initPool();
+                }
             }
+        } catch (\Exception $e) {
+            echo $e->getMessage().PHP_EOL;
         }
     }
 }

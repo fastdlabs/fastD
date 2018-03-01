@@ -19,7 +19,7 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Servitization\Client\Client;
+use FastD\Utils\EnvironmentObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -99,15 +99,16 @@ class Application extends Container
     {
         if (!$this->booted) {
             $config = load($this->path.'/config/app.php');
-
             $this->name = $config['name'];
+
+            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
-            $this->add('client', new Client());
 
             $this->registerExceptionHandler();
             $this->registerServicesProviders($config['services']);
+
             unset($config);
             $this->booted = true;
         }
@@ -119,7 +120,7 @@ class Application extends Container
 
         set_exception_handler([$this, 'handleException']);
 
-        set_error_handler(function ($level, $message, $file = '', $line = 0) {
+        set_error_handler(function ($level, $message, $file, $line) {
             throw new ErrorException($message, 0, $level, $file, $line);
         });
     }
@@ -139,27 +140,21 @@ class Application extends Container
      * @param ServerRequestInterface $request
      *
      * @return Response|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Exception
      */
     public function handleRequest(ServerRequestInterface $request)
     {
-        $this->add('request', $request);
-
         try {
-            $response = $this->get('dispatcher')->dispatch($request);
-            logger()->log(Logger::INFO, $response->getStatusCode(), [
-                'method' => $request->getMethod(),
-                'path' => $request->getUri()->getPath(),
-            ]);
+            $this->add('request', $request);
+
+            return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            $response = $this->handleException($exception);
+            $this->handleException($exception);
         } catch (Throwable $exception) {
             $exception = new FatalThrowableError($exception);
-            $response = $this->handleException($exception);
+            $this->handleException($exception);
         }
-
-        $this->add('response', $response);
-
-        return $response;
     }
 
     /**
@@ -173,7 +168,7 @@ class Application extends Container
     /**
      * @param $e
      *
-     * @return Response
+     * @throws FatalThrowableError
      */
     public function handleException($e)
     {
@@ -190,33 +185,20 @@ class Application extends Container
             ];
         }
 
-        $this->add('exception', $e);
-
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
 
-        $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
-
-        if (!array_key_exists($statusCode, Response::$statusTexts)) {
-            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+        if (EnvironmentObject::make()->isCli()) {
+            throw $e;
         }
 
-        return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
-    }
+        $status = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-    /**
-     * Started application.
-     *
-     * @return int
-     */
-    public function run()
-    {
-        $request = ServerRequest::createServerRequestFromGlobals();
+        if (!array_key_exists($status, Response::$statusTexts)) {
+            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
 
-        $response = $this->handleRequest($request);
-
-        $this->handleResponse($response);
-
-        return $this->shutdown($request, $response);
+        $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
+        $this->handleResponse($resposne);
     }
 
     /**
@@ -229,11 +211,25 @@ class Application extends Container
     {
         $this->offsetUnset('request');
         $this->offsetUnset('response');
-        if ($this->offsetExists('exception')) {
-            $this->offsetUnset('exception');
-        }
+
         unset($request, $response);
 
         return 0;
+    }
+
+    /**
+     * @return int
+     *
+     * @throws Exception
+     */
+    public function run()
+    {
+        $request = ServerRequest::createServerRequestFromGlobals();
+
+        $response = $this->handleRequest($request);
+
+        $this->handleResponse($response);
+
+        return $this->shutdown($request, $response);
     }
 }

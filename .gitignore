@@ -4,3 +4,4 @@
 composer.lock
 seed
 src/ServiceProvider/encryption
+.DS_Store

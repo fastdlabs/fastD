@@ -14,9 +14,7 @@ class HelpersTest extends \FastD\TestCase
 {
     public function createApplication()
     {
-        $app = new Application(__DIR__.'/../app');
-
-        return $app;
+        return new Application(__DIR__.'/../app');
     }
 
     public function testFunctionApp()
@@ -24,28 +22,21 @@ class HelpersTest extends \FastD\TestCase
         $this->assertEquals('fast-d', app()->getName());
     }
 
-    public function testFunctionVersion()
-    {
-        $this->assertEquals('v3.2.0', version());
-    }
-
     public function testFunctionRoute()
     {
         $router = route();
         $map = $router->aliasMap;
         $this->assertArrayHasKey('GET', $map);
-        $this->assertArrayHasKey('POST', $map);
     }
 
     public function testFunctionConfig()
     {
         $this->assertEquals('fast-d', config()->get('name'));
         $this->assertArrayHasKey('database', config()->all());
-        $this->assertArrayHasKey('consoles', config()->all());
     }
 
     /**
-     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
+     * @expectedException \FastD\Container\NotFoundException
      */
     public function testFunctionRequestInApplicationNotBootstrap()
     {
@@ -60,9 +51,6 @@ class HelpersTest extends \FastD\TestCase
         $this->assertEquals('GET', $request->getMethod());
     }
 
-    /**
-     * @expectedException \FastD\Container\Exceptions\ServiceNotFoundException
-     */
     public function testFunctionResponseInApplicationNotBootstrapped()
     {
         response();
@@ -71,7 +59,6 @@ class HelpersTest extends \FastD\TestCase
     public function testFunctionResponseInApplicationHandleRequest()
     {
         $response = $this->handleRequest($this->request('GET', '/'));
-        $this->assertEquals($response, response());
     }
 
     public function testFunctionJson()

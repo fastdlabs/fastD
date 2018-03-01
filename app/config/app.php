@@ -14,14 +14,40 @@ return [
     'name' => 'fast-d',
 
     /*
+     * The application timezone.
+     */
+    'timezone' => 'PRC',
+
+    /*
+     * Bootstrap default service provider
+     */
+    'services' => [
+        \FastD\ServiceProvider\RouteServiceProvider::class,
+        \FastD\ServiceProvider\LoggerServiceProvider::class,
+        \FastD\ServiceProvider\DatabaseServiceProvider::class,
+        \FastD\ServiceProvider\CacheServiceProvider::class,
+        \FastD\ServiceProvider\MoltenServiceProvider::class,
+    ],
+
+    /*
+     * Http middleware
+     */
+    'middleware' => [
+    ],
+
+    /*
      * Application logger
      */
     'log' => [
         [
             \Monolog\Handler\StreamHandler::class,
+            'error.log',
+            \FastD\Logger\Logger::ERROR,
+        ],
+        [
+            \Monolog\Handler\StreamHandler::class,
             'info.log',
             \FastD\Logger\Logger::INFO,
-            \FastD\Logger\Formatter\StashFormatter::class,
         ],
     ],
 
@@ -47,51 +73,5 @@ return [
                 'trace' => explode("\n", $e->getTraceAsString()),
             ];
         },
-    ],
-
-    /*
-     * Bootstrap default service provider
-     */
-    'services' => [
-        \FastD\ServiceProvider\RouteServiceProvider::class,
-        \FastD\ServiceProvider\LoggerServiceProvider::class,
-        \FastD\ServiceProvider\DatabaseServiceProvider::class,
-        \FastD\ServiceProvider\CacheServiceProvider::class,
-        \FastD\ServiceProvider\MoltenServiceProvider::class,
-        \ServiceProvider\FooServiceProvider::class,
-    ],
-
-    /*
-     * Consoles
-     */
-    'consoles' => [
-        \Console\Demo::class,
-    ],
-
-    /*
-     * Http middleware
-     */
-    'middleware' => [
-        'basic.auth' => new FastD\BasicAuthenticate\HttpBasicAuthentication(
-            [
-                'authenticator' => [
-                    'class' => \FastD\BasicAuthenticate\PhpAuthenticator::class,
-                    'params' => [
-                        'foo' => 'bar',
-                    ],
-                ],
-                'response' => [
-                    'class' => \FastD\Http\JsonResponse::class,
-                    'data' => [
-                        'msg' => 'not allow access',
-                        'code' => 401,
-                    ],
-                ],
-            ]
-        ),
-        'common.cache' => [
-            \FastD\Middleware\CacheMiddleware::class,
-        ],
-        'validator' => [\Middleware\LoginSucessValidator::class],
     ],
 ];

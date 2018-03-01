@@ -104,10 +104,20 @@ class Routing extends Command
                 } elseif (is_object($middleware)) {
                     $m[] = get_class($middleware);
                 }
+
+                $callback = $route->getCallback();
+                if (is_object($callback)) {
+                    $callback = get_class($callback);
+                } elseif (is_array($callback)) {
+                    if (is_object($callback[0])) {
+                        $callback[0] = get_class($callback[0]);
+                    }
+                    $callback = implode('@', $callback);
+                }
                 $rows[] = [
                     $route->getPath(),
                     $route->getMethod(),
-                    $route->getCallback(),
+                    $callback,
                     implode(',', $m),
                 ];
             }

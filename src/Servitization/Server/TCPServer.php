@@ -28,7 +28,10 @@ class TCPServer extends TCP
      * @param $data
      * @param $from_id
      *
-     * @return int
+     * @return int|mixed
+     *
+     * @throws \Exception
+     * @throws \FastD\Packet\Exceptions\PacketException
      */
     public function doWork(swoole_server $server, $fd, $data, $from_id)
     {

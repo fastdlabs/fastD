@@ -30,6 +30,8 @@ class Client extends Console
      * @param OutputInterface|null $output
      *
      * @return int
+     *
+     * @throws \Exception
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {

@@ -25,13 +25,14 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $dir = app()->getPath().'/config';
-        $container->get('config')->load($dir.'/config.php');
-        $container->get('config')->merge([
+        $config = $container->get('config');
+        $config->load($dir.'/config.php');
+        $config->merge([
             'database' => load($dir.'/database.php'),
             'cache' => load($dir.'/cache.php'),
         ]);
         if (file_exists(app()->getPath().'/.env.yml')) {
-            config()->merge(load(app()->getPath().'/.env.yml'));
+            $config->merge(load(app()->getPath().'/.env.yml'));
         }
     }
 }

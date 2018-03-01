@@ -27,10 +27,7 @@ class IndexController
     {
         return json([
                 'foo' => $request->getParam('foo', 'bar'),
-            ])
-            ->withCookie('uid', 100, 900)
-            ->withFileDescriptor(1)
-            ;
+            ]);
     }
 
     /**

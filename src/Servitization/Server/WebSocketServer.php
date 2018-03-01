@@ -27,7 +27,10 @@ class WebSocketServer extends WebSocket
      * @param swoole_server          $server
      * @param swoole_websocket_frame $frame
      *
-     * @return int
+     * @return int|mixed
+     *
+     * @throws \Exception
+     * @throws \FastD\Packet\Exceptions\PacketException
      */
     public function doMessage(swoole_server $server, swoole_websocket_frame $frame)
     {

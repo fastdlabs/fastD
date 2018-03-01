@@ -10,6 +10,7 @@ use FastD\Application;
 use FastD\Config\Config;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
+use FastD\Http\Uri;
 use FastD\Model\Database;
 use FastD\Model\Model;
 use FastD\Model\ModelFactory;
@@ -67,15 +68,11 @@ function request()
  */
 function response()
 {
-    return app()->get('response');
-}
+    if (!app()->has('response')) {
+        app()->add('response', new Response());
+    }
 
-/**
- * @return \Exception
- */
-function exception()
-{
-    return app()->get('exception');
+    return app()->get('response');
 }
 
 /**
@@ -157,7 +154,7 @@ function model($name, $key = 'default')
  *
  * @return Client
  */
-function client($uri = null, $async = false, $keep = true)
+function client($uri = null, $async = false, $keep = false)
 {
     if (null !== $uri) {
         return new Client($uri, $async, $keep);
@@ -172,10 +169,6 @@ function client($uri = null, $async = false, $keep = true)
 function server()
 {
     return app()->get('server');
-}
-
-function task()
-{
 }
 
 /**
@@ -204,4 +197,23 @@ function input()
 function output()
 {
     return app()->get('output');
+}
+
+/**
+ * @param $method
+ * @param $path
+ *
+ * @return Response
+ */
+function forward($method, $path)
+{
+    $request = clone app()->get('request');
+    $request
+        ->withMethod($method)
+        ->withUri(new Uri($path))
+    ;
+    $response = app()->get('dispatcher')->dispatch($request);
+    unset($request);
+
+    return $response;
 }

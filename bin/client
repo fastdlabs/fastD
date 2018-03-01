@@ -8,17 +8,15 @@
  * @link      https://fastdlabs.com
  */
 
-use FastD\Application;
-use FastD\Console;
-
 set_time_limit(0);
 date_default_timezone_set('PRC');
 
 // autoload composer
 foreach ([
-             __DIR__ . '/../../autoload.php',
+             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../vendor/autoload.php',
              __DIR__ . '/../vendor/autoload.php',
-             __DIR__ . '/vendor/autoload.php'
+             __DIR__ . '/vendor/autoload.php',
          ] as $value) {
     if (file_exists($value)) {
         define('COMPOSER_INSTALL', $value);
@@ -36,15 +34,11 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-/**
- * This code
- *
- * __DIR__ . '/app'
- *
- * is test code.
- */
+use FastD\Application;
+use FastD\Client;
+
 $path = file_exists('./app') ? './app' : getcwd();
 
-$console = new Console(new Application($path));
+$server = new Client(new Application($path));
 
-$console->run();
+$server->run();

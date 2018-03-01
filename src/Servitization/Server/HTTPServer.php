@@ -52,7 +52,9 @@ class HTTPServer extends HTTP
     /**
      * @param ServerRequestInterface $serverRequest
      *
-     * @return Response
+     * @return Response|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Exception
      */
     public function doRequest(ServerRequestInterface $serverRequest)
     {
