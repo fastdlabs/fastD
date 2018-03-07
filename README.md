@@ -35,22 +35,30 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 系列文章
 
-* [FastD 最佳实践一: 构建 API](https://fastdlabs.com/blog/9)
-* [FastD 最佳实践二: 构建配置中心](https://fastdlabs.com/blog/10)
-* [FastD 最佳实践三: 构建API网关](https://fastdlabs.com/blog/11)
-* [FastD 最佳实践四: 构建系统可视化监控](https://runnerlee.com/2017/08/18/influxdb-telegraf-grafana-monitor)
-* [FastD 最佳实践五: 构建ELK日志分析系统](http://fastdlabs.com/blog/13)
-* [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://fastdlabs.com/blog/14)
+* [FastD 最佳实践一: 构建 API](http://blog.fastdlabs.com/2017-12-12/create-api)
+* [FastD 最佳实践二: 构建配置中心](http://blog.fastdlabs.com/2017-12-12/create-configure)
+* [FastD 最佳实践三: 构建API网关](http://blog.fastdlabs.com/2017-12-12/create-gatewray)
+* [FastD 最佳实践四: 构建系统可视化监控](http://blog.fastdlabs.com/2017-12-12/create-monitor)
+* [FastD 最佳实践五: 构建ELK日志分析系统](http://blog.fastdlabs.com/2017-12-12/create-log)
+* [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://blog.fastdlabs.com/2017-12-12/create-zipkin)
 
 ### 周边
 
-* [FastD ServiceProvider](https://github.com/linghit/service-provider)
-* [FastD Viewer](https://github.com/JanHuang/viewer)
-* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
-* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
-* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
-* [Queue](https://github.com/RunnerLee/queue)
-* [Validator](https://github.com/RunnerLee/validator)
+* [FastD Viewer] (https://github.com/JanHuang/viewer)
+* [FastD ORM] (https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf] (https://github.com/JanHuang/QConfServiceProvider)
+* [FastD Seeder] (https://github.com/RunnerLee/fastd-seeder)
+* [FastD Session] (https://github.com/fastdlabs/session-provider)
+* [FastD HealthCheck] (https://github.com/fastdlabs/health-check-provider)
+* [FastD Log] (https://github.com/fastdlabs/log-provider)
+* [FastD Auth] (https://github.com/fastdlabs/auth-provider)
+* [FastD Cache] (https://github.com/fastdlabs/cache-provider)
+* [FastD CORS] (https://github.com/fastdlabs/cors-provider)
+* [FastD i18n] (https://github.com/fastdlabs/i18n-provider)
+* [FastD Mock] (https://github.com/fastdlabs/mock-provider)
+* [FastD WeChat] (https://github.com/fastdlabs/wechat-provider)
+* [Queue] (https://github.com/RunnerLee/queue)
+* [Validator] (https://github.com/RunnerLee/validator)
 
 ### 相关项目
 
