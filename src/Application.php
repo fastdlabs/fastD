@@ -147,13 +147,14 @@ class Application extends Container
     {
         try {
             $this->add('request', $request);
-
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            $this->handleException($exception);
+            $response = $this->handleException($exception);
+            $this->handleResponse($response);
         } catch (Throwable $exception) {
             $exception = new FatalThrowableError($exception);
-            $this->handleException($exception);
+            $response = $this->handleException($exception);
+            $this->handleResponse($response);
         }
     }
 
@@ -167,7 +168,7 @@ class Application extends Container
 
     /**
      * @param $e
-     *
+     * @return Response
      * @throws FatalThrowableError
      */
     public function handleException($e)
@@ -198,7 +199,11 @@ class Application extends Container
         }
 
         $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
-        $this->handleResponse($resposne);
+        if (!$this->isBooted()) {
+            $this->handleResponse($resposne);
+        }
+
+        return $resposne;
     }
 
     /**
