@@ -147,6 +147,7 @@ class Application extends Container
     {
         try {
             $this->add('request', $request);
+
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
             $response = $this->handleException($exception);
@@ -168,7 +169,9 @@ class Application extends Container
 
     /**
      * @param $e
+     *
      * @return Response
+     *
      * @throws FatalThrowableError
      */
     public function handleException($e)
