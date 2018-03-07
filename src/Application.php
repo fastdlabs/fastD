@@ -147,15 +147,12 @@ class Application extends Container
     {
         try {
             $this->add('request', $request);
-
             return $this->get('dispatcher')->dispatch($request);
         } catch (Exception $exception) {
-            $response = $this->handleException($exception);
-            $this->handleResponse($response);
+            return $this->handleException($exception);
         } catch (Throwable $exception) {
             $exception = new FatalThrowableError($exception);
-            $response = $this->handleException($exception);
-            $this->handleResponse($response);
+            return $this->handleException($exception);
         }
     }
 
