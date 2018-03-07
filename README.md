@@ -44,21 +44,22 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 周边
 
-* [FastD Viewer] (https://github.com/JanHuang/viewer)
-* [FastD ORM] (https://github.com/zqhong/fastd-eloquent)
-* [FastD QConf] (https://github.com/JanHuang/QConfServiceProvider)
-* [FastD Seeder] (https://github.com/RunnerLee/fastd-seeder)
-* [FastD Session] (https://github.com/fastdlabs/session-provider)
-* [FastD HealthCheck] (https://github.com/fastdlabs/health-check-provider)
-* [FastD Log] (https://github.com/fastdlabs/log-provider)
-* [FastD Auth] (https://github.com/fastdlabs/auth-provider)
-* [FastD Cache] (https://github.com/fastdlabs/cache-provider)
-* [FastD CORS] (https://github.com/fastdlabs/cors-provider)
-* [FastD i18n] (https://github.com/fastdlabs/i18n-provider)
-* [FastD Mock] (https://github.com/fastdlabs/mock-provider)
-* [FastD WeChat] (https://github.com/fastdlabs/wechat-provider)
-* [Queue] (https://github.com/RunnerLee/queue)
-* [Validator] (https://github.com/RunnerLee/validator)
+* [FastD Viewer](https://github.com/JanHuang/viewer)
+* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
+* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
+* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
+* [FastD Session](https://github.com/fastdlabs/session-provider)
+* [FastD HealthCheck](https://github.com/fastdlabs/health-check-provider)
+* [FastD Log](https://github.com/fastdlabs/log-provider)
+* [FastD Auth](https://github.com/fastdlabs/auth-provider)
+* [FastD Cache](https://github.com/fastdlabs/cache-provider)
+* [FastD CORS](https://github.com/fastdlabs/cors-provider)
+* [FastD i18n](https://github.com/fastdlabs/i18n-provider)
+* [FastD Mock](https://github.com/fastdlabs/mock-provider)
+* [FastD WeChat](https://github.com/fastdlabs/wechat-provider)
+* [Queue](https://github.com/RunnerLee/queue)
+* [Validator](https://github.com/RunnerLee/validator)
+* [Phalcon ORM](https://github.com/xueron/fastd-phalcon)
 
 ### 相关项目
 
