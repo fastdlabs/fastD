@@ -60,7 +60,7 @@
             $exception = new LogicException('handle exception');
             $this->app->handleException($exception);
             $response = $this->app->renderException($exception);
-            $this->equalsStatus($response, 502);
+            $this->equalsStatus($response, 500);
             $this->assertFalse(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }
 
