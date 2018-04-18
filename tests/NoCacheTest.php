@@ -73,7 +73,7 @@
             $this->app->add('response', $response);
             $this->app->add('request', new \FastD\Http\ServerRequest('GET', '/'));
             $this->app->shutdown(new \FastD\Http\ServerRequest('GET', '/'), $response);
-            $this->equalsStatus($response, 502);
+            $this->equalsStatus($response, 500);
             $this->assertTrue(file_exists(app()->getPath().'/runtime/logs/error.log'));
         }
 
