@@ -37,7 +37,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
                     $format = new LineFormatter();
                 }
                 $handle->setFormatter(is_string($format) ? new $format() : $format);
-                Logger()->pushHandler($handle);
+                logger()->pushHandler($handle);
             }
         }
     }
