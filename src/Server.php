@@ -108,10 +108,10 @@ class Server
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function start()
+        /**
+         * @return int
+         */
+        public function start()
     {
         return $this->server->start();
     }

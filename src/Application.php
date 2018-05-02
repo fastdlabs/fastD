@@ -125,6 +125,16 @@ class Application extends Container
         }
     }
 
+    /**
+     * Application reboot.
+     */
+    public function reboot()
+    {
+        $this->booted = false;
+
+        $this->bootstrap();
+    }
+
     protected function registerExceptionHandler()
     {
         error_reporting(config()->get('error_reporting', -1));
