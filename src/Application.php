@@ -71,7 +71,7 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -79,7 +79,7 @@ class Application extends Container
     /**
      * @return bool
      */
-    public function isBooted()
+    public function isBooted(): bool
     {
         return $this->booted;
     }
@@ -87,7 +87,7 @@ class Application extends Container
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -95,9 +95,9 @@ class Application extends Container
     /**
      * Application bootstrap.
      */
-    public function bootstrap()
+    public function bootstrap(): void
     {
-        if (!$this->booted) {
+        if ( ! $this->booted) {
             $config = load($this->path.'/config/app.php');
             $this->name = $config['name'];
 
@@ -114,9 +114,9 @@ class Application extends Container
         }
     }
 
-    protected function registerExceptionHandler()
+    protected function registerExceptionHandler(): void
     {
-        error_reporting(-1);
+        error_reporting(config()->get('error.level'));
 
         set_exception_handler([$this, 'handleException']);
 
@@ -128,7 +128,7 @@ class Application extends Container
     /**
      * @param ServiceProviderInterface[] $services
      */
-    protected function registerServicesProviders(array $services)
+    protected function registerServicesProviders(array $services): void
     {
         $this->register(new ConfigServiceProvider());
         foreach ($services as $service) {
@@ -143,7 +143,7 @@ class Application extends Container
      *
      * @throws Exception
      */
-    public function handleRequest(ServerRequestInterface $request)
+    public function handleRequest(ServerRequestInterface $request): Response
     {
         try {
             $this->add('request', $request);
@@ -175,7 +175,7 @@ class Application extends Container
      */
     public function handleException($e)
     {
-        if (!$e instanceof Exception) {
+        if ( ! $e instanceof Exception) {
             $e = new FatalThrowableError($e);
         }
 
@@ -196,12 +196,12 @@ class Application extends Container
 
         $status = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
-        if (!array_key_exists($status, Response::$statusTexts)) {
+        if ( ! array_key_exists($status, Response::$statusTexts)) {
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
-        if (!$this->isBooted()) {
+        if ( ! $this->isBooted()) {
             $this->handleResponse($resposne);
         }
 
@@ -209,7 +209,7 @@ class Application extends Container
     }
 
     /**
-     * @param ServerRequestInterface                                       $request
+     * @param ServerRequestInterface $request
      * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
      *
      * @return int
@@ -229,7 +229,7 @@ class Application extends Container
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): int
     {
         $request = ServerRequest::createServerRequestFromGlobals();
 
