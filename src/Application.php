@@ -31,6 +31,9 @@ use Throwable;
 class Application extends Container
 {
     const VERSION = 'v3.2.0';
+    const MODE_FPM = 1;
+    const MODE_SWOOLE = 2;
+    const MODE_CLI = 3;
 
     /**
      * @var Application
@@ -53,13 +56,21 @@ class Application extends Container
     protected $booted = false;
 
     /**
+     * @var int
+     */
+    protected $mode;
+
+    /**
      * AppKernel constructor.
      *
      * @param $path
+     * @param $mode
      */
-    public function __construct($path)
+    public function __construct($path, $mode = Application::MODE_FPM)
     {
         $this->path = $path;
+
+        $this->mode = $mode;
 
         static::$app = $this;
 
@@ -116,7 +127,7 @@ class Application extends Container
 
     protected function registerExceptionHandler()
     {
-        error_reporting(-1);
+        error_reporting(config()->get('error_reporting', -1));
 
         set_exception_handler([$this, 'handleException']);
 
@@ -190,7 +201,7 @@ class Application extends Container
 
         logger()->log(Logger::ERROR, $e->getMessage(), $trace);
 
-        if (EnvironmentObject::make()->isCli()) {
+        if (Application::MODE_CLI === $this->mode) {
             throw $e;
         }
 

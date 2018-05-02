@@ -39,6 +39,6 @@ use FastD\Client;
 
 $path = file_exists('./app') ? './app' : getcwd();
 
-$server = new Client(new Application($path));
+$server = new Client(new Application($path, Application::MODE_CLI));
 
 $server->run();

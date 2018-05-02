@@ -26,6 +26,7 @@ trait OnWorkerStart
         parent::onWorkerStart($server, $worker_id);
 
         try {
+            app()->bootstrap();
             foreach (app() as $service) {
                 if ($service instanceof PoolInterface) {
                     $service->initPool();

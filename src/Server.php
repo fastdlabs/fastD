@@ -113,8 +113,6 @@ class Server
      */
     public function start()
     {
-        $this->bootstrap();
-
         return $this->server->start();
     }
 

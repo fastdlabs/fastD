@@ -46,6 +46,6 @@ include COMPOSER_INSTALL;
  */
 $path = file_exists('./app') ? './app' : getcwd();
 
-$console = new Console(new Application($path));
+$console = new Console(new Application($path, Application::MODE_CLI));
 
 $console->run();

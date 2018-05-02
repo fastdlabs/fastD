@@ -39,6 +39,6 @@ use FastD\Processor;
 
 $path = file_exists('./app') ? './app' : getcwd();
 
-$processor = new Processor(new Application($path));
+$processor = new Processor(new Application($path, Application::MODE_SWOOLE));
 
 $processor->run();
