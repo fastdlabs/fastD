@@ -102,6 +102,10 @@ class CachePool implements PoolInterface
             ) {
                 $this->caches[$key] = $this->connect($key);
             }
+
+            if (app()->has('logger') && $this->caches[$key] instanceof AbstractAdapter) {
+                $this->caches[$key]->setLogger(logger());
+            }
         }
 
         return $this->caches[$key];

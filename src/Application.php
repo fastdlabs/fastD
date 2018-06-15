@@ -200,13 +200,19 @@ class Application extends Container
      */
     public function renderException(Exception $e)
     {
+        $response = call_user_func(config()->get('exception.response'), $e);
+
+        if (is_object($response) && $response instanceof Response) {
+            return $response;
+        }
+
         $statusCode = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
 
         if (!array_key_exists($statusCode, Response::$statusTexts)) {
-            $statusCode = 502;
+            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return json(call_user_func(config()->get('exception.response'), $e), $statusCode);
+        return json($response, $statusCode);
     }
 
     /**
