@@ -5,7 +5,7 @@
     "description": "The FastD High Performance API Framework",
     "minimum-stability": "stable",
     "keywords": ["Framework", "API", "Swoole", "FastD"],
-    "homepage": "https://fastdlabs.com",
+    "homepage": "https://fastdlabs.com/",
     "authors": [
         {
             "name": "janhuang",
@@ -34,18 +34,22 @@
         "fastd/routing": "^3.0",
         "fastd/swoole": "^2.0",
         "fastd/testing": "^0.3",
-        "fastd/event": "^1.0",
         "symfony/cache": "^3.0",
-        "monolog/monolog": "^1.0"
+        "monolog/monolog": "^1.0",
+        "inhere/event": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
-        "symfony/http-foundation": "^4.0"
+        "phpunit/phpunit": "^6.0"
     },
     "bin": [
         "bin/console",
         "bin/client",
         "bin/server",
         "bin/process"
-    ]
+    ],
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
+        ]
+    }
 }

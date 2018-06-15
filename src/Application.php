@@ -20,6 +20,8 @@ use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
 use FastD\Utils\EnvironmentObject;
+use Inhere\Event\EventManager;
+use Inhere\Event\EventManagerAwareTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -30,7 +32,13 @@ use Throwable;
  */
 class Application extends Container
 {
-    const VERSION = 'v3.2.0';
+    use EventManagerAwareTrait;
+
+    const VERSION = '5.0.0(dev)';
+
+    const ON_REQUEST = 'onRequest';
+    const ON_BOOTSTRAP = 'onBootstrap';
+    const ON_SHUTDOWN = 'onShutdown';
 
     /**
      * @var Application
@@ -62,6 +70,8 @@ class Application extends Container
         $this->path = $path;
 
         static::$app = $this;
+
+        $em = new EventManager();
 
         $this->add('app', $this);
 
@@ -110,6 +120,7 @@ class Application extends Container
             $this->registerServicesProviders($config['services']);
 
             unset($config);
+
             $this->booted = true;
         }
     }
