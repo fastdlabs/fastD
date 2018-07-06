@@ -74,7 +74,7 @@ class Server
         $listeners = config()->get('server.listeners', []);
         foreach ($listeners as $listener) {
             $this->server->listen(new $listener['class'](
-                app()->getName().' ports',
+                isset($listener['name']) ? $listener['name'] : app()->getName().' ports',
                 $listener['host'],
                 isset($listener['options']) ? $listener['options'] : []
             ));
