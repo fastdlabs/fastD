@@ -137,13 +137,14 @@ class Application extends Container
 
     protected function registerExceptionHandler()
     {
-        error_reporting(config()->get('error_reporting', -1));
+        $level = config()->get('error_reporting', E_ALL);
+        error_reporting($level);
 
         set_exception_handler([$this, 'handleException']);
 
         set_error_handler(function ($level, $message, $file, $line) {
             throw new ErrorException($message, 0, $level, $file, $line);
-        });
+        }, $level);
     }
 
     /**
