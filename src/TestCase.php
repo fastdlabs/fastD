@@ -33,6 +33,8 @@ class TestCase extends WebTestCase
      */
     public function setUp()
     {
+        parent::__construct();
+        
         $this->app = $this->createApplication();
     }
 
@@ -68,6 +70,7 @@ class TestCase extends WebTestCase
                 $request->withParsedBody($params);
             } else {
                 $request->getBody()->write(http_build_query($params));
+                $request->withParsedBody($params);
             }
         }
 

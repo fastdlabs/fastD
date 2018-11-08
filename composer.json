@@ -39,7 +39,7 @@
         "inhere/event": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^5.0"
     },
     "bin": [
         "bin/console",

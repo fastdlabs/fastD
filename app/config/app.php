@@ -46,7 +46,7 @@ return [
         ],
         [
             \Monolog\Handler\StreamHandler::class,
-            'info.log',
+            'access.log',
             \FastD\Logger\Logger::INFO,
         ],
     ],
