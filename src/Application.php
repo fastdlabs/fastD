@@ -32,8 +32,6 @@ use Throwable;
  */
 class Application extends Container
 {
-    use EventManagerAwareTrait;
-
     const VERSION = '5.0.0(dev)';
 
     const ON_REQUEST = 'onRequest';

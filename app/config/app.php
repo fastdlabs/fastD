@@ -27,6 +27,7 @@ return [
         \FastD\ServiceProvider\DatabaseServiceProvider::class,
         \FastD\ServiceProvider\CacheServiceProvider::class,
         \FastD\ServiceProvider\MoltenServiceProvider::class,
+        Exception::class,
     ],
 
     /*
