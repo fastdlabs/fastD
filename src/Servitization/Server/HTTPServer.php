@@ -39,7 +39,15 @@ class HTTPServer extends HTTP
             $swooleResponse->header($key, $response->getHeaderLine($key));
         }
         foreach ($response->getCookieParams() as $key => $cookieParam) {
-            $swooleResponse->cookie($key, $cookieParam);
+            $swooleResponse->cookie(
+                $key,
+                $cookieParam->getValue(),
+                $cookieParam->getExpire(),
+                $cookieParam->getPath(),
+                $cookieParam->getDomain(),
+                $cookieParam->isSecure(),
+                $cookieParam->isHttpOnly()
+            );
         }
 
         $swooleResponse->status($response->getStatusCode());
