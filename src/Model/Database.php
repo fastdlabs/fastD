@@ -60,13 +60,22 @@ class Database extends Medoo
      */
     public function query($query)
     {
+        if ($this->debug_mode)
+        {
+            echo $query;
+
+            $this->debug_mode = false;
+
+            return false;
+        }
         try {
-            return parent::query($query);
+
+            return $this->pdo->query($query);
         } catch (Exception $e) {
             $this->reconnect();
-
-            return parent::query($query);
+            return $this->pdo->query($query);
         }
+
     }
 
     /**
@@ -78,12 +87,20 @@ class Database extends Medoo
      */
     public function exec($query)
     {
+        if ($this->debug_mode)
+        {
+            echo $query;
+
+            $this->debug_mode = false;
+
+            return false;
+        }
+        
         try {
-            return parent::exec($query);
+            return $this->pdo->exec($query);
         } catch (Exception $e) {
             $this->reconnect();
-
-            return parent::exec($query);
+            return $this->pdo->exec($query);
         }
     }
 
