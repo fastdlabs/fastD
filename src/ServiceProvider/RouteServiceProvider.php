@@ -9,6 +9,7 @@
 
 namespace FastD\ServiceProvider;
 
+
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Routing\RouteCollection;
@@ -24,12 +25,12 @@ class RouteServiceProvider implements ServiceProviderInterface
      *
      * @return mixed
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
-        $router = new RouteCollection(config()->get('namespace', '\\Controller\\'));
-        $dispatcher = new RouteDispatcher($router, $container['config']->get('middleware', []));
+        $collector = new RouteCollection(config()->get('namespace', '\\Controller\\'));
+        $dispatcher = new RouteDispatcher($collector, config()->get('middleware', []));
 
-        $container->add('router', $router);
+        $container->add('router', $collector);
         $container->add('dispatcher', $dispatcher);
 
         include app()->getPath().'/config/routes.php';

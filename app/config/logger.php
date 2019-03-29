@@ -6,3 +6,10 @@
  * @see      https://www.github.com/fastdlabs
  * @see      http://www.fastdlabs.com/
  */
+
+return [
+    // 日志驱动，系统发生日志读写时触发
+    'default' => [
+        'adapter' => '',
+    ],
+];

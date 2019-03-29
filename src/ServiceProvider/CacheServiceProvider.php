@@ -23,7 +23,7 @@ class CacheServiceProvider implements ServiceProviderInterface
      *
      * @return mixed
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $config = $container->get('config')->get('cache');
 

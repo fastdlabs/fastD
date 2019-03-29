@@ -7,10 +7,10 @@
  * @see      http://www.fastdlabs.com/
  */
 
-return [
-    // 异常驱动，当系统发生异常的时候，会触发调用
-    'default' => [
-        'adapter' => '',
-        'level' => Exception::INFO
-    ],
-];
+namespace FastD\Exception;
+
+
+class ExceptionHandler
+{
+
+}

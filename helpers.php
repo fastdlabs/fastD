@@ -217,3 +217,8 @@ function forward($method, $path)
 
     return $response;
 }
+
+function em()
+{
+
+}

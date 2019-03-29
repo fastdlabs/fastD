@@ -9,7 +9,7 @@
 
 namespace FastD\Model;
 
-use Exception;
+use FastD;
 use Medoo\Medoo;
 use PDO;
 

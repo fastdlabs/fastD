@@ -1,42 +1,32 @@
 <?php
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2016
+ * @copyright 2019
  *
- * @see      https://www.github.com/janhuang
+ * @see      https://www.github.com/fastdlabs
  * @see      https://fastdlabs.com
  */
 
 namespace FastD;
 
-use ErrorException;
-use Exception;
-use FastD\Config\Config;
-use FastD\Container\Container;
-use FastD\Container\ServiceProviderInterface;
-use FastD\Http\HttpException;
+
+use Throwable;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Logger\Logger;
-use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Utils\EnvironmentObject;
-use Inhere\Event\EventManager;
-use Inhere\Event\EventManagerAwareTrait;
+use FastD\Container\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Throwable;
 
 /**
  * Class Application.
  */
 class Application extends Container
 {
-    const VERSION = '5.0.0(dev)';
+    const VERSION = 'v5.0.0(dev)';
 
-    const ON_REQUEST = 'onRequest';
-    const ON_BOOTSTRAP = 'onBootstrap';
-    const ON_SHUTDOWN = 'onShutdown';
+    const MODE_FPM = 1;
+    const MODE_SWOOLE = 2;
+    const MODE_CLI = 3;
 
     /**
      * @var Application
@@ -53,23 +43,24 @@ class Application extends Container
      */
     protected $name;
 
+    protected $mode = Application::MODE_FPM;
+
     /**
      * @var bool
      */
     protected $booted = false;
 
     /**
-     * AppKernel constructor.
-     *
-     * @param $path
+     * Application constructor.
+     * @param string $path
+     * @param int $mode
      */
-    public function __construct($path)
+    public function __construct(string $path, int $mode = Application::MODE_FPM)
     {
         $this->path = $path;
+        $this->mode = $mode;
 
         static::$app = $this;
-
-        $em = new EventManager();
 
         $this->add('app', $this);
 
@@ -101,129 +92,74 @@ class Application extends Container
     }
 
     /**
+     * @return int
+     */
+    public function getMode(): int
+    {
+        return $this->mode;
+    }
+
+    /**
      * Application bootstrap.
      */
     public function bootstrap(): void
     {
-        if ( ! $this->booted) {
+        if (!$this->booted) {
             $config = load($this->path.'/config/app.php');
             $this->name = $config['name'];
 
-            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
+            date_default_timezone_set($config['timezone'] ?? 'PRC');
 
-            $this->add('config', new Config($config));
-            $this->add('logger', new Logger($this->name));
-
-            $this->registerExceptionHandler();
-            $this->registerServicesProviders($config['services']);
-
-            unset($config);
+            foreach ($config['services'] as $service) {
+                $this->register(new $service);
+            }
 
             $this->booted = true;
+            unset($config);
         }
     }
 
-    protected function registerExceptionHandler(): void
+    public function handleException(Throwable $throwable): Response
     {
-        error_reporting(config()->get('error.level'));
-
-        set_exception_handler([$this, 'handleException']);
-
-        set_error_handler(function ($level, $message, $file, $line) {
-            throw new ErrorException($message, 0, $level, $file, $line);
-        });
-    }
-
-    /**
-     * @param ServiceProviderInterface[] $services
-     */
-    protected function registerServicesProviders(array $services): void
-    {
-        $this->register(new ConfigServiceProvider());
-        foreach ($services as $service) {
-            $this->register(new $service());
+        if (Application::MODE_CLI === $this->getMode()) {
+            throw $throwable;
         }
+
+        $response = new Response(str_replace(PHP_EOL, '<br />', $throwable->getTraceAsString()));
+
+        if (!$this->isBooted()) {
+            $this->handleResponse($response);
+        }
+
+        return $response;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return Response|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws Exception
-     */
     public function handleRequest(ServerRequestInterface $request): Response
     {
         try {
             $this->add('request', $request);
-
             return $this->get('dispatcher')->dispatch($request);
-        } catch (Exception $exception) {
-            return $this->handleException($exception);
         } catch (Throwable $exception) {
-            $exception = new FatalThrowableError($exception);
-
             return $this->handleException($exception);
         }
     }
 
     /**
-     * @param Response|\Symfony\Component\HttpFoundation\Response $response
+     * @param Response $response
+     * @return void
      */
-    public function handleResponse($response)
+    public function handleResponse($response): void
     {
         $response->send();
     }
 
     /**
-     * @param $e
-     *
-     * @return Response
-     *
-     * @throws FatalThrowableError
-     */
-    public function handleException($e)
-    {
-        if ( ! $e instanceof Exception) {
-            $e = new FatalThrowableError($e);
-        }
-
-        try {
-            $trace = call_user_func(config()->get('exception.log'), $e);
-        } catch (Exception $exception) {
-            $trace = [
-                'original' => explode("\n", $e->getTraceAsString()),
-                'handler' => explode("\n", $exception->getTraceAsString()),
-            ];
-        }
-
-        logger()->log(Logger::ERROR, $e->getMessage(), $trace);
-
-        if (EnvironmentObject::make()->isCli()) {
-            throw $e;
-        }
-
-        $status = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
-
-        if ( ! array_key_exists($status, Response::$statusTexts)) {
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
-        }
-
-        $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
-        if ( ! $this->isBooted()) {
-            $this->handleResponse($resposne);
-        }
-
-        return $resposne;
-    }
-
-    /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface|\Symfony\Component\HttpFoundation\Response $response
+     * @param ResponseInterface $response
      *
      * @return int
      */
-    public function shutdown(ServerRequestInterface $request, $response)
+    public function shutdown(ServerRequestInterface $request, ResponseInterface $response): int
     {
         $this->offsetUnset('request');
         $this->offsetUnset('response');
@@ -235,8 +171,6 @@ class Application extends Container
 
     /**
      * @return int
-     *
-     * @throws Exception
      */
     public function run(): int
     {

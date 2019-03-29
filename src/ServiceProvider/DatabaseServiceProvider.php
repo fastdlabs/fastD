@@ -21,7 +21,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface
     /**
      * @param Container $container
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $config = config()->get('database', []);
 

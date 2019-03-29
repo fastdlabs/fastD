@@ -1,3 +1,5 @@
 <?php
 
-route()->get('/', 'IndexController@welcome');
+route()->addRoute('GET', '/', function () {
+    throw new Exception('hello');
+});

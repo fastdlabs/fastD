@@ -18,61 +18,23 @@ return [
      */
     'timezone' => 'PRC',
 
+    /**
+     * Controller namespace
+     */
+    'namespace' => '\\Controller\\',
+
     /*
      * Bootstrap default service provider
      */
     'services' => [
+        \FastD\ServiceProvider\ConfigServiceProvider::class,
+        \FastD\ServiceProvider\ExceptionServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
-        \FastD\ServiceProvider\LoggerServiceProvider::class,
-        \FastD\ServiceProvider\DatabaseServiceProvider::class,
-        \FastD\ServiceProvider\CacheServiceProvider::class,
-        \FastD\ServiceProvider\MoltenServiceProvider::class,
-        Exception::class,
     ],
 
     /*
      * Http middleware
      */
     'middleware' => [
-    ],
-
-    /*
-     * Application logger
-     */
-    'log' => [
-        [
-            \Monolog\Handler\StreamHandler::class,
-            'error.log',
-            \FastD\Logger\Logger::ERROR,
-        ],
-        [
-            \Monolog\Handler\StreamHandler::class,
-            'access.log',
-            \FastD\Logger\Logger::INFO,
-        ],
-    ],
-
-    /*
-     * Exception handle
-     */
-    'exception' => [
-        'response' => function (Exception $e) {
-            return [
-                'msg' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => explode("\n", $e->getTraceAsString()),
-            ];
-        },
-        'log' => function (Exception $e) {
-            return [
-                'msg' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => explode("\n", $e->getTraceAsString()),
-            ];
-        },
     ],
 ];
