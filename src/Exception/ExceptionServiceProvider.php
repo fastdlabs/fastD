@@ -10,6 +10,7 @@
 namespace FastD\Exception;
 
 
+use Exception;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\Response;

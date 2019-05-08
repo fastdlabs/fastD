@@ -14,13 +14,13 @@ use FastD\Http\Response;
 use Throwable;
 
 /**
- * Interface ExceptionHndlerInterface
+ * Interface ExceptionHandlerInterface
  * @package Exception
  */
-interface ExceptionHndlerInterface
+interface ExceptionHandlerInterface
 {
     /**
-     * ExceptionHndlerInterface constructor.
+     * ExceptionHandlerInterface constructor.
      * @param array $options
      */
     public function __construct(array $options);
