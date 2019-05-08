@@ -28,13 +28,7 @@ return [
      */
     'services' => [
         \FastD\ServiceProvider\ConfigServiceProvider::class,
-        \FastD\ServiceProvider\ExceptionServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
-    ],
-
-    /*
-     * Http middleware
-     */
-    'middleware' => [
+        \FastD\Exception\ExceptionServiceProvider::class,
     ],
 ];

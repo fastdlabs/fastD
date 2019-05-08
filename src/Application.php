@@ -20,7 +20,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class Application.
  */
-class Application extends Container
+final class Application extends Container
 {
     const VERSION = 'v5.0.0(dev)';
 
@@ -43,6 +43,9 @@ class Application extends Container
      */
     protected $name;
 
+    /**
+     * @var int
+     */
     protected $mode = Application::MODE_FPM;
 
     /**
@@ -111,7 +114,7 @@ class Application extends Container
             date_default_timezone_set($config['timezone'] ?? 'PRC');
 
             foreach ($config['services'] as $service) {
-                $this->register(new $service);
+                $this->register(new $service());
             }
 
             $this->booted = true;
@@ -119,21 +122,25 @@ class Application extends Container
         }
     }
 
+    /**
+     * @param Throwable $throwable
+     * @return Response
+     * @throws Throwable
+     */
     public function handleException(Throwable $throwable): Response
     {
-        if (Application::MODE_CLI === $this->getMode()) {
+        if (!$this->has('exception')) {
             throw $throwable;
         }
 
-        $response = new Response(str_replace(PHP_EOL, '<br />', $throwable->getTraceAsString()));
-
-        if (!$this->isBooted()) {
-            $this->handleResponse($response);
-        }
-
-        return $response;
+        return $this->get('exception')->handle($throwable);
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return Response
+     * @throws Throwable
+     */
     public function handleRequest(ServerRequestInterface $request): Response
     {
         try {
@@ -171,6 +178,7 @@ class Application extends Container
 
     /**
      * @return int
+     * @throws Throwable
      */
     public function run(): int
     {

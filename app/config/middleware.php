@@ -8,8 +8,5 @@
  */
 
 return [
-    'adapter' => \FastD\Exception\ExceptionHandler::class,
-    'options' => [
-        'level' => 1
-    ]
+
 ];

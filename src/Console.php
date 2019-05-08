@@ -59,7 +59,7 @@ EOF
             new Controller(),
             new Routing(),
             new Config(),
-            new Migration(),
+//            new Migration(),
         ]);
 
         $consoles = config()->get('consoles', []);
