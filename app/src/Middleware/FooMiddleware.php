@@ -23,7 +23,7 @@ class FooMiddleware extends Middleware
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $serverRequest, DelegateInterface $delegate): ResponseInterface
     {
         if ('bar' === $serverRequest->getAttribute('name')) {
             return new JsonResponse([
@@ -31,6 +31,6 @@ class FooMiddleware extends Middleware
             ]);
         }
 
-        return $delegate($serverRequest);
+        return $delegate->process($serverRequest);
     }
 }

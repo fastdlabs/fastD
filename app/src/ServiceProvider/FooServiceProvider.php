@@ -33,7 +33,7 @@ class FooServiceProvider implements ServiceProviderInterface
      *
      * @return mixed
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $container->add('foo', new Foo());
         config()->merge([

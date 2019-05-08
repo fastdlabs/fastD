@@ -3,8 +3,8 @@
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2018
  *
- * @see      https://www.github.com/janhuang
- * @see      http://www.fast-d.cn/
+ * @see       https://www.github.com/janhuang
+ * @see       http://www.fast-d.cn/
  */
 
 namespace Middleware;
@@ -27,7 +27,7 @@ class SessionMiddleware extends Middleware
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $next)
+    public function handle(ServerRequestInterface $request, DelegateInterface $next): ResponseInterface
     {
         $cookies = $request->getCookieParams();
 

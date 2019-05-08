@@ -22,7 +22,7 @@ class LoginSucessValidator extends Middleware
      *
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $next)
+    public function handle(ServerRequestInterface $request, DelegateInterface $next): ResponseInterface
     {
         $_SessionKey = $request->getParam('_SessionKey');
         if (empty($_SessionKey)) {

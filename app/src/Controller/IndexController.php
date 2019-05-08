@@ -9,6 +9,7 @@
 
 namespace Controller;
 
+use Exception;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
@@ -22,6 +23,7 @@ class IndexController
      * @param ServerRequest $request
      *
      * @return Response
+     * @throws Exception
      */
     public function welcome(ServerRequest $request)
     {
@@ -65,6 +67,9 @@ class IndexController
         );
     }
 
+    /**
+     * @return Response
+     */
     public function model()
     {
         $model = model('demo');
@@ -76,6 +81,9 @@ class IndexController
         ]);
     }
 
+    /**
+     * @return Response
+     */
     public function auth()
     {
         return json([
@@ -83,11 +91,17 @@ class IndexController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function abort()
     {
         abort(400);
     }
 
+    /**
+     * @return Response
+     */
     public function queue()
     {
         queue()->push('demo queue');
