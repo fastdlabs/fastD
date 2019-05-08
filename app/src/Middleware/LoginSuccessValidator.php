@@ -14,7 +14,7 @@ use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class LoginSucessValidator extends Middleware
+class LoginSuccessValidator extends Middleware
 {
     /**
      * @param ServerRequestInterface $request
