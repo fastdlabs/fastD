@@ -76,7 +76,7 @@ class Server
         $listeners = config()->get('server.listeners', []);
         foreach ($listeners as $listener) {
             $this->server->listen(new $listener['class'](
-                app()->getName().' ports',
+                isset($listener['name']) ? $listener['name'] : app()->getName().' ports',
                 $listener['host'],
                 isset($listener['options']) ? $listener['options'] : []
             ));
@@ -108,10 +108,10 @@ class Server
         return $this;
     }
 
-        /**
-         * @return int
-         */
-        public function start()
+    /**
+     * @return int
+     */
+    public function start()
     {
         return $this->server->start();
     }

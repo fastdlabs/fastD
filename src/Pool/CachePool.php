@@ -9,6 +9,7 @@
 
 namespace FastD\Pool;
 
+use ReflectionClass;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
@@ -45,7 +46,8 @@ class CachePool implements PoolInterface
 
     /**
      * @param $key
-     * @return FilesystemAdapter|RedisAdapter
+     * @return AbstractAdapter|FilesystemAdapter|RedisAdapter
+     * @throws \ReflectionException
      */
     protected function connect($key)
     {
@@ -53,41 +55,20 @@ class CachePool implements PoolInterface
             throw new \LogicException(sprintf('No set %s cache', $key));
         }
         $config = $this->config[$key];
-        switch ($config['adapter']) {
-            case RedisAdapter::class:
-                $connect = null;
-                try {
-                    $connect = RedisAdapter::createConnection($config['params']['dsn']);
-                    $cache = new RedisAdapter(
-                        $connect,
-                        isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
-                        isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
-                    );
-                } catch (\Exception $e) {
-                    $cache = new FilesystemAdapter('', 0, '/tmp/cache');
-                }
 
-                $this->redises[$key] = [
-                    'connect' => $connect,
-                    'driver' => RedisAdapter::class,
-                ];
-
-                break;
-            default:
-                $cache = new $config['adapter'](
-                    isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
-                    isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
-                    isset($config['params']['directory']) ? $config['params']['directory'] : app()->getPath().'/runtime/cache'
-                );
+        // 解决使用了自定义的 RedisAdapter 时无法正常创建的问题
+        if (
+            $config['adapter'] === RedisAdapter::class
+            || (new ReflectionClass($config['adapter']))->isSubclassOf(RedisAdapter::class)) {
+            return $this->getRedisAdapter($config, $key);
         }
-
-        return $cache;
+        return $this->getAdapter($config);
     }
 
     /**
      * @param $key
-     *
      * @return AbstractAdapter
+     * @throws \ReflectionException
      */
     public function getCache($key)
     {
@@ -115,5 +96,44 @@ class CachePool implements PoolInterface
         foreach ($this->config as $name => $config) {
             $this->getCache($name);
         }
+    }
+
+    /**
+     * @param array $config
+     * @return FilesystemAdapter|RedisAdapter
+     */
+    protected function getRedisAdapter(array $config, $key)
+    {
+        $connect = null;
+        try {
+            $connect = RedisAdapter::createConnection($config['params']['dsn']);
+            $cache = new $config['adapter'](
+                $connect,
+                isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
+                isset($config['params']['lifetime']) ? $config['params']['lifetime'] : ''
+            );
+        } catch (\Exception $e) {
+            $cache = new FilesystemAdapter('', 0, '/tmp/cache');
+        }
+
+        $this->redises[$key] = [
+            'connect' => $connect,
+            'driver' => RedisAdapter::class,
+        ];
+
+        return $cache;
+    }
+
+    /**
+     * @param array $config
+     * @return AbstractAdapter
+     */
+    protected function getAdapter(array $config)
+    {
+        return new $config['adapter'](
+            isset($config['params']['namespace']) ? $config['params']['namespace'] : '',
+            isset($config['params']['lifetime']) ? $config['params']['lifetime'] : '',
+            isset($config['params']['directory']) ? $config['params']['directory'] : app()->getPath().'/runtime/cache'
+        );
     }
 }
