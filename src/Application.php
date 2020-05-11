@@ -19,10 +19,9 @@ use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Logger\Logger;
 use FastD\ServiceProvider\ConfigServiceProvider;
-use FastD\Utils\EnvironmentObject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Throwable;
 
 /**
@@ -163,7 +162,7 @@ class Application extends Container
      *
      * @return Response|\Symfony\Component\HttpFoundation\Response
      *
-     * @throws Exception
+     * @throws FlattenException
      */
     public function handleRequest(ServerRequestInterface $request)
     {
@@ -174,7 +173,7 @@ class Application extends Container
         } catch (Exception $exception) {
             return $this->handleException($exception);
         } catch (Throwable $exception) {
-            $exception = new FatalThrowableError($exception);
+            $exception = FlattenException::createFromThrowable($exception);
 
             return $this->handleException($exception);
         }
@@ -190,15 +189,13 @@ class Application extends Container
 
     /**
      * @param $e
-     *
      * @return Response
-     *
-     * @throws FatalThrowableError
+     * @throws FlattenException
      */
     public function handleException($e)
     {
         if (!$e instanceof Exception) {
-            $e = new FatalThrowableError($e);
+            $e = FlattenException::createFromThrowable($e);
         }
 
         try {
@@ -249,7 +246,7 @@ class Application extends Container
     /**
      * @return int
      *
-     * @throws Exception
+     * @throws FlattenException
      */
     public function run()
     {
