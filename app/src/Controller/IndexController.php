@@ -12,7 +12,7 @@
     use FastD\Http\JsonResponse;
     use FastD\Http\Response;
     use FastD\Http\ServerRequest;
-    
+
     /**
      * Class IndexController.
      */

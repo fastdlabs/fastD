@@ -7,18 +7,18 @@
     "keywords": ["Framework", "API", "Swoole", "FastD"],
     "homepage": "https://fastdlabs.com/",
     "authors": [
-                {
-                "name": "janhuang",
-                "email": "bboyjanhuang@gmail.com"
-                }
-                ],
+        {
+            "name": "janhuang",
+            "email": "bboyjanhuang@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "FastD\\": "src"
         },
         "files": [
-                  "helpers.php"
-                  ]
+            "helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

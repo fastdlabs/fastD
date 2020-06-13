@@ -36,29 +36,29 @@ final class Application extends Container
     /**
      * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var int
      */
-    protected $mode = Application::MODE_FPM;
+    protected int $mode = Application::MODE_FPM;
 
     /**
      * @var bool
      */
-    protected $booted = false;
+    protected bool $booted = false;
 
     /**
      * Application constructor.
      * @param string $path
      * @param int $mode
      */
-    public function __construct(string $path, int $mode = Application::MODE_FPM)
+    public function __construct(string $path = __DIR__, int $mode = Application::MODE_FPM)
     {
         $this->path = $path;
         $this->mode = $mode;

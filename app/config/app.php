@@ -29,6 +29,25 @@ return [
     'services' => [
         \FastD\ServiceProvider\ConfigServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
-        \FastD\Exception\ExceptionServiceProvider::class,
     ],
+
+    /**
+     *
+     */
+    'logger' => [
+        // 日志驱动，系统发生日志读写时触发
+        'default' => [
+            'adapter' => '',
+        ],
+    ],
+
+    /**
+     *
+     */
+    'exception' => [
+        'adapter' => \FastD\Exception\ExceptionHandler::class,
+        'options' => [
+            'level' => 1
+        ]
+    ]
 ];

@@ -1,7 +1,11 @@
 <?php
 
-route()->addRoute('GET', '/', function () {
+route()->get('/', function () {
     return json([
         'foo' => 'bar'
     ]);
+});
+
+route()->post('/', function ($request) {
+    return $request->getMethod();
 });
