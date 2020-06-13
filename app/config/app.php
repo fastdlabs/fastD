@@ -28,6 +28,8 @@ return [
      */
     'services' => [
         \FastD\ServiceProvider\ConfigServiceProvider::class,
+        \FastD\ServiceProvider\ExceptionServiceProvider::class,
+        \FastD\ServiceProvider\LoggerServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
     ],
 
@@ -37,7 +39,7 @@ return [
     'logger' => [
         // 日志驱动，系统发生日志读写时触发
         'default' => [
-            'adapter' => '',
+            'adapter' => \FastD\Logger\Logger::class,
         ],
     ],
 

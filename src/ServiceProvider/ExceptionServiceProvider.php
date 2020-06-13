@@ -7,7 +7,7 @@
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD\Exception;
+namespace FastD\ServiceProvider;
 
 
 use FastD\Container\Container;
@@ -22,8 +22,6 @@ class ExceptionServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $config = load(app()->getPath().'/config/exception.php');
-
         $adapter = $config['adapter'];
 
         $container->add('exception', new $adapter($config['options']));

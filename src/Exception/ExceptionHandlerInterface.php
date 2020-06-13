@@ -17,7 +17,7 @@ use Throwable;
  * Interface ExceptionHndlerInterface
  * @package Exception
  */
-interface ExceptionHndlerInterface
+interface ExceptionHandlerInterface
 {
     /**
      * ExceptionHndlerInterface constructor.

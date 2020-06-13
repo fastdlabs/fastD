@@ -18,7 +18,7 @@ use Throwable;
  * Class ExceptionHandler
  * @package FastD\Exception
  */
-class ExceptionHandler implements ExceptionHndlerInterface
+class ExceptionHandler implements ExceptionHandlerInterface
 {
     /**
      * ExceptionHndlerInterface constructor.
