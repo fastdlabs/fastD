@@ -24,20 +24,18 @@ class LoggerServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $handlers = config()->get('log', []);
-        $path = app()->getPath().'/runtime/logs/'.date('Ymd');
+        $handlers = config()->get('logger');
+        $logpath = app()->getPath().'/runtime/logs/'.date('Ymd');
 
-        foreach ($handlers as $handler) {
+        foreach ($handlers as $key => $handler) {
             list($handle, $name, $level, $format) = array_pad($handler, 4, null);
-            if (is_string($handle)) {
-                $handle = new $handle($path.'/'.$name, $level);
-            }
+            $handle = new $handle($logpath.'/'.$name, $level);
             if ($handle instanceof AbstractHandler) {
                 if (null === $format) {
                     $format = new LineFormatter();
                 }
                 $handle->setFormatter(is_string($format) ? new $format() : $format);
-                Logger()->pushHandler($handle);
+                logger()->pushHandler($handle);
             }
         }
     }
