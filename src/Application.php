@@ -10,6 +10,7 @@
 namespace FastD;
 
 
+use FastD\Config\Config;
 use Throwable;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
@@ -22,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class Application extends Container
 {
-    const VERSION = 'v5.0.0(dev)';
+    const VERSION = 'v5.0.0(reborn-dev)';
 
     const MODE_FPM = 1;
     const MODE_SWOOLE = 2;
@@ -108,12 +109,15 @@ final class Application extends Container
     public function bootstrap(): void
     {
         if (!$this->booted) {
-            $config = load($this->path.'/config/app.php');
-            $this->name = $config['name'];
+            $app = load($this->path.'/config/app.php');
 
-            date_default_timezone_set($config['timezone'] ?? 'PRC');
+            $this->name = $app['name'];
+            date_default_timezone_set($app['timezone'] ?? 'PRC');
 
-            foreach ($config['services'] as $service) {
+            $config = new Config($app);
+            $this->add('config', $config);
+
+            foreach ($app['services'] as $service) {
                 $this->register(new $service());
             }
 
@@ -127,13 +131,17 @@ final class Application extends Container
      * @return Response
      * @throws Throwable
      */
-    public function handleException(Throwable $throwable): Response
+    public function handleException(Throwable $throwable): ?Response
     {
-        if (!$this->has('exception')) {
-            throw $throwable;
+        $response = $this->get('exception')->handle($throwable);
+
+        if ($this->isBooted()) {
+            return $response;
         }
 
-        return $this->get('exception')->handle($throwable);
+        $this->handleResponse($response);
+
+        return null;
     }
 
     /**
@@ -161,6 +169,21 @@ final class Application extends Container
     }
 
     /**
+     * @return int
+     * @throws Throwable
+     */
+    public function run(): int
+    {
+        $request = ServerRequest::createServerRequestFromGlobals();
+
+        $response = $this->handleRequest($request);
+
+        $this->handleResponse($response);
+
+        return $this->shutdown($request, $response);
+    }
+
+    /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      *
@@ -174,20 +197,5 @@ final class Application extends Container
         unset($request, $response);
 
         return 0;
-    }
-
-    /**
-     * @return int
-     * @throws Throwable
-     */
-    public function run(): int
-    {
-        $request = ServerRequest::createServerRequestFromGlobals();
-
-        $response = $this->handleRequest($request);
-
-        $this->handleResponse($response);
-
-        return $this->shutdown($request, $response);
     }
 }

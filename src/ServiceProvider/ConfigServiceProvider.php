@@ -26,14 +26,12 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Container $container): void
     {
         $config = new Config();
+
         $container->add('config', $config);
 
-        $path = app()->getPath();
-
-
-        if (file_exists($path.'/.env.yml')) {
-            $config->merge(load($path.'/.env.yml'));
+        $env = app()->getPath().'/.env.yml';
+        if (file_exists($env)) {
+            $config->merge(load($env));
         }
-        echo 1;die;
     }
 }

@@ -10,9 +10,10 @@
 namespace FastD\ServiceProvider;
 
 
+use Exception;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Http\Response;
+use RuntimeException;
 
 class ExceptionServiceProvider implements ServiceProviderInterface
 {
@@ -22,50 +23,16 @@ class ExceptionServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $adapter = $config['adapter'];
+        $config = config()->get('exception');
 
-        $container->add('exception', new $adapter($config['options']));
+        $exception = new $config['adapter']($config['options']);
 
-//
-//        error_reporting(config()->get('error.level'));
-//
-//        set_exception_handler([$this, 'handleException']);
-//
-//        set_error_handler(function ($level, $message, $file, $line) {
-//            throw new ErrorException($message, 0, $level, $file, $line);
-//        });
-    }
+        $container->add('exception', $exception);
 
-    public function handleException(string $handler_class)
-    {
-        try {
-            $trace = call_user_func(config()->get('exception.log'), $e);
-        } catch (Exception $exception) {
-            $trace = [
-                'original' => explode("\n", $e->getTraceAsString()),
-                'handler' => explode("\n", $exception->getTraceAsString()),
-            ];
-        }
+        set_exception_handler([app(), 'handleException']);
 
-        logger()->log(Logger::ERROR, $e->getMessage(), $trace);
-
-        if (EnvironmentObject::make()->isCli()) {
-            throw $e;
-        }
-
-        $status = ($e instanceof HttpException) ? $e->getStatusCode() : $e->getCode();
-
-        if ( ! array_key_exists($status, Response::$statusTexts)) {
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
-        }
-
-        $resposne = json(call_user_func(config()->get('exception.response'), $e), $status);
-        if ( ! $this->isBooted()) {
-            $this->handleResponse($resposne);
-        }
-
-        $this->get('em')->trigger(static::ON_EXCEPTION);
-
-        return $resposne;
+        set_error_handler(function ($code, $message) {
+            throw new RuntimeException($message, $code);
+        }, $config['options']['level'] ?? E_ERROR);
     }
 }

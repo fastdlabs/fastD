@@ -22,7 +22,7 @@ class LoggerServiceProvider implements ServiceProviderInterface
     /**
      * @param Container $container
      */
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         $handlers = config()->get('log', []);
         $path = app()->getPath().'/runtime/logs/'.date('Ymd');

@@ -20,13 +20,15 @@ use Throwable;
  */
 class ExceptionHandler implements ExceptionHandlerInterface
 {
+    protected array $options = [];
+
     /**
      * ExceptionHndlerInterface constructor.
      * @param array $options
      */
     public function __construct(array $options)
     {
-
+        $this->options = $options;
     }
 
     /**
@@ -36,14 +38,16 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     public function handle(Throwable $throwable): Response
     {
-        if (Application::MODE_CLI === app()->getMode() || !app()->isBooted()) {
-            throw $throwable;
-        }
+        // Web 端输出
+        if (app()->getMode() == Application::MODE_FPM) {
+            $response = json([
+                'file' => $throwable->getFile(),
+                'line' => $throwable->getLine(),
+                'code' => $throwable->getCode(),
+                'msg' => $throwable->getTraceAsString()
+            ]);
 
-        return json([
-            'msg' => 'server interval error',
-            'code' => -1,
-            'trace' => explode(PHP_EOL, $throwable->getTraceAsString())
-        ], 500);
+            return $response;
+        }
     }
 }
