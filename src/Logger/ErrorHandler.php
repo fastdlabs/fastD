@@ -17,14 +17,6 @@ class ErrorHandler extends HandlerAbstract
     protected function logContextFormat()
     {
         return [
-            'ip' => get_local_ip(),
-            'get' => request()->getQueryParams(),
-            'post' => request()->getParsedBody(),
-            'msg' => exception()->getMessage(),
-            'code' => exception()->getCode(),
-            'file' => exception()->getFile(),
-            'line' => exception()->getLine(),
-            'trace' => explode("\n", exception()->getTraceAsString()),
         ];
     }
 }

@@ -20,7 +20,6 @@ class AccessHandler extends HandlerAbstract
     protected function logContextFormat()
     {
         return [
-            'ip' => get_local_ip(),
             'status' => response()->getStatusCode(),
             'get' => request()->getQueryParams(),
             'post' => request()->getParsedBody(),

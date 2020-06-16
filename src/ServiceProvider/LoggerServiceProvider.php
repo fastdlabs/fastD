@@ -12,7 +12,9 @@ namespace FastD\ServiceProvider;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Formatter\NormalizerFormatter;
 use Monolog\Handler\AbstractHandler;
+use Monolog\Logger;
 
 /**
  * Class LoggerServiceProvider.
@@ -27,16 +29,13 @@ class LoggerServiceProvider implements ServiceProviderInterface
         $handlers = config()->get('logger');
         $logpath = app()->getPath().'/runtime/logs/'.date('Ymd');
 
-        foreach ($handlers as $key => $handler) {
-            list($handle, $name, $level, $format) = array_pad($handler, 4, null);
-            $handle = new $handle($logpath.'/'.$name, $level);
-            if ($handle instanceof AbstractHandler) {
-                if (null === $format) {
-                    $format = new LineFormatter();
-                }
-                $handle->setFormatter(is_string($format) ? new $format() : $format);
-                logger()->pushHandler($handle);
-            }
+        $logger = new Logger(app()->getName());
+
+        foreach ($handlers as $name => $config) {
+            $handler = new $config['handler']($logpath.'/'.$name, $config['level']);
+            $formatter = $config['formatter'] ?? NormalizerFormatter::class;
+            $handler->setFormatter(new $formatter());
+            $logger->pushHandler($handler);
         }
     }
 }

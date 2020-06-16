@@ -18,7 +18,7 @@ class StashFormatter extends LogstashFormatter
 {
     public function __construct()
     {
-        parent::__construct(app()->getName(), get_local_ip(), null, null, self::V1);
+        parent::__construct(app()->getName(), 0, null, null, self::V1);
     }
 
     /**

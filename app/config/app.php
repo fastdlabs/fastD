@@ -48,7 +48,9 @@ return [
     'logger' => [
         // 日志驱动，系统发生日志读写时触发
         'default' => [
-            'adapter' => \FastD\Logger\Logger::class,
+            'handler' => \FastD\Logger\AccessHandler::class,
+            'level' => \Monolog\Logger::DEBUG,
+            'formatter' => \FastD\Logger\Formatter\StashFormatter::class,
         ],
     ],
 ];
