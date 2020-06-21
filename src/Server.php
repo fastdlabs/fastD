@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 /**
  * Class App.
  */
-class Server
+class Servere
 {
     /**
      * @var Application

@@ -32,7 +32,7 @@ final class Application extends Container
     /**
      * @var Application
      */
-    public static $app;
+    public static Application $app;
 
     /**
      * @var string

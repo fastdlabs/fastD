@@ -18,17 +18,10 @@ return [
      */
     'timezone' => 'PRC',
 
-    /**
-     * Controller namespace
-     */
-    'namespace' => '\\Controller\\',
-
     /*
      * Bootstrap default service provider
      */
     'services' => [
-        \FastD\ServiceProvider\LoggerServiceProvider::class,
-        \FastD\ServiceProvider\ExceptionServiceProvider::class,
         \FastD\ServiceProvider\RouteServiceProvider::class,
     ],
 
@@ -36,6 +29,7 @@ return [
      * Exception Handler
      */
     'exception' => [
+        'service' => \FastD\ServiceProvider\ExceptionServiceProvider::class,
         'adapter' => \FastD\Exception\ExceptionHandler::class,
         'options' => [
             'level' => E_ALL
@@ -46,6 +40,7 @@ return [
      * Logger Handler
      */
     'logger' => [
+        'service' => \FastD\ServiceProvider\LoggerServiceProvider::class,
         // 日志驱动，系统发生日志读写时触发
         'default' => [
             'handler' => \FastD\Logger\AccessHandler::class,

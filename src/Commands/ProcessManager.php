@@ -7,7 +7,7 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Process;
+namespace FastD\Console;
 
 use FastD\Swoole\Process;
 use Symfony\Component\Console\Command\Command;
