@@ -22,14 +22,13 @@ return [
      * Bootstrap default service provider
      */
     'services' => [
-        \FastD\ServiceProvider\RouteServiceProvider::class,
+        \FastD\Providers\RouteServiceProvider::class,
     ],
 
     /**
      * Exception Handler
      */
     'exception' => [
-        'service' => \FastD\ServiceProvider\ExceptionServiceProvider::class,
         'adapter' => \FastD\Exception\ExceptionHandler::class,
         'options' => [
             'level' => E_ALL
@@ -40,7 +39,6 @@ return [
      * Logger Handler
      */
     'logger' => [
-        'service' => \FastD\ServiceProvider\LoggerServiceProvider::class,
         // 日志驱动，系统发生日志读写时触发
         'default' => [
             'handler' => \FastD\Logger\AccessHandler::class,
