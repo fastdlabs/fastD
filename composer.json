@@ -1,55 +1,64 @@
 {
-    "name": "fastd/fastd",
-    "type": "library",
-    "license": "MIT",
-    "description": "The FastD High Performance API Framework",
-    "minimum-stability": "stable",
-    "keywords": ["Framework", "API", "Swoole", "FastD"],
-    "homepage": "https://fastdlabs.com/",
-    "authors": [
-        {
-            "name": "janhuang",
-            "email": "bboyjanhuang@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "FastD\\": "src"
-        },
-        "files": [
-            "helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "": "app/src"
-        }
-    },
-    "require": {
-        "php": ">=7.1",
-        "fastd/container": "dev-develop",
-        "fastd/middleware": "dev-develop",
-        "fastd/http": "5.0.x-dev",
-        "fastd/config": "dev-develop",
-        "fastd/routing": "5.0.x-dev",
-        "fastd/testing": "dev-develop",
-        "fastd/utils": "dev-develop",
-        "monolog/monolog": "^1.0",
-        "inhere/event": "^1.1",
-        "symfony/console": "^4.2"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.0"
-    },
-    "bin": [
-            "bin/console",
-            "bin/client",
-            "bin/server",
-            "bin/process"
-            ],
-    "scripts": {
-        "post-root-package-install": [
-                                      "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
-                                      ]
+  "name": "fastd/fastd",
+  "type": "library",
+  "license": "MIT",
+  "description": "The FastD High Performance API Framework",
+  "minimum-stability": "stable",
+  "keywords": [
+    "Framework",
+    "API",
+    "Swoole",
+    "FastD"
+  ],
+  "homepage": "https://fastdlabs.com/",
+  "authors": [
+    {
+      "name": "janhuang",
+      "email": "bboyjanhuang@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "FastD\\": "src"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "": "app/src"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "fastd/container": "dev-develop",
+    "fastd/middleware": "dev-develop",
+    "fastd/http": "5.0.x-dev",
+    "fastd/config": "dev-develop",
+    "fastd/routing": "5.0.x-dev",
+    "fastd/testing": "dev-develop",
+    "fastd/utils": "dev-develop",
+    "symfony/console": "^4.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.0"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/Users/rather_than/Documents/htdocs/fastd/exception"
+    }
+  ],
+  "bin": [
+    "bin/console",
+    "bin/client",
+    "bin/server",
+    "bin/process"
+  ],
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
+    ]
+  }
 }

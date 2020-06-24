@@ -7,6 +7,8 @@
  * @see      https://fastdlabs.com
  */
 
+use FastD\Http\Response;
+
 return [
     /*
      * The application name.
@@ -22,14 +24,27 @@ return [
      * Bootstrap default service provider
      */
     'services' => [
-        \FastD\Providers\RouteServiceProvider::class,
+        \FastD\Providers\ConfigProvider::class,
+        \FastD\Providers\ExceptionProvider::class,
+        \FastD\Providers\RouteProvider::class,
     ],
 
     /**
      * Exception Handler
      */
     'exception' => [
-        'adapter' => \FastD\Exception\ExceptionHandler::class,
+        'adapter' => new class
+        {
+            function handle(Throwable $throwable): Response
+            {
+                return json([
+                    'msg' => $throwable->getMessage(),
+                    'code' => $throwable->getCode(),
+                    'line' => $throwable->getLine(),
+                    'trace' => $throwable->getTraceAsString(),
+                ]);
+            }
+        },
         'options' => [
             'level' => E_ALL
         ]
@@ -38,12 +53,12 @@ return [
     /**
      * Logger Handler
      */
-    'logger' => [
+    /*'logger' => [
         // 日志驱动，系统发生日志读写时触发
         'default' => [
             'handler' => \FastD\Logger\AccessHandler::class,
             'level' => \Monolog\Logger::DEBUG,
             'formatter' => \FastD\Logger\Formatter\StashFormatter::class,
         ],
-    ],
+    ],*/
 ];

@@ -10,8 +10,8 @@
 namespace FastD;
 
 
-use FastD\Config\Config;
 use Throwable;
+use FastD\Config\Config;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Container\Container;
@@ -26,8 +26,8 @@ final class Application extends Container
     const VERSION = 'v5.0.0(reborn-dev)';
 
     const MODE_FPM = 1;
-    const MODE_SWOOLE = 2;
-    const MODE_CLI = 3;
+    const MODE_CLI = 2;
+    const MODE_SWOOLE = 3;
 
     /**
      * @var Application
@@ -109,15 +109,14 @@ final class Application extends Container
     public function bootstrap(): void
     {
         if (!$this->booted) {
-            $app = load($this->path.'/config/app.php');
+            $config = load($this->path.'/config/app.php');
 
-            $this->name = $app['name'];
-            date_default_timezone_set($app['timezone'] ?? 'PRC');
+            $this->name = $config['name'];
+            date_default_timezone_set($config['timezone'] ?? 'PRC');
 
-            $config = new Config($app);
-            $this->add('config', $config);
+            $this->add('config', new Config($config));
 
-            foreach ($app['services'] as $service) {
+            foreach ($config['services'] as $service) {
                 $this->register(new $service());
             }
 
@@ -131,17 +130,22 @@ final class Application extends Container
      * @return Response
      * @throws Throwable
      */
-    public function handleException(Throwable $throwable): ?Response
+    public function handleException(Throwable $throwable): Response
     {
         $response = $this->get('exception')->handle($throwable);
 
-        if ($this->isBooted()) {
-            return $response;
+        switch ($this->getMode()) {
+            case Application::MODE_CLI:
+            case Application::MODE_SWOOLE:
+                break;
+            case Application::MODE_FPM:
+                if (!$this->isBooted()) {
+                    $this->handleResponse($response);
+                }
+                break;
         }
-
-        $this->handleResponse($response);
-
-        return null;
+        // 如果没有接受response，系统自动丢弃此变量
+        return $response;
     }
 
     /**
