@@ -25,8 +25,8 @@ return [
      */
     'services' => [
         \FastD\Providers\ConfigProvider::class,
-        \FastD\Providers\LoggerProvider::class,
         \FastD\Providers\ExceptionProvider::class,
+        \FastD\Providers\LoggerProvider::class,
         \FastD\Providers\RouteProvider::class,
     ],
 
@@ -56,10 +56,5 @@ return [
      */
     'logger' => [
         // 日志驱动，系统发生日志读写时触发
-        'default' => [
-            'handler' => \FastD\Logger\AccessHandler::class,
-            'level' => \Monolog\Logger::DEBUG,
-            'formatter' => \FastD\Logger\Formatter\StashFormatter::class,
-        ],
     ],
 ];

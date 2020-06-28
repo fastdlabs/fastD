@@ -3,7 +3,7 @@
 $route = route();
 
 $route->get('/', function () {
-    abort('abc');
+    abort('abc', 500);
     return json([
         'foo' => 'bar'
     ]);

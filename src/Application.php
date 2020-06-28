@@ -10,6 +10,7 @@
 namespace FastD;
 
 
+use Monolog\Logger;
 use Throwable;
 use FastD\Config\Config;
 use FastD\Http\Response;
@@ -47,7 +48,7 @@ final class Application extends Container
     /**
      * @var int
      */
-    protected int $mode = Application::MODE_FPM;
+    protected int $mode;
 
     /**
      * @var bool
@@ -134,18 +135,24 @@ final class Application extends Container
     {
         $response = $this->get('exception')->handle($throwable);
 
-        switch ($this->getMode()) {
-            case Application::MODE_CLI:
-            case Application::MODE_SWOOLE:
-                break;
-            case Application::MODE_FPM:
-                if (!$this->isBooted()) {
-                    $this->handleResponse($response);
-                }
-                break;
+        if (!$this->isBooted()) {
+            $this->handleResponse($response);
         }
+        // 处理日志
+//        $this->handleLogger(Logger::ERROR, $throwable->getMessage(), ['tract' => $throwable->getTraceAsString()]);
         // 如果没有接受response，系统自动丢弃此变量
         return $response;
+    }
+
+    /**
+     * @param int $level
+     * @param string $message
+     * @param array $context
+     * @return bool
+     */
+    public function handleLogger(int $level, string $message, array $context = []): bool
+    {
+        return logger()->addRecord($level, $message, $context);
     }
 
     /**
@@ -169,7 +176,14 @@ final class Application extends Container
      */
     public function handleResponse($response): void
     {
-        $response->send();
+        switch ($this->getMode()) {
+            case Application::MODE_CLI:
+            case Application::MODE_SWOOLE:
+                break;
+            case Application::MODE_FPM:
+                $response->send();
+                break;
+        }
     }
 
     /**
