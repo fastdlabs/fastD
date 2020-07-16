@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Processor.
  */
-class Processor extends Console
+class Processor extends Application
 {
     public function registerCommands()
     {

@@ -9,33 +9,11 @@
 
 namespace FastD\Console;
 
-use FastD\Application;
-use FastD\Http\Stream;
-use Symfony\Component\Console\Application as SymfonyCli;
-use Throwable;
+use Symfony\Component\Console\Application;
 
 /**
  * Class AppConsole.
  */
 class Console extends Application
 {
-    const INPUT = 'input';
-    const OUTPUT = 'output';
-
-    public function handleInput(): Stream {}
-
-    public function handleOutput(Stream $stream): void {}
-
-    public function start(): void
-    {
-        $application = new SymfonyCli();
-
-        try {
-            $application->run();
-        } catch (Throwable $e) {
-            $this->handleException($e);
-        }
-    }
-
-    public function shutdown(): void {}
 }

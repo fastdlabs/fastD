@@ -35,14 +35,14 @@ return [
      */
     'exception' => [
         'adapter' => new class {
-            function handle(Throwable $throwable): Response
+            function handle(Throwable $throwable): \FastD\Http\Stream
             {
                 return json([
                     'msg' => $throwable->getMessage(),
                     'code' => $throwable->getCode(),
                     'line' => $throwable->getLine(),
                     'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-                ]);
+                ])->getBody();
             }
         },
         'options' => [
