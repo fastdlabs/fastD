@@ -34,8 +34,8 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Application;
-use FastD\Server;
+use FastD\Runner;
+use FastD\Server\Swoole;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -44,14 +44,8 @@ use Symfony\Component\Console\Input\InputOption;
 $input = new ArgvInput(null, new InputDefinition([
     new InputArgument('action', InputArgument::OPTIONAL, 'The server action', 'status'),
     new InputOption('daemon', 'd', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
-    new InputOption('t', 't', InputOption::VALUE_OPTIONAL, 'Web root relative path'),
 ]));
 
-$path = $input->getOption('t');
-if (!$path) {
-    $path = file_exists('./app') ? './app' : getcwd();
-}
+$app_path = file_exists('./app') ? './app' : getcwd();
 
-$server = new Server(new Application($path, Application::MODE_SWOOLE));
-
-$server->run($input);
+(new Runner(new Swoole($app_path)))->start();

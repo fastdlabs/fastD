@@ -24,9 +24,9 @@ return [
      * Bootstrap default service provider
      */
     'services' => [
-        \FastD\Providers\ConfigProvider::class,
+//        \FastD\Providers\ConfigProvider::class,
         \FastD\Providers\ExceptionProvider::class,
-        \FastD\Providers\LoggerProvider::class,
+//        \FastD\Providers\LoggerProvider::class,
         \FastD\Providers\RouteProvider::class,
     ],
 
@@ -35,7 +35,7 @@ return [
      */
     'exception' => [
         'adapter' => new class {
-            function handle(Throwable $throwable, int $mode): Response
+            function handle(Throwable $throwable): Response
             {
                 return json([
                     'msg' => $throwable->getMessage(),

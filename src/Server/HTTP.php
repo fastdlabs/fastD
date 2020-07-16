@@ -11,11 +11,12 @@ namespace FastD\Swoole;
 
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\Swoole\Server\HTTPServer;
 
 /**
  * Class HTTPServer.
  */
-class HTTPServer extends \FastD\Swoole\Server\HTTPServer
+class HTTP extends HTTPServer
 {
     public function handleRequest(ServerRequest $request): Response
     {

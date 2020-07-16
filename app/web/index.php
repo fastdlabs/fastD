@@ -8,8 +8,7 @@
  */
 include __DIR__.'/../../vendor/autoload.php';
 
-use FastD\Application;
+use FastD\FPM\FastCGI;
+use FastD\Runner;
 
-$app = new Application(__DIR__.'/..');
-
-$app->run();
+(new Runner(new FastCGI(__DIR__ . '/../')))->start();

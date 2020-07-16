@@ -9,7 +9,8 @@
  */
 
 use FastD\Application;
-use FastD\Console;
+use FastD\Console\Console;
+use FastD\Runner;
 
 set_time_limit(0);
 date_default_timezone_set('PRC');
@@ -44,8 +45,8 @@ include COMPOSER_INSTALL;
  *
  * is test code.
  */
-$path = file_exists('./app') ? './app' : getcwd();
+$app_path = file_exists('./app') ? './app' : getcwd();
 
-$console = new Console(new Application($path));
+$console = new Runner(new Console($app_path));
 
-$console->run();
+$console->start();

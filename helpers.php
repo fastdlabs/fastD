@@ -9,6 +9,7 @@
 
 use FastD\Application;
 use FastD\Config\Config;
+use FastD\Container\Container;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
@@ -17,6 +18,7 @@ use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
+use FastD\Runner;
 use FastD\Servitization\Client\Client;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,7 +29,12 @@ use Symfony\Component\Cache\Adapter\AbstractAdapter;
  */
 function app()
 {
-    return Application::$app;
+    return Runner::$application;
+}
+
+function container(): Container
+{
+    return Runner::$container;
 }
 
 /**
@@ -43,7 +50,7 @@ function version()
  */
 function route()
 {
-    return app()->get('router');
+    return container()->get('router');
 }
 
 /**
@@ -51,7 +58,7 @@ function route()
  */
 function config()
 {
-    return app()->get('config');
+    return container()->get('config');
 }
 
 /**

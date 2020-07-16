@@ -29,10 +29,10 @@ class ExceptionProvider implements ServiceProviderInterface
 
         $container->add('exception', $exception);
 
-        set_exception_handler([app(), 'handleException']);
+        /*set_exception_handler([app(), 'handleException']);
 
         set_error_handler(function ($code, $message) {
             throw new RuntimeException($message, $code);
-        }, $config['options']['level'] ?? E_ERROR);
+        }, $config['options']['level'] ?? E_ERROR);*/
     }
 }
