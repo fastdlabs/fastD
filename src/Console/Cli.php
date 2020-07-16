@@ -7,7 +7,7 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD;
+namespace FastD\Console;
 
 use FastD\Commands\Config;
 use Symfony\Component\Console\Application as Symfony;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class AppConsole.
  */
-class Console extends Symfony
+class Cli extends Symfony
 {
     /**
      * AppConsole constructor.

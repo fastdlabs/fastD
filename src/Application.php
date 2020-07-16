@@ -10,8 +10,8 @@
 namespace FastD;
 
 
-use FastD\Http\JsonResponse;
 use Throwable;
+use FastD\Http\JsonResponse;
 use FastD\Config\Config;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
