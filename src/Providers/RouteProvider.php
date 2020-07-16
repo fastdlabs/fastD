@@ -27,7 +27,7 @@ class RouteProvider implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $collector = new RouteCollection(config()->get('namespace', '\\Controller\\'));
+        $collector = new RouteCollection();
         $dispatcher = new RouteDispatcher($collector, config()->get('middleware', []));
 
         $container->add('router', $collector);

@@ -7,7 +7,7 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Console;
+namespace FastD\Commands;
 
 use FastD\Utils\FileObject;
 use Symfony\Component\Console\Command\Command;

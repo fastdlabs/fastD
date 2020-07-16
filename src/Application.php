@@ -10,7 +10,7 @@
 namespace FastD;
 
 
-use Monolog\Logger;
+use FastD\Http\JsonResponse;
 use Throwable;
 use FastD\Config\Config;
 use FastD\Http\Response;
@@ -133,26 +133,22 @@ final class Application extends Container
      */
     public function handleException(Throwable $throwable): Response
     {
-        $response = $this->get('exception')->handle($throwable);
+        $response = $this->get('exception')->handle($throwable, $this->getMode());
 
-        if (!$this->isBooted()) {
-            $this->handleResponse($response);
+        // 处理输出
+        $this->handleResponse($response);
+
+        // 存在日志配置，则启用日志功能
+        if ($this->has('logger')) {
+            // 处理日志
+            logger()->error($throwable->getMessage(), [
+                'file' => $throwable->getFile(),
+                'line' => $throwable->getLine(),
+                'trace' => $throwable->getTraceAsString()
+            ]);
         }
-        // 处理日志
-//        $this->handleLogger(Logger::ERROR, $throwable->getMessage(), ['tract' => $throwable->getTraceAsString()]);
         // 如果没有接受response，系统自动丢弃此变量
         return $response;
-    }
-
-    /**
-     * @param int $level
-     * @param string $message
-     * @param array $context
-     * @return bool
-     */
-    public function handleLogger(int $level, string $message, array $context = []): bool
-    {
-        return logger()->addRecord($level, $message, $context);
     }
 
     /**
@@ -174,11 +170,18 @@ final class Application extends Container
      * @param Response $response
      * @return void
      */
-    public function handleResponse($response): void
+    public function handleResponse(Response $response): void
     {
         switch ($this->getMode()) {
             case Application::MODE_CLI:
             case Application::MODE_SWOOLE:
+                if ($response instanceof JsonResponse) {
+                    $content = $response->getContents();
+                    $content = json_encode(json_decode($content, true), JSON_PRETTY_PRINT);
+                } else {
+                    $content = $response->getContents();
+                }
+                echo $content;
                 break;
             case Application::MODE_FPM:
                 $response->send();

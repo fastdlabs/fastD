@@ -34,15 +34,14 @@ return [
      * Exception Handler
      */
     'exception' => [
-        'adapter' => new class
-        {
-            function handle(Throwable $throwable): Response
+        'adapter' => new class {
+            function handle(Throwable $throwable, int $mode): Response
             {
                 return json([
                     'msg' => $throwable->getMessage(),
                     'code' => $throwable->getCode(),
                     'line' => $throwable->getLine(),
-                    'trace' => $throwable->getTraceAsString(),
+                    'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
                 ]);
             }
         },

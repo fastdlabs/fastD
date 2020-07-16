@@ -9,11 +9,7 @@
 
 namespace FastD;
 
-use FastD\Console\Config;
-use FastD\Console\Controller;
-use FastD\Console\Migration;
-use FastD\Console\Model;
-use FastD\Console\Routing;
+use FastD\Commands\Config;
 use Symfony\Component\Console\Application as Symfony;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,8 +26,6 @@ class Console extends Symfony
      */
     public function __construct(Application $app)
     {
-        $version = Application::VERSION;
-
         parent::__construct(<<<EOF
                     
            ______           __  ____        
@@ -39,7 +33,7 @@ class Console extends Symfony
          / /_  / __ `/ ___/ __/ / / /       
         / __/ / /_/ (__  ) /_/ /_/ /        
        /_/    \__,_/____/\__/_____/          
-                                       <info>{$version}</info>
+                                       <info>{Application::VERSION}</info>
                                                                         
 EOF
 );
@@ -55,9 +49,6 @@ EOF
     public function registerCommands()
     {
         $this->addCommands([
-            new Model(),
-            new Controller(),
-            new Routing(),
             new Config(),
 //            new Migration(),
         ]);

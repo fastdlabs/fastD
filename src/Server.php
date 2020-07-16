@@ -9,15 +9,13 @@
 
 namespace FastD;
 
-use FastD\ServiceProvider\SwooleServiceProvider;
-use FastD\Servitization\Server\HTTPServer;
-use swoole_server;
+use FastD\Swoole\HTTPServer;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * Class App.
  */
-class Servere
+class Server
 {
     /**
      * @var Application
@@ -36,28 +34,14 @@ class Servere
      */
     public function __construct(Application $application)
     {
-        $application->register(new SwooleServiceProvider());
+        // 加载server配置文件
+        config()->load(app()->getPath() . '/config/server.php');
 
         $server = config()->get('server.class', HTTPServer::class);
 
-        $this->server = $server::createServer(
-            $application->getName(),
-            config()->get('server.host'),
-            config()->get('server.options', [])
-        );
+        $this->server = $server::createServer(config()->get('server.host', '127.0.0.1:9527'));
 
         $application->add('server', $this->server);
-
-        $this->initListeners();
-        $this->initProcesses();
-    }
-
-    /**
-     * @return swoole_server
-     */
-    public function getSwoole()
-    {
-        return $this->server->getSwoole();
     }
 
     /**
@@ -113,6 +97,8 @@ class Servere
      */
     public function start()
     {
+        output('server starting...');
+
         $this->bootstrap();
 
         return $this->server->start();

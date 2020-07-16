@@ -29,26 +29,26 @@
         "php": ">=7.4",
         "fastd/container": "dev-develop",
         "fastd/middleware": "dev-develop",
-        "fastd/http": "5.0.x-dev",
         "fastd/config": "dev-develop",
-        "fastd/routing": "5.0.x-dev",
+        "fastd/routing": "dev-develop",
         "fastd/testing": "dev-develop",
-        "fastd/utils": "dev-develop",
+        "fastd/http": "dev-develop",
+        "fastd/swoole": "dev-develop",
         "monolog/monolog": "^1.0",
-        "symfony/console": "^4.2"
+        "symfony/console": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
     },
     "bin": [
-            "bin/console",
-            "bin/client",
-            "bin/server",
-            "bin/process"
-            ],
+        "bin/console",
+        "bin/client",
+        "bin/server",
+        "bin/process"
+    ],
     "scripts": {
         "post-root-package-install": [
-                                      "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
-                                      ]
+            "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
+        ]
     }
 }
