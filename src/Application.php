@@ -10,15 +10,14 @@
 namespace FastD;
 
 
+use Exception;
 use FastD\Config\Config;
-use FastD\Http\Stream;
-use Throwable;
 use FastD\Container\Container;
 
 /**
  * Class Application.
  */
-abstract class Application
+final class Application
 {
     const VERSION = 'v5.0.0(reborn-dev)';
 
@@ -43,13 +42,15 @@ abstract class Application
         return $this->path;
     }
 
-    public function bootstrap(Container $container): void
+    public function bootstrap(Container $container, Runtime $runtime): void
     {
         $config = load($this->path.'/config/app.php');
 
         date_default_timezone_set($config['timezone'] ?? 'PRC');
 
         $container->add('config', new Config($config));
+
+        $this->handleException($runtime);;
 
         foreach ($config['services'] as $service) {
             $container->register(new $service());
@@ -58,23 +59,15 @@ abstract class Application
         unset($config);
     }
 
-    public function handleException(Throwable $throwable): Stream
+    /**
+     * @param Runtime $runtime
+     */
+    public function handleException(Runtime $runtime)
     {
-        $stream = container()->get(Application::EXCEPTION)->handle($throwable);
-        // 开启日志功能
-        if (container()->has('logger')) {
-            // 处理日志
-            logger()->error($throwable->getMessage(), [
-                'file' => $throwable->getFile(),
-                'line' => $throwable->getLine(),
-                'trace' => $throwable->getTraceAsString()
-            ]);
-        }
-        // 如果没有接受Stream，系统自动丢弃此变量
-        return $stream;
+        set_exception_handler([$runtime, 'handleException']);
+
+        set_error_handler(function ($code, $message) {
+            throw new Exception($message, $code);
+        }, $config['options']['level'] ?? E_ERROR);
     }
-
-    abstract public function handleInput(): Stream;
-
-    abstract public function handleOutput(Stream $stream): void ;
 }

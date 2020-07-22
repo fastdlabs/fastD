@@ -34,7 +34,7 @@ return [
      * Exception Handler
      */
     'exception' => [
-        'adapter' => new class {
+        'handler' => new class extends \FastD\AppException {
             function handle(Throwable $throwable): \FastD\Http\Stream
             {
                 return json([

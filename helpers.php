@@ -18,23 +18,28 @@ use FastD\Model\Model;
 use FastD\Model\ModelFactory;
 use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
-use FastD\Runner;
+use FastD\Runtime;
 use FastD\Servitization\Client\Client;
 use Monolog\Logger;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
+
+function runtime()
+{
+
+}
 
 /**
  * @return Application
  */
 function app()
 {
-    return Runner::$application;
+    return Runtime::$application;
 }
 
 function container(): Container
 {
-    return Runner::$container;
+    return Runtime::$container;
 }
 
 /**

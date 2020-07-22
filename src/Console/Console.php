@@ -9,11 +9,12 @@
 
 namespace FastD\Console;
 
-use Symfony\Component\Console\Application;
+
+use FastD\Runtime;
 
 /**
  * Class AppConsole.
  */
-class Console extends Application
+class Console extends Runtime
 {
 }

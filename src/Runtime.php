@@ -11,12 +11,13 @@ namespace FastD;
 
 
 use FastD\Container\Container;
+use Throwable;
 
 /**
  * Class Runner
  * @package FastD
  */
-class Runner
+abstract class Runtime
 {
     public static Container $container;
 
@@ -34,18 +35,16 @@ class Runner
 
         static::$container = new Container();
 
-        $this->bootstrap(static::$container);
+        $application->bootstrap(static::$container, $this);
     }
 
-    public function bootstrap(Container $container): void
-    {
-        app()->bootstrap($container);
-    }
+    abstract public function start();
 
-    public function start(): void
-    {
-        $stream = app()->handleInput();
+    abstract public function handleLog(int $level, string $message, array $context = []);
 
-        app()->handleOutput($stream);
-    }
+    abstract public function handleException(Throwable $throwable);
+
+    abstract public function handleInput();
+
+    abstract public function handleOutput($output);
 }

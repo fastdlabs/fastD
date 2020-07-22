@@ -10,51 +10,60 @@
 namespace FastD\FPM;
 
 
-use FastD\Application;
+use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Http\Stream;
+use FastD\Runtime;
 use Throwable;
 
 /**
  * Class FastCGI
  * @package FastD\FPM
  */
-class FastCGI extends Application
+class FastCGI extends Runtime
 {
-    const REQUEST = 'request';
+    public function handleLog(int $level, string $message, array $context = []): void
+    {
+        // TODO: Implement log() method.
+    }
 
-    public function handleInput(): Stream
+    /**
+     * @param Throwable $throwable
+     * @return Response
+     */
+    public function handleException(Throwable $throwable)
+    {
+        $handler = new (config()->get('exception.handler'));
+
+        $exception = $handler->handle($throwable);
+    }
+
+    /**
+     * @return Response
+     */
+    public function handleInput()
     {
         try {
-            $request = container()->get(FastCGI::REQUEST);
-            $response = container()->get('dispatcher')->dispatch($request);
-            $response->sendHeaders();
-            return $response->getBody();
+            $input = ServerRequest::createServerRequestFromGlobals();
+            static::$container->add('request', $input);
+            return  static::$container->get('dispatcher')->dispatch($input);
         } catch (Throwable $exception) {
             return $this->handleException($exception);
         }
     }
 
-    public function handleOutput(Stream $stream): void
+    /**
+     * @param Response $output
+     * @return void
+     */
+    public function handleOutput($output)
     {
-        echo (string)$stream;
-
-        if (function_exists('fastcgi_finish_request')) {
-            fastcgi_finish_request();
-        }
+        $output->send();
     }
 
     public function start(): void
     {
-        container()->add(FastCGI::REQUEST, ServerRequest::createServerRequestFromGlobals());
+        $output = $this->handleInput();
 
-        $this->handleOutput($this->handleInput());
-
-        $this->shutdown();
-    }
-
-    public function shutdown(): void
-    {
-        container()->offsetUnset(FastCGI::REQUEST);
+        $this->handleOutput($output);
     }
 }

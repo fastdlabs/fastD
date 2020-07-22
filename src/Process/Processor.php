@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class Processor.
  */
-class Processor extends Application
+class Processor extends Runtime
 {
     public function registerCommands()
     {
@@ -48,5 +48,25 @@ class Processor extends Application
         array_unshift($argv, $script);
 
         return parent::run(new ArgvInput($argv), $output);
+    }
+
+    public function start(): void
+    {
+        // TODO: Implement start() method.
+    }
+
+    public function shutdown(): void
+    {
+        // TODO: Implement shutdown() method.
+    }
+
+    public function log(): void
+    {
+        // TODO: Implement log() method.
+    }
+
+    public function exception(): void
+    {
+        // TODO: Implement exception() method.
     }
 }

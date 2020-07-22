@@ -13,6 +13,7 @@ namespace FastD\Server;
 use FastD\Application;
 use FastD\Container\Container;
 use FastD\Http\Stream;
+use FastD\Runtime;
 use FastD\Swoole\Handlers\HTTPHandler;
 use FastD\Swoole\HTTP;
 use FastD\Swoole\Server\ServerAbstract;
@@ -21,31 +22,6 @@ use Symfony\Component\Console\Input\InputInterface;
 /**
  * Class App.
  */
-class Swoole extends Application
+class Swoole extends Runtime
 {
-    protected ServerAbstract $server;
-
-    public function bootstrap(Container $container): void
-    {
-        parent::bootstrap($container);
-
-        $this->server = config()->get('server.adapter', HTTP::class);
-    }
-
-    public function daemon()
-    {
-        $this->server->daemon();
-
-        return $this;
-    }
-
-    public function handleInput(): Stream
-    {
-        $this->server->handler(HTTPHandler::class);
-    }
-
-    public function handleOutput(Stream $stream): void
-    {
-
-    }
 }

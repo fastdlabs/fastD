@@ -34,7 +34,7 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Runner;
+use FastD\Runtime;
 use FastD\Server\Swoole;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,4 +48,4 @@ $input = new ArgvInput(null, new InputDefinition([
 
 $app_path = file_exists('./app') ? './app' : getcwd();
 
-(new Runner(new Swoole($app_path)))->start();
+(new Runtime(new Swoole($app_path)))->start();
