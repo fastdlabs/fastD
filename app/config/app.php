@@ -25,7 +25,6 @@ return [
      */
     'services' => [
 //        \FastD\Providers\ConfigProvider::class,
-        \FastD\Providers\ExceptionProvider::class,
 //        \FastD\Providers\LoggerProvider::class,
         \FastD\Providers\RouteProvider::class,
     ],
@@ -34,20 +33,9 @@ return [
      * Exception Handler
      */
     'exception' => [
-        'handler' => new class extends \FastD\AppException {
-            function handle(Throwable $throwable): \FastD\Http\Stream
-            {
-                return json([
-                    'msg' => $throwable->getMessage(),
-                    'code' => $throwable->getCode(),
-                    'line' => $throwable->getLine(),
-                    'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-                ])->getBody();
-            }
-        },
-        'options' => [
-            'level' => E_ALL
-        ]
+        // 异常格式，出现异常时候，系统会按照自定义格式进行处理
+        'formatter' => \Exception\ApiException::class,
+        'level' => E_ALL
     ],
 
     /**
@@ -55,5 +43,6 @@ return [
      */
     'logger' => [
         // 日志驱动，系统发生日志读写时触发
+        'formatter' => [],
     ],
 ];

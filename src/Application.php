@@ -10,7 +10,7 @@
 namespace FastD;
 
 
-use Exception;
+use RuntimeException;
 use FastD\Config\Config;
 use FastD\Container\Container;
 
@@ -42,6 +42,10 @@ final class Application
         return $this->path;
     }
 
+    /**
+     * @param Container $container
+     * @param Runtime $runtime
+     */
     public function bootstrap(Container $container, Runtime $runtime): void
     {
         $config = load($this->path.'/config/app.php');
@@ -50,24 +54,14 @@ final class Application
 
         $container->add('config', new Config($config));
 
-        $this->handleException($runtime);;
+        set_exception_handler([$runtime, 'handleException']);
+
+        set_error_handler(function ($code, $message) {
+            throw new RuntimeException($message, $code);
+        }, $config['exception']['level'] ?? E_ERROR);
 
         foreach ($config['services'] as $service) {
             $container->register(new $service());
         }
-
-        unset($config);
-    }
-
-    /**
-     * @param Runtime $runtime
-     */
-    public function handleException(Runtime $runtime)
-    {
-        set_exception_handler([$runtime, 'handleException']);
-
-        set_error_handler(function ($code, $message) {
-            throw new Exception($message, $code);
-        }, $config['options']['level'] ?? E_ERROR);
     }
 }

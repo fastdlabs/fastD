@@ -32,23 +32,21 @@ class FastCGI extends Runtime
      */
     public function handleException(Throwable $throwable)
     {
-        $handler = new (config()->get('exception.handler'));
+        $class = config()->get('exception.handler');
 
-        $exception = $handler->handle($throwable);
+        $handler = new $class;
+
+        $output = json($handler->handle($throwable));
+
+        $this->handleOutput($output);
     }
 
     /**
-     * @return Response
+     * @return ServerRequest
      */
     public function handleInput()
     {
-        try {
-            $input = ServerRequest::createServerRequestFromGlobals();
-            static::$container->add('request', $input);
-            return  static::$container->get('dispatcher')->dispatch($input);
-        } catch (Throwable $exception) {
-            return $this->handleException($exception);
-        }
+        return ServerRequest::createServerRequestFromGlobals();
     }
 
     /**
@@ -62,8 +60,12 @@ class FastCGI extends Runtime
 
     public function start(): void
     {
-        $output = $this->handleInput();
-
-        $this->handleOutput($output);
+        try {
+            $input = $this->handleInput();
+            $output = static::$container->get('dispatcher')->dispatch($input);
+            $this->handleOutput($output);
+        } catch (Throwable $exception) {
+            $this->handleException($exception);
+        }
     }
 }
