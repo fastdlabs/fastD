@@ -8,9 +8,16 @@
  */
 
 return [
+    'url' => 'http://0.0.0.0:9527',
+    'server' => \FastD\Swoole\Server\HTTPServer::class,
+    'handle' => \FastD\Server\Handle\HttpHandle::class,
+    'options' => [
+        'pid_file' => __DIR__.'/../runtime/pid/fastd.pid',
+        'worker_num' => 1,
+    ],
+    'processes' => [
 
+    ],
+    'listeners' => [
+    ],
 ];
-
-/**
- * config()->get('server.host');
- */
