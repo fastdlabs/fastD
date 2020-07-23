@@ -7,8 +7,6 @@
  * @see      https://fastdlabs.com
  */
 
-use FastD\Http\Response;
-
 return [
     /*
      * The application name.
@@ -24,8 +22,6 @@ return [
      * Bootstrap default service provider
      */
     'services' => [
-//        \FastD\Providers\ConfigProvider::class,
-//        \FastD\Providers\LoggerProvider::class,
         \FastD\Providers\RouteProvider::class,
     ],
 
@@ -34,7 +30,7 @@ return [
      */
     'exception' => [
         // 异常格式，出现异常时候，系统会按照自定义格式进行处理
-        'formatter' => \Exception\ApiException::class,
+        'handle' => '',
         'level' => E_ALL
     ],
 

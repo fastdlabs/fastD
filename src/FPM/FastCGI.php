@@ -10,9 +10,11 @@
 namespace FastD\FPM;
 
 
+use Exception\ExceptionInterface;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Runtime;
+use Monolog\Logger;
 use Throwable;
 
 /**
@@ -28,15 +30,22 @@ class FastCGI extends Runtime
 
     /**
      * @param Throwable $throwable
-     * @return Response
      */
     public function handleException(Throwable $throwable)
     {
-        $class = config()->get('exception.handler');
+        $handle = config()->get('exception.handle');
 
-        $handler = new $class;
+        $output = json([
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+        ]);
 
-        $output = json($handler->handle($throwable));
+        $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+        ]);
 
         $this->handleOutput($output);
     }

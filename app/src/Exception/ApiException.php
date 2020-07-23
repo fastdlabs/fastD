@@ -9,12 +9,24 @@
 
 namespace Exception;
 
-class ApiException
+use FastD\Http\JsonResponse;
+
+/**
+ * Class ApiException
+ * @package Exception
+ */
+class ApiException implements ExceptionInterface
 {
+    /**
+     * @return string
+     */
     public function format()
     {
-        return [
-            ''
-        ];
+        return JsonResponse::class;
+    }
+
+    public function handle(\Throwable $throwable)
+    {
+        // TODO: Implement handle() method.
     }
 }

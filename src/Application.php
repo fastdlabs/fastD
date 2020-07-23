@@ -52,13 +52,13 @@ final class Application
 
         date_default_timezone_set($config['timezone'] ?? 'PRC');
 
-        $container->add('config', new Config($config));
-
         set_exception_handler([$runtime, 'handleException']);
 
         set_error_handler(function ($code, $message) {
             throw new RuntimeException($message, $code);
         }, $config['exception']['level'] ?? E_ERROR);
+
+        $container->add('config', new Config($config));
 
         foreach ($config['services'] as $service) {
             $container->register(new $service());
