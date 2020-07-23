@@ -21,8 +21,6 @@ final class Application
 {
     const VERSION = 'v5.0.0(reborn-dev)';
 
-    const EXCEPTION = 'exception';
-
     protected string $path;
 
     /**

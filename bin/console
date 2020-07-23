@@ -10,10 +10,8 @@
 
 use FastD\Application;
 use FastD\Console\Console;
-use FastD\Runtime;
 
 set_time_limit(0);
-date_default_timezone_set('PRC');
 
 // autoload composer
 foreach ([
@@ -38,13 +36,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-/**
- * This code
- *
- * __DIR__ . '/app'
- *
- * is test code.
- */
 $app_path = file_exists('./app') ? './app' : getcwd();
 
-(new Console($app_path))->run();
+(new Console(new Application($app_path)))->start();

@@ -11,7 +11,9 @@ namespace FastD\Console;
 
 
 use FastD\Runtime;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
 
 /**
@@ -19,19 +21,14 @@ use Throwable;
  */
 class Console extends Runtime
 {
-    public function start()
-    {
-        // TODO: Implement start() method.
-    }
-
     public function handleLog(int $level, string $message, array $context = [])
     {
-        // TODO: Implement handleLog() method.
+
     }
 
     public function handleException(Throwable $throwable)
     {
-        // TODO: Implement handleException() method.
+        throw $throwable;
     }
 
     /**
@@ -44,6 +41,21 @@ class Console extends Runtime
 
     public function handleOutput($output)
     {
-        // TODO: Implement handleOutput() method.
+        return $output;
+    }
+
+    public function start()
+    {
+        $app = new Application('FastD', \FastD\Application::VERSION);
+
+        $input = $this->handleInput();
+
+        $output = $this->handleOutput(new ConsoleOutput());
+
+        try {
+            $app->run($input, $output);
+        } catch (Throwable $e) {
+            $this->handleException($e);
+        }
     }
 }

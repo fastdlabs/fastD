@@ -9,7 +9,6 @@
  */
 
 set_time_limit(0);
-date_default_timezone_set('PRC');
 
 // autoload composer
 foreach ([
@@ -34,7 +33,7 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Runtime;
+use FastD\Application;
 use FastD\Server\Swoole;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,4 +47,4 @@ $input = new ArgvInput(null, new InputDefinition([
 
 $app_path = file_exists('./app') ? './app' : getcwd();
 
-(new Runtime(new Swoole($app_path)))->start();
+(new Swoole(new Application($app_path)))->start();

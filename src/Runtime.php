@@ -38,8 +38,6 @@ abstract class Runtime
         $application->bootstrap(static::$container, $this);
     }
 
-    abstract public function start();
-
     abstract public function handleLog(int $level, string $message, array $context = []);
 
     abstract public function handleException(Throwable $throwable);
@@ -47,4 +45,6 @@ abstract class Runtime
     abstract public function handleInput();
 
     abstract public function handleOutput($output);
+
+    abstract public function start();
 }
