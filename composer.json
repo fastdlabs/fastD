@@ -31,7 +31,6 @@
         "fastd/middleware": "dev-develop",
         "fastd/config": "dev-develop",
         "fastd/routing": "dev-develop",
-        "fastd/testing": "dev-develop",
         "fastd/http": "dev-develop",
         "fastd/swoole": "dev-develop",
         "monolog/monolog": "^1.0",

@@ -9,124 +9,119 @@
 
 namespace FastD;
 
+use FastD\Http\JsonResponse;
 use FastD\Http\Response;
-use FastD\Testing\WebTestCase;
-use PHPUnit_Extensions_Database_DataSet_ArrayDataSet;
-use PHPUnit_Extensions_Database_DataSet_CompositeDataSet;
-use PHPUnit_Extensions_Database_DataSet_IDataSet;
-use Psr\Http\Message\ServerRequestInterface;
+use FastD\Http\ServerRequest;
 
 /**
  * Class TestCase.
  */
-class TestCase extends WebTestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected $connection = 'default';
-
     /**
-     * @var Application
+     * @param $method
+     * @param $path
+     * @param array $headers
+     * @return ServerRequest
      */
-    protected $app;
-
-    /**
-     * Set up unit.
-     */
-    public function setUp()
+    public function createRequest(string $method, string $path, array $headers = []): ServerRequest
     {
-        parent::__construct();
-        
-        $this->app = $this->createApplication();
+        return new ServerRequest($method, $path, $headers);
     }
 
     /**
-     * @return bool
+     * @param Response $response
+     * @param $assert
      */
-    public function isLocal()
+    public function response(Response $response, $assert): void
     {
-        return 'prod' !== config()->get('env');
+        $this->equalsResponse($response, $assert);
     }
 
     /**
-     * @return Application
+     * @param Response $response
+     * @param $assert
      */
-    public function createApplication()
+    public function equalsResponse(Response $response, $assert): void
     {
-        return new Application(getcwd());
+        static::assertEquals((string) $response->getBody(), $assert);
     }
 
     /**
-     * @param ServerRequestInterface $request
-     * @param array                  $params
-     * @param array                  $headers
-     *
-     * @return Response
+     * @deprecated
+     * @param Response $response
+     * @param array $assert
      */
-    public function handleRequest(ServerRequestInterface $request, array $params = [], array $headers = [])
+    public function json(Response $response, array $assert): void
     {
-        if (!empty($params)) {
-            if ('GET' === $request->getMethod()) {
-                $request->withQueryParams($params);
-            } elseif ('POST' === $request->getMethod()) {
-                $request->withParsedBody($params);
-            } else {
-                $request->getBody()->write(http_build_query($params));
-                $request->withParsedBody($params);
-            }
+        $this->equalsJson($response, $assert);
+    }
+
+    /**
+     * @param Response $response
+     * @param array $assert
+     */
+    public function equalsJson(Response $response, array $assert): void
+    {
+        static::assertEquals((string) $response->getBody(), json_encode($assert, JsonResponse::JSON_OPTIONS));
+    }
+
+    /**
+     * @param Response $response
+     * @param string $key
+     */
+    public function equalsJsonResponseHasKey(Response $response, string $key): void
+    {
+        $json = (string) $response->getBody();
+        $array = json_decode($json, true);
+        if (is_string($key)) {
+            $keys = [$key];
+        } else {
+            $keys = $key;
         }
-
-        if (!empty($headers)) {
-            foreach ($headers as $name => $header) {
-                $request->withAddedHeader($name, $header);
-            }
-        }
-
-        return $this->app->handleRequest($request);
-    }
-
-    /**
-     * Returns the test database connection.
-     *
-     * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection|null
-     */
-    protected function getConnection()
-    {
-        try {
-            return $this->createDefaultDBConnection(database($this->connection)->pdo);
-        } catch (\Exception $exception) {
-            return null;
+        foreach ($keys as $key) {
+            static::assertArrayHasKey($key, $array);
         }
     }
 
     /**
-     * Returns the test dataset.
-     *
-     * @return PHPUnit_Extensions_Database_DataSet_IDataSet
+     * @param Response $response
+     * @param $statusCode
      */
-    protected function getDataSet()
+    public function equalsStatus(Response $response, $statusCode): void
     {
-        $path = app()->getPath().'/database/dataset/'.$this->connection;
+        static::assertEquals($response->getStatusCode(), $statusCode);
+    }
 
-        if (!file_exists($path) && !empty($this->connection)) {
-            $path = dirname($path);
-        }
+    /**
+     * @param Response $response
+     */
+    public function isServerInterval(Response $response): void
+    {
+        static::assertEquals(500, $response->getStatusCode());
+    }
 
-        $composite = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+    /**
+     * @param Response $response
+     */
+    public function isBadRequest(Response $response): void
+    {
+        static::assertEquals(400, $response->getStatusCode());
+    }
 
-        foreach (glob($path.'/*') as $file) {
-            $dataSet = load($file);
-            if (empty($dataSet)) {
-                $dataSet = [];
-            }
-            $tableName = pathinfo($file, PATHINFO_FILENAME);
-            $composite->addDataSet(
-                new PHPUnit_Extensions_Database_DataSet_ArrayDataSet(
-                    [
-                        $tableName => $dataSet,
-                    ]
-                )
-            );
-        }
+    /**
+     * @param Response $response
+     */
+    public function isNotFound(Response $response): void
+    {
+        static::assertEquals(404, $response->getStatusCode());
+    }
 
-        return $composite;
+    /**
+     * @param Response $response
+     */
+    public function isSuccessful(Response $response): void
+    {
+        static::assertEquals(200, $response->getStatusCode());
     }
 }
