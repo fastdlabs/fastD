@@ -13,26 +13,15 @@ use FastD\Container\Container;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
-use FastD\Model\Database;
-use FastD\Model\Model;
-use FastD\Model\ModelFactory;
-use FastD\Packet\Swoole;
 use FastD\Routing\RouteCollection;
 use FastD\Runtime;
-use FastD\Servitization\Client\Client;
 use Monolog\Logger;
-use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
-function runtime()
-{
-
-}
 
 /**
  * @return Application
  */
-function app()
+function app(): Application
 {
     return Runtime::$application;
 }
@@ -45,7 +34,7 @@ function container(): Container
 /**
  * @return string
  */
-function version()
+function version(): string
 {
     return Application::VERSION;
 }
@@ -53,7 +42,7 @@ function version()
 /**
  * @return RouteCollection
  */
-function route()
+function route(): RouteCollection
 {
     return container()->get('router');
 }
@@ -61,29 +50,9 @@ function route()
 /**
  * @return Config
  */
-function config()
+function config(): Config
 {
     return container()->get('config');
-}
-
-/**
- * @return ServerRequestInterface
- */
-function request()
-{
-    return app()->get('request');
-}
-
-/**
- * @return Response
- */
-function response()
-{
-    if (!app()->has('response')) {
-        app()->add('response', new Response());
-    }
-
-    return app()->get('response');
 }
 
 /**
@@ -145,28 +114,3 @@ function logger()
 {
     return app()->get('logger');
 }
-
-/**
- * @param null $uri
- * @param bool $async
- * @param bool $keep
- *
- * @return Client
- */
-function client($uri = null, $async = false, $keep = false)
-{
-    if (null !== $uri) {
-        return new Client($uri, $async, $keep);
-    }
-
-    return app()->get('client');
-}
-
-/**
- * @return \FastD\Swoole\Server
- */
-function server()
-{
-    return app()->get('server');
-}
-
