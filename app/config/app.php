@@ -22,8 +22,7 @@ return [
      * Bootstrap default service provider
      */
     'services' => [
-        \FastD\Providers\RouteProvider::class,
-        \FastD\Providers\ConfigProvider::class,
+        \FastD\Service\RouteProvider::class,
     ],
 
     /**

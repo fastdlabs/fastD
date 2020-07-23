@@ -1,22 +1,20 @@
-#!/usr/bin/env php
 <?php
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2016
+ * @copyright 2020
  *
  * @link      https://www.github.com/janhuang
  * @link      https://fastdlabs.com
  */
 
 set_time_limit(0);
-date_default_timezone_set('PRC');
 
 // autoload composer
 foreach ([
-            __DIR__ . '/../../../autoload.php',
-            __DIR__ . '/../../vendor/autoload.php',
-            __DIR__ . '/../vendor/autoload.php',
-            __DIR__ . '/vendor/autoload.php',
+             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../vendor/autoload.php',
+             __DIR__ . '/../vendor/autoload.php',
+             __DIR__ . '/vendor/autoload.php',
          ] as $value) {
     if (file_exists($value)) {
         define('COMPOSER_INSTALL', $value);
@@ -35,10 +33,8 @@ if (!defined('COMPOSER_INSTALL')) {
 include COMPOSER_INSTALL;
 
 use FastD\Application;
-use FastD\Processor;
+use FastD\Process\Process;
 
-$path = file_exists('./app') ? './app' : getcwd();
+$app_path = file_exists('./app') ? './app' : getcwd();
 
-$processor = new Processor(new Application($path));
-
-$processor->run();
+(new Process(new Application($app_path)))->start();

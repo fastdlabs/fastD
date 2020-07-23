@@ -7,7 +7,7 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Providers;
+namespace FastD\Service;
 
 
 use FastD\Container\Container;

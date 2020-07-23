@@ -3,5 +3,5 @@
 /app/runtime
 composer.lock
 seed
-src/Providers/encryption
+src/Service/encryption
 .DS_Store
