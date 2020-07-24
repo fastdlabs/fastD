@@ -6,8 +6,8 @@
 <a href="https://travis-ci.org/fastdlabs/fastD"><img src="https://travis-ci.org/fastdlabs/fastD.svg?branch=master" /></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="http://www.php.net/">https://img.shields.io/badge/php-v7.4-brightgreen</a>
-<a href="http://www.swoole.com/">https://img.shields.io/badge/swoole-v4.5-brightgreen</a>
+<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-v7.4-brightgreen" /></a>
+<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-v4.5-brightgreen"/></a>
 <a href="https://fastdlabs.com/"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
 </p>
 
