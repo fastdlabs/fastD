@@ -82,9 +82,9 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 鸣谢
 
-<img src="https://s103.ggwan.com/mainlinghitv2/images/public/logo.png" width="250px"/>
+![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
 
-[JanHuang State](https://github-readme-stats.vercel.app/api?username=janhuang&orgs=fastdlabs&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
+![JanHuang State](https://github-readme-stats.vercel.app/api?username=janhuang&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
 
 ### 联系
 
