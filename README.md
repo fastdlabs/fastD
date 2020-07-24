@@ -80,6 +80,10 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)。
 * 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)。
 
+### 鸣谢
+
+<img src="https://s103.ggwan.com/mainlinghitv2/images/public/logo.png" width="250px"/>
+
 ### 联系
 
 如果你在使用中遇到问题，请联系: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com). 微博: [编码侠](http://weibo.com/ecbboyjan)
