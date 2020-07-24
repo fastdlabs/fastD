@@ -1,4 +1,4 @@
-<img src="https://avatars0.githubusercontent.com/u/20292713?s=200&v=4" align="center" width="30%"/>
+<img src="https://avatars0.githubusercontent.com/u/20292713?s=200&v=4" style="margin:0 auto;" width="100px"/>
 <h1 align="center">Fast-D</h1>
 
 <p align="center">:rocket: A high performance PHP API framework.</p>
