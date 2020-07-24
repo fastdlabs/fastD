@@ -38,3 +38,4 @@ use FastD\Process\Process;
 $app_path = file_exists('./app') ? './app' : getcwd();
 
 (new Process(new Application($app_path)))->start();
+// php bin/process %process_name% %args%

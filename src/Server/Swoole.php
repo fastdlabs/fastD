@@ -29,6 +29,10 @@ class Swoole extends Runtime
     protected ServerAbstract $server;
     protected ConsoleOutput $output;
 
+    /**
+     * Application constructor.
+     * @param Application $application
+     */
     public function __construct(Application $application)
     {
         parent::__construct($application);
@@ -87,11 +91,9 @@ class Swoole extends Runtime
     {
         try {
             $input = $this->handleInput();
-
             if ($input->hasParameterOption(['--daemon', '-d'], true)) {
                 $this->server->daemon();
             }
-
             switch ($input->getArgument('action')) {
                 case 'start':
                     $handle = config()->get('server.handle');
