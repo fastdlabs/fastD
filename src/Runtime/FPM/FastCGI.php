@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2020
