@@ -7,10 +7,10 @@
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Console;
+namespace FastD\Runtime\Console;
 
 
-use FastD\Runtime;
+use FastD\Runtime\Runtime;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -44,7 +44,7 @@ class Console extends Runtime
         return $output;
     }
 
-    public function start()
+    public function run()
     {
         $app = new Application('FastD', \FastD\Application::VERSION);
 

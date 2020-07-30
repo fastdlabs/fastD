@@ -7,13 +7,13 @@
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD\FPM;
+namespace FastD\Runtime\FPM;
 
 
 use Exception\ExceptionInterface;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Runtime;
+use FastD\Runtime\Runtime;
 use Monolog\Logger;
 use Throwable;
 
@@ -67,7 +67,7 @@ class FastCGI extends Runtime
         $output->send();
     }
 
-    public function start(): void
+    public function run(): void
     {
         try {
             $input = $this->handleInput();

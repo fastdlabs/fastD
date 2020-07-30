@@ -7,9 +7,10 @@
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD;
+namespace FastD\Runtime;
 
 
+use FastD\Application;
 use FastD\Container\Container;
 use Throwable;
 
@@ -46,5 +47,5 @@ abstract class Runtime
 
     abstract public function handleOutput($output);
 
-    abstract public function start();
+    abstract public function run();
 }

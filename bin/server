@@ -8,9 +8,6 @@
  * @link      https://fastdlabs.com
  */
 
-use FastD\Application;
-use FastD\Console\Console;
-
 set_time_limit(0);
 
 // autoload composer
@@ -36,6 +33,9 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
+use FastD\Application;
+use FastD\Runtime\Swoole\HTTP;
+
 $app_path = file_exists('./app') ? './app' : getcwd();
 
-(new Console(new Application($app_path)))->start();
+(new HTTP(new Application($app_path)))->run();

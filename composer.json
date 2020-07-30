@@ -37,10 +37,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
+        "fastd/swoole": "dev-develop",
         "eaglewu/swoole-ide-helper": "dev-master"
     },
     "bin": [
-        "console"
+        "bin/console",
+        "bin/process",
+        "bin/server"
     ],
     "scripts": {
         "post-root-package-install": [

@@ -13,6 +13,7 @@ namespace FastD;
 use RuntimeException;
 use FastD\Config\Config;
 use FastD\Container\Container;
+use FastD\Runtime\Runtime;
 
 /**
  * Class Application.

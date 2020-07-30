@@ -14,7 +14,7 @@ use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
 use FastD\Routing\RouteCollection;
-use FastD\Runtime;
+use FastD\Runtime\Runtime;
 use Monolog\Logger;
 
 

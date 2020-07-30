@@ -1,0 +1,41 @@
+<?php
+/**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2020
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      https://fastdlabs.com
+ */
+
+set_time_limit(0);
+
+// autoload composer
+foreach ([
+             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../vendor/autoload.php',
+             __DIR__ . '/../vendor/autoload.php',
+             __DIR__ . '/vendor/autoload.php',
+         ] as $value) {
+    if (file_exists($value)) {
+        define('COMPOSER_INSTALL', $value);
+        break;
+    }
+}
+
+if (!defined('COMPOSER_INSTALL')) {
+    fwrite(STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
+
+include COMPOSER_INSTALL;
+
+use FastD\Application;
+use FastD\Runtime\Process\Process;
+
+$app_path = file_exists('./app') ? './app' : getcwd();
+
+(new Process(new Application($app_path)))->run();
+// php bin/process %process_name% %args%

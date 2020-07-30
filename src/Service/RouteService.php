@@ -18,7 +18,7 @@ use FastD\Routing\RouteDispatcher;
 /**
  * Class RouteServiceProvider.
  */
-class RouteProvider implements ServiceProviderInterface
+class RouteService implements ServiceProviderInterface
 {
     /**
      * @param Container $container
