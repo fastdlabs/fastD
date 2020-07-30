@@ -12,11 +12,12 @@ namespace FastD;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
  * Class TestCase.
  */
-class TestCase extends \PHPUnit\Framework\TestCase
+class TestCase extends PHPUnit
 {
     /**
      * @param $method

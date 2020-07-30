@@ -10,7 +10,6 @@
 namespace FastD\Runtime\FPM;
 
 
-use Exception\ExceptionInterface;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Runtime\Runtime;

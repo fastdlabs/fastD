@@ -27,10 +27,8 @@ class RouteService implements ServiceProviderInterface
      */
     public function register(Container $container): void
     {
-        $collector = new RouteCollection();
-        $dispatcher = new RouteDispatcher($collector, config()->get('middleware', []));
+        $dispatcher = new RouteDispatcher(new RouteCollection());
 
-        $container->add('router', $collector);
         $container->add('dispatcher', $dispatcher);
 
         include app()->getPath().'/config/routes.php';
