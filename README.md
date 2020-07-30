@@ -25,10 +25,6 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 文档
 
-<p align="center">
-<img src="fastd.png"/>
-</p>
-
 我们希望不仅仅是提供一个开发框架，更希望能够将自己的经验整理成解决方案，开发套件分享和贡献给社区。
 
 * [中文文档](http://docs.fastdlabs.com/#/zh-cn/3.2/readme)
@@ -73,18 +69,18 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * [zqhong](https://github.com/zqhong)
 * [xsharp](https://github.com/xsharp)
 
+### 鸣谢
+
+![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
+
+![JanHuang State](https://github-readme-stats.vercel.app/api?username=janhuang&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
+
 非常欢迎感兴趣，愿意参与其中，共同打造更好PHP生态，Swoole生态的开发者。
 
 如果你乐于此，却又不知如何开始，可以试试下面这些事情：
 
 * 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)。
 * 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)。
-
-### 鸣谢
-
-![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
-
-![JanHuang State](https://github-readme-stats.vercel.app/api?username=janhuang&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
 
 ### 联系
 
