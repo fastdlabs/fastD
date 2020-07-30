@@ -64,7 +64,7 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 鸣谢
 
-![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
+![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)(https://www.linghit.com/)
 
 非常欢迎感兴趣，愿意参与其中，共同打造更好PHP生态，Swoole生态的开发者。
 
