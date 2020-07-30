@@ -18,10 +18,7 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 
 ### 要求
 
-* PHP >= 5.6
-* ext-curl
-* ext-pdo
-* ext-swoole
+* PHP >= 7.4
 
 ### 文档
 
@@ -58,10 +55,6 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 * [Validator](https://github.com/RunnerLee/validator)
 * [Phalcon ORM](https://github.com/xueron/fastd-phalcon)
 
-### 相关项目
-
-* [Dobee API Framework](https://github.com/JanHuang/dobee)
-
 ### 贡献
 
 * [yyz26371945](https://github.com/yyz26371945)
@@ -72,8 +65,6 @@ FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性�
 ### 鸣谢
 
 ![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
-
-![JanHuang State](https://github-readme-stats.vercel.app/api?username=janhuang&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
 
 非常欢迎感兴趣，愿意参与其中，共同打造更好PHP生态，Swoole生态的开发者。
 
