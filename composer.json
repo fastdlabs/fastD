@@ -32,7 +32,6 @@
         "fastd/config": "dev-develop",
         "fastd/routing": "dev-develop",
         "fastd/http": "dev-develop",
-        "fastd/swoole": "dev-develop",
         "monolog/monolog": "^1.0",
         "symfony/console": "^4.0"
     },
@@ -41,10 +40,7 @@
         "eaglewu/swoole-ide-helper": "dev-master"
     },
     "bin": [
-        "bin/console",
-        "bin/client",
-        "bin/server",
-        "bin/process"
+        "console"
     ],
     "scripts": {
         "post-root-package-install": [
