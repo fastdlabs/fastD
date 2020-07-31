@@ -32,8 +32,8 @@
     "require": {
         "php": ">=7.4",
         "fastd/container": "dev-develop",
-        "fastd/middleware": "dev-develop",
         "fastd/config": "dev-develop",
+        "fastd/middleware": "dev-develop",
         "fastd/routing": "dev-develop",
         "fastd/http": "dev-develop",
         "monolog/monolog": "^1.0",
@@ -49,6 +49,9 @@
         "bin/process",
         "bin/server"
     ],
+    "suggest": {
+        "fastd/swoole": "Can effectively improve performance。"
+    },
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
