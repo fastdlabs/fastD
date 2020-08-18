@@ -6,3 +6,4 @@ seed
 src/Service/encryption
 .DS_Store
 app
+bin
