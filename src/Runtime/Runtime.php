@@ -43,7 +43,7 @@ abstract class Runtime
         logger()->addRecord($level, $message, $context);
     }
 
-    abstract public function handleException(Throwable $throwable);
+    abstract public function handleException(Throwable $throwable): void ;
 
     abstract public function handleInput();
 

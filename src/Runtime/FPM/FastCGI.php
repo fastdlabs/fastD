@@ -26,7 +26,7 @@ class FastCGI extends Runtime
     /**
      * @param Throwable $throwable
      */
-    public function handleException(Throwable $throwable)
+    public function handleException(Throwable $throwable): void
     {
         $output = json([
             'line' => $throwable->getLine(),
