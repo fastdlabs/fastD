@@ -12,6 +12,7 @@ namespace FastD\Runtime\Swoole;
 
 
 use FastD\Application;
+use Monolog\Logger;
 use Throwable;
 use FastD\Runtime\Runtime;
 use FastD\Swoole\Server\HTTPServer;
@@ -56,17 +57,21 @@ class HTTP extends Runtime
         $this->server->configure(config()->get('server.options'));
     }
 
-    public function handleLog(int $level, string $message, array $context = [])
+    public function handleException(Throwable $throwable): void
     {
+        $output = json([
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+        ]);
 
-    }
+        $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+        ]);
 
-    public function handleException(Throwable $throwable)
-    {
-        echo $throwable->getMessage().PHP_EOL;
-        echo $throwable->getLine().PHP_EOL;
-        echo $throwable->getFile().PHP_EOL;
-        echo $throwable->getTraceAsString();
+        $this->handleOutput($output);
     }
 
     /**
