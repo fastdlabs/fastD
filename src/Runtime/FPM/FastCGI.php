@@ -14,8 +14,8 @@ namespace FastD\Runtime\FPM;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Runtime\Runtime;
-use Monolog\Logger;
 use Throwable;
+use Monolog\Logger;
 
 /**
  * Class FastCGI
@@ -23,18 +23,11 @@ use Throwable;
  */
 class FastCGI extends Runtime
 {
-    public function handleLog(int $level, string $message, array $context = []): void
-    {
-        // TODO: Implement log() method.
-    }
-
     /**
      * @param Throwable $throwable
      */
     public function handleException(Throwable $throwable)
     {
-        $handle = config()->get('exception.handle');
-
         $output = json([
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),

@@ -25,8 +25,6 @@ abstract class Runtime
 
     public static Application $application;
 
-    protected string $path;
-
     /**
      * Application constructor.
      * @param Application $application
@@ -40,7 +38,10 @@ abstract class Runtime
         $application->bootstrap(static::$container, $this);
     }
 
-    abstract public function handleLog(int $level, string $message, array $context = []);
+    public function handleLog(int $level, string $message, array $context = []): void
+    {
+        logger()->addRecord($level, $message, $context);
+    }
 
     abstract public function handleException(Throwable $throwable);
 

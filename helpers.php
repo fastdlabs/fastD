@@ -110,7 +110,7 @@ function json(array $content = [], $statusCode = Response::HTTP_OK)
 /**
  * @return Logger
  */
-function logger()
+function logger(): object
 {
-    return app()->get('logger');
+    return container()->get('logger');
 }

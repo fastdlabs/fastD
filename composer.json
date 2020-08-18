@@ -45,9 +45,9 @@
         "eaglewu/swoole-ide-helper": "dev-master"
     },
     "bin": [
-        "bin/console",
-        "bin/process",
-        "bin/server"
+        "console",
+        "process",
+        "server"
     ],
     "suggest": {
         "fastd/swoole": "Can effectively improve performance。"
@@ -56,5 +56,8 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
         ]
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }

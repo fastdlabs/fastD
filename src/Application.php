@@ -15,6 +15,7 @@ use RuntimeException;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Runtime\Runtime;
+use Monolog\Logger;
 
 /**
  * Class Application.
@@ -22,6 +23,8 @@ use FastD\Runtime\Runtime;
 final class Application
 {
     const VERSION = 'v5.0.0(reborn-dev)';
+
+    protected string $name;
 
     protected string $path;
 
@@ -42,26 +45,60 @@ final class Application
         return $this->path;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @param Container $container
      * @param Runtime $runtime
      */
     public function bootstrap(Container $container, Runtime $runtime): void
     {
-        $config = load($this->path.'/config/app.php');
+        $config = load($this->path . '/config/app.php');
 
         date_default_timezone_set($config['timezone'] ?? 'PRC');
+        $this->name = $config['name'] ?? 'fastd';
 
+        $container->add('config', new Config($config));
+        // 初始化异常处理
+        $this->initExceptionHandle($runtime);
+        // 初始化日志处理
+        $this->initLoggerHandle($runtime);
+
+        foreach ($config['services'] as $service) {
+            $container->register(new $service);
+        }
+    }
+
+    /**
+     * @param Runtime $runtime
+     */
+    public function initExceptionHandle(Runtime $runtime): void
+    {
         set_exception_handler([$runtime, 'handleException']);
 
         set_error_handler(function ($code, $message) {
             throw new RuntimeException($message, $code);
-        }, $config['exception']['level'] ?? E_ERROR);
+        }, E_ERROR);
+    }
 
-        $container->add('config', new Config($config));
+    /**
+     * @param Runtime $runtime
+     */
+    public function initLoggerHandle(Runtime $runtime): void
+    {
+        $monolog = new Logger(app()->getName());
 
-        foreach ($config['services'] as $service) {
-            $container->register(new $service());
+        $config = config()->get('logger');
+
+        foreach ($config as $log) {
+            list('handle' => $handle, 'path' => $path, 'level' => $level) = $log;
+            $handler = new $handle($path, $level);
+            $monolog->pushHandler($handler);
         }
+
+        container()->add('logger', $monolog);
     }
 }
