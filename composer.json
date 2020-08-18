@@ -37,7 +37,8 @@
         "fastd/routing": "dev-develop",
         "fastd/http": "dev-develop",
         "monolog/monolog": "^1.0",
-        "symfony/console": "^4.0"
+        "symfony/console": "^4.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",

@@ -16,6 +16,7 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Runtime\Runtime;
 use Monolog\Logger;
+use function Swoole\Coroutine\run;
 
 /**
  * Class Application.
@@ -95,7 +96,20 @@ final class Application
 
         foreach ($config as $log) {
             list('handle' => $handle, 'path' => $path, 'level' => $level) = $log;
-            $handler = new $handle($path, $level);
+            if (empty($path)) {
+                $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
+            } else {
+                if ($path[0] == '/') {
+                    $logPath = $path;
+                } else {
+                    $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $path;
+                }
+            }
+            $dir = dirname($logPath);
+            if (!file_exists($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $handler = new $handle($logPath, $level);
             $monolog->pushHandler($handler);
         }
 
