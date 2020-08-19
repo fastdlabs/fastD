@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace FastD;
+namespace FastD\Testing;
 
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
