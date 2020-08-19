@@ -12,7 +12,7 @@ set_time_limit(0);
 
 // autoload composer
 foreach ([
-             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../../vendor/autoload.php',
              __DIR__ . '/../../vendor/autoload.php',
              __DIR__ . '/../vendor/autoload.php',
              __DIR__ . '/vendor/autoload.php',
@@ -36,6 +36,4 @@ include COMPOSER_INSTALL;
 use FastD\Application;
 use FastD\Runtime\Swoole\HTTP;
 
-$app_path = file_exists('./app') ? './app' : getcwd();
-
-(new HTTP(new Application($app_path)))->run();
+(new HTTP(new Application(getcwd())))->run();

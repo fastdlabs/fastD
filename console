@@ -15,7 +15,7 @@ set_time_limit(0);
 
 // autoload composer
 foreach ([
-             __DIR__ . '/../../../autoload.php',
+             __DIR__ . '/../../../vendor/autoload.php',
              __DIR__ . '/../../vendor/autoload.php',
              __DIR__ . '/../vendor/autoload.php',
              __DIR__ . '/vendor/autoload.php',
@@ -36,6 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$app_path = file_exists('./app') ? './app' : getcwd();
-
-(new Console(new Application($app_path)))->run();
+(new Console(new Application(getcwd())))->run();
