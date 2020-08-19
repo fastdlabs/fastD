@@ -22,12 +22,7 @@ use Throwable;
  */
 class Console extends Runtime
 {
-    public function handleLog(int $level, string $message, array $context = [])
-    {
-
-    }
-
-    public function handleException(Throwable $throwable)
+    public function handleException(Throwable $throwable):void
     {
         throw $throwable;
     }

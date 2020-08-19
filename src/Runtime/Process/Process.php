@@ -32,12 +32,7 @@ class Process extends Runtime
         config()->merge(['process' => $config]);
     }
 
-    public function handleLog(int $level, string $message, array $context = [])
-    {
-        // TODO: Implement handleLog() method.
-    }
-
-    public function handleException(Throwable $throwable)
+    public function handleException(Throwable $throwable): void
     {
         echo $throwable->getMessage().PHP_EOL;
         echo $throwable->getLine().PHP_EOL;
