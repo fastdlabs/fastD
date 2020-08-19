@@ -59,19 +59,17 @@ class HTTP extends Runtime
 
     public function handleException(Throwable $throwable): void
     {
-        $output = json([
-            'line' => $throwable->getLine(),
-            'file' => $throwable->getFile(),
-            'trace' => explode("\r\n", $throwable->getTraceAsString()),
-        ]);
-
         $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),
             'trace' => explode("\r\n", $throwable->getTraceAsString()),
         ]);
 
-        $this->handleOutput($output);
+        $this->handleOutput($throwable->getCode());
+        $this->handleOutput($throwable->getFile());
+        $this->handleOutput($throwable->getLine());
+        $this->handleOutput($throwable->getMessage());
+        $this->handleOutput($throwable->getTraceAsString());
     }
 
     /**
@@ -88,8 +86,9 @@ class HTTP extends Runtime
     /**
      * @param $output
      */
-    public function handleOutput($output)
+    public function handleOutput($meesage)
     {
+        $this->output->writeln($meesage);
         return;
     }
 
