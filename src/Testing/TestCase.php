@@ -21,14 +21,16 @@ use PHPUnit\Framework\TestCase as PHPUnit;
 class TestCase extends PHPUnit
 {
     /**
-     * @param $method
-     * @param $path
+     * @param string $method
+     * @param string $path
      * @param array $headers
-     * @return ServerRequest
+     * @return Response
      */
-    public function createRequest(string $method, string $path, array $headers = []): ServerRequest
+    public function handleRequest(string $method, string $path, array $headers = []): Response
     {
-        return new ServerRequest($method, $path, $headers);
+        $input = new ServerRequest($method, $path, $headers);
+
+        return container()->get('dispatcher')->dispatch($input);
     }
 
     /**
