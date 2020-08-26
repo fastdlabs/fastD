@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
 
 /**
@@ -23,9 +24,13 @@ use Throwable;
  */
 class Process extends Runtime
 {
+    protected ConsoleOutput $output;
+
     public function __construct(Application $application)
     {
         parent::__construct($application);
+
+        $this->output = new ConsoleOutput();
 
         $config = load(app()->getPath() . '/config/process.php');
 
@@ -34,10 +39,11 @@ class Process extends Runtime
 
     public function handleException(Throwable $throwable): void
     {
-        echo $throwable->getMessage().PHP_EOL;
-        echo $throwable->getLine().PHP_EOL;
-        echo $throwable->getFile().PHP_EOL;
-        echo $throwable->getTraceAsString();
+        $this->handleOutput($throwable->getCode());
+        $this->handleOutput($throwable->getFile());
+        $this->handleOutput($throwable->getLine());
+        $this->handleOutput($throwable->getMessage());
+        $this->handleOutput($throwable->getTraceAsString());
     }
 
     public function handleInput()
@@ -49,9 +55,9 @@ class Process extends Runtime
         ]));
     }
 
-    public function handleOutput($output)
+    public function handleOutput($meesage)
     {
-        // TODO: Implement handleOutput() method.
+        $this->output->writeln(sprintf("<green>[%s]<green>: %s", date('Y-m-d H:i:s'), $meesage));
     }
 
     public function run()
