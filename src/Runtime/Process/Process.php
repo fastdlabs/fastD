@@ -57,7 +57,7 @@ class Process extends Runtime
 
     public function handleOutput($meesage)
     {
-        $this->output->writeln(sprintf("<green>[%s]</green>: %s", date('Y-m-d H:i:s'), $meesage));
+        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $meesage));
     }
 
     public function run()
