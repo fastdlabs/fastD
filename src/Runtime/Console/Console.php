@@ -40,6 +40,13 @@ class Console extends Runtime
         return $output;
     }
 
+    protected function scanCommands()
+    {
+        $path = app()->getPath().'/config/console.php';
+
+        return include $path;
+    }
+
     public function run()
     {
         $app = new Application('FastD', \FastD\Application::VERSION);
@@ -47,6 +54,10 @@ class Console extends Runtime
         $input = $this->handleInput();
 
         $output = $this->handleOutput(new ConsoleOutput());
+
+        foreach ($this->scanCommands() as $command) {
+            $app->add(new $command());
+        }
 
         try {
             $app->run($input, $output);
