@@ -35,7 +35,4 @@ include COMPOSER_INSTALL;
 use FastD\Application;
 use FastD\Runtime\Process\Process;
 
-$app_path = file_exists('./app') ? './app' : getcwd();
-
-(new Process(new Application($app_path)))->run();
-// php bin/process %process_name% %args%
+(new Process(new Application(getcwd())))->run();
