@@ -29,15 +29,17 @@ class FastCGI extends Runtime
     public function handleException(Throwable $throwable): void
     {
         $output = json([
+            'msg' => $throwable->getMessage(),
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),
-            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ]);
 
         $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
+            'msg' => $throwable->getMessage(),
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),
-            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ]);
 
         $this->handleOutput($output);
