@@ -66,7 +66,7 @@ class Process extends Runtime
             $input = $this->handleInput();
 
             $name = $input->getArgument('name');
-            $worker = $input->getArgument('worker', 1);
+            $worker = $input->getArgument('worker');
 
             $process = config()->get('process.'.$name);
 

@@ -18,6 +18,8 @@ use Swoole\Http\Request;
 use Swoole\Http\Response;
 
 /**
+ * swoole http 处理器，接受的http请求会使用该对象进行处理
+ *
  * Class HttpHandle
  * @package FastD\Server\Handle
  */

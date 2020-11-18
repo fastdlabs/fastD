@@ -42,7 +42,7 @@ function version(): string
 /**
  * @return RouteCollection
  */
-function route(): RouteCollection
+function route(): object
 {
     return container()->get('router');
 }
@@ -50,7 +50,7 @@ function route(): RouteCollection
 /**
  * @return Config
  */
-function config(): Config
+function config(): object
 {
     return container()->get('config');
 }
@@ -63,12 +63,12 @@ function config(): Config
  */
 function forward($method, $path)
 {
-    $request = clone app()->get('request');
+    $request = clone container()->get('request');
     $request
         ->withMethod($method)
         ->withUri(new Uri($path))
     ;
-    $response = app()->get('dispatcher')->dispatch($request);
+    $response = container()->get('dispatcher')->dispatch($request);
     unset($request);
 
     return $response;
@@ -83,17 +83,6 @@ function forward($method, $path)
 function abort($message, $statusCode = Response::HTTP_BAD_REQUEST)
 {
     throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
-}
-
-/**
- * @param array $content
- * @param int   $statusCode
- *
- * @return Response
- */
-function binary(array $content, $statusCode = Response::HTTP_OK)
-{
-    return new Response(Swoole::encode($content), $statusCode);
 }
 
 /**
