@@ -58,14 +58,14 @@ class Database extends Medoo
      * @param $query
      * @return bool|false|\PDOStatement
      */
-    public function query($query)
+    public function query($query, $map = [])
     {
         try {
-            return $this->pdo->query($query);
+            return parent::query($query, $map);
         } catch (Exception $e) {
             $this->reconnect();
 
-            return $this->pdo->query($query);
+            return parent::query($query, $map);
         }
     }
 
@@ -73,14 +73,14 @@ class Database extends Medoo
      * @param $query
      * @return bool|int
      */
-    public function exec($query)
+    public function exec($query, $map = [])
     {
         try {
-            return $this->pdo->exec($query);
+            return parent::exec($query, $map);
         } catch (Exception $e) {
             $this->reconnect();
 
-            return $this->pdo->exec($query);
+            return parent::exec($query, $map);
         }
     }
 
