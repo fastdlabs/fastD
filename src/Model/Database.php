@@ -83,24 +83,4 @@ class Database extends Medoo
             return parent::exec($query, $map);
         }
     }
-
-    /**
-     * @param $table
-     * @param $join
-     * @param null $where
-     *
-     * @return bool
-     */
-    public function has($table, $join, $where = null)
-    {
-        $column = null;
-
-        $query = $this->query('SELECT EXISTS('.$this->selectContext($table, $join, $column, $where, 1).')');
-
-        if ($query && 1 === intval($query->fetchColumn())) {
-            return true;
-        }
-
-        return false;
-    }
 }
