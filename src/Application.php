@@ -112,7 +112,9 @@ class Application extends Container
             $config = load($this->path.'/config/app.php');
             $this->name = $config['name'];
 
-            date_default_timezone_set(isset($config['timezone']) ? $config['timezone'] : 'UTC');
+            if (!empty($config['timezone'])) {
+                date_default_timezone_set($config['timezone']);
+            }
 
             $this->add('config', new Config($config));
             $this->add('logger', new Logger($this->name));
