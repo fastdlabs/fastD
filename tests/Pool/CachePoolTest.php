@@ -7,10 +7,11 @@
  * @see      https://fastdlabs.com
  */
 
+use PHPUnit\Framework\TestCase;
 /**
  * Class CachePoolTest.
  */
-class CachePoolTest extends PHPUnit_Framework_TestCase
+class CachePoolTest extends TestCase
 {
     public function testCacheConnection()
     {

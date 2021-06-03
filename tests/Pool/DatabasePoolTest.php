@@ -7,8 +7,9 @@
  * @see      https://fastdlabs.com
  */
 use FastD\Pool\DatabasePool;
+use PHPUnit\Framework\TestCase;
 
-class DatabasePoolTest extends PHPUnit_Framework_TestCase
+class DatabasePoolTest extends TestCase
 {
     /**
      * @var DatabasePool
