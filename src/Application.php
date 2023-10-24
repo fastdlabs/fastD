@@ -57,7 +57,7 @@ final class Application
      */
     public function bootstrap(Container $container, Runtime $runtime): void
     {
-        $config = load($this->path . '/config/app.php');
+        $config = load($this->path . '/src/config/app.php');
         $this->name = $config['name'];
         date_default_timezone_set($config['timezone'] ?? 'PRC');
 
@@ -91,13 +91,13 @@ final class Application
     {
         $monolog = new Logger($this->name);
         $config = config()->get('logger');
-        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $runtime->getEnvironment() . '.log';
+        $defaultLogPath = app()->getPath() . '/runtime/logs/' . date('Ym') . '/' . $runtime->getEnvironment() . '.log';
         foreach ($config as $log) {
             if (!empty($log['path'])) {
                 if ($log['path'][0] == '/') {
                     $logPath = $log['path'];
                 } else {
-                    $logPath = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $log['path'];
+                    $logPath = app()->getPath() . '/runtime/logs/' . date('Ym') . '/' . $log['path'];
                 }
             }
             $handler = new RotatingFileHandler($logPath ?? $defaultLogPath, $log['level']);

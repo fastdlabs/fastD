@@ -51,7 +51,7 @@ class FastCGITest extends TestCase
     public function testBootstrap()
     {
         $runtime = $this->bootstrap();
-        $logFile = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $runtime->getEnvironment() . '-' . date('Y-m-d') . '.log';
+        $logFile = app()->getPath() . '/runtime/logs/' . date('Ym') . '/' . $runtime->getEnvironment() . '-' . date('Y-m-d') . '.log';
         $ok = logger()->error("test");
         $this->assertTrue($ok);
         $this->assertFileExists($logFile);
@@ -73,7 +73,7 @@ class FastCGITest extends TestCase
         $cgi = $this->bootstrap();
 
         $_SERVER = $this->dataServerFromGlobals();
-        require_once __DIR__ . '/App/http/routes.php';
+        require_once __DIR__ . '/App/src/config/routes.php';
         $input = $cgi->handleInput();
         $output = container()->get('dispatcher')->dispatch($input);
         $cgi->handleOutput($output);

@@ -33,6 +33,6 @@ class RouteService implements ServiceProviderInterface
         $container->add('router', $collection);
         $container->add('dispatcher', $dispatcher);
 
-        $routes = include app()->getPath() . '/http/routes.php';
+        $routes = include app()->getPath() . '/src/config/routes.php';
     }
 }
