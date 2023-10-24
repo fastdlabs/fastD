@@ -15,8 +15,7 @@ use FastD\Application;
 use Monolog\Logger;
 use Throwable;
 use FastD\Runtime\Runtime;
-use FastD\Swoole\Server\HTTPServer;
-use FastD\Swoole\Server\ServerAbstract;
+use FastD\Swoole\Server\AbstractServer;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +27,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class HTTP extends Runtime
 {
-    protected ServerAbstract $server;
+    protected AbstractServer $server;
     protected ConsoleOutput $output;
 
     /**
@@ -50,7 +49,7 @@ class HTTP extends Runtime
     {
         $this->output = new ConsoleOutput();
 
-        $server = config()->get('server.server', HTTPServer::class);
+        $server = config()->get('server.server', \FastD\Swoole\Server\HTTP::class);
 
         $this->server = new $server(config()->get('server.url'));
 

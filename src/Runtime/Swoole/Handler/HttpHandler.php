@@ -12,8 +12,8 @@ namespace FastD\Runtime\Swoole\Handler;
 
 
 use FastD\Http\SwooleRequest;
-use FastD\Swoole\Handlers\HandlerAbstract;
-use FastD\Swoole\Handlers\HTTPHandlerInterface;
+use FastD\Swoole\Server\Handler\HandlerAbstract;
+use FastD\Swoole\Server\Handler\HTTPHandlerInterface;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 
