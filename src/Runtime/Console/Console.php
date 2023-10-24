@@ -22,6 +22,11 @@ use Throwable;
  */
 class Console extends Runtime
 {
+    public function __construct(\FastD\Application $application)
+    {
+        parent::__construct('console', $application);
+    }
+
     public function handleException(Throwable $throwable):void
     {
         throw $throwable;

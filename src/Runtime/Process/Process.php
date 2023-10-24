@@ -28,7 +28,7 @@ class Process extends Runtime
 
     public function __construct(Application $application)
     {
-        parent::__construct($application);
+        parent::__construct('process', $application);
 
         $this->output = new ConsoleOutput();
 

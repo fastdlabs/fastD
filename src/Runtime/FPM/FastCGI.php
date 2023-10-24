@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace FastD\Runtime\FPM;
 
 
+use FastD\Application;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
 use FastD\Runtime\Runtime;
@@ -23,6 +24,11 @@ use Monolog\Logger;
  */
 class FastCGI extends Runtime
 {
+    public function __construct(Application $application)
+    {
+        parent::__construct('fastcgi', $application);
+    }
+
     /**
      * @param Throwable $throwable
      */

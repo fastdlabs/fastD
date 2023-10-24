@@ -21,6 +21,8 @@ use Throwable;
  */
 abstract class Runtime
 {
+    protected string $environment = 'fastcgi';
+
     /**
      * @var Container
      */
@@ -32,16 +34,26 @@ abstract class Runtime
     public static Application $application;
 
     /**
-     * Application constructor.
+     * @param string $environment
      * @param Application $application
      */
-    public function __construct(Application $application)
+    public function __construct(string $environment, Application $application)
     {
+        $this->environment = $environment;
+
         static::$application = $application;
 
         static::$container = new Container();
 
         $application->bootstrap(static::$container, $this);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->environment;
     }
 
     /**

@@ -37,7 +37,7 @@ class HTTP extends Runtime
      */
     public function __construct(Application $application)
     {
-        parent::__construct($application);
+        parent::__construct('swoole', $application);
 
         $config = load(app()->getPath() . '/config/server.php');
 

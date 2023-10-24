@@ -90,7 +90,7 @@ final class Application
     {
         $monolog = new Logger($this->name);
         $config = config()->get('logger');
-        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
+        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $runtime->getEnvironment() . '.log';
         foreach ($config as $log) {
             if (!empty($log['path'])) {
                 if ($log['path'][0] == '/') {
