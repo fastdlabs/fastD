@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD\Runtime\Swoole\Handle;
+namespace FastD\Runtime\Swoole\Handler;
 
 
-use FastD\Http\SwooleServerRequest;
+use FastD\Http\SwooleRequest;
 use FastD\Swoole\Handlers\HandlerAbstract;
 use FastD\Swoole\Handlers\HTTPHandlerInterface;
 use Swoole\Http\Request;
@@ -23,11 +23,11 @@ use Swoole\Http\Response;
  * Class HttpHandle
  * @package FastD\Server\Handle
  */
-class HttpHandle extends HandlerAbstract implements HTTPHandlerInterface
+class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
 {
     public function onRequest(Request $swooleRequet, Response $swooleResponse): void
     {
-        $request = SwooleServerRequest::createServerRequestFromSwoole($swooleRequet);
+        $request = SwooleRequest::createServerRequestFromSwoole($swooleRequet);
 
         $response = container()->get('dispatcher')->dispatch($request);
 
