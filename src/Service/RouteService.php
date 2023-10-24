@@ -29,12 +29,10 @@ class RouteService implements ServiceProviderInterface
     public function register(Container $container): void
     {
         $collection = new RouteCollection();
-
         $dispatcher = new RouteDispatcher($collection);
-
         $container->add('router', $collection);
         $container->add('dispatcher', $dispatcher);
 
-        include app()->getPath().'/config/routes.php';
+        $routes = include app()->getPath() . '/http/routes.php';
     }
 }

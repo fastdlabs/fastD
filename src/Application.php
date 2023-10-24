@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace FastD;
 
 
+use Monolog\Handler\RotatingFileHandler;
 use RuntimeException;
 use FastD\Config\Config;
 use FastD\Container\Container;
@@ -90,16 +91,16 @@ final class Application
     {
         $monolog = new Logger($this->name);
         $config = config()->get('logger');
-        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $runtime->getEnvironment() . '.log';
+        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $runtime->getEnvironment() . '.log';
         foreach ($config as $log) {
             if (!empty($log['path'])) {
                 if ($log['path'][0] == '/') {
                     $logPath = $log['path'];
                 } else {
-                    $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $log['path'];
+                    $logPath = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $log['path'];
                 }
             }
-            $handler = new $log['handle']($logPath ?? $defaultLogPath, $log['level']);
+            $handler = new RotatingFileHandler($logPath ?? $defaultLogPath, $log['level']);
             $monolog->pushHandler($handler);
             unset($log);
         }

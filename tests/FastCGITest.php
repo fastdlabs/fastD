@@ -1,9 +1,8 @@
 <?php
 
-namespace Runtime\FPM;
+namespace tests;
 
 use FastD\Application;
-use FastD\Http\Response;
 use FastD\Runtime\FPM\FastCGI;
 use FastD\Runtime\Runtime;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +11,7 @@ class FastCGITest extends TestCase
 {
     public function bootstrap(): Runtime
     {
-        return new FastCGI(new Application(__DIR__ . '/../../App'));
+        return new FastCGI(new Application(__DIR__ . '/App'));
     }
 
     public function dataServerFromGlobals()
@@ -51,13 +50,13 @@ class FastCGITest extends TestCase
 
     public function testBootstrap()
     {
-        $this->bootstrap();
-        $logFile = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
+        $runtime = $this->bootstrap();
+        $logFile = app()->getPath() . '/runtime/log/' . date('Ym') . '/' . $runtime->getEnvironment() . '-' . date('Y-m-d') . '.log';
         $ok = logger()->error("test");
         $this->assertTrue($ok);
         $this->assertFileExists($logFile);
     }
-/*
+
     public function testHandleException()
     {
         $cgi = $this->bootstrap();
@@ -74,9 +73,9 @@ class FastCGITest extends TestCase
         $cgi = $this->bootstrap();
 
         $_SERVER = $this->dataServerFromGlobals();
-        require_once __DIR__ . '/../../App/config/routes.php';
+        require_once __DIR__ . '/App/http/routes.php';
         $input = $cgi->handleInput();
         $output = container()->get('dispatcher')->dispatch($input);
         $cgi->handleOutput($output);
-    }*/
+    }
 }

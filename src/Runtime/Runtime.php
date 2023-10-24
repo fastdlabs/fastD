@@ -51,7 +51,7 @@ abstract class Runtime
     /**
      * @return string
      */
-    public function getEnvironment()
+    public function getEnvironment(): string
     {
         return $this->environment;
     }
