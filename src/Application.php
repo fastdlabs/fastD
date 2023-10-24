@@ -57,14 +57,13 @@ final class Application
     public function bootstrap(Container $container, Runtime $runtime): void
     {
         $config = load($this->path . '/config/app.php');
-
+        $this->name = $config['name'];
         date_default_timezone_set($config['timezone'] ?? 'PRC');
-        $this->name = $config['name'] ?? 'fastd';
 
         $container->add('config', new Config($config));
-        // 初始化异常处理
+        // 异常处理
         $this->handleException($runtime);
-        // 初始化日志处理
+        // 日志处理
         $this->handleLogger($runtime);
 
         foreach ($config['services'] as $service) {
@@ -93,16 +92,16 @@ final class Application
         $config = config()->get('logger');
         $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
         foreach ($config as $log) {
-            [$handle, $path, $level] = $log;
-            if (!empty($path)) {
-                if ($path[0] == '/') {
-                    $logPath = $path;
+            if (!empty($log['path'])) {
+                if ($log['path'][0] == '/') {
+                    $logPath = $log['path'];
                 } else {
-                    $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $path;
+                    $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $log['path'];
                 }
             }
-            $handler = new $handle($logPath??$defaultLogPath, $level);
+            $handler = new $log['handle']($logPath ?? $defaultLogPath, $log['level']);
             $monolog->pushHandler($handler);
+            unset($log);
         }
         container()->add('logger', $monolog);
     }

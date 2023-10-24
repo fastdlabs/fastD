@@ -48,7 +48,7 @@ class FastCGI extends Runtime
     /**
      * @return ServerRequest
      */
-    public function handleInput()
+    public function handleInput(): ServerRequest
     {
         return ServerRequest::createServerRequestFromGlobals();
     }
@@ -57,7 +57,7 @@ class FastCGI extends Runtime
      * @param Response $output
      * @return void
      */
-    public function handleOutput($output)
+    public function handleOutput($output): void
     {
         $output->send();
     }

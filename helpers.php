@@ -53,7 +53,7 @@ function route(string $method, string $path, string $handle, string $func = ''):
 /**
  * @return Config
  */
-function config(): object
+function config(): Config
 {
     return container()->get('config');
 }

@@ -22,11 +22,13 @@ use PHPUnit\Framework\TestCase as PHPUnit;
  */
 class TestCase extends PHPUnit
 {
-    public function setUp()
+    protected $runtime;
+
+    protected function setUp(): void
     {
         parent::setUp();
 
-        return new FastCGI(new Application(getcwd()));
+        $this->runtime = new FastCGI(new Application(getcwd()));
     }
 
     /**
