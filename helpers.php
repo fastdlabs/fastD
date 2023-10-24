@@ -13,6 +13,7 @@ use FastD\Container\Container;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
+use FastD\Routing\Route;
 use FastD\Routing\RouteCollection;
 use FastD\Runtime\Runtime;
 use Monolog\Logger;
@@ -32,19 +33,21 @@ function container(): Container
 }
 
 /**
- * @return string
+ * @return RouteCollection
  */
-function version(): string
+function router(): object
 {
-    return Application::VERSION;
+    return container()->get('router');
 }
 
 /**
- * @return RouteCollection
+ * 添加路由
  */
-function route(): object
+function route(string $method, string $path, string $handle, string $func = ''): Route
 {
-    return container()->get('router');
+    $method = strtolower($method);
+    $handle = empty($func) ? $handle : sprintf("%s@%s", $handle, $func);
+    return router()->$method($path, $handle);
 }
 
 /**

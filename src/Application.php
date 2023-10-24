@@ -16,14 +16,13 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Runtime\Runtime;
 use Monolog\Logger;
-use function Swoole\Coroutine\run;
 
 /**
  * Class Application.
  */
 final class Application
 {
-    const VERSION = 'v5.0.0(reborn-dev)';
+    const VERSION = 'v5.0.0(newborn)';
 
     protected string $name;
 
@@ -64,9 +63,9 @@ final class Application
 
         $container->add('config', new Config($config));
         // 初始化异常处理
-        $this->initExceptionHandle($runtime);
+        $this->handleException($runtime);
         // 初始化日志处理
-        $this->initLoggerHandle($runtime);
+        $this->handleLogger($runtime);
 
         foreach ($config['services'] as $service) {
             $container->register(new $service);
@@ -76,7 +75,7 @@ final class Application
     /**
      * @param Runtime $runtime
      */
-    public function initExceptionHandle(Runtime $runtime): void
+    public function handleException(Runtime $runtime): void
     {
         set_exception_handler([$runtime, 'handleException']);
 
@@ -88,31 +87,23 @@ final class Application
     /**
      * @param Runtime $runtime
      */
-    public function initLoggerHandle(Runtime $runtime): void
+    public function handleLogger(Runtime $runtime): void
     {
-        $monolog = new Logger(app()->getName());
-
+        $monolog = new Logger($this->name);
         $config = config()->get('logger');
-
+        $defaultLogPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
         foreach ($config as $log) {
-            list('handle' => $handle, 'path' => $path, 'level' => $level) = $log;
-            if (empty($path)) {
-                $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . app()->getName() . '.log';
-            } else {
+            [$handle, $path, $level] = $log;
+            if (!empty($path)) {
                 if ($path[0] == '/') {
                     $logPath = $path;
                 } else {
                     $logPath = app()->getPath() . '/runtime/log/' . date('Ymd') . '/' . $path;
                 }
             }
-            $dir = dirname($logPath);
-            if (!file_exists($dir)) {
-                mkdir($dir, 0755, true);
-            }
-            $handler = new $handle($logPath, $level);
+            $handler = new $handle($logPath??$defaultLogPath, $level);
             $monolog->pushHandler($handler);
         }
-
         container()->add('logger', $monolog);
     }
 }

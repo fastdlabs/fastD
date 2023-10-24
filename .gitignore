@@ -7,3 +7,4 @@ src/Service/encryption
 .DS_Store
 app
 bin
+.phpunit.result.cache

@@ -64,8 +64,7 @@ abstract class Runtime
     abstract public function handleException(Throwable $throwable): void ;
 
     /**
-     * 输入
-     *  输入包括HTTP，命令行
+     * 输入包括HTTP，命令行
      *
      * @return mixed
      */
