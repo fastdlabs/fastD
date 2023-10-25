@@ -40,7 +40,7 @@ class HTTP extends Runtime
 
         $config = load(app()->getPath() . '/src/config/server.php');
         // 配置默认路径
-        $config['options']['p_id'] = $config['options']['p_id'] ?? app()->getPath() . '/runtime/pid/' . app()->getName() . '.pid';
+        $config['options']['pid_file'] = $config['options']['p_id'] ?? app()->getPath() . '/runtime/pid/' . app()->getName() . '.pid';
         config()->merge(['server' => $config]);
 
         $this->bootstrap();
