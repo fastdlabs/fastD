@@ -100,7 +100,7 @@ final class Application
                     $logPath = app()->getPath() . '/runtime/logs/' . date('Ym') . '/' . $log['path'];
                 }
             }
-            $handler = new RotatingFileHandler($logPath ?? $defaultLogPath, $log['level']);
+            $handler = new RotatingFileHandler($logPath ?? $defaultLogPath, 100, $log['level']);
             $monolog->pushHandler($handler);
             unset($log);
         }

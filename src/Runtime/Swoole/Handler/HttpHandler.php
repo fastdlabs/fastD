@@ -29,6 +29,11 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
     {
         $request = SwooleRequest::createServerRequestFromSwoole($swooleRequet);
 
+        if ($request->serverParams['PATH_INFO'] === '/favicon.ico') {
+            $swooleResponse->end();
+            return;
+        }
+
         $response = container()->get('dispatcher')->dispatch($request);
 
         foreach ($response->getHeaders() as $key => $header) {
