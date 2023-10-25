@@ -35,7 +35,7 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
             $swooleResponse->header($key, $response->getHeaderLine($key));
         }
 
-        foreach ($response->getCookieParams() as $key => $cookie) {
+        foreach ($response->getCookies() as $key => $cookie) {
             $swooleResponse->cookie($key, $cookie);
         }
 

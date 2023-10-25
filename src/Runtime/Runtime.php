@@ -90,5 +90,5 @@ abstract class Runtime
      */
     abstract public function handleOutput($output);
 
-    abstract public function run();
+    abstract public function run(): void;
 }

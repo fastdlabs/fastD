@@ -55,19 +55,22 @@ class Process extends Runtime
         ]));
     }
 
-    public function handleOutput($meesage)
+    public function handleOutput($output)
     {
-        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $meesage));
+        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $output));
     }
 
-    public function run()
+    public function run(): void
     {
         try {
             $input = $this->handleInput();
-
             $name = $input->getArgument('name');
-            $worker = $input->getArgument('worker');
+            if (empty($name)) {
+                $this->output->writeln(sprintf('Process name is empty'));
+                return ;
+            }
 
+            $worker = $input->getArgument('worker');
             $process = config()->get('process.'.$name);
 
             if (empty($process)) {

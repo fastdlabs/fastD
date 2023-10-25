@@ -85,13 +85,12 @@ class HTTP extends Runtime
     /**
      * @param $output
      */
-    public function handleOutput($meesage)
+    public function handleOutput($output): void
     {
-        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $meesage));
-        return;
+        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $output));
     }
 
-    public function run()
+    public function run(): void
     {
         try {
             $input = $this->handleInput();

@@ -63,7 +63,7 @@ class FastCGI extends Runtime
      * @param Response $output
      * @return void
      */
-    public function handleOutput($output): void
+    public function handleOutput($output)
     {
         $output->send();
     }

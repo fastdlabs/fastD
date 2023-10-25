@@ -52,7 +52,7 @@ class Console extends Runtime
         return include $path;
     }
 
-    public function run()
+    public function run(): void
     {
         $app = new Application('FastD', \FastD\Application::VERSION);
 
