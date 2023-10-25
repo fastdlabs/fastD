@@ -38,7 +38,7 @@ class HTTP extends Runtime
     {
         parent::__construct('swoole', $application);
 
-        $config = load(app()->getPath() . '/config/server.php');
+        $config = load(app()->getPath() . '/src/config/server.php');
 
         config()->merge(['server' => $config]);
 

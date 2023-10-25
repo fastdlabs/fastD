@@ -32,7 +32,7 @@ class Process extends Runtime
 
         $this->output = new ConsoleOutput();
 
-        $config = load(app()->getPath() . '/config/process.php');
+        $config = load(app()->getPath() . '/src/config/process.php');
 
         config()->merge(['process' => $config]);
     }

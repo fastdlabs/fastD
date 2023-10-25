@@ -47,7 +47,7 @@ class Console extends Runtime
 
     protected function scanCommands()
     {
-        $path = app()->getPath().'/config/commands.php';
+        $path = app()->getPath().'/src/config/commands.php';
 
         return include $path;
     }
