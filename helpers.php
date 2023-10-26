@@ -13,7 +13,6 @@ use FastD\Container\Container;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
-use FastD\Routing\Route;
 use FastD\Routing\RouteCollection;
 use FastD\Runtime\Runtime;
 use Monolog\Logger;
@@ -35,19 +34,9 @@ function container(): Container
 /**
  * @return RouteCollection
  */
-function router(): object
+function router(): RouteCollection
 {
     return container()->get('router');
-}
-
-/**
- * 添加路由
- */
-function route(string $method, string $path, string $handle, string $func = ''): Route
-{
-    $method = strtolower($method);
-    $handle = empty($func) ? $handle : sprintf("%s@%s", $handle, $func);
-    return router()->$method($path, $handle);
 }
 
 /**
@@ -64,7 +53,7 @@ function config(): Config
  *
  * @return Response
  */
-function forward($method, $path)
+function forward(string $method, string $path): Response
 {
     $request = clone container()->get('request');
     $request
@@ -83,18 +72,17 @@ function forward($method, $path)
  *
  * @throws Exception
  */
-function abort($message, $statusCode = Response::HTTP_BAD_REQUEST)
+function abort(string $message, int $statusCode = Response::HTTP_BAD_REQUEST): void
 {
     throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
 }
 
 /**
  * @param array $content
- * @param int   $statusCode
- *
- * @return Response
+ * @param $statusCode
+ * @return JsonResponse
  */
-function json(array $content = [], $statusCode = Response::HTTP_OK)
+function json(array $content = [], int $statusCode = Response::HTTP_OK): JsonResponse
 {
     return new JsonResponse($content, $statusCode);
 }
@@ -102,7 +90,7 @@ function json(array $content = [], $statusCode = Response::HTTP_OK)
 /**
  * @return Logger
  */
-function logger(): object
+function logger(): Logger
 {
     return container()->get('logger');
 }
