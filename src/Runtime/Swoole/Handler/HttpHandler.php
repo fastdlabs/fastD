@@ -34,17 +34,20 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
             return;
         }
 
-        $response = container()->get('dispatcher')->dispatch($request);
-
-        foreach ($response->getHeaders() as $key => $header) {
-            $swooleResponse->header($key, $response->getHeaderLine($key));
+        try {
+            $response = container()->get('dispatcher')->dispatch($request);
+            foreach ($response->getHeaders() as $key => $header) {
+                $swooleResponse->header($key, $response->getHeaderLine($key));
+            }
+            foreach ($response->getCookies() as $key => $cookie) {
+                $swooleResponse->cookie($key, $cookie);
+            }
+            $swooleResponse->status($response->getStatusCode());
+            $swooleResponse->end((string) $response->getBody());
+        } catch (\Exception $e) {
+            $swooleResponse->status(\FastD\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
+            $swooleResponse->end($e->getMessage());
+            throw $e;
         }
-
-        foreach ($response->getCookies() as $key => $cookie) {
-            $swooleResponse->cookie($key, $cookie);
-        }
-
-        $swooleResponse->status($response->getStatusCode());
-        $swooleResponse->end((string) $response->getBody());
     }
 }
