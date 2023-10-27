@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\runtime\Console;
+namespace FastD\Console;
 
 
-use fastd\server\runtime;
+use fastd\runtime;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;

@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\runtime\Process;
+namespace FastD\Console;
 
 use FastD\Application;
-use fastd\server\runtime;
+use fastd\runtime;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;

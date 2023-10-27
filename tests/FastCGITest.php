@@ -2,15 +2,15 @@
 
 namespace tests;
 
-use fastd\server\Cgi;
-use fastd\server\runtime;
+use fastd\runtime;
+use fastd\server\FastCGI;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
 {
     public function bootstrap(): runtime
     {
-        return new Cgi(__DIR__ . '/App');
+        return new FastCGI(__DIR__ . '/App');
     }
 
     public function dataServerFromGlobals()

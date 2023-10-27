@@ -8,18 +8,19 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace fastd\server;
+namespace FastD\Server;
 
 
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use fastd\Runtime;
 use Throwable;
 
 /**
  * Class FastCGI
  * @package FastD\FPM
  */
-class Cgi extends Runtime
+class FastCGI extends Runtime
 {
     public function __construct($path)
     {

@@ -12,6 +12,7 @@ namespace fastd\server;
 
 
 use FastD\Application;
+use fastd\Runtime;
 use FastD\Swoole\Server\AbstractServer;
 use FastD\Swoole\Server\HTTP;
 use Monolog\Logger;
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
-use const FastD\runtime\Swoole\SWOOLE_LOG_ROTATION_DAILY;
+use const FastD\Server\Swoole\SWOOLE_LOG_ROTATION_DAILY;
 
 /**
  * Class App.
