@@ -9,7 +9,7 @@
  */
 
 use FastD\Application;
-use FastD\Runtime\Console\Console;
+use FastD\runtime\Console\Console;
 
 set_time_limit(0);
 

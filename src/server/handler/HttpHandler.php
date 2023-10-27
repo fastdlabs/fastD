@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD\Runtime\Swoole\Handler;
+namespace fastd\server\handler;
 
 
 use FastD\Http\SwooleRequest;
@@ -27,6 +27,8 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
 {
     public function onRequest(Request $swooleRequet, Response $swooleResponse): void
     {
+        register_shutdown_function([$this, 'onException'], [$swooleResponse]);
+
         $request = SwooleRequest::createServerRequestFromSwoole($swooleRequet);
 
         if ($request->serverParams['PATH_INFO'] === '/favicon.ico') {
@@ -46,8 +48,12 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
             $swooleResponse->end((string) $response->getBody());
         } catch (\Exception $e) {
             $swooleResponse->status(\FastD\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
-            $swooleResponse->end($e->getMessage());
-            throw $e;
+            $swooleResponse->end(json_encode());
         }
+    }
+
+    public function onException(Response $swooleResponse)
+    {
+
     }
 }

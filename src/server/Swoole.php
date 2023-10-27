@@ -8,24 +8,25 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Runtime\Swoole;
+namespace fastd\server;
 
 
 use FastD\Application;
-use Monolog\Logger;
-use Throwable;
-use FastD\Runtime\Runtime;
 use FastD\Swoole\Server\AbstractServer;
+use FastD\Swoole\Server\HTTP;
+use Monolog\Logger;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Throwable;
+use const FastD\runtime\Swoole\SWOOLE_LOG_ROTATION_DAILY;
 
 /**
  * Class App.
  */
-class HTTP extends Runtime
+class Swoole extends runtime
 {
     protected AbstractServer $server;
     protected ConsoleOutput $output;
@@ -51,7 +52,7 @@ class HTTP extends Runtime
     {
         $this->output = new ConsoleOutput();
 
-        $server = config()->get('server.server', \FastD\Swoole\Server\HTTP::class);
+        $server = config()->get('server.server', HTTP::class);
 
         $this->server = new $server(config()->get('server.url'));
 
@@ -60,17 +61,15 @@ class HTTP extends Runtime
 
     public function handleException(Throwable $throwable): void
     {
-        $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
+        $message = [
+            'message' => $throwable->getMessage(),
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),
             'trace' => explode("\r\n", $throwable->getTraceAsString()),
-        ]);
+        ];
 
-        $this->handleOutput($throwable->getCode());
-        $this->handleOutput($throwable->getFile());
-        $this->handleOutput($throwable->getLine());
-        $this->handleOutput($throwable->getMessage());
-        $this->handleOutput($throwable->getTraceAsString());
+        $this->handleLog(Logger::ERROR, $throwable->getMessage(), $message);
+        $this->handleOutput(json_encode($message, JSON_UNESCAPED_UNICODE));
     }
 
     /**

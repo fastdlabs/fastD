@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Service;
+namespace fastd\service;
 
 
 use FastD\Container\Container;
@@ -33,6 +33,6 @@ class RouteService implements ServiceProviderInterface
         $container->add('router', $collection);
         $container->add('dispatcher', $dispatcher);
 
-        $routes = include app()->getPath() . '/src/config/routes.php';
+        $routes = include runtime()->getPath() . '/src/config/routes.php';
     }
 }

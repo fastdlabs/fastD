@@ -34,6 +34,6 @@ if (!defined('COMPOSER_INSTALL')) {
 include COMPOSER_INSTALL;
 
 use FastD\Application;
-use FastD\Runtime\Swoole\HTTP;
+use fastd\server\Swoole;
 
-(new HTTP(new Application(getcwd())))->run();
+(new Swoole(new Application(getcwd())))->run();

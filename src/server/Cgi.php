@@ -8,47 +8,22 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace FastD\Runtime\FPM;
+namespace fastd\server;
 
 
-use FastD\Application;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Runtime\Runtime;
 use Throwable;
-use Monolog\Logger;
 
 /**
  * Class FastCGI
  * @package FastD\FPM
  */
-class FastCGI extends Runtime
+class Cgi extends Runtime
 {
-    public function __construct(Application $application)
+    public function __construct($path)
     {
-        parent::__construct('fastcgi', $application);
-    }
-
-    /**
-     * @param Throwable $throwable
-     */
-    public function handleException(Throwable $throwable): void
-    {
-        $output = json([
-            'msg' => $throwable->getMessage(),
-            'line' => $throwable->getLine(),
-            'file' => $throwable->getFile(),
-            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-        ]);
-
-        $this->handleLog(Logger::ERROR, $throwable->getMessage(), [
-            'msg' => $throwable->getMessage(),
-            'line' => $throwable->getLine(),
-            'file' => $throwable->getFile(),
-            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-        ]);
-
-        $this->handleOutput($output);
+        parent::__construct('cgi', $path);
     }
 
     /**

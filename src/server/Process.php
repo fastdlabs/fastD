@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @see      http://www.fast-d.cn/
  */
 
-namespace FastD\Runtime\Process;
+namespace FastD\runtime\Process;
 
 use FastD\Application;
-use FastD\Runtime\Runtime;
+use fastd\server\runtime;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -22,7 +22,7 @@ use Throwable;
 /**
  * Class Processor.
  */
-class Process extends Runtime
+class Process extends runtime
 {
     protected ConsoleOutput $output;
 

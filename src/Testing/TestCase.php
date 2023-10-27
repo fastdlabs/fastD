@@ -14,7 +14,7 @@ use FastD\Application;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use FastD\Runtime\FPM\FastCGI;
+use fastd\server\Cgi;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
 /**
@@ -28,7 +28,7 @@ class TestCase extends PHPUnit
     {
         parent::setUp();
 
-        $this->runtime = new FastCGI(new Application(getcwd()));
+        $this->runtime = new Cgi(new Application(getcwd()));
     }
 
     /**

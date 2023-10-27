@@ -14,21 +14,18 @@ use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
 use FastD\Routing\RouteCollection;
-use FastD\Runtime\Runtime;
+use fastd\server\runtime;
 use Monolog\Logger;
 
-
-/**
- * @return Application
- */
-function app(): Application
-{
-    return Runtime::$application;
-}
 
 function container(): Container
 {
     return Runtime::$container;
+}
+
+function runtime(): Runtime
+{
+    return container()->get('runtime');
 }
 
 /**

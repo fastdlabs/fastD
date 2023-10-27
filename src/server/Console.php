@@ -8,10 +8,10 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace FastD\Runtime\Console;
+namespace FastD\runtime\Console;
 
 
-use FastD\Runtime\Runtime;
+use fastd\server\runtime;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -20,7 +20,7 @@ use Throwable;
 /**
  * Class AppConsole.
  */
-class Console extends Runtime
+class Console extends runtime
 {
     public function __construct(\FastD\Application $application)
     {
@@ -58,7 +58,7 @@ class Console extends Runtime
 
         $input = $this->handleInput();
 
-        $output = $this->handleOutput(new ConsoleOutput());
+        $output = new ConsoleOutput();
 
         foreach ($this->scanCommands() as $command) {
             $app->add(new $command());
