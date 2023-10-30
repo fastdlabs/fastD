@@ -33,7 +33,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Application;
-use fastd\server\Swoole;
+use FastD\Server\Swoole;
 
-(new Swoole(new Application(getcwd())))->run();
+(new Swoole(getcwd()))->run();

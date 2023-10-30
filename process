@@ -33,7 +33,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Application;
-use FastD\runtime\Process\Process;
+use FastD\Console\Process;
 
-(new Process(new Application(getcwd())))->run();
+(new Process(getcwd()))->run();
