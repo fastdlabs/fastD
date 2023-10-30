@@ -74,10 +74,7 @@ class Swoole extends Runtime
     /**
      * @param $output
      */
-    public function handleOutput($output)
-    {
-
-    }
+    public function handleOutput($output) {}
 
     public function run(): void
     {
