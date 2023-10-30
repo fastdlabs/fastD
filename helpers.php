@@ -29,6 +29,14 @@ function runtime(): Runtime
 }
 
 /**
+ * @return Logger
+ */
+function logger(): Logger
+{
+    return container()->get('logger');
+}
+
+/**
  * @return RouteCollection
  */
 function router(): RouteCollection
@@ -82,12 +90,4 @@ function abort(string $message, int $statusCode = Response::HTTP_BAD_REQUEST): v
 function json(array $content = [], int $statusCode = Response::HTTP_OK): JsonResponse
 {
     return new JsonResponse($content, $statusCode);
-}
-
-/**
- * @return Logger
- */
-function logger(): Logger
-{
-    return container()->get('logger');
 }

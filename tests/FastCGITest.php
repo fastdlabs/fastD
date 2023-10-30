@@ -2,8 +2,8 @@
 
 namespace tests;
 
-use fastd\runtime;
-use fastd\server\FastCGI;
+use FastD\Runtime;
+use FastD\Server\FastCGI;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
@@ -50,21 +50,13 @@ class FastCGITest extends TestCase
     public function testBootstrap()
     {
         $runtime = $this->bootstrap();
-        $logFile = app()->getPath() . '/runtime/logs/' . date('Ym') . '/' . $runtime->getEnvironment() . '-' . date('Y-m-d') . '.log';
-        $ok = logger()->error("test");
-        $this->assertTrue($ok);
-        $this->assertFileExists($logFile);
+        $runtime->handleLogger('test bootstrap');
     }
 
     public function testHandleException()
     {
         $cgi = $this->bootstrap();
-
-        try {
-            throw new \Exception("test exception");
-        } catch (\Exception $exception) {
-            $cgi->handleException($exception);
-        }
+        $cgi->handleException(new \Exception("test exception"));
     }
 
     public function testHandleRoute()
@@ -76,5 +68,6 @@ class FastCGITest extends TestCase
         $input = $cgi->handleInput();
         $output = container()->get('dispatcher')->dispatch($input);
         $cgi->handleOutput($output);
+        $this->expectOutputString('hello');
     }
 }

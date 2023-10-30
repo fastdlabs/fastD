@@ -13,7 +13,7 @@ namespace FastD\Server;
 
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use fastd\Runtime;
+use FastD\Runtime;
 use Throwable;
 
 /**
@@ -42,6 +42,16 @@ class FastCGI extends Runtime
     public function handleOutput($output)
     {
         $output->send();
+    }
+
+    public function handleException(Throwable $throwable): void
+    {
+        $this->handleOutput(json([
+            'msg' => $throwable->getMessage(),
+            'file' => $throwable->getFile(),
+            'line' => $throwable->getLine(),
+            'trace' => $throwable->getTraceAsString()
+        ], Response::HTTP_INTERNAL_SERVER_ERROR));
     }
 
     public function run(): void

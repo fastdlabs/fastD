@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace fastd;
+namespace FastD;
 
 
 use ErrorException;
@@ -16,6 +16,7 @@ use FastD\Config\Config;
 use FastD\Container\Container;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Throwable;
 
 /**
  * Class Runner
@@ -41,7 +42,7 @@ abstract class Runtime
     {
         $this->environment = $environment;
         $this->path = $path;
-        $this->bootstrap(new Container());
+        $this->bootstrap();
     }
 
     public function getPath(): string
@@ -60,40 +61,29 @@ abstract class Runtime
     /**
      * @throws ErrorException
      */
-    public function bootstrap(Container $container)
+    public function bootstrap()
     {
-        static::$container = $container;
+        static::$container = new Container();
         $config = load($this->path . '/src/config/app.php');
         date_default_timezone_set($config['timezone'] ?? 'PRC');
-        $container->add('runtime', $this);
-        $container->add('config', new Config($config));
-        $this->handleException();
-        $this->handleLogger();
-        foreach ($config['services'] as $service) {
-            $container->register(new $service);
-        }
+        static::$container->add('runtime', $this);
+        static::$container->add('config', new Config($config));
+
+        $this->registerServices($config['services']);
     }
 
-    public function handleLogger(): void
+    protected function registerServices($services): void
     {
-        $monolog = new Logger($this->environment);
-        $defaultLogPath = $this->path . '/runtime/logs/' . date('Ym') . '/' . $this->getEnvironment() . '.log';
-        $logPath = $this->path . '/runtime/logs/' . date('Ym') . '/';
-        $handler = new RotatingFileHandler($logPath ?? $defaultLogPath, 100);
-        $monolog->pushHandler($handler);
-        self::$container->add('logger', $monolog);
-    }
-
-    public function handleException(): void
-    {
-        $exceptionHandler = function ($exception) {
-            $output = json([
-                'msg' => $exception->getMessage(),
-                'line' => $exception->getLine(),
-                'file' => $exception->getFile(),
-                'trace' => explode(PHP_EOL, $exception->getTraceAsString()),
-            ]);
-            $this->handleOutput($output);
+        // 注册异常处理
+        $exceptionHandler = function (Throwable $throwable) {
+            $data = [
+                'msg' => $throwable->getMessage(),
+                'line' => $throwable->getLine(),
+                'file' => $throwable->getFile(),
+                'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
+            ];
+            $this->handleLogger($throwable->getMessage(), $data);
+            $this->handleException($throwable);
         };
         set_exception_handler($exceptionHandler);
         $errorHandler = function ($errno, $errstr, $errfile, $errline) {
@@ -101,21 +91,29 @@ abstract class Runtime
             throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
         };
         set_error_handler($errorHandler);
+
+        // 注册日志处理
+        $logPath = $this->path . '/runtime/logs/' . date('Ym');
+        $handler = new RotatingFileHandler($logPath . '/' . $this->environment . '.log', 100, Logger::INFO);
+        $monolog = new Logger($this->environment);
+        $monolog->pushHandler($handler);
+        self::$container->add('logger', $monolog);
+
+        // 注册自定义服务
+        foreach ($services as $service) {
+            static::$container->register(new $service);
+        }
     }
 
-    /**
-     * 输入包括HTTP，命令行
-     *
-     * @return mixed
-     */
+    public function handleLogger(string $message, array $context = []): void
+    {
+        logger()->error($message, $context);
+    }
+
+    abstract public function handleException(Throwable $throwable): void;
+
     abstract public function handleInput();
 
-    /**
-     * 输出
-     *
-     * @param $output
-     * @return mixed
-     */
     abstract public function handleOutput($output);
 
     abstract public function run(): void;

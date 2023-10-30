@@ -8,11 +8,10 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace fastd\server;
+namespace FastD\Server;
 
 
-use FastD\Application;
-use fastd\Runtime;
+use FastD\Runtime;
 use FastD\Swoole\Server\AbstractServer;
 use FastD\Swoole\Server\HTTP;
 use Monolog\Logger;
@@ -32,45 +31,31 @@ class Swoole extends runtime
     protected AbstractServer $server;
     protected ConsoleOutput $output;
 
-    /**
-     * Application constructor.
-     * @param Application $application
-     */
-    public function __construct(Application $application)
+    public function __construct($path)
     {
-        parent::__construct('swoole', $application);
+        parent::__construct('cgi', $path);
 
-        $config = load(app()->getPath() . '/src/config/server.php');
+        $config = load($this->path . '/src/config/server.php');
         // 配置默认路径
-        $config['options']['pid_file'] = $config['options']['p_id'] ?? app()->getPath() . '/runtime/pid/' . app()->getName() . '.pid';
+        $config['options']['pid_file'] = $config['options']['p_id'] ?? $this->path . '/runtime/pid/' . config()->get('name') . '.pid';
         $config['options']['log_rotation'] = $config['options']['log_rotation'] ?? SWOOLE_LOG_ROTATION_DAILY;
         config()->merge(['server' => $config]);
 
-        $this->bootstrap();
-    }
-
-    public function bootstrap()
-    {
         $this->output = new ConsoleOutput();
-
         $server = config()->get('server.server', HTTP::class);
-
         $this->server = new $server(config()->get('server.url'));
-
         $this->server->configure(config()->get('server.options'));
     }
 
     public function handleException(Throwable $throwable): void
     {
-        $message = [
-            'message' => $throwable->getMessage(),
+        $data = [
+            'msg' => $throwable->getMessage(),
             'line' => $throwable->getLine(),
             'file' => $throwable->getFile(),
-            'trace' => explode("\r\n", $throwable->getTraceAsString()),
+            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ];
-
-        $this->handleLog(Logger::ERROR, $throwable->getMessage(), $message);
-        $this->handleOutput(json_encode($message, JSON_UNESCAPED_UNICODE));
+        $this->handleLogger($throwable->getMessage(), $data);
     }
 
     /**

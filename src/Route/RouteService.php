@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      https://fastdlabs.com
  */
 
-namespace fastd\service;
+namespace FastD\Route;
 
 
 use FastD\Container\Container;
