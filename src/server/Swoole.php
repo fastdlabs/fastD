@@ -26,22 +26,21 @@ use const FastD\Server\Swoole\SWOOLE_LOG_ROTATION_DAILY;
 /**
  * Class App.
  */
-class Swoole extends runtime
+class Swoole extends Runtime
 {
     protected AbstractServer $server;
     protected ConsoleOutput $output;
 
     public function __construct($path)
     {
-        parent::__construct('cgi', $path);
-
+        $this->output = new ConsoleOutput();
+        parent::__construct('swoole', $path);
         $config = load($this->path . '/src/config/server.php');
         // 配置默认路径
         $config['options']['pid_file'] = $config['options']['p_id'] ?? $this->path . '/runtime/pid/' . config()->get('name') . '.pid';
         $config['options']['log_rotation'] = $config['options']['log_rotation'] ?? SWOOLE_LOG_ROTATION_DAILY;
         config()->merge(['server' => $config]);
 
-        $this->output = new ConsoleOutput();
         $server = config()->get('server.server', HTTP::class);
         $this->server = new $server(config()->get('server.url'));
         $this->server->configure(config()->get('server.options'));
@@ -56,6 +55,9 @@ class Swoole extends runtime
             'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ];
         $this->handleLogger($throwable->getMessage(), $data);
+        $this->output->writeln(sprintf('<info>[%s]</info>: %s', date('Y-m-d H:i:s'), $throwable->getMessage()));
+        $this->output->writeln(sprintf('into file: %s(%s)', $throwable->getFile(), $throwable->getLine()));
+        $this->output->writeln($throwable->getTraceAsString());
     }
 
     /**
