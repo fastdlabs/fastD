@@ -10,17 +10,15 @@ declare(strict_types=1);
 
 namespace FastD\Testing;
 
-use FastD\Application;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
-use fastd\server\FastCGI;
-use PHPUnit\Framework\TestCase as PHPUnit;
+use FastD\Server\FastCGI;
 
 /**
  * Class TestCase.
  */
-class TestCase extends PHPUnit
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected $runtime;
 
@@ -28,7 +26,7 @@ class TestCase extends PHPUnit
     {
         parent::setUp();
 
-        $this->runtime = new FastCGI(new Application(getcwd()));
+        $this->runtime = new FastCGI(getcwd());
     }
 
     /**
