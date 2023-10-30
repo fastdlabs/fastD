@@ -50,7 +50,7 @@ class FastCGI extends Runtime
             'msg' => $throwable->getMessage(),
             'file' => $throwable->getFile(),
             'line' => $throwable->getLine(),
-            'trace' => $throwable->getTraceAsString()
+            'trace' => explode(PHP_EOL, $throwable->getTraceAsString())
         ], Response::HTTP_INTERNAL_SERVER_ERROR));
     }
 
