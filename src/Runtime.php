@@ -105,12 +105,12 @@ abstract class Runtime
         }
     }
 
-    public function handleLogger(string $message, array $context = []): void
+    public function handleLogger(string $message, array $context = [])
     {
         logger()->error($message, $context);
     }
 
-    abstract public function handleException(Throwable $throwable): void;
+    abstract public function handleException(Throwable $throwable);
 
     abstract public function handleInput();
 

@@ -27,8 +27,6 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
 {
     public function onRequest(Request $swooleRequet, Response $swooleResponse): void
     {
-        register_shutdown_function([$this, 'onException'], [$swooleResponse]);
-
         $request = SwooleRequest::createServerRequestFromSwoole($swooleRequet);
 
         if ($request->serverParams['PATH_INFO'] === '/favicon.ico') {
@@ -47,13 +45,10 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
             $swooleResponse->status($response->getStatusCode());
             $swooleResponse->end((string) $response->getBody());
         } catch (\Exception $e) {
-            $swooleResponse->status(\FastD\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
-            $swooleResponse->end(json_encode());
+            $exceptionData = runtime()->handleException($e);
+            $responseData = json($exceptionData, \FastD\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
+            $swooleResponse->status($responseData->getStatusCode());
+            $swooleResponse->end((string)$responseData->getBody());
         }
-    }
-
-    public function onException(Response $swooleResponse)
-    {
-
     }
 }

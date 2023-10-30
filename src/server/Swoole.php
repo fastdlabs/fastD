@@ -21,7 +21,6 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
-use const FastD\Server\Swoole\SWOOLE_LOG_ROTATION_DAILY;
 
 /**
  * Class App.
@@ -46,7 +45,7 @@ class Swoole extends Runtime
         $this->server->configure(config()->get('server.options'));
     }
 
-    public function handleException(Throwable $throwable): void
+    public function handleException(Throwable $throwable)
     {
         $data = [
             'msg' => $throwable->getMessage(),
@@ -58,6 +57,7 @@ class Swoole extends Runtime
         $this->output->writeln(sprintf('<info>[%s]</info>: %s', date('Y-m-d H:i:s'), $throwable->getMessage()));
         $this->output->writeln(sprintf('into file: %s(%s)', $throwable->getFile(), $throwable->getLine()));
         $this->output->writeln($throwable->getTraceAsString());
+        return $data;
     }
 
     /**
@@ -74,9 +74,9 @@ class Swoole extends Runtime
     /**
      * @param $output
      */
-    public function handleOutput($output): void
+    public function handleOutput($output)
     {
-        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $output));
+
     }
 
     public function run(): void
