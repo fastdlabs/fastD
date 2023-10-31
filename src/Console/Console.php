@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace FastD\Console;
 
 
-use fastd\runtime;
+use FastD\Runtime;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -20,11 +20,11 @@ use Throwable;
 /**
  * Class AppConsole.
  */
-class Console extends runtime
+class Console extends Runtime
 {
-    public function __construct(\FastD\Application $application)
+    public function __construct($path)
     {
-        parent::__construct('console', $application);
+        parent::__construct('console', $path);
     }
 
     public function handleException(Throwable $throwable):void
@@ -47,7 +47,7 @@ class Console extends runtime
 
     protected function scanCommands()
     {
-        $path = app()->getPath().'/src/config/commands.php';
+        $path = runtime()->getPath().'/src/config/commands.php';
 
         return include $path;
     }

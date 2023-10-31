@@ -10,8 +10,7 @@ declare(strict_types=1);
 
 namespace FastD\Console;
 
-use FastD\Application;
-use fastd\runtime;
+use FastD\Runtime;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -22,17 +21,16 @@ use Throwable;
 /**
  * Class Processor.
  */
-class Process extends runtime
+class Process extends Runtime
 {
     protected ConsoleOutput $output;
 
-    public function __construct(Application $application)
+    public function __construct($path)
     {
-        parent::__construct('process', $application);
-
         $this->output = new ConsoleOutput();
+        parent::__construct('process', $path);
 
-        $config = load(app()->getPath() . '/src/config/process.php');
+        $config = load(runtime()->getPath() . '/src/config/process.php');
 
         config()->merge(['process' => $config]);
     }
