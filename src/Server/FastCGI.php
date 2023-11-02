@@ -13,6 +13,8 @@ namespace FastD\Server;
 
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\Routing\Exceptions\RouteException;
+use FastD\Routing\Exceptions\RouteNotFoundException;
 use FastD\Runtime;
 use Throwable;
 
@@ -60,6 +62,8 @@ class FastCGI extends Runtime
             $input = $this->handleInput();
             $output = static::$container->get('dispatcher')->dispatch($input);
             $this->handleOutput($output);
+        } catch (RouteNotFoundException $e) {
+            $this->handleException(new RouteException(Response::$statusTexts[Response::HTTP_FORBIDDEN], Response::HTTP_FORBIDDEN));
         } catch (Throwable $exception) {
             $this->handleException($exception);
         }

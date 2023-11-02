@@ -12,6 +12,8 @@ namespace fastd\server\handler;
 
 
 use FastD\Http\SwooleRequest;
+use FastD\Routing\Exceptions\RouteException;
+use FastD\Routing\Exceptions\RouteNotFoundException;
 use FastD\Swoole\Server\Handler\HandlerAbstract;
 use FastD\Swoole\Server\Handler\HTTPHandlerInterface;
 use Swoole\Http\Request;
@@ -34,6 +36,9 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
                 return;
             }
             $response = container()->get('dispatcher')->dispatch($request);
+        } catch (RouteNotFoundException $e) {
+            $exceptionData = runtime()->handleException(new RouteException(\FastD\Http\Response::$statusTexts[\FastD\Http\Response::HTTP_FORBIDDEN], \FastD\Http\Response::HTTP_FORBIDDEN));
+            $response = json($exceptionData, \FastD\Http\Response::HTTP_FORBIDDEN);
         } catch (\Exception $e) {
             $exceptionData = runtime()->handleException($e);
             $response = json($exceptionData, \FastD\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
