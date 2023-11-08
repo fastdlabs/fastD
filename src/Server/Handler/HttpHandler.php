@@ -8,7 +8,7 @@ declare(strict_types=1);
  * @see      http://www.fastdlabs.com/
  */
 
-namespace fastd\server\handler;
+namespace FastD\Server\Handler;
 
 
 use FastD\Http\SwooleRequest;
