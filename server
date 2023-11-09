@@ -8,6 +8,9 @@
  * @link      https://fastdlabs.com
  */
 
+use FastD\Application;
+use FastD\Server\Swoole;
+
 set_time_limit(0);
 
 // autoload composer
@@ -33,6 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Server\Swoole;
-
-(new Swoole(getcwd()))->run();
+(new Swoole(new Application(include getcwd() . '/bootstrap/swoole.php')))->run();

@@ -9,7 +9,7 @@
  */
 
 use FastD\Application;
-use FastD\runtime\Console\Console;
+use FastD\Console\Console;
 
 set_time_limit(0);
 
@@ -36,4 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new Console(new Application(getcwd())))->run();
+(new Console(new Application(include getcwd() . '/bootstrap/console.php')))->run();

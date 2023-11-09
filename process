@@ -8,6 +8,9 @@
  * @link      https://fastdlabs.com
  */
 
+use FastD\Application;
+use FastD\Console\Process as ProcessAlias;
+
 set_time_limit(0);
 
 // autoload composer
@@ -33,6 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-use FastD\Console\Process;
-
-(new Process(getcwd()))->run();
+(new ProcessAlias(new Application(include getcwd() . '/bootstrap/process.php')))->run();
