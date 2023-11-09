@@ -23,14 +23,33 @@ use Throwable;
  */
 class Console extends Runtime
 {
-    public function handleException(Throwable $throwable): void {}
+
+    protected ConsoleOutput $output;
+
+    public function __construct(\FastD\Application $application)
+    {
+        parent::__construct($application);
+        $this->output = new ConsoleOutput();
+    }
+
+    public function handleException(Throwable $throwable): void
+    {
+        $this->handleOutput($throwable->getCode());
+        $this->handleOutput($throwable->getFile());
+        $this->handleOutput($throwable->getLine());
+        $this->handleOutput($throwable->getMessage());
+        $this->handleOutput($throwable->getTraceAsString());
+    }
 
     public function handleInput()
     {
         return new ArgvInput();
     }
 
-    public function handleOutput($output): void {}
+    public function handleOutput($output): void
+    {
+        $this->output->writeln(sprintf("<info>[%s]</info>: %s", date('Y-m-d H:i:s'), $output));
+    }
 
     public function run(): void
     {
@@ -46,6 +65,6 @@ class Console extends Runtime
             $app->add(new $command());
         }
 
-        $app->run($this->handleInput(), new ConsoleOutput());
+        $app->run($this->handleInput(), $this->output);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace FastD\Console\Command;
 
+use FastD\Routing\Route;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,7 +34,7 @@ class RouteList extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->render($input, $output);
-         return 0;
+        return 0;
     }
 
     /**
@@ -45,48 +46,56 @@ class RouteList extends Command
         $table = new Table($output);
         $rows = [];
         $table->setHeaders(array('Method', 'Path', 'Regex', 'Handle', 'Middleware'));
-        $routeCollections = app()->get('router')->routeMaps->getRoutes();
-        foreach ($routeCollections as $routeCollection) {
-            foreach ($routeCollection as $method => $routes) {
-                foreach ($routes as $path => $route) {
-                    $m = [];
-                    $middleware = $route->getMiddlewares();
-                    if (is_array($middleware)) {
-                        foreach ($middleware as $value) {
-                            if (is_object($value)) {
-                                $m[] = get_class($value);
-                            } else {
-                                $m[] = $value;
-                            }
-                        }
-                    } elseif (is_object($middleware)) {
-                        $m[] = get_class($middleware);
-                    }
-
-                    $callback = $route->getHandler();
-                    if (is_object($callback)) {
-                        $callback = get_class($callback);
-                    } elseif (is_array($callback)) {
-                        if (is_object($callback[0])) {
-                            $callback[0] = get_class($callback[0]);
-                        }
-                        $callback = implode('@', $callback);
-                    }
-
-                    $rows[] = [
-                        $path,
-                        $route->method,
-                        $route->regex,
-                        $callback,
-                        implode(',', $m),
-                    ];
+        [$statics, $dynamices] = app()->get('router')->routeMaps->getRoutes();
+        foreach ($statics as $method => $static) {
+            foreach ($static as $path => $route) {
+                $rows[] = $this->route($path, $route);
+            }
+        }
+        foreach ($dynamices as $dynamice) {
+            foreach ($dynamice as $method => $routes) {
+                foreach ($routes['routeMap'] as $route) {
+                    $rows[] = $this->route($route->regex, $route);
                 }
             }
         }
 
         $table->setRows($rows);
-
         $table->render();
+    }
 
+    protected function route($path, Route $route)
+    {
+        $m = [];
+        $middleware = $route->getMiddlewares();
+        if (is_array($middleware)) {
+            foreach ($middleware as $value) {
+                if (is_object($value)) {
+                    $m[] = get_class($value);
+                } else {
+                    $m[] = $value;
+                }
+            }
+        } elseif (is_object($middleware)) {
+            $m[] = get_class($middleware);
+        }
+
+        $callback = $route->getHandler();
+        if (is_object($callback)) {
+            $callback = get_class($callback);
+        } elseif (is_array($callback)) {
+            if (is_object($callback[0])) {
+                $callback[0] = get_class($callback[0]);
+            }
+            $callback = implode('@', $callback);
+        }
+
+        return [
+            $route->method,
+            $path,
+            $route->regex,
+            $callback,
+            implode(',', $m),
+        ];
     }
 }
