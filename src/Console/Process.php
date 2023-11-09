@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace FastD\Console;
 
+use FastD\Application;
 use FastD\Runtime;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,6 +25,12 @@ use Throwable;
 class Process extends Runtime
 {
     protected ConsoleOutput $output;
+
+    public function __construct(Application $application)
+    {
+        parent::__construct($application);
+        $this->output = new ConsoleOutput();
+    }
 
     public function handleException(Throwable $throwable): void
     {
@@ -61,7 +68,7 @@ class Process extends Runtime
             $config = app()->getBoostrap('process');
 
             if (!isset($config[$name])) {
-                throw new \RuntimeException(sprintf("Process %s not found", $name));
+                throw new \RuntimeException(sprintf('Process "%s" not found', $name));
             }
             $worker = $input->getArgument('worker');
             $process = $config[$name];

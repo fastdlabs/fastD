@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace FastD\Console;
 
 
+use FastD\Console\Command\RouteList;
 use FastD\Runtime;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -36,6 +37,10 @@ class Console extends Runtime
         $app = new Application(app()->getName(), \FastD\Application::VERSION);
 
         $commands = app()->getBoostrap('commands');
+
+        $commands = array_merge([
+            RouteList::class,
+        ], $commands);
 
         foreach ($commands as $command) {
             $app->add(new $command());

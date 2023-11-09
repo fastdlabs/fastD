@@ -12,9 +12,6 @@ namespace FastD;
 
 
 use ErrorException;
-use Monolog\Handler\RotatingFileHandler;
-use RuntimeException;
-use Monolog\Logger;
 use Throwable;
 
 /**
@@ -55,7 +52,7 @@ abstract class Runtime
         set_exception_handler($exceptionHandler);
         $errorHandler = function ($errno, $errstr, $errfile, $errline) {
             // 将错误抛出作为异常
-            throw new RuntimeException($errstr, 0, $errno, $errfile, $errline);
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
         };
         set_error_handler($errorHandler);
     }
