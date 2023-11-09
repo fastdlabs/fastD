@@ -58,8 +58,7 @@ class Process extends Runtime
                 return ;
             }
 
-            ['process' => $config] = app()->getBoostrap()['process'];
-            $config = include $config;
+            $config = app()->getBoostrap('process');
 
             if (!isset($config[$name])) {
                 throw new \RuntimeException(sprintf("Process %s not found", $name));

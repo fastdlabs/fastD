@@ -35,9 +35,7 @@ class Console extends Runtime
     {
         $app = new Application(app()->getName(), \FastD\Application::VERSION);
 
-        ['commands' => $commands] = app()->getBoostrap();
-
-        $commands = include $commands;
+        $commands = app()->getBoostrap('commands');
 
         foreach ($commands as $command) {
             $app->add(new $command());

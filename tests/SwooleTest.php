@@ -19,6 +19,6 @@ class SwooleTest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertArrayHasKey('swoole', app()->getBoostrap());
+        $this->assertNotEmpty( app()->getBoostrap('swoole'));
     }
 }

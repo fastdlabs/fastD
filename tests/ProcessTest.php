@@ -18,6 +18,7 @@ class ProcessTest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertArrayHasKey('process', app()->getBoostrap());
+        $this->assertNotEmpty(app()->getBoostrap('process'));
+        $this->assertArrayHasKey('demo', app()->getBoostrap('process'));
     }
 }

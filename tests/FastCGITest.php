@@ -53,5 +53,7 @@ class FastCGITest extends TestCase
         $server = $this->server();
         $server->bootstrap();
         $server->handleLogger('test bootstrap');
+        $config = app()->getBoostrap('app');
+        $this->assertEquals(app()->getName(), $config['name']);
     }
 }

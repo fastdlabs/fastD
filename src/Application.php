@@ -2,6 +2,7 @@
 
 namespace FastD;
 
+use ErrorException;
 use FastD\Config\Config;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
@@ -39,16 +40,14 @@ class Application extends Container
         unset($boostrap);
     }
 
+    /**
+     * @throws ErrorException
+     */
     public function bootstrap(): void
     {
         if (!$this->booted) {
-            [
-                'app' => $config,
-                'routes' => $routes,
-                'services' => $services,
-            ] = $this->boostrap;
 
-            $config = include $config;
+            $config = $this->getBoostrap('app');
             $this->name = $config['name'] ?: $this->name;
             $this->timezone = $config['timezone'] ?: $this->timezone;
             date_default_timezone_set($this->timezone);
@@ -56,8 +55,8 @@ class Application extends Container
             // 获取环境变量配置
             $variables = file_exists($this->path . '/.env.yml') ? load($this->path . '/.env.yml') : [];
             $this->add('config', new Config($config, $variables));
-            $this->registerServices(include $services);
-            $this->registerRoutes(include $routes);
+            $this->registerServices($this->getBoostrap('services'));
+            $this->registerRoutes($this->getBoostrap('routes'));
             $this->booted = true;
         }
     }
@@ -82,9 +81,15 @@ class Application extends Container
         return $this->environment;
     }
 
-    public function getBoostrap(): array
+    public function getBoostrap(string $name = 'app'): array
     {
-        return $this->boostrap;
+        if (!isset($this->boostrap[$name])) {
+            throw new ErrorException(sprintf('boostrap name %s not exists', $name));
+        }
+        if (is_string($this->boostrap[$name])) {
+            $this->boostrap[$name] = include $this->boostrap[$name];
+        }
+        return $this->boostrap[$name];
     }
 
     public function defaultServices(): array
@@ -92,11 +97,14 @@ class Application extends Container
         // 日志服务
         $logPath = $this->getPath() . '/runtime/logs/' . date('Ym');
         $logFile = $logPath . '/' . $this->getEnvironment() . '.log';
-        $monolog = new Logger($this->getEnvironment());
-        $monolog->pushHandler(new RotatingFileHandler($logFile, 100, Logger::INFO));
+        $monolog = new Logger($this->getEnvironment(), [new RotatingFileHandler($logFile, 100, Logger::INFO)]);
+
+        $collection = new RouteCollection();
 
         return [
             'logger' => $monolog,
+            'router' => $collection,
+            'dispatcher' => new RouteDispatcher($collection),
         ];
     }
 
@@ -114,13 +122,10 @@ class Application extends Container
 
     public function registerRoutes(array $routes): void
     {
-        $collection = new RouteCollection();
-        $dispatcher = new RouteDispatcher($collection);
+        $router = $this->get('router');
         foreach ($routes as $route) {
-            $collection->addRoute($route[0], $route[1], $route[2]);
+            $router->addRoute($route[0], $route[1], $route[2]);
         }
-        $this->add('router', $collection);
-        $this->add('dispatcher', $dispatcher);
     }
 
     public function dispatch(ServerRequest $serverRequest): Response

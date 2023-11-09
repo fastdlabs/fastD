@@ -18,6 +18,7 @@ class ConsoleTest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertArrayHasKey('commands', app()->getBoostrap());
+        $this->assertIsArray(app()->getBoostrap('commands'));
+        $this->assertEmpty(app()->getBoostrap('commands'));
     }
 }
