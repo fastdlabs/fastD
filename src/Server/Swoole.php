@@ -51,7 +51,7 @@ class Swoole extends Runtime
         $this->server->handle($handle);
     }
 
-    public function handleException(Throwable $throwable)
+    public function handleException(Throwable $throwable): void
     {
         $data = [
             'msg' => $throwable->getMessage(),
@@ -63,7 +63,6 @@ class Swoole extends Runtime
         $this->output->writeln(sprintf('<info>[%s]</info>: %s', date('Y-m-d H:i:s'), $throwable->getMessage()));
         $this->output->writeln(sprintf('into file: %s(%s)', $throwable->getFile(), $throwable->getLine()));
         $this->output->writeln($throwable->getTraceAsString());
-        return $data;
     }
 
     /**

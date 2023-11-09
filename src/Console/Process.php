@@ -25,16 +25,6 @@ class Process extends Runtime
 {
     protected ConsoleOutput $output;
 
-    public function __construct($path)
-    {
-        $this->output = new ConsoleOutput();
-        parent::__construct('process', $path);
-
-        $config = load(runtime()->getPath() . '/src/config/process.php');
-
-        config()->merge(['process' => $config]);
-    }
-
     public function handleException(Throwable $throwable): void
     {
         $this->handleOutput($throwable->getCode());
@@ -68,18 +58,20 @@ class Process extends Runtime
                 return ;
             }
 
-            $worker = $input->getArgument('worker');
-            $process = config()->get('process.'.$name);
+            ['process' => $config] = app()->getBoostrap()['process'];
+            $config = include $config;
 
-            if (empty($process)) {
+            if (!isset($config[$name])) {
                 throw new \RuntimeException(sprintf("Process %s not found", $name));
             }
+            $worker = $input->getArgument('worker');
+            $process = $config[$name];
 
-            $obj = new $process['process']('fastd');
+            $process = new $process['process'];
             if ($worker > 1) {
-                $obj->fork($worker);
+                $process->fork($worker);
             } else {
-                $obj->start();
+                $process->start();
             }
         } catch (Throwable $throwable) {
             $this->handleException($throwable);
