@@ -12,9 +12,8 @@ namespace FastD;
 
 
 use ErrorException;
-use FastD\Config\Config;
-use FastD\Container\Container;
 use Monolog\Handler\RotatingFileHandler;
+use RuntimeException;
 use Monolog\Logger;
 use Throwable;
 
@@ -24,56 +23,23 @@ use Throwable;
  */
 abstract class Runtime
 {
-    /**
-     * @var Container
-     */
-    public static Container $container;
+    protected static Application $application;
 
-    protected string $environment = '';
-
-    protected string $path = '';
-
-    /**
-     * @param string $environment
-     * @param string $path
-     * @throws ErrorException
-     */
-    public function __construct(string $environment, string $path)
+    public function __construct(Application $application)
     {
-        $this->environment = $environment;
-        $this->path = $path;
-        $this->bootstrap();
+        $application->add('runtime', $this);
+        static::$application = $application;
     }
 
-    public function getPath(): string
+    public static function application(): Application
     {
-        return $this->path;
+        return static::$application;
     }
 
-    /**
-     * @return string
-     */
-    public function getEnvironment(): string
-    {
-        return $this->environment;
-    }
-
-    /**
-     * @throws ErrorException
-     */
     public function bootstrap()
     {
-        static::$container = new Container();
-        $config = load($this->path . '/src/config/app.php');
-        date_default_timezone_set($config['timezone'] ?? 'PRC');
-        static::$container->add('runtime', $this);
-        static::$container->add('config', new Config($config));
-
-        $this->registerServices($config['services']);
-    }
-
-    protected function registerServices($services): void
-    {
+        // 初始化应用配置
+        static::$application->bootstrap();
         // 注册异常处理
         $exceptionHandler = function (Throwable $throwable) {
             $data = [
@@ -88,26 +54,14 @@ abstract class Runtime
         set_exception_handler($exceptionHandler);
         $errorHandler = function ($errno, $errstr, $errfile, $errline) {
             // 将错误抛出作为异常
-            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+            throw new RuntimeException($errstr, 0, $errno, $errfile, $errline);
         };
         set_error_handler($errorHandler);
-
-        // 注册日志处理
-        $logPath = $this->path . '/runtime/logs/' . date('Ym');
-        $handler = new RotatingFileHandler($logPath . '/' . $this->environment . '.log', 100, Logger::INFO);
-        $monolog = new Logger($this->environment);
-        $monolog->pushHandler($handler);
-        self::$container->add('logger', $monolog);
-
-        // 注册自定义服务
-        foreach ($services as $service) {
-            static::$container->register(new $service);
-        }
     }
 
     public function handleLogger(string $message, array $context = [])
     {
-        logger()->error($message, $context);
+        app()->get('logger')->error($message, $context);
     }
 
     abstract public function handleException(Throwable $throwable);

@@ -24,11 +24,6 @@ use Throwable;
  */
 class FastCGI extends Runtime
 {
-    public function __construct($path)
-    {
-        parent::__construct('cgi', $path);
-    }
-
     /**
      * @return ServerRequest
      */
@@ -60,8 +55,9 @@ class FastCGI extends Runtime
     {
         try {
             $input = $this->handleInput();
-            $output = static::$container->get('dispatcher')->dispatch($input);
+            $output = static::$application->dispatch($input);
             $this->handleOutput($output);
+            unset($input, $output);
         } catch (RouteNotFoundException $e) {
             $this->handleException(new RouteException(Response::$statusTexts[Response::HTTP_FORBIDDEN], Response::HTTP_FORBIDDEN));
         } catch (Throwable $exception) {

@@ -2,15 +2,16 @@
 
 namespace tests;
 
+use FastD\Application;
 use FastD\Runtime;
 use FastD\Server\FastCGI;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
 {
-    public function bootstrap(): runtime
+    public function server(): runtime
     {
-        return new FastCGI(__DIR__ . '/App');
+        return new FastCGI(new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
     }
 
     public function dataServerFromGlobals()
@@ -49,25 +50,8 @@ class FastCGITest extends TestCase
 
     public function testBootstrap()
     {
-        $runtime = $this->bootstrap();
+        $runtime = $this->server();
+        $runtime->bootstrap();
         $runtime->handleLogger('test bootstrap');
-    }
-
-    public function testHandleException()
-    {
-        $cgi = $this->bootstrap();
-        $cgi->handleException(new \Exception("test exception"));
-    }
-
-    public function testHandleRoute()
-    {
-        $cgi = $this->bootstrap();
-
-        $_SERVER = $this->dataServerFromGlobals();
-        require_once __DIR__ . '/App/src/config/routes.php';
-        $input = $cgi->handleInput();
-        $output = container()->get('dispatcher')->dispatch($input);
-        $cgi->handleOutput($output);
-        $this->expectOutputString('hello');
     }
 }

@@ -9,7 +9,7 @@
 
 use FastD\Application;
 use FastD\Config\Config;
-use FastD\Container\Container;
+use FastD\Http\HttpException;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
@@ -18,14 +18,14 @@ use fastd\runtime;
 use Monolog\Logger;
 
 
-function container(): Container
+function app(): Application
 {
-    return Runtime::$container;
+    return Runtime::application();
 }
 
 function runtime(): Runtime
 {
-    return container()->get('runtime');
+    return app()->get('runtime');
 }
 
 /**
@@ -33,15 +33,7 @@ function runtime(): Runtime
  */
 function logger(): Logger
 {
-    return container()->get('logger');
-}
-
-/**
- * @return RouteCollection
- */
-function router(): RouteCollection
-{
-    return container()->get('router');
+    return app()->get('logger');
 }
 
 /**
@@ -49,7 +41,7 @@ function router(): RouteCollection
  */
 function config(): Config
 {
-    return container()->get('config');
+    return app()->get('config');
 }
 
 /**
@@ -60,31 +52,30 @@ function config(): Config
  */
 function forward(string $method, string $path): Response
 {
-    $request = clone container()->get('request');
+    $request = clone app()->get('request');
     $request
         ->withMethod($method)
         ->withUri(new Uri($path))
     ;
-    $response = container()->get('dispatcher')->dispatch($request);
+    $response = app()->get('dispatcher')->dispatch($request);
     unset($request);
 
     return $response;
 }
 
 /**
- * @param $statusCode
- * @param $message
- *
- * @throws Exception
+ * @param string $message
+ * @param int $statusCode
+ * @return void
  */
 function abort(string $message, int $statusCode = Response::HTTP_BAD_REQUEST): void
 {
-    throw new Exception((is_null($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
+    throw new HttpException((empty($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
 }
 
 /**
  * @param array $content
- * @param $statusCode
+ * @param int $statusCode
  * @return JsonResponse
  */
 function json(array $content = [], int $statusCode = Response::HTTP_OK): JsonResponse

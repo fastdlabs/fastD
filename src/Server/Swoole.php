@@ -11,10 +11,9 @@ declare(strict_types=1);
 namespace FastD\Server;
 
 
+use FastD\Application;
 use FastD\Runtime;
 use FastD\Swoole\Server\AbstractServer;
-use FastD\Swoole\Server\HTTP;
-use Monolog\Logger;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -30,17 +29,23 @@ class Swoole extends Runtime
     protected AbstractServer $server;
     protected ConsoleOutput $output;
 
-    public function __construct($path)
+    public function __construct(Application $application)
     {
-        $this->output = new ConsoleOutput();
-        parent::__construct('swoole', $path);
-        $config = load($this->path . '/src/config/server.php');
-        // 配置默认路径
-        $config['options']['pid_file'] = $config['options']['p_id'] ?? $this->path . '/runtime/pid/' . config()->get('name') . '.pid';
-        $config['options']['log_rotation'] = $config['options']['log_rotation'] ?? SWOOLE_LOG_ROTATION_DAILY;
-        config()->merge(['server' => $config]);
+        parent::__construct($application);
+        [
+            'host' => $host,
+            'port' => $port,
+            'server' => $server,
+            'handle' => $handler,
+            'options' => $config
+        ] = $application->getBoostrap()['swoole'];
 
-        $server = config()->get('server.server', HTTP::class);
+        $this->output = new ConsoleOutput();
+        print_r($server);
+        die;
+        // 配置默认路径
+        $config['pid_file'] = $config['p_id'] ?? $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
+        $config['log_rotation'] = $config['log_rotation'] ?? SWOOLE_LOG_ROTATION_DAILY;
         $this->server = new $server(config()->get('server.url'));
         $this->server->configure(config()->get('server.options'));
     }
@@ -74,7 +79,9 @@ class Swoole extends Runtime
     /**
      * @param $output
      */
-    public function handleOutput($output) {}
+    public function handleOutput($output)
+    {
+    }
 
     public function run(): void
     {
