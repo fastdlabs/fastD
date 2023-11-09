@@ -35,7 +35,7 @@ class HttpHandler extends HandlerAbstract implements HTTPHandlerInterface
                 $swooleResponse->end();
                 return;
             }
-            $response = container()->get('dispatcher')->dispatch($request);
+            $response = app()->dispatch($request);
         } catch (RouteNotFoundException $e) {
             $exceptionData = runtime()->handleException(new RouteException(\FastD\Http\Response::$statusTexts[\FastD\Http\Response::HTTP_FORBIDDEN], \FastD\Http\Response::HTTP_FORBIDDEN));
             $response = json($exceptionData, \FastD\Http\Response::HTTP_FORBIDDEN);

@@ -1,10 +1,7 @@
 /vendor
 /.idea
-/app/runtime
+tests/app/runtime
 composer.lock
-seed
-src/Service/encryption
 .DS_Store
-app
 bin
 .phpunit.result.cache

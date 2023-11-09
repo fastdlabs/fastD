@@ -14,6 +14,7 @@ namespace FastD\Server;
 use FastD\Application;
 use FastD\Runtime;
 use FastD\Swoole\Server\AbstractServer;
+use FastD\Swoole\Server\HTTP;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -29,25 +30,25 @@ class Swoole extends Runtime
     protected AbstractServer $server;
     protected ConsoleOutput $output;
 
+
     public function __construct(Application $application)
     {
-        parent::__construct($application);
-        [
-            'host' => $host,
-            'port' => $port,
-            'server' => $server,
-            'handle' => $handler,
-            'options' => $config
-        ] = $application->getBoostrap()['swoole'];
-
         $this->output = new ConsoleOutput();
-        print_r($server);
-        die;
+        parent::__construct($application);
+
+        [
+            'host' => $url,
+            'handle' => $handle,
+            'options' => $config
+        ] = include $application->getBoostrap()['swoole'];
+
         // 配置默认路径
-        $config['pid_file'] = $config['p_id'] ?? $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
-        $config['log_rotation'] = $config['log_rotation'] ?? SWOOLE_LOG_ROTATION_DAILY;
-        $this->server = new $server(config()->get('server.url'));
-        $this->server->configure(config()->get('server.options'));
+        $config['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
+        $config['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
+
+        $this->server = new HTTP($url);
+        $this->server->configure($config);
+        $this->server->handle($handle);
     }
 
     public function handleException(Throwable $throwable)
@@ -92,8 +93,6 @@ class Swoole extends Runtime
             }
             switch ($input->getArgument('action')) {
                 case 'start':
-                    $handle = config()->get('server.handle');
-                    $this->server->handle($handle);
                     $this->server->start();
                     break;
                 case 'stop':

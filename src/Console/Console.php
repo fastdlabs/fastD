@@ -22,11 +22,6 @@ use Throwable;
  */
 class Console extends Runtime
 {
-    public function __construct($path)
-    {
-        parent::__construct('console', $path);
-    }
-
     public function handleException(Throwable $throwable):void
     {
         throw $throwable;
