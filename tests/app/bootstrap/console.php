@@ -9,5 +9,7 @@ return [
 
     'routes' => __DIR__ . '/../src/config/routes.php',
 
-    'command' => __DIR__ . '/../src/config/command.php',
+    'services' => __DIR__ . '/../src/config/services.php',
+
+    'commands' => __DIR__ . '/../src/config/command.php',
 ];

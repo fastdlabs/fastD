@@ -22,20 +22,14 @@ use Throwable;
  */
 class Console extends Runtime
 {
-    public function handleException(Throwable $throwable): void
-    {
-        throw $throwable;
-    }
+    public function handleException(Throwable $throwable): void {}
 
     public function handleInput()
     {
         return new ArgvInput();
     }
 
-    public function handleOutput($output)
-    {
-        return $output;
-    }
+    public function handleOutput($output): void {}
 
     public function run(): void
     {
@@ -49,14 +43,6 @@ class Console extends Runtime
             $app->add(new $command());
         }
 
-        $input = $this->handleInput();
-
-        $output = new ConsoleOutput();
-
-        try {
-            $app->run($input, $output);
-        } catch (Throwable $e) {
-            $this->handleException($e);
-        }
+        $app->run($this->handleInput(), new ConsoleOutput());
     }
 }

@@ -3,22 +3,21 @@
 namespace tests;
 
 use FastD\Application;
+use FastD\Console\Console;
 use FastD\Runtime;
-use FastD\Server\Handler\HttpHandler;
-use FastD\Server\Swoole;
 use PHPUnit\Framework\TestCase;
 
-class SwooleTest extends TestCase
+class ConsoleTest extends TestCase
 {
     public function server(): runtime
     {
-        return new Swoole(new Application(include __DIR__ . '/app/bootstrap/swoole.php'));
+        return new Console(new Application(include __DIR__ . '/app/bootstrap/console.php'));
     }
 
     public function testBoostrap()
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertArrayHasKey('swoole', app()->getBoostrap());
+        $this->assertArrayHasKey('commands', app()->getBoostrap());
     }
 }

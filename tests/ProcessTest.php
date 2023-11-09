@@ -3,22 +3,21 @@
 namespace tests;
 
 use FastD\Application;
+use FastD\Console\Process;
 use FastD\Runtime;
-use FastD\Server\Handler\HttpHandler;
-use FastD\Server\Swoole;
 use PHPUnit\Framework\TestCase;
 
-class SwooleTest extends TestCase
+class ProcessTest extends TestCase
 {
     public function server(): runtime
     {
-        return new Swoole(new Application(include __DIR__ . '/app/bootstrap/swoole.php'));
+        return new Process(new Application(include __DIR__ . '/app/bootstrap/process.php'));
     }
 
     public function testBoostrap()
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertArrayHasKey('swoole', app()->getBoostrap());
+        $this->assertArrayHasKey('process', app()->getBoostrap());
     }
 }
