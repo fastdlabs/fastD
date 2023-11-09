@@ -44,7 +44,7 @@ class Process extends Runtime
     public function handleInput()
     {
         return new ArgvInput(null, new InputDefinition([
-            new InputArgument('name', InputArgument::OPTIONAL, 'The server action', 'status'),
+            new InputArgument('name', InputArgument::OPTIONAL, 'The server action'),
             new InputArgument('worker', InputArgument::OPTIONAL, 'Worker number'),
             new InputOption('daemon', 'd', InputOption::VALUE_NONE, 'Do not ask any interactive question'),
         ]));
@@ -65,7 +65,7 @@ class Process extends Runtime
                 return ;
             }
 
-            $config = app()->getBoostrap('process');
+            $config = app()->getBootstrap('process');
 
             if (!isset($config[$name])) {
                 throw new \RuntimeException(sprintf('Process "%s" not found', $name));

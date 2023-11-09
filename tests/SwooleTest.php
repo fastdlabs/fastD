@@ -19,6 +19,6 @@ class SwooleTest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertNotEmpty( app()->getBoostrap('swoole'));
+        $this->assertNotEmpty( app()->getBootstrap('swoole'));
     }
 }

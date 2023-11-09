@@ -25,19 +25,19 @@ class Application extends Container
 
     protected string $timezone = 'PRC';
 
-    protected array $boostrap = [];
+    protected array $bootstrap = [];
 
     protected bool $booted = false;
 
     /**
-     * @param array $boostrap
+     * @param array $bootstrap
      */
-    public function __construct(array $boostrap)
+    public function __construct(array $bootstrap)
     {
-        $this->environment = $boostrap['env'] ?: $this->environment;
-        $this->path = $boostrap['path'];
-        $this->boostrap = $boostrap;
-        unset($boostrap);
+        $this->environment = $bootstrap['env'] ?: $this->environment;
+        $this->path = $bootstrap['path'];
+        $this->bootstrap = $bootstrap;
+        unset($bootstrap);
     }
 
     /**
@@ -47,7 +47,7 @@ class Application extends Container
     {
         if (!$this->booted) {
 
-            $config = $this->getBoostrap('app');
+            $config = $this->getBootstrap('app');
             $this->name = $config['name'] ?: $this->name;
             $this->timezone = $config['timezone'] ?: $this->timezone;
             date_default_timezone_set($this->timezone);
@@ -55,8 +55,8 @@ class Application extends Container
             // 获取环境变量配置
             $variables = file_exists($this->path . '/.env.yml') ? load($this->path . '/.env.yml') : [];
             $this->add('config', new Config($config, $variables));
-            $this->registerServices($this->getBoostrap('services'));
-            $this->registerRoutes($this->getBoostrap('routes'));
+            $this->registerServices($this->getBootstrap('services'));
+            $this->registerRoutes($this->getBootstrap('routes'));
             $this->booted = true;
         }
     }
@@ -81,15 +81,15 @@ class Application extends Container
         return $this->environment;
     }
 
-    public function getBoostrap(string $name = 'app'): array
+    public function getBootstrap(string $name = 'app'): array
     {
-        if (!isset($this->boostrap[$name])) {
-            throw new ErrorException(sprintf('boostrap name %s not exists', $name));
+        if (!isset($this->bootstrap[$name])) {
+            throw new ErrorException(sprintf('bootstrap name %s not exists', $name));
         }
-        if (is_string($this->boostrap[$name])) {
-            $this->boostrap[$name] = include $this->boostrap[$name];
+        if (is_string($this->bootstrap[$name])) {
+            $this->bootstrap[$name] = include $this->bootstrap[$name];
         }
-        return $this->boostrap[$name];
+        return $this->bootstrap[$name];
     }
 
     public function defaultServices(): array

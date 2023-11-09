@@ -14,11 +14,11 @@ class ConsoleTest extends TestCase
         return new Console(new Application(include __DIR__ . '/app/bootstrap/console.php'));
     }
 
-    public function testBoostrap()
+    public function testBootstrap()
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertIsArray(app()->getBoostrap('commands'));
-        $this->assertEmpty(app()->getBoostrap('commands'));
+        $this->assertIsArray(app()->getBootstrap('commands'));
+        $this->assertEmpty(app()->getBootstrap('commands'));
     }
 }

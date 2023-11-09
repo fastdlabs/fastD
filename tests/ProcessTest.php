@@ -14,11 +14,11 @@ class ProcessTest extends TestCase
         return new Process(new Application(include __DIR__ . '/app/bootstrap/process.php'));
     }
 
-    public function testBoostrap()
+    public function testBootstrap()
     {
         $server = $this->server();
         $server->bootstrap();
-        $this->assertNotEmpty(app()->getBoostrap('process'));
-        $this->assertArrayHasKey('demo', app()->getBoostrap('process'));
+        $this->assertNotEmpty(app()->getBootstrap('process'));
+        $this->assertArrayHasKey('demo', app()->getBootstrap('process'));
     }
 }

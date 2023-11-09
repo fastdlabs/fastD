@@ -40,7 +40,7 @@ class Swoole extends Runtime
             'host' => $url,
             'handle' => $handle,
             'options' => $config
-        ] = $application->getBoostrap('swoole');
+        ] = $application->getBootstrap('swoole');
 
         // 配置默认路径
         $config['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';

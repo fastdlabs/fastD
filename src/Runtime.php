@@ -22,6 +22,10 @@ abstract class Runtime
 {
     protected static Application $application;
 
+    /**
+     * @param Application $application
+     * @throws ErrorException
+     */
     public function __construct(Application $application)
     {
         $application->add('runtime', $this);

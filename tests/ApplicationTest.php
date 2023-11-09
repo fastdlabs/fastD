@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    public function testApplicationBoostrap()
+    public function testApplicationBootstrap()
     {
         $application = new Application(include __DIR__ . '/app/bootstrap/fastcgi.php');
         $application->bootstrap();

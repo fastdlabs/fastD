@@ -36,7 +36,7 @@ class Console extends Runtime
     {
         $app = new Application(app()->getName(), \FastD\Application::VERSION);
 
-        $commands = app()->getBoostrap('commands');
+        $commands = app()->getBootstrap('commands');
 
         $commands = array_merge([
             RouteList::class,
