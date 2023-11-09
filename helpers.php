@@ -13,7 +13,6 @@ use FastD\Http\HttpException;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\Uri;
-use FastD\Routing\RouteCollection;
 use fastd\runtime;
 use Monolog\Logger;
 
