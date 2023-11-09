@@ -48,8 +48,8 @@ class Application extends Container
         if (!$this->booted) {
 
             $config = $this->getBootstrap('app');
-            $this->name = $config['name'] ?: $this->name;
-            $this->timezone = $config['timezone'] ?: $this->timezone;
+            $this->name = $config['name'] ?? $this->name;
+            $this->timezone = $config['timezone'] ?? $this->timezone;
             date_default_timezone_set($this->timezone);
 
             // 获取环境变量配置
