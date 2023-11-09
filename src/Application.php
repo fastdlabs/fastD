@@ -84,7 +84,7 @@ class Application extends Container
     public function getBootstrap(string $name = 'app'): array
     {
         if (!isset($this->bootstrap[$name])) {
-            throw new ErrorException(sprintf('bootstrap name %s not exists', $name));
+            throw new ErrorException(sprintf('bootstrap name "%s" not exists', $name));
         }
         if (is_string($this->bootstrap[$name])) {
             $this->bootstrap[$name] = include $this->bootstrap[$name];
