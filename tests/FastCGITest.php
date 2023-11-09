@@ -50,8 +50,8 @@ class FastCGITest extends TestCase
 
     public function testBootstrap()
     {
-        $runtime = $this->server();
-        $runtime->bootstrap();
-        $runtime->handleLogger('test bootstrap');
+        $server = $this->server();
+        $server->bootstrap();
+        $server->handleLogger('test bootstrap');
     }
 }

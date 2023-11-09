@@ -29,6 +29,7 @@ abstract class Runtime
     {
         $application->add('runtime', $this);
         static::$application = $application;
+        $this->bootstrap();
     }
 
     public static function application(): Application

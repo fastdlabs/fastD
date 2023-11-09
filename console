@@ -36,4 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new Console(new Application(include getcwd() . '/bootstrap/console.php')))->run();
+(new Console(new Application(include getcwd() . '/boostrap/console.php')))->run();

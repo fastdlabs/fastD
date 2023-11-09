@@ -36,4 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new Swoole(new Application(include getcwd() . '/bootstrap/swoole.php')))->run();
+(new Swoole(new Application(include getcwd() . '/boostrap/swoole.php')))->run();

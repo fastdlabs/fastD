@@ -36,4 +36,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new ProcessAlias(new Application(include getcwd() . '/bootstrap/process.php')))->run();
+(new ProcessAlias(new Application(include getcwd() . '/boostrap/process.php')))->run();
