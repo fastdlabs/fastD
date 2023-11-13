@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace FastD\Testing;
 
+use FastD\Application;
 use FastD\Http\JsonResponse;
 use FastD\Http\Response;
 use FastD\Http\ServerRequest;
@@ -26,7 +27,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->runtime = new FastCGI(getcwd());
+        $bootstrap = include getcwd() . '/bootstrap/fastcgi.php';
+
+        $this->runtime = new FastCGI(new Application($bootstrap));
     }
 
     /**
@@ -39,7 +42,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $input = new ServerRequest($method, $path, $headers);
 
-        return container()->get('dispatcher')->dispatch($input);
+        return app()->get('dispatcher')->dispatch($input);
     }
 
     /**
