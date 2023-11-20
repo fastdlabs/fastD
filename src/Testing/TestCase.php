@@ -38,9 +38,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $headers
      * @return Response
      */
-    public function handleRequest(string $method, string $path, array $headers = []): Response
+    public function handleRequest(string $method, string $path, array $body = [], array $headers = []): Response
     {
         $input = new ServerRequest($method, $path, $headers);
+
+        $input->withParsedBody($body);
 
         return app()->get('dispatcher')->dispatch($input);
     }
