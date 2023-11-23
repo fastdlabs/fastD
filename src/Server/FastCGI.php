@@ -45,10 +45,11 @@ class FastCGI extends Runtime
     {
         $this->handleOutput(json([
             'msg' => $throwable->getMessage(),
+            'code' => $throwable->getCode(),
             'file' => $throwable->getFile(),
             'line' => $throwable->getLine(),
             'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-        ], $throwable->getCode() !== 0 ? $throwable->getCode() : Response::HTTP_INTERNAL_SERVER_ERROR));
+        ], Response::HTTP_BAD_REQUEST));
     }
 
     public function run(): void

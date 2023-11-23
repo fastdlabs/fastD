@@ -46,6 +46,7 @@ abstract class Runtime
         $exceptionHandler = function (Throwable $throwable) {
             $data = [
                 'msg' => $throwable->getMessage(),
+                'code' => $throwable->getCode(),
                 'line' => $throwable->getLine(),
                 'file' => $throwable->getFile(),
                 'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
