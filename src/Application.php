@@ -95,8 +95,11 @@ class Application extends Container
     public function defaultServices(): array
     {
         // 日志服务
-        $logPath = $this->getPath() . '/runtime/logs/' . date('Ym');
-        $logFile = $logPath . '/' . $this->getEnvironment() . '.log';
+        $logDirectory = $this->getPath() . '/runtime/logs/' . date('Ym');
+        if (!file_exists($logDirectory)) {
+            mkdir($logDirectory, 0755, true);
+        }
+        $logFile = $logDirectory . '/' . $this->getEnvironment() . '.log';
         $monolog = new Logger($this->getEnvironment(), [new RotatingFileHandler($logFile, 100, Logger::INFO)]);
 
         $collection = new RouteCollection();
