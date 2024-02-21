@@ -32,13 +32,17 @@ function runtime(): Runtime
  * @param array $context
  * @return bool
  */
-function logging(string $message, array $context = []): bool
+function logging($level, string $message, array $context = []): bool
 {
-    return app()->get('logger')->addRecord(
-        config()->get('log.level'),
-        $message,
-        $context
-    );
+    $configLevel = config()->get('log.level');
+    if ($level >= $configLevel) {
+        return app()->get('logger')->addRecord(
+            $level,
+            $message,
+            $context
+        );
+    }
+    return false;
 }
 
 /**

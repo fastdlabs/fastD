@@ -5,6 +5,7 @@ namespace tests;
 use FastD\Application;
 use FastD\Runtime;
 use FastD\Server\FastCGI;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
@@ -61,6 +62,6 @@ class FastCGITest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        logging('logging');
+        logging(Logger::DEBUG, 'logging');
     }
 }
