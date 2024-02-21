@@ -28,11 +28,17 @@ function runtime(): Runtime
 }
 
 /**
- * @return Logger
+ * @param string $message
+ * @param array $context
+ * @return bool
  */
-function logger(): Logger
+function logging(string $message, array $context = []): bool
 {
-    return app()->get('logger');
+    return app()->get('logger')->addRecord(
+        config()->get('log.level'),
+        $message,
+        $context
+    );
 }
 
 /**
