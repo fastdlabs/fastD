@@ -128,7 +128,7 @@ class Application extends Container
     {
         $router = $this->get('router');
         foreach ($routes as $route) {
-            $router->addRoute($route[0], $route[1], $route[2]);
+            $router->addRoute($route[0], $route[1], $route[2], $route[3] ?? []);
         }
     }
 
