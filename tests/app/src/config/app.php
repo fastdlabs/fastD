@@ -10,4 +10,11 @@ return [
      * The application timezone.
      */
     'timezone' => 'PRC',
+
+    /**
+     * logging
+     */
+    'log' => [
+        'level' => \Monolog\Logger::INFO,
+    ]
 ];

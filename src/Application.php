@@ -100,7 +100,8 @@ class Application extends Container
             mkdir($logDirectory, 0755, true);
         }
         $logFile = $logDirectory . '/' . $this->getEnvironment() . '.log';
-        $monolog = new Logger($this->getEnvironment(), [new RotatingFileHandler($logFile, 100, Logger::INFO)]);
+
+        $monolog = new Logger($this->getEnvironment(), [new RotatingFileHandler($logFile, 100, $this->bootstrap['app']['log']['level'] ?? Logger::INFO)]);
 
         $collection = new RouteCollection();
 
