@@ -12,11 +12,6 @@ use Throwable;
 
 class Terminal extends Environment
 {
-    public function __construct(\FastD\Application $application)
-    {
-        parent::__construct('terminal', $application);
-    }
-
     public function onInput(): mixed
     {
         $app = new Application(static::$application->getName());

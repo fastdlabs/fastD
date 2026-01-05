@@ -17,11 +17,6 @@ use Throwable;
 
 class FastCGI extends Environment
 {
-    public function __construct(Application $application)
-    {
-        parent::__construct('fastcgi', $application);
-    }
-
     public function onInput(): Response
     {
         return static::$application->dispatch(ServerRequest::createServerRequestFromGlobals());

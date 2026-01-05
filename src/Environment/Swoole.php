@@ -19,17 +19,19 @@ use Throwable;
 
 class Swoole extends Environment
 {
+    protected array $config;
+
     protected \FastD\Swoole\Server\Swoole $server;
 
-    public function __construct(Application $application)
+    public function __construct(string $environment, Application $application)
     {
-        parent::__construct('swoole', $application);
+        parent::__construct($environment, $application);
 
-        ['url' => $url, 'setting' => $setting] = include $application->getPath() . '/config/swoole.php';
+        $this->config = include $application->getPath() . '/config/swoole.php';
 
         // 配置默认路径
-        $setting['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
-        $setting['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
+        $this->config['setting']['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
+        $this->config['setting']['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
         $this->server = new class extends HTTP {
             public function onResponse(ServerRequest $serverRequest): Response
@@ -38,7 +40,7 @@ class Swoole extends Environment
             }
         };
 
-        $this->server->configure($setting);
+        $this->server->configure($this->config['setting']);
     }
 
     public function onInput(): mixed
@@ -52,27 +54,53 @@ class Swoole extends Environment
             $this->server->daemon();
         }
 
-        return match ($input->getArgument('action')) {
+        $action = $input->getArgument('action');
+        return [$action, match ($action) {
             'start' => $this->server->start(),
             'stop' => $this->server->stop(),
             'reload' => $this->server->reload(),
             default => $this->server->status(),
-        };
+        }];
     }
 
     public function onOutput(mixed $output): void
     {
-        echo sprintf("[%s] %s", date('Y-m-d H:i:s'), $output) . PHP_EOL;
+        if (in_array($output[0], ['start', 'stop', 'reload'])) {
+            return ;
+        }
+        // 获取服务器信息
+        $url = $this->config['url'];
+        $setting = $this->config['setting'];
+
+        // 解析URL以获取主机和端口
+        $parsedUrl = parse_url($url);
+        $host = $parsedUrl['host'];
+        $port = $parsedUrl['port'];
+
+        echo "┌─────────────────────────────────────────────────────────┐" . PHP_EOL;
+        echo "│                    FastD Swoole Server                  │" . PHP_EOL;
+        echo "└─────────────────────────────────────────────────────────┘" . PHP_EOL;
+        echo "Server Information:" . PHP_EOL;
+        echo "  - Address: {$host}" . PHP_EOL;
+        echo "  - Port: {$port}" . PHP_EOL;
+        echo "  - PID File: {$setting['pid_file']}" . PHP_EOL;
+        echo "  - Log Rotation: {$setting['log_rotation']}" . PHP_EOL;
+        echo "Configuration Options:" . PHP_EOL;
+
+        // 显示配置项
+        foreach ($setting as $key => $value) {
+            if (!in_array($key, ['pid_file', 'log_rotation'])) {
+                $valueStr = is_array($value) ? json_encode($value) : (is_bool($value) ? ($value ? 'true' : 'false') : $value);
+                echo " - {$key}: {$valueStr}" . PHP_EOL;
+            }
+        }
     }
 
     public function onError(Throwable $throwable): void
     {
-        $data = [
-            'msg' => $throwable->getMessage(),
-            'line' => $throwable->getLine(),
-            'file' => $throwable->getFile(),
-            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
-        ];
-        echo json_encode($data, JSON_PRETTY_PRINT);
+        echo "Error: " . $throwable->getMessage() . PHP_EOL;
+        echo "Line: " . $throwable->getLine() . PHP_EOL;
+        echo "File: " . $throwable->getFile() . PHP_EOL;
+        echo "Trace: " . PHP_EOL . $throwable->getTraceAsString() . PHP_EOL;
     }
 }

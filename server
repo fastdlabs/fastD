@@ -28,6 +28,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$swoole = new Swoole(new Application(include getcwd() . '/config/app.php'));
+$swoole = new Swoole('swoole', new Application(include getcwd() . '/config/app.php'));
 
 $swoole->run();

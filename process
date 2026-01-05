@@ -2,7 +2,7 @@
 <?php
 
 use FastD\Application;
-use FastD\Environment\Process as ProcessAlias;
+use FastD\Environment\Process;
 
 // autoload composer
 if (isset($GLOBALS['_composer_autoload_path'])) {
@@ -28,4 +28,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new ProcessAlias(new Application(include getcwd() . '/config/app.php')))->run();
+$process = new Process('process', new Application(include getcwd() . '/config/app.php'));
+
+$process->run();

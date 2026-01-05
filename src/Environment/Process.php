@@ -15,11 +15,6 @@ use Throwable;
 
 class Process extends Environment
 {
-    public function __construct(Application $application)
-    {
-        parent::__construct('process', $application);
-    }
-
     public function onInput(): string
     {
         $input = new ArgvInput(null, new InputDefinition([

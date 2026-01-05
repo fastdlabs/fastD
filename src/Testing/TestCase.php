@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace FastD\Testing;
 
 use FastD\Application;
+use FastD\Environment;
 use FastD\Environment\FastCGI;
+use FastD\Http\Request\ServerRequest;
+use FastD\Http\Response\JsonResponse;
+use FastD\Http\Response\Response;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected $runtime;
+    protected Environment $environment;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $bootstrap = include getcwd() . '/bootstrap/fastcgi.php';
+        $bootstrap = include getcwd() . '/config/app.php';
 
-        $this->runtime = new FastCGI(new Application($bootstrap));
+        $this->environment = new FastCGI('testcase', new Application($bootstrap));
     }
 
     public function handleRequest(string $method, string $path, array $body = [], array $headers = []): Response
@@ -46,7 +50,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
     public function equalsJson(Response $response, array $assert): void
     {
-        static::assertEquals((string) $response->getBody(), json_encode($assert, JsonResponse::JSON_OPTIONS));
+        static::assertEquals((string) $response->getBody(), (string) new JsonResponse($assert));
     }
 
     public function equalsJsonResponseHasKey(Response $response, string $key): void

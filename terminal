@@ -30,4 +30,5 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new Terminal(new Application(include getcwd() . '/config/app.php')))->run();
+$terminal = new Terminal('terminal', new Application(include getcwd() . '/config/app.php'));
+$terminal->run();
