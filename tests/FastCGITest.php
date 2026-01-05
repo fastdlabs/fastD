@@ -3,14 +3,14 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Runtime;
-use FastD\Server\FastCGI;
+use FastD\Environment\FastCGI;
+use FastD\Environment;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
 {
-    public function server(): runtime
+    public function server(): Environment
     {
         return new FastCGI(new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
     }

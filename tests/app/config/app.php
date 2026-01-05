@@ -15,6 +15,9 @@ return [
      * logging
      */
     'log' => [
-        'level' => \Monolog\Logger::INFO,
-    ]
+        'level' => \Monolog\Level::Info,
+    ],
+    'routes' => __DIR__ . '/routes.php',
+
+    'services' => __DIR__ . '/services.php',
 ];

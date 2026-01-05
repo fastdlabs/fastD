@@ -1,64 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FastD;
 
 use ErrorException;
-use FastD\Config\Config;
+use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
-use FastD\Http\Response;
-use FastD\Http\ServerRequest;
+use FastD\Http\Request\ServerRequest;
+use FastD\Http\Response\Response;
 use FastD\Routing\RouteCollection;
 use FastD\Routing\RouteDispatcher;
 use Monolog\Handler\RotatingFileHandler;
+use Monolog\Level;
 use Monolog\Logger;
 
-class Application extends Container
+final class Application extends Container
 {
-    public const VERSION = '5.0.0';
-
-    protected string $environment = 'fastcgi';
-
     protected string $name = 'fastd';
+
+    protected string $environment;
 
     protected string $path;
 
-    protected string $timezone = 'PRC';
-
-    protected array $bootstrap = [];
+    protected string $timezone;
 
     protected bool $booted = false;
 
-    /**
-     * @param array $bootstrap
-     */
-    public function __construct(array $bootstrap)
+    public function __construct(protected array $bootstrap)
     {
-        $this->environment = $bootstrap['env'] ?: $this->environment;
         $this->path = $bootstrap['path'];
-        $this->bootstrap = $bootstrap;
-        unset($bootstrap);
-    }
-
-    /**
-     * @throws ErrorException
-     */
-    public function bootstrap(): void
-    {
-        if (!$this->booted) {
-
-            $config = $this->getBootstrap('app');
-            $this->name = $config['name'] ?? $this->name;
-            $this->timezone = $config['timezone'] ?? $this->timezone;
-            date_default_timezone_set($this->timezone);
-
-            // 获取环境变量配置
-            $variables = file_exists($this->path . '/.env.yml') ? load($this->path . '/.env.yml') : [];
-            $this->add('config', new Config($config, $variables));
-            $this->registerServices($this->getBootstrap('services'));
-            $this->registerRoutes($this->getBootstrap('routes'));
-            $this->booted = true;
-        }
+        $this->timezone = $bootstrap['timezone'] ?? 'PRC';
     }
 
     public function getName(): string
@@ -81,27 +54,44 @@ class Application extends Container
         return $this->environment;
     }
 
-    public function getBootstrap(string $name = 'app'): array
+    public function getBootstrap(): array
     {
-        if (!isset($this->bootstrap[$name])) {
-            throw new ErrorException(sprintf('bootstrap name "%s" not exists', $name));
+        return $this->bootstrap;
+    }
+
+    /**
+     * @param string $environment
+     * @return void
+     * @throws ErrorException
+     */
+    public function bootstrap(string $environment): void
+    {
+        if (!$this->booted) {
+            $this->environment = $environment;
+            $this->name = $this->bootstrap['app']['name'] ?? $this->name;
+            date_default_timezone_set($this->timezone);
+
+            // 获取环境变量配置
+//            $variables = file_exists($this->path . '/.env.yml') ? load($this->path . '/.env.yml') : [];
+            $this->add('config', new FileParser());
+            $this->registerServices(include $this->bootstrap['services']);
+            $this->registerRoutes(include $this->bootstrap['routes']);
+            $this->booted = true;
         }
-        if (is_string($this->bootstrap[$name])) {
-            $this->bootstrap[$name] = include $this->bootstrap[$name];
-        }
-        return $this->bootstrap[$name];
     }
 
     public function defaultServices(): array
     {
         // 日志服务
-        $logDirectory = $this->getPath() . '/runtime/logs/' . date('Ym');
-        if (!file_exists($logDirectory)) {
-            mkdir($logDirectory, 0755, true);
+        $logDir = $this->path . '/runtime/logs/' . date('Ym');
+        if (!file_exists($logDir)) {
+            if (!mkdir($logDir, 0755, true)) {
+                throw new ErrorException(sprintf('log directory "%s" create failed', $logDir));
+            }
         }
-        $logFile = $logDirectory . '/' . $this->getEnvironment() . '.log';
+        $logFile = $logDir . '/' . $this->environment . '.log';
 
-        $monolog = new Logger($this->getEnvironment(), [new RotatingFileHandler($logFile, 100, $this->bootstrap['app']['log']['level'] ?? Logger::INFO)]);
+        $monolog = new Logger($this->environment, [new RotatingFileHandler($logFile, 100, $this->bootstrap['app']['log']['level'] ?? Level::Info)]);
 
         $collection = new RouteCollection();
 
@@ -112,6 +102,11 @@ class Application extends Container
         ];
     }
 
+    /**
+     * @param array $services
+     * @return void
+     * @throws ErrorException
+     */
     public function registerServices(array $services): void
     {
         $defaultServices = $this->defaultServices();

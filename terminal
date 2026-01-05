@@ -2,7 +2,9 @@
 <?php
 
 use FastD\Application;
-use FastD\Environment\Swoole;
+use FastD\Environment\Terminal;
+
+set_time_limit(0);
 
 // autoload composer
 if (isset($GLOBALS['_composer_autoload_path'])) {
@@ -28,6 +30,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$swoole = new Swoole(new Application(include getcwd() . '/config/app.php'));
-
-$swoole->run();
+(new Terminal(new Application(include getcwd() . '/config/app.php')))->run();

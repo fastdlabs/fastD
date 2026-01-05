@@ -3,13 +3,13 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Console\Process;
-use FastD\Runtime;
+use FastD\Environment\Process;
+use FastD\Environment;
 use PHPUnit\Framework\TestCase;
 
 class ProcessTest extends TestCase
 {
-    public function server(): runtime
+    public function server(): Environment
     {
         return new Process(new Application(include __DIR__ . '/app/bootstrap/process.php'));
     }

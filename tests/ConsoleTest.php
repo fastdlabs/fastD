@@ -3,15 +3,15 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Console\Console;
-use FastD\Runtime;
+use FastD\Environment\Terminal;
+use FastD\Environment;
 use PHPUnit\Framework\TestCase;
 
 class ConsoleTest extends TestCase
 {
-    public function server(): runtime
+    public function server(): Environment
     {
-        return new Console(new Application(include __DIR__ . '/app/bootstrap/console.php'));
+        return new Terminal(new Application(include __DIR__ . '/app/bootstrap/console.php'));
     }
 
     public function testBootstrap()

@@ -3,7 +3,7 @@
     "type": "library",
     "license": "MIT",
     "description": "The FastD High Performance API Framework",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "keywords": ["Framework", "API", "Swoole", "FastD"],
     "homepage": "https://fastdlabs.com/",
     "authors": [
@@ -30,25 +30,47 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": ">=8.2",
+        "ext-json": "*",
         "fastd/container": "dev-develop",
         "fastd/config": "dev-develop",
         "fastd/middleware": "dev-develop",
-        "fastd/routing": "dev-develop",
-        "fastd/http": "dev-develop",
         "fastd/swoole": "dev-develop",
-        "monolog/monolog": "^1.0",
-        "symfony/console": "^5.0",
-        "ext-json": "*"
+        "fastd/http": "dev-develop",
+        "fastd/routing": "dev-develop",
+        "monolog/monolog": "^3.0",
+        "symfony/console": "^8.1",
+        "symfony/yaml": "^8.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
-        "eaglewu/swoole-ide-helper": "dev-master"
+        "swoole/ide-helper": "@dev"
     },
-    "bin": [
-        "console",
-        "process",
-        "server"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/container"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/config"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/middleware"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/swoole"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/http"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/routing"
+        }
     ],
     "suggest": {
         "fastd/swoole": "Can effectively improve performance。"
@@ -58,7 +80,9 @@
             "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
         ]
     },
-    "config": {
-        "bin-dir": "bin"
-    }
+    "bin": [
+        "terminal",
+        "process",
+        "server"
+    ]
 }

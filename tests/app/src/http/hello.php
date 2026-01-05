@@ -1,8 +1,8 @@
 <?php
 
-namespace tests\App\src\http\handler;
+namespace app\src\http;
 
-use FastD\Http\Response;
+use FastD\Http\Response\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

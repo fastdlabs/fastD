@@ -1,29 +1,21 @@
 #!/usr/bin/env php
 <?php
-/**
- * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2020
- *
- * @link      https://www.github.com/janhuang
- * @link      https://fastdlabs.com
- */
 
 use FastD\Application;
-use FastD\Console\Process as ProcessAlias;
-
-set_time_limit(0);
+use FastD\Environment\Process as ProcessAlias;
 
 // autoload composer
-foreach ([
-             __DIR__ . '/../../../vendor/autoload.php',
-             __DIR__ . '/../../vendor/autoload.php',
-             __DIR__ . '/../vendor/autoload.php',
-             __DIR__ . '/vendor/autoload.php',
-         ] as $value) {
-    if (file_exists($value)) {
-        define('COMPOSER_INSTALL', $value);
-        break;
+if (isset($GLOBALS['_composer_autoload_path'])) {
+    define('COMPOSER_INSTALL', $GLOBALS['_composer_autoload_path']);
+    unset($GLOBALS['_composer_autoload_path']);
+} else {
+    foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+        if (file_exists($file)) {
+            define('COMPOSER_INSTALL', $file);
+            break;
+        }
     }
+    unset($file);
 }
 
 if (!defined('COMPOSER_INSTALL')) {
@@ -36,4 +28,4 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-(new ProcessAlias(new Application(include getcwd() . '/bootstrap/process.php')))->run();
+(new ProcessAlias(new Application(include getcwd() . '/config/app.php')))->run();

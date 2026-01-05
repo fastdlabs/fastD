@@ -1,28 +1,20 @@
 <?php
-    /**
-     * @author    jan huang <bboyjanhuang@gmail.com>
-     * @copyright 2016
-     *
-     * @see      https://www.github.com/janhuang
-     * @see      https://fastdlabs.com
-     */
+
+declare(strict_types=1);
 
 use FastD\Application;
-use FastD\Config\Config;
-use FastD\Http\HttpException;
-use FastD\Http\JsonResponse;
-use FastD\Http\Response;
+use fastd\Environment;
+use FastD\Http\Response\JsonResponse;
+use FastD\Http\Response\Response;
 use FastD\Http\Uri;
-use fastd\runtime;
 use Monolog\Logger;
-
 
 function app(): Application
 {
-    return Runtime::application();
+    return Environment::application();
 }
 
-function runtime(): Runtime
+function runtime(): Environment
 {
     return app()->get('runtime');
 }
@@ -45,10 +37,7 @@ function logging($level, string $message, array $context = []): bool
     return false;
 }
 
-/**
- * @return Config
- */
-function config(): Config
+function config(): \FastD\Config\FileParser
 {
     return app()->get('config');
 }
@@ -79,7 +68,7 @@ function forward(string $method, string $path): Response
  */
 function abort(string $message, int $statusCode = Response::HTTP_BAD_REQUEST): void
 {
-    throw new HttpException((empty($message) ? Response::$statusTexts[$statusCode] : $message), $statusCode);
+    throw new HttpException((empty($message) ? \FastD\Http\Response\StatusCodeInterface::$statusTexts[$statusCode] : $message), $statusCode);
 }
 
 /**
