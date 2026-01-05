@@ -46,32 +46,6 @@
         "phpunit/phpunit": "^9.0",
         "swoole/ide-helper": "@dev"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/container"
-        },
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/config"
-        },
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/middleware"
-        },
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/swoole"
-        },
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/http"
-        },
-        {
-            "type": "path",
-            "url": "/Users/janhuang/PhpstormProjects/fastd/routing"
-        }
-    ],
     "suggest": {
         "fastd/swoole": "Can effectively improve performance。"
     },
