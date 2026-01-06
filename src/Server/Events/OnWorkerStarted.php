@@ -11,11 +11,11 @@ trait OnWorkerStarted
         parent::onWorkerStart($server, $id);
 
         // 重置 cache 和 db 链接
-        if (app()->has('cache')) {
-            app()->get('cache')->initConnections();
+        if (container()->has('cache')) {
+            container()->get('cache')->initConnections();
         }
-        if (app()->has('medoodb')) {
-            app()->get('medoodb')->initConnections();
+        if (container()->has('medoodb')) {
+            container()->get('medoodb')->initConnections();
         }
     }
 }

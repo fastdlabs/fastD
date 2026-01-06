@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use FastD\Application;
 use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Http\Response\JsonResponse;
@@ -10,7 +11,7 @@ use FastD\Http\Uri;
 use FastD\Runtime;
 use Monolog\Logger;
 
-function container(): Container
+function container(): Application
 {
     return Runtime::container();
 }

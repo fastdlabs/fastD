@@ -24,10 +24,11 @@ class SwServer extends Runtime
     {
         parent::__construct($environment, $application);
 
-        ['url' => $url, 'setting' => $settings] = include $application->getPath() . '/config/swoole.php';
+        ['url' => $url, 'setting' => $settings] = $application->need('swoole');
 
         // 配置默认路径
-        $settings['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
+        $settings['pid_file'] = $application->getRootPath() . '/runtime/pid/' . $application->getName() . '.pid';
+        $settings['log_file'] = $application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
         $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
         $this->server = new class($url) extends HTTP { use OnResponsed, OnWorkerStarted; };

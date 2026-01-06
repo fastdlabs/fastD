@@ -27,7 +27,7 @@ class Process extends Runtime
             return 'Process name is empty';
         }
 
-        $config = include static::$application->getPath() . '/config/process.php';
+        $config = container()->need('processes');
 
         if (!isset($config[$name])) {
             return sprintf('Process "%s" not found', $name);

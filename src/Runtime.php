@@ -24,7 +24,7 @@ abstract class Runtime
         static::$application->bootstrap($environment);
     }
 
-    public static function container(): Container
+    public static function container(): Application
     {
         return static::$application;
     }

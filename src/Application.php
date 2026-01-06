@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FastD;
 
+use DateTimeZone;
 use ErrorException;
 use FastD\Config\FileParser;
 use FastD\Container\Container;
@@ -48,10 +49,16 @@ final class Application extends Container
         return $this->bootstrap['runtime'];
     }
 
-    public function need(string $key): mixed
+    /**
+     * include bootstrap config
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function need(string $key): array
     {
         if (!isset($this->bootstrap[$key]) || !file_exists($this->bootstrap[$key])) {
-            throw new RuntimeException(sprintf('The bootstrap["%s"] does not exist', $key));
+            throw new RuntimeException(sprintf('The bootstrap["%s"] config does not exist', $key));
         }
         return include $this->bootstrap[$key];
     }
@@ -86,7 +93,7 @@ final class Application extends Container
             }
         }
         $logFile = $logDir . '/' . $this->bootstrap['runtime'] . '.log';
-        $logger = new Logger($this->bootstrap['runtime'], [new RotatingFileHandler($logFile, 100, $this->bootstrap['log']['level'])]);
+        $logger = new Logger($this->bootstrap['runtime'], [new RotatingFileHandler($logFile, 100, $this->bootstrap['log']['level'])], [], new DateTimeZone($this->getTimezone()));
 
         $collection = new RouteCollection();
 

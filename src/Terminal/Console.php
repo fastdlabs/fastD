@@ -15,9 +15,9 @@ class Console extends Runtime
 {
     public function onInput(): mixed
     {
-        $app = new Application(static::$application->getName());
+        $app = new Application(container()->getName());
 
-        $commands = include static::$application->getPath() . '/config/terminal.php';
+        $commands = container()->need('commands');
 
         foreach ($commands as $command) {
             $app->addCommand(new $command);

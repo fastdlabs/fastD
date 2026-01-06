@@ -10,6 +10,6 @@ trait OnResponsed
 {
     public function onResponse(ServerRequest $serverRequest): Response
     {
-        return app()->dispatch($serverRequest);
+        return container()->dispatch($serverRequest);
     }
 }
