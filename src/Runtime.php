@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace FastD;
 
 use ErrorException;
-use FastD\Http\Response\Response;
 use Throwable;
 
-abstract class Environment
+abstract class Runtime
 {
     protected static Application $application;
 

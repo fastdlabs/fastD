@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace FastD\Environment;
+namespace FastD\Server;
 
 use FastD\Application;
 use FastD\Http\Request\ServerRequest;
-use FastD\Environment;
-use FastD\Http\Request\SwooleServerRequest;
-use FastD\Http\Response\Response;
+use FastD\Runtime;
+use FastD\Server\Events\OnResponsed;
+use FastD\Server\Events\OnWorkerStarted;
 use FastD\Swoole\Server\HTTP;
+use FastD\Terminal;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
 
-class Swoole extends Environment
+class SwServer extends Runtime
 {
     protected array $config;
 
@@ -33,12 +33,7 @@ class Swoole extends Environment
         $this->config['setting']['pid_file'] = $application->getPath() . '/runtime/pid/' . $application->getName() . '.pid';
         $this->config['setting']['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
-        $this->server = new class extends HTTP {
-            public function onResponse(ServerRequest $serverRequest): Response
-            {
-                return app()->dispatch($serverRequest);
-            }
-        };
+        $this->server = new class extends HTTP { use OnResponsed, OnWorkerStarted; };
 
         $this->server->configure($this->config['setting']);
     }

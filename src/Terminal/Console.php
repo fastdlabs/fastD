@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace FastD\Environment;
+namespace FastD\Terminal;
 
-use FastD\Environment;
+use FastD\Runtime;
+use FastD\Terminal;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Throwable;
 
-class Terminal extends Environment
+class Console extends Runtime
 {
     public function onInput(): mixed
     {

@@ -3,8 +3,8 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Environment\Process;
-use FastD\Environment;
+use FastD\Terminal\Environment;
+use FastD\Terminal\Process;
 use PHPUnit\Framework\TestCase;
 
 class ProcessTest extends TestCase

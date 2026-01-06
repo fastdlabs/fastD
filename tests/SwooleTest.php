@@ -3,15 +3,15 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Environment\Swoole;
-use FastD\Environment;
+use FastD\Terminal\Environment;
+use FastD\Server\SwServer;
 use PHPUnit\Framework\TestCase;
 
 class SwooleTest extends TestCase
 {
     public function server(): Environment
     {
-        return new Swoole(new Application(include __DIR__ . '/app/bootstrap/swoole.php'));
+        return new SwServer(new Application(include __DIR__ . '/app/bootstrap/swoole.php'));
     }
 
     public function testBoostrap()

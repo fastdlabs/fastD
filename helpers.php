@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 use FastD\Application;
-use fastd\Environment;
 use FastD\Http\Response\JsonResponse;
 use FastD\Http\Response\Response;
 use FastD\Http\Uri;
-use Monolog\Logger;
+use FastD\Runtime;
+use FastD\Terminal;
 
 function app(): Application
 {
-    return Environment::application();
+    return Runtime::application();
 }
 
-function runtime(): Environment
+function runtime(): Runtime
 {
     return app()->get('runtime');
 }

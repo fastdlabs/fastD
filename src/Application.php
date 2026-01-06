@@ -15,6 +15,7 @@ use FastD\Routing\RouteDispatcher;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
 use Monolog\Logger;
+use Symfony\Component\Yaml\Yaml;
 
 final class Application extends Container
 {
@@ -72,8 +73,11 @@ final class Application extends Container
             date_default_timezone_set($this->timezone);
 
             // 获取环境变量配置
-//            $variables = file_exists($this->path . '/.env.yml') ? load($this->path . '/.env.yml') : [];
-            $this->add('config', new FileParser());
+            $envVars = [];
+            if (file_exists($this->path . '/.env.yml')) {
+                $envVars = Yaml::parseFile($this->path . '/.env.yml');
+            }
+            $this->add('config', new FileParser($envVars));
             $this->registerServices(include $this->bootstrap['services']);
             $this->registerRoutes(include $this->bootstrap['routes']);
             $this->booted = true;

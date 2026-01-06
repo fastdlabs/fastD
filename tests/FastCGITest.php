@@ -3,8 +3,8 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Environment\FastCGI;
-use FastD\Environment;
+use FastD\Terminal\Environment;
+use FastD\Server\CgiServer;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +12,7 @@ class FastCGITest extends TestCase
 {
     public function server(): Environment
     {
-        return new FastCGI(new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
+        return new CgiServer(new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
     }
 
     public function dataServerFromGlobals()

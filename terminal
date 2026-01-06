@@ -2,7 +2,7 @@
 <?php
 
 use FastD\Application;
-use FastD\Environment\Terminal;
+use FastD\Terminal\Console;
 
 set_time_limit(0);
 
@@ -30,5 +30,5 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$terminal = new Terminal('terminal', new Application(include getcwd() . '/config/app.php'));
+$terminal = new Console('terminal', new Application(include getcwd() . '/config/app.php'));
 $terminal->run();

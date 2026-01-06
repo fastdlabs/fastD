@@ -2,7 +2,7 @@
 <?php
 
 use FastD\Application;
-use FastD\Environment\Process;
+use FastD\Terminal\Process;
 
 // autoload composer
 if (isset($GLOBALS['_composer_autoload_path'])) {

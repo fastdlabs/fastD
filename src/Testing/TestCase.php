@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace FastD\Testing;
 
 use FastD\Application;
-use FastD\Environment;
-use FastD\Environment\FastCGI;
 use FastD\Http\Request\ServerRequest;
 use FastD\Http\Response\JsonResponse;
 use FastD\Http\Response\Response;
+use FastD\Runtime;
+use FastD\Server\CgiServer;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected Environment $environment;
+    protected Runtime $runtime;
 
     protected function setUp(): void
     {
@@ -21,7 +21,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         $bootstrap = include getcwd() . '/config/app.php';
 
-        $this->environment = new FastCGI('testcase', new Application($bootstrap));
+        $this->runtime = new CgiServer('testcase', new Application($bootstrap));
     }
 
     public function handleRequest(string $method, string $path, array $body = [], array $headers = []): Response

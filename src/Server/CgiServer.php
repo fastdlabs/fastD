@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-namespace FastD\Environment;
+namespace FastD\Server;
 
-use FastD\Application;
 use FastD\Http\Exception\HttpException;
 use FastD\Http\Request\ServerRequest;
 use FastD\Http\Response\JsonResponse;
 use FastD\Http\Response\Response;
 use FastD\Http\Response\StatusCodeInterface;
-use FastD\Routing\Exceptions\RouteException;
-use FastD\Routing\Exceptions\RouteNotFoundException;
-use FastD\Environment;
+use FastD\Runtime;
+use FastD\Terminal;
 use Throwable;
 
-class FastCGI extends Environment
+class CgiServer extends Runtime
 {
     public function onInput(): Response
     {
