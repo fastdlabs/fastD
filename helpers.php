@@ -2,55 +2,47 @@
 
 declare(strict_types=1);
 
-use FastD\Application;
+use FastD\Config\FileParser;
+use FastD\Container\Container;
 use FastD\Http\Response\JsonResponse;
 use FastD\Http\Response\Response;
 use FastD\Http\Uri;
 use FastD\Runtime;
-use FastD\Terminal;
+use Monolog\Logger;
 
-function app(): Application
+function container(): Container
 {
-    return Runtime::application();
+    return Runtime::container();
 }
 
 function runtime(): Runtime
 {
-    return app()->get('runtime');
+    return container()->get('runtime');
 }
 
-/**
- * @param string $message
- * @param array $context
- * @return bool
- */
-function logging($level, string $message, array $context = []): bool
+function config(): FileParser
 {
-    $configLevel = config()->get('log.level');
-    if ($level >= $configLevel) {
-        return app()->get('logger')->addRecord(
-            $level,
-            $message,
-            $context
-        );
-    }
-    return false;
+    return container()->get('config');
 }
 
-function config(): \FastD\Config\FileParser
+function logger(): Logger
 {
-    return app()->get('config');
+    return container()->get('logger');
 }
 
-/**
- * @param $method
- * @param $path
- *
- * @return Response
- */
+function info(string $message, array $context = []): void
+{
+    logger()->info($message, $context);
+}
+
+function debug(string $message, array $context = []): void
+{
+    logger()->debug($message, $context);
+}
+
 function forward(string $method, string $path): Response
 {
-    $request = clone app()->get('request');
+    $request = clone container()->get('request');
     $request
         ->withMethod($method)
         ->withUri(new Uri($path))
@@ -61,21 +53,11 @@ function forward(string $method, string $path): Response
     return $response;
 }
 
-/**
- * @param string $message
- * @param int $statusCode
- * @return void
- */
 function abort(string $message, int $statusCode = Response::HTTP_BAD_REQUEST): void
 {
     throw new HttpException((empty($message) ? \FastD\Http\Response\StatusCodeInterface::$statusTexts[$statusCode] : $message), $statusCode);
 }
 
-/**
- * @param array $content
- * @param int $statusCode
- * @return JsonResponse
- */
 function json(array $content = [], int $statusCode = Response::HTTP_OK): JsonResponse
 {
     return new JsonResponse($content, $statusCode);

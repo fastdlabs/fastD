@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FastD;
 
 use ErrorException;
+use FastD\Container\Container;
 use Throwable;
 
 abstract class Runtime
@@ -16,14 +17,14 @@ abstract class Runtime
      * @param Application $application
      * @throws ErrorException
      */
-    public function __construct(string $environment, Application $application)
+    public function __construct(public string $environment, Application $application)
     {
         $application->add('runtime', $this);
         static::$application = $application;
         static::$application->bootstrap($environment);
     }
 
-    public static function application(): Application
+    public static function container(): Container
     {
         return static::$application;
     }
