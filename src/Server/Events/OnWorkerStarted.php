@@ -3,6 +3,7 @@
 namespace FastD\Server\Events;
 
 use Swoole\Server;
+use Throwable;
 
 trait OnWorkerStarted
 {
@@ -15,10 +16,13 @@ trait OnWorkerStarted
             $events = container()->get('onWorkerStart');
             foreach ($events['service'] as $event) {
                 if ($event instanceof CallbackEventsInterface) {
-                    $result = $event->onCallback();
-                    debug('connect ' . ($result ? 'successful' : 'failed'), [
-                        'class' => get_class($event),
-                    ]);
+                    try {
+                        $result = $event->onCallback();
+                    } catch (Throwable $throwable) {
+                        debug('connect failed', [
+                            'class' => get_class($event),
+                        ]);
+                    }
                 }
             }
         }
