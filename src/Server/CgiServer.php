@@ -6,16 +6,16 @@ namespace FastD\Server;
 
 use FastD\Http\Exception\HttpException;
 use FastD\Http\Request\ServerRequest;
-use FastD\Http\Response\JsonResponse;
-use FastD\Http\Response\Response;
-use FastD\Http\Response\StatusCodeInterface;
+use Psr\Http\Message\ResponseInterface;
+use FastD\Http\Response\StatusCode;
+use FastD\Http\Response\Json;
 use FastD\Runtime;
 use FastD\Terminal;
 use Throwable;
 
 class CgiServer extends Runtime
 {
-    public function onInput(): Response
+    public function onInput(): ResponseInterface
     {
         return static::$application->dispatch(ServerRequest::createServerRequestFromGlobals());
     }
@@ -35,11 +35,11 @@ class CgiServer extends Runtime
             'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ];
 
-        $statusCode = StatusCodeInterface::HTTP_INTERNAL_SERVER_ERROR;
+        $statusCode = StatusCode::HTTP_INTERNAL_SERVER_ERROR;
         if ($throwable instanceof HttpException) {
             $statusCode = $throwable->getStatusCode();
         }
 
-        (new JsonResponse($data, $statusCode))->send();
+        (new Json($data, $statusCode))->send();
     }
 }

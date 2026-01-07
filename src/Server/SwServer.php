@@ -30,8 +30,8 @@ class SwServer extends Runtime
         $settings['pid_file'] = $application->getRootPath() . '/runtime/pid/' . $application->getName() . '.pid';
         $settings['log_file'] = $application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
         $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
-
-        $this->server = new class($url) extends HTTP { use OnResponsed, OnWorkerStarted; };
+        // 可以通过 servcie register 的方式进行自定义
+        $this->server = $application->has('swServer') ? $application->got('swServer') : new class($url) extends HTTP { use OnResponsed, OnWorkerStarted; };
 
         $this->server->configure($settings);
     }

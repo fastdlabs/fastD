@@ -4,7 +4,7 @@
     "license": "MIT",
     "description": "The FastD High Performance API Framework",
     "minimum-stability": "dev",
-    "keywords": ["Framework", "API", "Swoole", "FastD"],
+    "keywords": ["FastD", "api", "psr7", ""],
     "homepage": "https://fastdlabs.com/",
     "authors": [
         {
@@ -48,6 +48,40 @@
         "phpunit/phpunit": "^9.0",
         "swoole/ide-helper": "@dev"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/container"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/config"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/middleware"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/swoole"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/http"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/routing"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/medoodb"
+        },
+        {
+            "type": "path",
+            "url": "/Users/janhuang/PhpstormProjects/fastd/cache"
+        }
+    ],
     "suggest": {
         "fastd/swoole": "Can effectively improve performance。"
     },

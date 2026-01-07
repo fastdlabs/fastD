@@ -10,14 +10,12 @@ use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\Request\ServerRequest;
-use FastD\Http\Response\Response;
 use FastD\Routing\RouteCollection;
 use FastD\Routing\RouteDispatcher;
-use Symfony\Component\Yaml\Yaml;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
 use Monolog\Logger;
-use RuntimeException;
+use Psr\Http\Message\ResponseInterface;
 
 final class Application extends Container
 {
@@ -49,18 +47,12 @@ final class Application extends Container
         return $this->bootstrap['runtime'];
     }
 
-    /**
-     * include bootstrap config
-     *
-     * @param string $key
-     * @return mixed
-     */
     public function need(string $key): array
     {
         if (!isset($this->bootstrap[$key]) || !file_exists($this->bootstrap[$key])) {
-            throw new RuntimeException(sprintf('The bootstrap["%s"] config does not exist', $key));
+            throw new ErrorException(sprintf('The bootstrap["%s"] config does not exist', $key));
         }
-        return include $this->bootstrap[$key];
+        return config()->parse($this->bootstrap[$key])->get($key);
     }
 
     /**
@@ -74,17 +66,14 @@ final class Application extends Container
             $this->bootstrap['runtime'] = $runtime;
             date_default_timezone_set($this->bootstrap['timezone']);
 
-            $this->registerServices($this->need('services'));
-            $this->registerRoutes($this->need('routes'));
+            $this->registerServices(include $this->bootstrap['services']);
+            $this->registerRoutes(include $this->bootstrap['routes']);
             $this->booted = true;
         }
     }
 
     public function defaultServices(): array
     {
-        // 环境变量
-        $vars = file_exists($this->bootstrap['root'] . '/.env.yml') ? Yaml::parseFile($this->bootstrap['root'] . '/.env.yml') : [];
-
         // 日志服务，初始化目录及根据执行环境保存日志信息
         $logDir = $this->bootstrap['log']['path'] . '/' . date('Ym');
         if (!file_exists($logDir)) {
@@ -98,18 +87,13 @@ final class Application extends Container
         $collection = new RouteCollection();
 
         return [
-            'config'        => new FileParser($vars),
+            'config'        => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
             'logger'        => $logger,
             'routes'        => $collection,
             'dispatcher'    => new RouteDispatcher($collection),
         ];
     }
 
-    /**
-     * @param array $services
-     * @return void
-     * @throws ErrorException
-     */
     public function registerServices(array $services): void
     {
         $defaultServices = $this->defaultServices();
@@ -124,14 +108,14 @@ final class Application extends Container
 
     public function registerRoutes(array $routes): void
     {
-        $collection = $this->get('routes');
+        $collection = $this->got('routes');
         foreach ($routes as $route) {
             $collection->addRoute($route[0], $route[1], $route[2], $route[3] ?? []);
         }
     }
 
-    public function dispatch(ServerRequest $serverRequest): Response
+    public function dispatch(ServerRequest $serverRequest): ResponseInterface
     {
-        return $this->get('dispatcher')->dispatch($serverRequest);
+        return $this->got('dispatcher')->dispatch($serverRequest);
     }
 }

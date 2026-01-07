@@ -12,11 +12,6 @@ abstract class Runtime
 {
     protected static Application $application;
 
-    /**
-     * @param string $environment
-     * @param Application $application
-     * @throws ErrorException
-     */
     public function __construct(public string $environment, Application $application)
     {
         $application->add('runtime', $this);

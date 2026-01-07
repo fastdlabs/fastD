@@ -10,12 +10,17 @@ trait OnWorkerStarted
     {
         parent::onWorkerStart($server, $id);
 
-        // 重置 cache 和 db 链接
-        if (container()->has('cache')) {
-            container()->get('cache')->initConnections();
-        }
-        if (container()->has('medoodb')) {
-            container()->get('medoodb')->initConnections();
+        // 当容器中存在 workerStart 需要执行的回调时，则进行处理
+        if (container()->has('onWorkerStart')) {
+            $events = container()->get('onWorkerStart');
+            foreach ($events['service'] as $event) {
+                if ($event instanceof CallbackEventsInterface) {
+                    $result = $event->onCallback();
+                    debug('connect ' . ($result ? 'successful' : 'failed'), [
+                        'class' => get_class($event),
+                    ]);
+                }
+            }
         }
     }
 }

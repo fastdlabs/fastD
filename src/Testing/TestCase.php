@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace FastD\Testing;
 
 use FastD\Application;
+use PHPUnit\Framework\TestCase as PHPUnit;
+use Psr\Http\Message\ResponseInterface;
 use FastD\Http\Request\ServerRequest;
-use FastD\Http\Response\JsonResponse;
-use FastD\Http\Response\Response;
-use FastD\Runtime;
+use FastD\Http\Response\Json;
+use FastD\Http\Response\Text;
 use FastD\Server\CgiServer;
+use FastD\Runtime;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+class TestCase extends PHPUnit
 {
     protected Runtime $runtime;
 
@@ -24,7 +26,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $this->runtime = new CgiServer('testcase', new Application($bootstrap));
     }
 
-    public function handleRequest(string $method, string $path, array $body = [], array $headers = []): Response
+    public function handleRequest(string $method, string $path, array $body = [], array $headers = []): ResponseInterface
     {
         $input = new ServerRequest($method, $path, $headers);
 
@@ -33,27 +35,27 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return app()->get('dispatcher')->dispatch($input);
     }
 
-    public function response(Response $response, $assert): void
+    public function response(ResponseInterface $response, $assert): void
     {
         $this->equalsResponse($response, $assert);
     }
 
-    public function equalsResponse(Response $response, $assert): void
+    public function equalsResponse(ResponseInterface $response, $assert): void
     {
         static::assertEquals((string) $response->getBody(), $assert);
     }
 
-    public function json(Response $response, array $assert): void
+    public function json(ResponseInterface $response, array $assert): void
     {
         $this->equalsJson($response, $assert);
     }
 
-    public function equalsJson(Response $response, array $assert): void
+    public function equalsJson(ResponseInterface $response, array $assert): void
     {
-        static::assertEquals((string) $response->getBody(), (string) new JsonResponse($assert));
+        static::assertEquals((string) $response->getBody(), (string) new Json($assert));
     }
 
-    public function equalsJsonResponseHasKey(Response $response, string $key): void
+    public function equalsJsonResponseHasKey(ResponseInterface $response, string $key): void
     {
         $json = (string) $response->getBody();
         $array = json_decode($json, true);
@@ -67,27 +69,27 @@ class TestCase extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function equalsStatus(Response $response, $statusCode): void
+    public function equalsStatus(ResponseInterface $response, $statusCode): void
     {
         static::assertEquals($response->getStatusCode(), $statusCode);
     }
 
-    public function isServerInterval(Response $response): void
+    public function isServerInterval(ResponseInterface $response): void
     {
         static::assertEquals(500, $response->getStatusCode());
     }
 
-    public function isBadRequest(Response $response): void
+    public function isBadRequest(ResponseInterface $response): void
     {
         static::assertEquals(400, $response->getStatusCode());
     }
 
-    public function isNotFound(Response $response): void
+    public function isNotFound(ResponseInterface $response): void
     {
         static::assertEquals(404, $response->getStatusCode());
     }
 
-    public function isSuccessful(Response $response): void
+    public function isSuccessful(ResponseInterface $response): void
     {
         static::assertEquals(200, $response->getStatusCode());
     }
