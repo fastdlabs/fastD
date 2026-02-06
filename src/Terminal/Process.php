@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FastD\Terminal;
+namespace FastD\Runtime;
 
 use FastD\Runtime;
 use FastD\Terminal;
@@ -27,7 +27,7 @@ class Process extends Runtime
             return 'Process name is empty';
         }
 
-        $config = container()->need('processes');
+        $config = container()->config('processes');
 
         if (!isset($config[$name])) {
             return sprintf('Process "%s" not found', $name);

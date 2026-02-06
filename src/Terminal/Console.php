@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FastD\Terminal;
+namespace FastD\Runtime;
 
 use FastD\Runtime;
 use FastD\Terminal;
@@ -17,7 +17,7 @@ class Console extends Runtime
     {
         $app = new Application(container()->getName());
 
-        $commands = container()->need('commands');
+        $commands = container()->config('commands');
 
         foreach ($commands as $command) {
             $app->addCommand(new $command);

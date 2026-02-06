@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace FastD\Server;
+namespace FastD\Runtime;
 
-use FastD\Runtime;
 use FastD\Application;
-use FastD\Swoole\Server\HTTP;
-use FastD\Swoole\Server\Swoole;
-use FastD\Server\Events\OnResponsed;
-use FastD\Server\Events\OnWorkerStarted;
+use FastD\Runtime;
+use FastD\Swoole\Server;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -18,20 +15,20 @@ use Throwable;
 
 class SwServer extends Runtime
 {
-    protected Swoole $server;
+    protected Server $server;
 
     public function __construct(string $environment, Application $application)
     {
         parent::__construct($environment, $application);
 
-        ['url' => $url, 'setting' => $settings] = $application->need('swoole');
+        ['url' => $url, 'setting' => $settings] = $application->config('swoole');
 
         // 配置默认路径
         $settings['pid_file'] = $application->getRootPath() . '/runtime/pid/' . $application->getName() . '.pid';
         $settings['log_file'] = $application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
         $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
         // 可以通过 servcie register 的方式进行自定义
-        $this->server = $application->has('swServer') ? $application->got('swServer') : new class($url) extends HTTP { use OnResponsed, OnWorkerStarted; };
+        $this->server = $application->has('swServer') ? $application->got('swServer') : new class($url) extends HTTP { use OnResponsed, WorkerStartedEvent; };
 
         $this->server->configure($settings);
     }
@@ -88,9 +85,14 @@ class SwServer extends Runtime
 
     public function onError(Throwable $throwable): void
     {
-        echo "Error: " . $throwable->getMessage() . PHP_EOL;
-        echo "Line: " . $throwable->getLine() . PHP_EOL;
-        echo "File: " . $throwable->getFile() . PHP_EOL;
-        echo "Trace: " . PHP_EOL . $throwable->getTraceAsString() . PHP_EOL;
+        $data = [
+            'msg' => $throwable->getMessage(),
+            'code' => $throwable->getCode(),
+            'line' => $throwable->getLine(),
+            'file' => $throwable->getFile(),
+            'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
+        ];
+        error($throwable->getMessage(), $data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }
