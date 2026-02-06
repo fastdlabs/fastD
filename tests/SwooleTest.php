@@ -3,8 +3,8 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Terminal\Environment;
 use FastD\Server\SwServer;
+use FastD\Terminal\Environment;
 use PHPUnit\Framework\TestCase;
 
 class SwooleTest extends TestCase

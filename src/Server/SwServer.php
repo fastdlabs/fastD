@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace FastD\Runtime;
+namespace FastD\Server;
 
 use FastD\Application;
+use FastD\Listener\SwHttpListener;
 use FastD\Runtime;
+use FastD\Swoole\Listener\Server\WorkerListener;
 use FastD\Swoole\Server;
+use FastD\Swoole\SwooleEventDispatcher;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -15,25 +18,38 @@ use Throwable;
 
 class SwServer extends Runtime
 {
-    protected Server $server;
+    protected ?Server $server = null;
 
-    public function __construct(string $environment, Application $application)
+    public function bootstrap(): void
     {
-        parent::__construct($environment, $application);
+        parent::bootstrap();
 
-        ['url' => $url, 'setting' => $settings] = $application->config('swoole');
+        [
+            'listen' => $listens,
+            'worker' => $worker,
+            'setting' => $settings
+        ] = $this->application->config('swoole');
 
         // 配置默认路径
-        $settings['pid_file'] = $application->getRootPath() . '/runtime/pid/' . $application->getName() . '.pid';
-        $settings['log_file'] = $application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
+        $settings['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
+        $settings['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
         $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
-        // 可以通过 servcie register 的方式进行自定义
-        $this->server = $application->has('swServer') ? $application->got('swServer') : new class($url) extends HTTP { use OnResponsed, WorkerStartedEvent; };
 
-        $this->server->configure($settings);
+        $listenerProvider = $this->application->got('event')->listenerProvider;
+        $this->server = new Server($settings, new SwooleEventDispatcher($listenerProvider));
+
+        foreach ($worker as $item) {
+            $listenerProvider->addListener(new $item);
+        }
+
+        foreach ($listens as $listen) {
+            $this->server->listen($listen['host'], $listen['port'], new $listen['worker']);
+        }
+        // 替换原有事件调度
+        $this->application->add('event', $this->server->eventDispatcher);
     }
 
-    public function onInput(): mixed
+    public function input(): mixed
     {
         $input = new ArgvInput(null, new InputDefinition([
             new InputArgument('action', InputArgument::OPTIONAL, 'The server action', 'status'),
@@ -45,15 +61,15 @@ class SwServer extends Runtime
         }
 
         $action = $input->getArgument('action');
-        return [$action, match ($action) {
+        return match ($action) {
             'start' => $this->server->start(),
             'stop' => $this->server->stop(),
             'reload' => $this->server->reload(),
             default => $this->server->status(),
-        }];
+        };
     }
 
-    public function onOutput(mixed $output): void
+    public function output(mixed $output): void
     {
         if (in_array($output[0], ['start', 'stop', 'reload'])) {
             return ;
@@ -83,7 +99,7 @@ class SwServer extends Runtime
         }
     }
 
-    public function onError(Throwable $throwable): void
+    public function abort(Throwable $throwable): void
     {
         $data = [
             'msg' => $throwable->getMessage(),

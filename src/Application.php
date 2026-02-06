@@ -9,22 +9,28 @@ use ErrorException;
 use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
+use FastD\Event\EventDispatcher;
+use FastD\Event\ListenerProvider;
 use FastD\Http\Request\ServerRequest;
-use FastD\Routing\RouteCollection;
-use FastD\Routing\RouteDispatcher;
+use FastD\Listener\RuntimeListener;
+use FastD\Routing\Collection\RouteCollection;
+use FastD\Routing\RouteMatcher;
+use Psr\Http\Message\ResponseInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
 use Monolog\Logger;
-use Psr\Http\Message\ResponseInterface;
 
 final class Application extends Container
 {
     public const VERSION = '8.0';
 
+    public static Application $application;
+
     protected bool $booted = false;
 
     public function __construct(protected array $bootstrap)
     {
+        Application::$application = $this;
     }
 
     public function getName(): string
@@ -47,7 +53,7 @@ final class Application extends Container
         return $this->bootstrap['runtime'];
     }
 
-    public function need(string $key): array
+    public function config(string $key): array
     {
         if (!isset($this->bootstrap[$key]) || !file_exists($this->bootstrap[$key])) {
             throw new ErrorException(sprintf('The bootstrap["%s"] config does not exist', $key));
@@ -55,24 +61,20 @@ final class Application extends Container
         return config()->parse($this->bootstrap[$key])->get($key);
     }
 
-    /**
-     * @param string $runtime
-     * @return void
-     * @throws ErrorException
-     */
     public function bootstrap(string $runtime): void
     {
         if (!$this->booted) {
             $this->bootstrap['runtime'] = $runtime;
             date_default_timezone_set($this->bootstrap['timezone']);
 
-            $this->registerServices(include $this->bootstrap['services']);
-            $this->registerRoutes(include $this->bootstrap['routes']);
+            $this->registerEventListener(include $this->bootstrap['listener']);
+            $this->registerServices(include $this->bootstrap['service']);
+            $this->registerRoutes(include $this->bootstrap['route']);
             $this->booted = true;
         }
     }
 
-    public function defaultServices(): array
+    protected function defaultServices(): array
     {
         // 日志服务，初始化目录及根据执行环境保存日志信息
         $logDir = $this->bootstrap['log']['path'] . '/' . date('Ym');
@@ -84,13 +86,9 @@ final class Application extends Container
         $logFile = $logDir . '/' . $this->bootstrap['runtime'] . '.log';
         $logger = new Logger($this->bootstrap['runtime'], [new RotatingFileHandler($logFile, 100, $this->bootstrap['log']['level'])], [], new DateTimeZone($this->getTimezone()));
 
-        $collection = new RouteCollection();
-
         return [
-            'config'        => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
-            'logger'        => $logger,
-            'routes'        => $collection,
-            'dispatcher'    => new RouteDispatcher($collection),
+            'config'    => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
+            'logger'    => $logger,
         ];
     }
 
@@ -108,14 +106,24 @@ final class Application extends Container
 
     public function registerRoutes(array $routes): void
     {
-        $collection = $this->got('routes');
+        $collection = new RouteCollection();
         foreach ($routes as $route) {
             $collection->addRoute($route[0], $route[1], $route[2], $route[3] ?? []);
         }
+        $this->add('matcher', new RouteMatcher($collection));
+    }
+
+    public function registerEventListener(array $listeners): void
+    {
+        $listenerProvider = new ListenerProvider();
+        foreach ($listeners as $listener) {
+            $listenerProvider->addListener(new $listener);
+        }
+        $this->add('event', new EventDispatcher($listenerProvider));
     }
 
     public function dispatch(ServerRequest $serverRequest): ResponseInterface
     {
-        return $this->got('dispatcher')->dispatch($serverRequest);
+        return $this->got('matcher')->dispatch($serverRequest);
     }
 }

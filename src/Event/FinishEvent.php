@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace FastD\Event;
 
-class FinishEvent
-{
+use FastD\Runtime;
 
+class FinishEvent extends Event
+{
+    public function __construct(public readonly Runtime $runtime)
+    {
+    }
 }

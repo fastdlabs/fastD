@@ -3,8 +3,8 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Terminal\Environment;
 use FastD\Server\CgiServer;
+use FastD\Terminal\Environment;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 

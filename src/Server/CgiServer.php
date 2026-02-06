@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace FastD\Runtime;
+namespace FastD\Server;
 
+use FastD\Event\BootedEvent;
+use FastD\Event\AbortEvent;
+use FastD\Event\FinishEvent;
 use FastD\Http\Request\ServerRequest;
 use FastD\Http\Response\Json;
 use FastD\Http\Response\StatusCode;
@@ -14,17 +17,17 @@ use Throwable;
 
 class CgiServer extends Runtime
 {
-    public function onInput(): ResponseInterface
+    public function input(): ResponseInterface
     {
-        return static::$application->dispatch(ServerRequest::fromGlobals());
+        return $this->application->dispatch(ServerRequest::fromGlobals());
     }
 
-    public function onOutput(mixed $output): void
+    public function output(mixed $output): void
     {
         $output->send();
     }
 
-    public function onError(Throwable $throwable): void
+    public function abort(Throwable $throwable): void
     {
         $data = [
             'msg' => $throwable->getMessage(),

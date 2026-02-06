@@ -30,5 +30,5 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$terminal = new Console('console', new Application(include getcwd() . '/config/app.php'));
+$terminal = new Console('console', new Application(include getcwd() . '/src/bootstrap.php'));
 $terminal->run();

@@ -28,6 +28,6 @@ if (!defined('COMPOSER_INSTALL')) {
 
 include COMPOSER_INSTALL;
 
-$process = new Process('process', new Application(include getcwd() . '/config/app.php'));
+$process = new Process('process', new Application(include getcwd() . '/src/bootstrap.php'));
 
 $process->run();

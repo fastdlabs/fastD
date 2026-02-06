@@ -3,8 +3,8 @@
 namespace tests;
 
 use FastD\Application;
-use FastD\Terminal\Environment;
 use FastD\Terminal\Console;
+use FastD\Terminal\Environment;
 use PHPUnit\Framework\TestCase;
 
 class ConsoleTest extends TestCase

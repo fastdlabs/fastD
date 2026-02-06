@@ -6,7 +6,7 @@ namespace FastD\Event;
 
 use FastD\Runtime;
 
-class ErrorEvent extends Event
+class AbortEvent extends Event
 {
     public function __construct(public readonly Runtime $runtime)
     {

@@ -5,8 +5,10 @@ declare(strict_types=1);
 use FastD\Application;
 use FastD\Config\FileParser;
 use FastD\Container\Container;
+use FastD\Event\EventDispatcher;
 use FastD\Http\Response\Json;
 use FastD\Http\Response\StatusCode;
+use FastD\Http\Response\Text;
 use FastD\Http\Uri;
 use FastD\Runtime;
 use Monolog\Logger;
@@ -14,12 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 
 function container(): Application
 {
-    return Runtime::container();
-}
-
-function runtime(): Runtime
-{
-    return container()->got('runtime');
+    return Application::$application;
 }
 
 function config(): FileParser
@@ -27,14 +24,14 @@ function config(): FileParser
     return container()->got('config');
 }
 
+function event(): EventDispatcher
+{
+    return container()->got('event');
+}
+
 function logger(): Logger
 {
     return container()->got('logger');
-}
-
-function info(string $message, array $context = []): void
-{
-    logger()->info($message, $context);
 }
 
 function debug(string $message, array $context = []): void
@@ -42,10 +39,19 @@ function debug(string $message, array $context = []): void
     logger()->debug($message, $context);
 }
 
+function info(string $message, array $context = []): void
+{
+    logger()->info($message, $context);
+}
+
+function error(string $message, array $context = []): void
+{
+    logger()->error($message, $context);
+}
+
 function forward(string $method, string $path): ResponseInterface
 {
-    $request = clone container()->get('request');
-    $request
+    $request = container()->got('request')
         ->withMethod($method)
         ->withUri(new Uri($path))
     ;
@@ -57,10 +63,15 @@ function forward(string $method, string $path): ResponseInterface
 
 function abort(string $message, int $statusCode = StatusCode::HTTP_BAD_REQUEST): void
 {
-    throw new HttpException((empty($message) ? StatusCode::STATUS_TEXT[$statusCode] : $message), $statusCode);
+    throw new HttpException((empty($message) ? StatusCode::PHRASES[$statusCode] : $message), $statusCode);
+}
+
+function text(string $content = '', int $statusCode = StatusCode::HTTP_OK): ResponseInterface
+{
+    return new Text($statusCode, $content);
 }
 
 function json(array $content = [], int $statusCode = StatusCode::HTTP_OK): ResponseInterface
 {
-    return new Json($content, $statusCode);
+    return new Json($statusCode, $content);
 }

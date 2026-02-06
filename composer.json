@@ -32,12 +32,13 @@
     "require": {
         "php": ">=8.2",
         "ext-json": "*",
+        "fastd/event": "dev-develop",
         "fastd/container": "dev-develop",
         "fastd/config": "dev-develop",
         "fastd/middleware": "dev-develop",
-        "fastd/swoole": "dev-develop",
         "fastd/http": "dev-develop",
         "fastd/routing": "dev-develop",
+        "fastd/swoole": "dev-develop",
         "fastd/medoodb": "dev-develop",
         "fastd/cache": "dev-develop",
         "monolog/monolog": "^3.0",
@@ -45,7 +46,7 @@
         "symfony/yaml": "^8.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^10.0",
         "swoole/ide-helper": "@dev"
     },
     "suggest": {

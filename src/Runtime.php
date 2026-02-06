@@ -6,36 +6,48 @@ namespace FastD;
 
 use ErrorException;
 use FastD\Container\Container;
+use FastD\Event\BootedEvent;
+use FastD\Event\AbortEvent;
+use FastD\Event\FinishEvent;
 use Throwable;
 
 abstract class Runtime
 {
-    protected static Application $application;
-
-    public function __construct(public string $environment, Application $application)
+    public function __construct(public readonly string $environment, public readonly Application $application)
     {
-        $application->add('runtime', $this);
-        static::$application = $application;
-        static::$application->bootstrap($environment);
     }
 
-    public static function container(): Application
+    public function bootstrap(): void
     {
-        return static::$application;
+        $this->application->bootstrap($this->environment);
     }
 
-    abstract public function onInput(): mixed;
+    public function booted(): void
+    {
+        $this->bootstrap();
+        $this->application->got('event')->dispatch(new BootedEvent($this));
+    }
 
-    abstract public function onOutput(mixed $output): void;
+    public function process(): void
+    {
+        try {
+            $this->output($this->input());
+            $this->application->got('event')->dispatch(new FinishEvent($this));
+        } catch (Throwable $throwable) {
+            $this->abort($throwable);
+            $this->application->got('event')->dispatch(new AbortEvent($this));
+        }
+    }
 
-    abstract public function onError(Throwable $throwable): void;
+    abstract public function input(): mixed;
+
+    abstract public function output(mixed $output): void;
+
+    abstract public function abort(Throwable $throwable): void;
 
     public function run(): void
     {
-        try {
-            $this->onOutput($this->onInput());
-        } catch (Throwable $throwable) {
-            $this->onError($throwable);
-        }
+        $this->booted();
+        $this->process();
     }
 }

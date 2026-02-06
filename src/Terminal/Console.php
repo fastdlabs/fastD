@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FastD\Runtime;
+namespace FastD\Terminal;
 
 use FastD\Runtime;
-use FastD\Terminal;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -13,11 +12,11 @@ use Throwable;
 
 class Console extends Runtime
 {
-    public function onInput(): mixed
+    public function input(): mixed
     {
-        $app = new Application(container()->getName());
+        $app = new Application(container()->getName(), \FastD\Application::VERSION);
 
-        $commands = container()->config('commands');
+        $commands = container()->config('command');
 
         foreach ($commands as $command) {
             $app->addCommand(new $command);
@@ -26,15 +25,13 @@ class Console extends Runtime
         $app->run(new ArgvInput(), new ConsoleOutput());
     }
 
-    public function onOutput($output): void
+    public function output($output): void
     {
-        $message = sprintf("[%s] %s", date('Y-m-d H:i:s'), $output);
-        echo $message . PHP_EOL; // 正常输出
+        echo sprintf("[%s] %s", date('Y-m-d H:i:s'), $output) . PHP_EOL;
     }
 
-    public function onError(Throwable $throwable): void
+    public function abort(Throwable $throwable): void
     {
-        $message = sprintf("[%s] ERROR: %s", date('Y-m-d H:i:s'), $throwable->getMessage());
-        echo "\033[31m" . $message . "\033[0m" . PHP_EOL; // 红色输出
+        echo "\033[31m" . sprintf("[%s] ERROR: %s", date('Y-m-d H:i:s'), $throwable->getMessage()) . "\033[0m" . PHP_EOL;
     }
 }
