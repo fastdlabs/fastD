@@ -24,7 +24,7 @@ class SwServer extends Runtime
         $swooleConfig = $this->application->config('swoole');
         
         $listens = $swooleConfig['listen'] ?? [];
-        $worker = $swooleConfig['worker'] ?? [];
+        $listener = $swooleConfig['listener'] ?? [];
         $settings = $swooleConfig['setting'] ?? [];
 
         // 配置默认路径
@@ -35,7 +35,7 @@ class SwServer extends Runtime
         $listenerProvider = $this->application->get('event')->listenerProvider;
         $this->server = new Server($settings, new SwooleEventDispatcher($listenerProvider));
 
-        foreach ($worker as $item) {
+        foreach ($listener as $item) {
             $listenerProvider->addListener(new $item);
         }
 
