@@ -87,8 +87,8 @@ final class Application extends Container
         $logger = new Logger($this->bootstrap['runtime'], [new RotatingFileHandler($logFile, 100, $this->bootstrap['log']['level'])], [], new DateTimeZone($this->getTimezone()));
 
         return [
-            'config'    => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
-            'logger'    => $logger,
+            'config' => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
+            'logger' => $logger,
         ];
     }
 
@@ -108,7 +108,7 @@ final class Application extends Container
     {
         $collection = new RouteCollection();
         foreach ($routes as $route) {
-            $collection->addRoute($route[0], $route[1], $route[2], $route[3] ?? []);
+            $collection->addRoute(...$route);
         }
         $this->add('matcher', new RouteMatcher($collection));
     }
@@ -124,6 +124,6 @@ final class Application extends Container
 
     public function dispatch(ServerRequest $serverRequest): ResponseInterface
     {
-        return $this->got('matcher')->dispatch($serverRequest);
+        return $this->get('matcher')->dispatch($serverRequest);
     }
 }

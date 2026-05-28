@@ -1,80 +1,147 @@
 <p align="center">
     <img src="https://avatars0.githubusercontent.com/u/20292713?s=200&v=4" width="100px" height="100px"/>
 </p>
-<h1 align="center">Fast-D</h1>
+<h1 align="center">FastD</h1>
 
-<p align="center">:rocket: A high performance PHP API framework.</p>
+<p align="center">🚀 A high performance PHP API framework based on PSR standards and Swoole extension.</p>
 
 <p align="center">
 <a href="https://travis-ci.org/fastdlabs/fastD"><img src="https://travis-ci.org/fastdlabs/fastD.svg?branch=master" /></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-v7.4-brightgreen" /></a>
-<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-v4.5-brightgreen"/></a>
+<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D8.2-brightgreen" /></a>
+<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D4.5-brightgreen"/></a>
 <a href="https://fastdlabs.com/"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
 </p>
 
-FastD 是一个支持 Swoole 的轻量级 Web 开发框架，可适用于对性能有要求的 API 场景，并且灵活的扩展性可以让开发者们更容易地建造自己的服务 (基于Swoole)，
+FastD 是一个轻量级的高性能 PHP Web 开发框架，基于 PSR 标准和 Swoole 扩展构建。适用于对性能有严格要求的 API 服务场景，提供灵活的扩展机制让开发者轻松构建自己的服务。
 
-### 要求
+## ✨ 特性
 
-* PHP >= 7.4
+- 🎯 **PSR 标准兼容**: 完全遵循 PSR-11 容器接口规范
+- ⚡ **高性能**: 基于 Swoole 协程引擎，支持异步非阻塞 I/O
+- 📦 **轻量级**: 核心组件精简，按需加载扩展
+- 🔧 **灵活扩展**: 基于 ServiceProvider 的插件化架构
+- 🎭 **多运行环境**: 支持 Swoole Server、FastCGI、Console、Process 等多种运行模式
+- 📝 **完善测试**: 全面的单元测试覆盖，保证代码质量
 
-### 文档
+## 📋 要求
+
+- PHP >= 8.2
+- Swoole >= 4.5 (可选，用于高性能模式)
+- Composer
+
+## 🚀 快速开始
+
+### 安装
+
+```bash
+composer create-project fastd/fastd my-app
+cd my-app
+```
+
+### 启动服务
+
+```bash
+# Swoole 模式（推荐）
+php server start
+
+# FastCGI 模式（传统 PHP-FPM）
+# 配置 Nginx 指向 web 目录
+
+# 命令行模式
+php console list
+
+# 多进程模式
+php process start
+```
+
+### 创建路由
+
+```php
+// config/routes.php
+return [
+    ['GET', '/hello', function($request) {
+        return json(['message' => 'Hello, FastD!']);
+    }],
+];
+```
+
+### 访问服务
+
+```bash
+curl http://localhost:9999/hello
+# {"message":"Hello, FastD!"}
+```
+
+## 📚 架构设计
+
+### 核心组件
+
+- **Application**: 应用核心类，继承自 PSR-11 容器
+- **Runtime**: 运行时抽象，支持多种运行环境
+- **Container**: 依赖注入容器，支持延迟实例化和单例模式
+- **Event**: 事件驱动架构，基于 PSR-14 事件调度器
+- **Routing**: 高性能路由系统
+- **HTTP**: PSR-7 HTTP 消息实现
+- **Middleware**: PSR-15 中间件支持
+
+### 运行模式
+
+1. **Swoole Server**: 常驻内存，极致性能
+2. **FastCGI**: 兼容传统 PHP-FPM 部署
+3. **Console**: 命令行工具支持
+4. **Process**: 多进程任务处理
+
+## 📖 文档
 
 我们希望不仅仅是提供一个开发框架，更希望能够将自己的经验整理成解决方案，开发套件分享和贡献给社区。
 
-* [中文文档](http://docs.fastdlabs.com/#/zh-cn/3.2/readme)
-* [English Document](https://docs.fastdlabs.com/#/en-us/3.2/readme)
+- [中文文档](http://docs.fastdlabs.com/#/zh-cn/3.2/readme)
+- [English Document](https://docs.fastdlabs.com/#/en-us/3.2/readme)
 
-### 系列文章
+## 🧪 测试
 
-* [FastD 最佳实践一: 构建 API](http://blog.fastdlabs.com/2017-12-12/create-api)
-* [FastD 最佳实践二: 构建配置中心](http://blog.fastdlabs.com/2017-12-12/create-configure)
-* [FastD 最佳实践三: 构建API网关](http://blog.fastdlabs.com/2017-12-12/create-gatewray)
-* [FastD 最佳实践四: 构建系统可视化监控](http://blog.fastdlabs.com/2017-12-12/create-monitor)
-* [FastD 最佳实践五: 构建ELK日志分析系统](http://blog.fastdlabs.com/2017-12-12/create-log)
-* [FastD 最佳实践六: 为应用添加调用链监控 Zipkin](http://blog.fastdlabs.com/2017-12-12/create-zipkin)
+```bash
+# 运行单元测试
+php vendor/bin/phpunit
 
-### 周边
+# 查看测试覆盖率
+php vendor/bin/phpunit --coverage-html coverage
+```
 
-* [FastD Viewer](https://github.com/JanHuang/viewer)
-* [FastD ORM](https://github.com/zqhong/fastd-eloquent)
-* [FastD QConf](https://github.com/JanHuang/QConfServiceProvider)
-* [FastD Seeder](https://github.com/RunnerLee/fastd-seeder)
-* [FastD Session](https://github.com/fastdlabs/session-provider)
-* [FastD HealthCheck](https://github.com/fastdlabs/health-check-provider)
-* [FastD Log](https://github.com/fastdlabs/log-provider)
-* [FastD Auth](https://github.com/fastdlabs/auth-provider)
-* [FastD Cache](https://github.com/fastdlabs/cache-provider)
-* [FastD CORS](https://github.com/fastdlabs/cors-provider)
-* [FastD i18n](https://github.com/fastdlabs/i18n-provider)
-* [FastD Mock](https://github.com/fastdlabs/mock-provider)
-* [FastD WeChat](https://github.com/fastdlabs/wechat-provider)
-* [Queue](https://github.com/RunnerLee/queue)
-* [Validator](https://github.com/RunnerLee/validator)
-* [Phalcon ORM](https://github.com/xueron/fastd-phalcon)
+## 🤝 贡献
 
-### 贡献
+感谢所有为 FastD 做出贡献的开发者：
 
-* [yyz26371945](https://github.com/yyz26371945)
-* [RunnerLee](https://github.com/RunnerLee)
-* [zqhong](https://github.com/zqhong)
-* [xsharp](https://github.com/xsharp)
+- [yyz26371945](https://github.com/yyz26371945)
+- [RunnerLee](https://github.com/RunnerLee)
+- [zqhong](https://github.com/zqhong)
+- [xsharp](https://github.com/xsharp)
 
-### 鸣谢
+欢迎提交 Issue 和 Pull Request！
+
+## 🙏 鸣谢
 
 ![](https://s103.ggwan.com/mainlinghitv2/images/public/logo.png)
 
-非常欢迎感兴趣，愿意参与其中，共同打造更好PHP生态，Swoole生态的开发者。
+非常欢迎感兴趣，愿意参与其中，共同打造更好 PHP 生态、Swoole 生态的开发者。
 
 如果你乐于此，却又不知如何开始，可以试试下面这些事情：
 
-* 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)。
-* 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)。
+- 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)
+- 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)
+- 帮助改进文档或翻译
+- 分享你的使用经验和最佳实践
 
-### 联系
+## 📮 联系
 
-如果你在使用中遇到问题，请联系: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com). 微博: [编码侠](http://weibo.com/ecbboyjan)
+如果你在使用中遇到问题，请联系：
 
-## License MIT
+- Email: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com)
+- Weibo: [编码侠](http://weibo.com/ecbboyjan)
+- GitHub: [Issues](https://github.com/JanHuang/fastD/issues)
+
+## 📄 License
+
+MIT License

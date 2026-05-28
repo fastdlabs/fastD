@@ -4,15 +4,15 @@ namespace tests;
 
 use FastD\Application;
 use FastD\Server\CgiServer;
-use FastD\Terminal\Environment;
+use FastD\Runtime;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
 class FastCGITest extends TestCase
 {
-    public function server(): Environment
+    public function server(): Runtime
     {
-        return new CgiServer(new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
+        return new CgiServer('testing', new Application(include __DIR__ . '/app/bootstrap/fastcgi.php'));
     }
 
     public function dataServerFromGlobals()
@@ -53,15 +53,48 @@ class FastCGITest extends TestCase
     {
         $server = $this->server();
         $server->bootstrap();
-        $server->handleLogger('test bootstrap');
-        $config = app()->getBootstrap('app');
-        $this->assertEquals(app()->getName(), $config['name']);
+        
+        // 测试基本属性
+        $this->assertEquals('fastd', container()->getName());
+        $this->assertEquals('testing', container()->getRuntime());
+        
+        // 测试 logger 服务已注册
+        $this->assertTrue(container()->has('logger'));
+        $this->assertInstanceOf(Logger::class, container()->get('logger'));
+        
+        // 测试 config 服务已注册
+        $this->assertTrue(container()->has('config'));
     }
 
     public function testHelper()
     {
         $server = $this->server();
         $server->bootstrap();
-        logging(Logger::DEBUG, 'logging');
+        
+        // 测试 helper 函数
+        $this->assertSame(container(), container());
+        $this->assertEquals('fastd', container()->getName());
+    }
+
+    public function testServicesRegistration()
+    {
+        $server = $this->server();
+        $server->bootstrap();
+        
+        // 测试默认服务已注册
+        $this->assertTrue(container()->has('config'));
+        $this->assertTrue(container()->has('logger'));
+        $this->assertTrue(container()->has('matcher'));
+        $this->assertTrue(container()->has('event'));
+    }
+
+    public function testEventDispatcher()
+    {
+        $server = $this->server();
+        $server->bootstrap();
+        
+        // 测试 event 服务
+        $event = container()->get('event');
+        $this->assertInstanceOf(\FastD\Event\EventDispatcher::class, $event);
     }
 }

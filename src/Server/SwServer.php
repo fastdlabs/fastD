@@ -35,7 +35,7 @@ class SwServer extends Runtime
         $settings['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
         $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
-        $listenerProvider = $this->application->got('event')->listenerProvider;
+        $listenerProvider = $this->application->get('event')->listenerProvider;
         $this->server = new Server($settings, new SwooleEventDispatcher($listenerProvider));
 
         foreach ($worker as $item) {

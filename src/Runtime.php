@@ -25,17 +25,17 @@ abstract class Runtime
     public function booted(): void
     {
         $this->bootstrap();
-        $this->application->got('event')->dispatch(new BootedEvent($this));
+        $this->application->get('event')->dispatch(new BootedEvent($this));
     }
 
     public function process(): void
     {
         try {
             $this->output($this->input());
-            $this->application->got('event')->dispatch(new FinishEvent($this));
+            $this->application->get('event')->dispatch(new FinishEvent($this));
         } catch (Throwable $throwable) {
             $this->abort($throwable);
-            $this->application->got('event')->dispatch(new AbortEvent($this));
+            $this->application->get('event')->dispatch(new AbortEvent($this));
         }
     }
 

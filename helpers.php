@@ -21,17 +21,17 @@ function container(): Application
 
 function config(): FileParser
 {
-    return container()->got('config');
+    return container()->get('config');
 }
 
 function event(): EventDispatcher
 {
-    return container()->got('event');
+    return container()->get('event');
 }
 
 function logger(): Logger
 {
-    return container()->got('logger');
+    return container()->get('logger');
 }
 
 function debug(string $message, array $context = []): void
@@ -49,13 +49,18 @@ function error(string $message, array $context = []): void
     logger()->error($message, $context);
 }
 
+function logging(int $level, string $message, array $context = []): void
+{
+    logger()->log($level, $message, $context);
+}
+
 function forward(string $method, string $path): ResponseInterface
 {
-    $request = container()->got('request')
+    $request = container()->get('request')
         ->withMethod($method)
         ->withUri(new Uri($path))
     ;
-    $response = container()->got('dispatcher')->dispatch($request);
+    $response = container()->get('dispatcher')->dispatch($request);
     unset($request);
 
     return $response;

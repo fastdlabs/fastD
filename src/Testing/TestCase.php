@@ -30,6 +30,6 @@ class TestCase extends PHPUnit
 
         $input = $input->withParsedBody($body);
 
-        return container()->got('dispatcher')->dispatch($input);
+        return container()->get('dispatcher')->dispatch($input);
     }
 }
