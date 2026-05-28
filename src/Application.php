@@ -10,12 +10,12 @@ use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Event\EventDispatcher;
 use FastD\Event\ListenerProvider;
-use FastD\Http\Request\ServerRequest;
 use FastD\Routing\Collection\RouteCollection;
 use FastD\Routing\RouteMatcher;
 use Psr\Http\Message\ResponseInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Psr\Http\Message\ServerRequestInterface;
 
 final class Application extends Container
 {
@@ -119,7 +119,7 @@ final class Application extends Container
         $this->add('event', new EventDispatcher($listenerProvider));
     }
 
-    public function dispatch(ServerRequest $serverRequest): ResponseInterface
+    public function dispatch(ServerRequestInterface $serverRequest): ResponseInterface
     {
         return $this->get('matcher')->dispatch($serverRequest);
     }

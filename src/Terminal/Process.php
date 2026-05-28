@@ -15,7 +15,11 @@ class Process extends Runtime
 
         $workers = container()->config('process');
 
-        foreach ($workers as $name => $worker) {
+        foreach ($workers['listener'] as $listener) {
+            $process->addListener(new $listener);
+        }
+
+        foreach ($workers['worker'] as $name => $worker) {
             $process->addWorker(new $worker($name));
         }
 
