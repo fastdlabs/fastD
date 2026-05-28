@@ -8,16 +8,13 @@ use DateTimeZone;
 use ErrorException;
 use FastD\Config\FileParser;
 use FastD\Container\Container;
-use FastD\Container\ServiceProviderInterface;
 use FastD\Event\EventDispatcher;
 use FastD\Event\ListenerProvider;
 use FastD\Http\Request\ServerRequest;
-use FastD\Listener\RuntimeListener;
 use FastD\Routing\Collection\RouteCollection;
 use FastD\Routing\RouteMatcher;
 use Psr\Http\Message\ResponseInterface;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Level;
 use Monolog\Logger;
 
 final class Application extends Container
@@ -89,6 +86,7 @@ final class Application extends Container
         return [
             'config' => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
             'logger' => $logger,
+            'matcher' => new RouteMatcher(new RouteCollection()),
         ];
     }
 
@@ -106,11 +104,10 @@ final class Application extends Container
 
     public function registerRoutes(array $routes): void
     {
-        $collection = new RouteCollection();
+        $collection = $this->get('matcher')->routeCollection;
         foreach ($routes as $route) {
             $collection->addRoute(...$route);
         }
-        $this->add('matcher', new RouteMatcher($collection));
     }
 
     public function registerEventListener(array $listeners): void
