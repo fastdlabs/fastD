@@ -21,11 +21,11 @@ class SwServer extends Runtime
     {
         parent::bootstrap();
 
-        [
-            'listen' => $listens,
-            'worker' => $worker,
-            'setting' => $settings
-        ] = $this->application->config('swoole');
+        $swooleConfig = $this->application->config('swoole');
+        
+        $listens = $swooleConfig['listen'] ?? [];
+        $worker = $swooleConfig['worker'] ?? [];
+        $settings = $swooleConfig['setting'] ?? [];
 
         // 配置默认路径
         $settings['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
