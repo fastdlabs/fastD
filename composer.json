@@ -41,8 +41,8 @@
         "fastd/medoodb": "^8.0",
         "fastd/cache": "^8.0",
         "monolog/monolog": "^3.0",
-        "symfony/console": "^8.1",
-        "symfony/yaml": "^8.1"
+        "symfony/console": "^8.0",
+        "symfony/yaml": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
