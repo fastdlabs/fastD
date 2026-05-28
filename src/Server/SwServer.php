@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace FastD\Server;
 
-use FastD\Application;
-use FastD\Listener\SwHttpListener;
 use FastD\Runtime;
-use FastD\Swoole\Listener\Server\WorkerListener;
 use FastD\Swoole\Server;
 use FastD\Swoole\SwooleEventDispatcher;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -71,32 +68,10 @@ class SwServer extends Runtime
 
     public function output(mixed $output): void
     {
-        if (in_array($output[0], ['start', 'stop', 'reload'])) {
-            return ;
-        }
-        // 获取服务器信息
-        $url = $this->server->url;
-        $setting = $this->server->config;
-
-        echo "┌─────────────────────────────────────────────────────────┐" . PHP_EOL;
-        echo "│                    FastD Swoole Server                  │" . PHP_EOL;
-        echo "└─────────────────────────────────────────────────────────┘" . PHP_EOL;
-        echo "Server Information:" . PHP_EOL;
-        echo "  - Url: {$this->server->url}" . PHP_EOL;
-        echo "  - Address: {$this->server->host}" . PHP_EOL;
-        echo "  - Port: {$this->server->port}" . PHP_EOL;
-        echo "  - Mode: {$this->server->mode}" . PHP_EOL;
-        echo "  - SockType: {$this->server->sockType}" . PHP_EOL;
-        echo "  - PID File: {$setting['pid_file']}" . PHP_EOL;
-        echo "Configuration Options:" . PHP_EOL;
-
-        // 显示配置项
-        foreach ($setting as $key => $value) {
-            if ($key != 'pid_file') {
-                $valueStr = is_array($value) ? json_encode($value) : (is_bool($value) ? ($value ? 'true' : 'false') : $value);
-                echo " - {$key}: {$valueStr}" . PHP_EOL;
-            }
-        }
+        // 由 swoole event 监听输出
+        info('SwServer output', [
+            'output' => $output,
+        ]);
     }
 
     public function abort(Throwable $throwable): void
