@@ -3,7 +3,6 @@
     "type": "library",
     "license": "MIT",
     "description": "A High Performance API Framework By Swoole Extension",
-    "minimum-stability": "dev",
     "keywords": ["FastD", "api", "container", "http-message", "http-server-handler", "http-server-middle", "cache"],
     "homepage": "https://fastdlabs.com/",
     "authors": [
