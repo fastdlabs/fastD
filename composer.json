@@ -30,7 +30,7 @@
         }
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-json": "*",
         "fastd/event": "^8.0",
         "fastd/container": "^8.0",
