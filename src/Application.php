@@ -86,7 +86,7 @@ final class Application extends Container
         return [
             'config' => new FileParser(file_exists($this->bootstrap['root'] . '/.env.yml') ? $this->bootstrap['root'] . '/.env.yml' : []),
             'logger' => $logger,
-            'matcher' => new RouteMatcher(new RouteCollection()),
+            'matcher' => new RouteMatcher(new RouteCollection(), fn (string $class) => $this->make($class)),
         ];
     }
 
