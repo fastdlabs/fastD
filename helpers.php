@@ -9,10 +9,13 @@ use FastD\Event\EventDispatcher;
 use FastD\Http\Response\Json;
 use FastD\Http\Response\StatusCode;
 use FastD\Http\Response\Text;
+use FastD\Http\Session\SessionInterface;
+use FastD\Http\Session\SessionMiddleware;
 use FastD\Http\Uri;
 use FastD\Runtime;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 function container(): Application
 {
@@ -79,4 +82,16 @@ function text(string $content = '', int $statusCode = StatusCode::HTTP_OK): Resp
 function json(array $content = [], int $statusCode = StatusCode::HTTP_OK): ResponseInterface
 {
     return new Json($statusCode, $content);
+}
+
+/**
+ * 从当前请求读取会话对象（需先启用 SessionServiceProvider）。
+ *
+ * 会话对象是 per-request 的，因此必须显式传入请求，不能放在容器里做单例。
+ */
+function session(ServerRequestInterface $request): ?SessionInterface
+{
+    $session = $request->getAttribute(SessionMiddleware::ATTRIBUTE);
+
+    return $session instanceof SessionInterface ? $session : null;
 }
