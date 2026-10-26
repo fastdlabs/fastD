@@ -2,7 +2,7 @@
 
 return [
     'name' => 'fastd',
-    'timezone' => 'PRC',
+    'timezone' => 'Asia/Shanghai',
     'root' => __DIR__ . '/../../',
     'log' => [
         'path' => __DIR__ . '/../../runtime/logs',

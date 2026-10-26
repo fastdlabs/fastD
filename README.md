@@ -27,7 +27,7 @@ FastD 是一个轻量级的高性能 PHP Web 开发框架，基于 PSR 标准和
 
 ## 📋 要求
 
-- PHP >= 8.2
+- PHP >= 8.4
 - Swoole >= 4.5 (可选，用于高性能模式)
 - Composer
 

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: swoole, mbstring
+          coverage: none
+          tools: composer:v2
+      - name: Validate composer.json
+        run: composer validate --no-check-publish --no-check-lock
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-interaction
+      - name: Run tests
+        run: vendor/bin/phpunit --no-coverage
