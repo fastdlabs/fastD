@@ -35,7 +35,7 @@
         "fastd/container": "^8.0",
         "fastd/config": "^8.0",
         "fastd/middleware": "^8.0",
-        "fastd/http": "^8.1",
+        "fastd/http": "^8.0",
         "fastd/routing": "^8.0",
         "fastd/swoole": "^8.0",
         "fastd/medoodb": "^8.0",
