@@ -5,3 +5,29 @@ composer.lock
 .DS_Store
 bin
 .phpunit.result.cache
+# --- OS generated ---
+Thumbs.db
+
+# --- IDE / editor ---
+.vscode/
+.fleet/
+.trae/
+.history/
+
+# --- PHP test / build artifacts ---
+.phpunit.cache/
+coverage/
+build/
+
+# --- local runtime ---
+runtime/
+*.log
+*.pid
+
+# --- environment ---
+.env
+.env.local
+.env.*.local
+
+# --- agent workspace ---
+.qoder/
