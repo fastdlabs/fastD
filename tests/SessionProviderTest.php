@@ -25,6 +25,10 @@ class SessionProviderTest extends TestCase
     {
         parent::setUp();
 
+        if (!class_exists(SessionMiddleware::class)) {
+            $this->markTestSkipped('fastd/http with session support (>= 8.1) is required.');
+        }
+
         $this->sessionDir = __DIR__ . '/app/runtime/session';
         $this->cleanupSessionDir();
 
