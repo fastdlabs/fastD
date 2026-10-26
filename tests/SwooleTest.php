@@ -22,7 +22,7 @@ class SwooleTest extends TestCase
         // 测试基本属性
         $this->assertEquals('fastd', container()->getName());
         $this->assertEquals('testing', container()->getRuntime());
-        $this->assertEquals('PRC', container()->getTimezone());
+        $this->assertEquals('Asia/Shanghai', container()->getTimezone());
     }
 
     public function testBootstrapIdempotent()

@@ -21,7 +21,7 @@ class ConsoleTest extends TestCase
         
         // 测试基本属性
         $this->assertEquals('fastd', container()->getName());
-        $this->assertEquals('PRC', container()->getTimezone());
+        $this->assertEquals('Asia/Shanghai', container()->getTimezone());
         $this->assertEquals('testing', container()->getRuntime());
         
         // 测试根路径

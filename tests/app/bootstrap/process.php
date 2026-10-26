@@ -9,7 +9,7 @@ return [
     /*
      * The application timezone.
      */
-    'timezone' => 'PRC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
      * The application root path.
