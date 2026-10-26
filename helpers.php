@@ -7,10 +7,12 @@ use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Event\EventDispatcher;
 use FastD\Http\Response\Json;
+use FastD\Http\Response\SseResponse;
 use FastD\Http\Response\StatusCode;
 use FastD\Http\Response\Text;
 use FastD\Http\Session\SessionInterface;
 use FastD\Http\Session\SessionMiddleware;
+use FastD\Http\Sse\EmitterInterface;
 use FastD\Http\Uri;
 use FastD\Runtime;
 use Monolog\Logger;
@@ -94,4 +96,18 @@ function session(ServerRequestInterface $request): ?SessionInterface
     $session = $request->getAttribute(SessionMiddleware::ATTRIBUTE);
 
     return $session instanceof SessionInterface ? $session : null;
+}
+
+/**
+ * 创建 Server-Sent Events 流式响应。
+ *
+ * 支持迭代器（yield 事件）或回调（EmitterInterface $emitter）两种写法，
+ * CGI/FPM 与 Swoole 运行时由框架自动选择输出方式。
+ *
+ * @param iterable<\FastD\Http\Sse\Event|string|array>|(\Closure(EmitterInterface): void) $producer
+ * @param array<string, mixed> $options 见 SseResponse 构造函数（heartbeat/max_duration/retry/error_event/headers/on_error）
+ */
+function sse(iterable|\Closure $producer, array $options = []): SseResponse
+{
+    return new SseResponse($producer, $options);
 }
