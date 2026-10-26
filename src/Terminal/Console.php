@@ -23,6 +23,8 @@ class Console extends Runtime
         }
 
         $app->run(new ArgvInput(), new ConsoleOutput());
+
+        return null;
     }
 
     public function output($output): void

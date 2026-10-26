@@ -24,6 +24,8 @@ class Process extends Runtime
         }
 
         $process->start();
+
+        return '';
     }
 
     public function output($output): void

@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method FastD\\\\Container\\\\Container\\:\\:config\\(\\)\\.$#"
+			count: 1
+			path: src/ServiceProvider/SessionServiceProvider.php
+
+		-
+			message: "#^Call to an undefined method FastD\\\\Container\\\\Container\\:\\:getRuntime\\(\\)\\.$#"
+			count: 1
+			path: src/ServiceProvider/SessionServiceProvider.php
