@@ -1,6 +1,6 @@
 <?php
 
-namespace app\src\http;
+namespace app\src\Http;
 
 use FastD\Http\Response\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class hello implements MiddlewareInterface
+class Hello implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
