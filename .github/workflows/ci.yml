@@ -32,7 +32,7 @@ jobs:
           vendor/bin/phpunit --coverage-clover=build/coverage.xml
       - name: Enforce coverage threshold
         env:
-          COVERAGE_MIN: '0'
+          COVERAGE_MIN: '30'
         run: |
           php -r '
           $xml = simplexml_load_file("build/coverage.xml");
