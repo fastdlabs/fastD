@@ -2,7 +2,7 @@
     "name": "fastd/fastd",
     "type": "library",
     "license": "MIT",
-    "description": "A High Performance API Framework By Swoole Extension",
+    "description": "High-performance PHP API framework based on PSR standards and Swoole.",
     "keywords": [
         "FastD",
         "api",
