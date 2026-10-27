@@ -1,8 +1,10 @@
 <?php
 
+use FastD\Http\Session\Handler\NativeFileSessionHandler;
+
 return [
     'enabled' => true,
-    'handler' => 'auto',
+    'handler' => NativeFileSessionHandler::class,
     'ttl' => 60,
     'cookie' => [
         'name' => 'FASTD_SESSID',

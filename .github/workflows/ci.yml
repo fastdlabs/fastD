@@ -21,7 +21,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: swoole, mbstring
+          extensions: swoole, mbstring, redis
           coverage: pcov
           tools: composer:v2
       - name: Validate composer.json
