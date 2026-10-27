@@ -82,6 +82,8 @@ curl http://127.0.0.1:9527/
 - **HTTP**: PSR-7 HTTP 消息实现
 - **Middleware**: PSR-15 中间件支持
 
+> Cache 与 MedooDB 为可选组件，需要时通过 Composer 单独安装。
+
 ### 运行模式
 
 1. **Swoole Server**: 常驻内存，极致性能

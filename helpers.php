@@ -59,16 +59,11 @@ function logging(int $level, string $message, array $context = []): void
     logger()->log($level, $message, $context);
 }
 
-function forward(string $method, string $path): ResponseInterface
+function forward(ServerRequestInterface $request, string $method, string $path): ResponseInterface
 {
-    $request = container()->get('request')
-        ->withMethod($method)
-        ->withUri(new Uri($path))
-    ;
-    $response = container()->get('dispatcher')->dispatch($request);
-    unset($request);
-
-    return $response;
+    return container()->get('matcher')->dispatch(
+        $request->withMethod($method)->withUri(new Uri($path))
+    );
 }
 
 function abort(string $message, int $statusCode = StatusCode::HTTP_BAD_REQUEST): void

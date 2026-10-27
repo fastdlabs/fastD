@@ -19,8 +19,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class Application extends Container
 {
-    public const VERSION = '8.0';
-
     public static Application $application;
 
     protected bool $booted = false;
