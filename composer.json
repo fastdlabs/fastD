@@ -44,7 +44,7 @@
         "fastd/container": "^8.1",
         "fastd/config": "^8.0",
         "fastd/middleware": "^8.0",
-        "fastd/http": "^8.1",
+        "fastd/http": "^8.2",
         "fastd/routing": "^8.1",
         "fastd/swoole": "^8.1",
         "monolog/monolog": "^3.0",
@@ -53,7 +53,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^13.4",
-        "swoole/ide-helper": "@dev",
+        "swoole/ide-helper": "^6.0",
         "phpstan/phpstan": "^2.3"
     },
     "suggest": {

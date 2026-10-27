@@ -2,8 +2,6 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    ignoreErrors:
-        - '#FastD\\Http\\Session\\Handler\\RedisSessionHandler#'
     level: 5
     paths:
         - src
