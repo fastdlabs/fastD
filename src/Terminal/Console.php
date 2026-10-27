@@ -16,10 +16,17 @@ class Console extends Runtime
     {
         $app = new Application($this->application->getName(), \FastD\Application::VERSION);
 
-        $commands = $this->application->config('command');
+        $registry = $this->application->has('commands')
+            ? $this->application->get('commands')
+            : new CommandRegistry();
+
+        $commands = array_merge($this->application->config('command'), $registry->all());
 
         foreach ($commands as $command) {
-            $app->addCommand(new $command);
+            // 命令统一从容器解析，支持 ServiceProvider 注册与构造器注入。
+            $app->addCommand($command instanceof \Symfony\Component\Console\Command\Command
+                ? $command
+                : $this->application->make($command));
         }
 
         $app->run(new ArgvInput(), new ConsoleOutput());
