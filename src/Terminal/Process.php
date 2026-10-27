@@ -16,11 +16,17 @@ class Process extends Runtime
         $workers = $this->application->config('process');
 
         foreach ($workers['listener'] as $listener) {
-            $process->addListener(new $listener);
+            // 进程监听器从容器解析，支持 ServiceProvider 注册与依赖注入。
+            $process->addListener($this->application->make($listener));
         }
 
         foreach ($workers['worker'] as $name => $worker) {
-            $process->addWorker(new $worker($name));
+            // Worker 支持容器中预注册实例；未注册时保持原有 name 构造行为。
+            $process->addWorker(
+                $this->application->has($worker)
+                    ? $this->application->get($worker)
+                    : new $worker($name)
+            );
         }
 
         $process->start();

@@ -19,7 +19,8 @@ class Console extends Runtime
         $commands = $this->application->config('command');
 
         foreach ($commands as $command) {
-            $app->addCommand(new $command);
+            // 命令统一从容器解析，支持 ServiceProvider 注册与构造器注入。
+            $app->addCommand($this->application->make($command));
         }
 
         $app->run(new ArgvInput(), new ConsoleOutput());
