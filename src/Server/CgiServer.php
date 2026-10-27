@@ -36,7 +36,7 @@ class CgiServer extends Runtime
             'file' => $throwable->getFile(),
             'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ];
-        error($throwable->getMessage(), $data);
+        $this->application->get('logger')->error($throwable->getMessage(), $data);
         (new Json(StatusCode::HTTP_INTERNAL_SERVER_ERROR, $data))->send();
     }
 }

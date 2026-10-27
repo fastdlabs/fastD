@@ -55,7 +55,13 @@ final class Application extends Container
         if (!isset($this->bootstrap[$key]) || !file_exists($this->bootstrap[$key])) {
             throw new ErrorException(sprintf('The bootstrap["%s"] config does not exist', $key));
         }
-        return config()->parse($this->bootstrap[$key])->get($key);
+        $parser = $this->get('config');
+
+        if (!$parser instanceof FileParser) {
+            throw new ErrorException('The FastD config service is not a FileParser.');
+        }
+
+        return $parser->parse($this->bootstrap[$key])->get($key);
     }
 
     public function bootstrap(string $runtime): void

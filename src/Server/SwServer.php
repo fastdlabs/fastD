@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FastD\Server;
 
+use FastD\Listener\Server\SwHttpListener;
 use FastD\Runtime;
 use FastD\Swoole\Server;
 use FastD\Swoole\SwooleEventDispatcher;
@@ -40,7 +41,12 @@ class SwServer extends Runtime
         }
 
         foreach ($listens as $listen) {
-            $this->server->listen($listen['host'], $listen['port'], new $listen['worker']);
+            $worker = $listen['worker'];
+            $listener = is_string($worker) && is_a($worker, SwHttpListener::class, true)
+                ? new $worker($this->application)
+                : new $worker();
+
+            $this->server->listen($listen['host'], $listen['port'], $listener);
         }
         // 替换原有事件调度
         $this->application->add('event', $this->server->eventDispatcher);
@@ -69,7 +75,7 @@ class SwServer extends Runtime
     public function output(mixed $output): void
     {
         // 由 swoole event 监听输出
-        info('SwServer output', [
+        $this->application->get('logger')->info('SwServer output', [
             'output' => $output,
         ]);
     }
@@ -83,7 +89,7 @@ class SwServer extends Runtime
             'file' => $throwable->getFile(),
             'trace' => explode(PHP_EOL, $throwable->getTraceAsString()),
         ];
-        error($throwable->getMessage(), $data);
+        $this->application->get('logger')->error($throwable->getMessage(), $data);
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }
