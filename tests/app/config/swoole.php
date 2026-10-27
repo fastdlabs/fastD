@@ -1,11 +1,18 @@
 <?php
 
-
 return [
-    'host' => 'http://0.0.0.0:9999',
-    // swoole server 配置项，与官网保持一致: https://wiki.swoole.com/#/server/setting
+    'servers' => [
+        'http' => [
+            'host' => '127.0.0.1',
+            'port' => 9999,
+            'handler' => \FastD\Listener\Server\SwHttpListener::class,
+        ],
+    ],
+    'events' => [
+        \FastD\Swoole\Listener\Server\WorkerListener::class,
+    ],
     'options' => [
         'log_level' => 5,
-        'worker_num' => 8,
+        'worker_num' => 1,
     ],
 ];

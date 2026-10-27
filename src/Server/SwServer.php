@@ -24,29 +24,31 @@ class SwServer extends Runtime
 
         $swooleConfig = $this->application->config('swoole');
         
-        $listens = $swooleConfig['listen'] ?? [];
-        $listener = $swooleConfig['listener'] ?? [];
-        $settings = $swooleConfig['setting'] ?? [];
+        $servers = $swooleConfig['servers'] ?? [];
+        $events = $swooleConfig['events'] ?? [];
+        $options = $swooleConfig['options'] ?? [];
 
         // 配置默认路径
-        $settings['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
-        $settings['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
-        $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
+        $options['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
+        $options['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
+        $options['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
         $listenerProvider = $this->application->get('event')->listenerProvider;
-        $this->server = new Server($settings, new SwooleEventDispatcher($listenerProvider));
+        $this->server = new Server($options, new SwooleEventDispatcher($listenerProvider));
 
-        foreach ($listener as $item) {
-            $listenerProvider->addListener(new $item);
+        foreach ($events as $event) {
+            $listenerProvider->addListener(new $event);
         }
 
-        foreach ($listens as $listen) {
-            $worker = $listen['worker'];
-            $listener = is_string($worker) && is_a($worker, SwHttpListener::class, true)
-                ? new $worker($this->application)
-                : new $worker();
+        foreach ($servers as $name => $server) {
+            $handler = $server['handler']
+                ?? throw new \RuntimeException(sprintf('Swoole server "%s" requires a handler.', $name));
 
-            $this->server->listen($listen['host'], $listen['port'], $listener);
+            $listener = is_string($handler) && is_a($handler, SwHttpListener::class, true)
+                ? new $handler($this->application)
+                : new $handler();
+
+            $this->server->listen($server['host'], $server['port'], $listener);
         }
         // 替换原有事件调度
         $this->application->add('event', $this->server->eventDispatcher);
