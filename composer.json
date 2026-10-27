@@ -38,7 +38,7 @@
         }
     },
     "require": {
-        "php": ">=8.4",
+        "php": ">=8.4.1",
         "ext-json": "*",
         "fastd/event": "^8.0",
         "fastd/container": "^8.1",
@@ -54,9 +54,9 @@
         "symfony/yaml": "^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^13.4",
         "swoole/ide-helper": "@dev",
-        "phpstan/phpstan": "^1.12.24"
+        "phpstan/phpstan": "^2.3"
     },
     "suggest": {
         "fastd/swoole": "Can effectively improve performance。"

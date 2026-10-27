@@ -1,7 +1,7 @@
 <phpunit
         colors="true"
         bootstrap="vendor/autoload.php"
-        cacheResult="true"
+        recordTestRunHistory="true"
         backupGlobals="false"
 >
     
