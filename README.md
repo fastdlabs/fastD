@@ -57,7 +57,7 @@ php bin/process start
 ### 创建路由
 
 ```php
-// routes/api.php
+// routes/web.php
 return [
     ['GET', '/', \Http\Controller\WelcomeController::class],
 ];
