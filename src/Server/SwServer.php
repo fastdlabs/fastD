@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FastD\Server;
 
-use FastD\Listener\Server\SwHttpListener;
 use FastD\Runtime;
 use FastD\Swoole\Server;
 use FastD\Swoole\SwooleEventDispatcher;
@@ -24,29 +23,27 @@ class SwServer extends Runtime
 
         $swooleConfig = $this->application->config('swoole');
         
-        $listens = $swooleConfig['listen'] ?? [];
-        $listener = $swooleConfig['listener'] ?? [];
-        $settings = $swooleConfig['setting'] ?? [];
+        $servers = $swooleConfig['servers'] ?? [];
+        $listeners = $swooleConfig['listeners'] ?? [];
+        $options = $swooleConfig['options'] ?? [];
 
         // 配置默认路径
-        $settings['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
-        $settings['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
-        $settings['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
+        $options['pid_file'] = $this->application->getRootPath() . '/runtime/pid/' . $this->application->getName() . '.pid';
+        $options['log_file'] = $this->application->getRootPath() . '/runtime/logs/' . date('Ym') . '/error.log';
+        $options['log_rotation'] = SWOOLE_LOG_ROTATION_DAILY;
 
         $listenerProvider = $this->application->get('event')->listenerProvider;
-        $this->server = new Server($settings, new SwooleEventDispatcher($listenerProvider));
+        $this->server = new Server($options, new SwooleEventDispatcher($listenerProvider));
 
-        foreach ($listener as $item) {
-            $listenerProvider->addListener(new $item);
+        foreach ($listeners as $listener) {
+            $listenerProvider->addListener(new $listener);
         }
 
-        foreach ($listens as $listen) {
-            $worker = $listen['worker'];
-            $listener = is_string($worker) && is_a($worker, SwHttpListener::class, true)
-                ? new $worker($this->application)
-                : new $worker();
+        foreach ($servers as $name => $server) {
+            $listenerClass = $server['listener']
+                ?? throw new \RuntimeException(sprintf('Swoole server "%s" requires a listener.', $name));
 
-            $this->server->listen($listen['host'], $listen['port'], $listener);
+            $this->server->listen($server['host'], $server['port'], new $listenerClass());
         }
         // 替换原有事件调度
         $this->application->add('event', $this->server->eventDispatcher);
