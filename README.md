@@ -6,7 +6,7 @@
 <p align="center">🚀 A high performance PHP API framework based on PSR standards and Swoole extension.</p>
 
 <p align="center">
-<a href="https://travis-ci.org/fastdlabs/fastD"><img src="https://travis-ci.org/fastdlabs/fastD.svg?branch=master" /></a>
+<a href="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml"><img src="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
 <a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
 <a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D8.2-brightgreen" /></a>
