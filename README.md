@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml"><img src="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a>
 <a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D8.4.1-brightgreen" /></a>
-<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D4.5-brightgreen"/></a>
+<a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D6.0-brightgreen"/></a>
 <a href="https://fastdlabs.com/"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
 </p>
 
@@ -26,7 +26,7 @@ FastD 是一个轻量级的高性能 PHP Web 开发框架，基于 PSR 标准和
 ## 📋 要求
 
 - PHP >= 8.4.1
-- Swoole >= 4.5 (可选，用于高性能模式)
+- Swoole >= 6.0
 - Composer
 
 ## 🚀 快速开始
@@ -125,7 +125,7 @@ php vendor/bin/phpunit --coverage-html coverage
 
 如果你乐于此，却又不知如何开始，可以试试下面这些事情：
 
-- 在你的系统中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)
+- 在你的系统中使用，将遇到的问题 [反馈](https://github.com/fastdlabs/fastD/issues)
 - 有更好的建议？欢迎联系 [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com) 或 [新浪微博:编码侠](http://weibo.com/ecbboyjan)
 - 帮助改进文档或翻译
 - 分享你的使用经验和最佳实践
@@ -136,7 +136,7 @@ php vendor/bin/phpunit --coverage-html coverage
 
 - Email: [bboyjanhuang@gmail.com](mailto:bboyjanhuang@gmail.com)
 - Weibo: [编码侠](http://weibo.com/ecbboyjan)
-- GitHub: [Issues](https://github.com/JanHuang/fastD/issues)
+- GitHub: [Issues](https://github.com/fastdlabs/fastD/issues)
 
 ## 📄 License
 
