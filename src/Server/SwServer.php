@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FastD\Server;
 
-use FastD\Listener\Server\SwHttpListener;
 use FastD\Runtime;
 use FastD\Swoole\Server;
 use FastD\Swoole\SwooleEventDispatcher;
@@ -25,7 +24,7 @@ class SwServer extends Runtime
         $swooleConfig = $this->application->config('swoole');
         
         $servers = $swooleConfig['servers'] ?? [];
-        $events = $swooleConfig['events'] ?? [];
+        $listeners = $swooleConfig['listeners'] ?? [];
         $options = $swooleConfig['options'] ?? [];
 
         // 配置默认路径
@@ -36,19 +35,15 @@ class SwServer extends Runtime
         $listenerProvider = $this->application->get('event')->listenerProvider;
         $this->server = new Server($options, new SwooleEventDispatcher($listenerProvider));
 
-        foreach ($events as $event) {
-            $listenerProvider->addListener(new $event);
+        foreach ($listeners as $listener) {
+            $listenerProvider->addListener(new $listener);
         }
 
         foreach ($servers as $name => $server) {
-            $handler = $server['handler']
-                ?? throw new \RuntimeException(sprintf('Swoole server "%s" requires a handler.', $name));
+            $listenerClass = $server['listener']
+                ?? throw new \RuntimeException(sprintf('Swoole server "%s" requires a listener.', $name));
 
-            $listener = is_string($handler) && is_a($handler, SwHttpListener::class, true)
-                ? new $handler($this->application)
-                : new $handler();
-
-            $this->server->listen($server['host'], $server['port'], $listener);
+            $this->server->listen($server['host'], $server['port'], new $listenerClass());
         }
         // 替换原有事件调度
         $this->application->add('event', $this->server->eventDispatcher);
