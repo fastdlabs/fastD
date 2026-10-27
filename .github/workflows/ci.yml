@@ -18,11 +18,31 @@ jobs:
         with:
           php-version: '8.4'
           extensions: swoole, mbstring
-          coverage: none
+          coverage: pcov
           tools: composer:v2
       - name: Validate composer.json
         run: composer validate --no-check-publish --no-check-lock
       - name: Install dependencies
         run: composer update --prefer-dist --no-progress --no-interaction
-      - name: Run tests
-        run: vendor/bin/phpunit --no-coverage
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+      - name: Run tests with coverage
+        run: |
+          mkdir -p build
+          vendor/bin/phpunit --coverage-clover=build/coverage.xml
+      - name: Enforce coverage threshold
+        env:
+          COVERAGE_MIN: '30'
+        run: |
+          php -r '
+          $xml = simplexml_load_file("build/coverage.xml");
+          $metrics = $xml->project->metrics;
+          $total = (int) $metrics["statements"];
+          $covered = (int) $metrics["coveredstatements"];
+          $pct = $total > 0 ? 100 * $covered / $total : 0.0;
+          printf("Coverage: %.2f%% (minimum %.2f%%)\n", $pct, (float) getenv("COVERAGE_MIN"));
+          if ($pct < (float) getenv("COVERAGE_MIN")) {
+              fwrite(STDERR, "Coverage below threshold\n");
+              exit(1);
+          }
+          '
