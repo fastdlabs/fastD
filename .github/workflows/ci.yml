@@ -26,6 +26,8 @@ jobs:
         run: composer update --prefer-dist --no-progress --no-interaction
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+      - name: Check global helper usage
+        run: php tools/check-helper-usage.php
       - name: Run tests with coverage
         run: |
           mkdir -p build

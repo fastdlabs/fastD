@@ -64,7 +64,8 @@
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env.yml') || copy('.env.yml.example', '.env.yml');\""
-        ]
+        ],
+        "check:helpers": "php tools/check-helper-usage.php"
     },
     "bin": [
         "console",
