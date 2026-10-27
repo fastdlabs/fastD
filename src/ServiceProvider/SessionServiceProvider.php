@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace FastD\ServiceProvider;
 
-use ErrorException;
+use Throwable;
+use FastD\Application;
+use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\Session\Handler\NativeFileSessionHandler;
@@ -26,9 +28,13 @@ final class SessionServiceProvider implements ServiceProviderInterface
     {
         try {
             $config = $container->config('session');
-        } catch (ErrorException) {
-            $file = container()->getRootPath() . '/config/session.php';
-            $config = is_file($file) ? (array) config()->parse($file)->get('session') : [];
+        } catch (Throwable) {
+            $root = $container instanceof Application ? $container->getRootPath() : getcwd();
+            $file = $root . '/config/session.php';
+            $parser = $container->has('config') ? $container->get('config') : null;
+            $config = $parser instanceof FileParser && is_file($file)
+                ? (array) $parser->parse($file)->get('session')
+                : [];
         }
 
         if (empty($config['enabled'])) {
@@ -62,8 +68,12 @@ final class SessionServiceProvider implements ServiceProviderInterface
             (bool) ($cookie['secure'] ?? false),
             (bool) ($cookie['http_only'] ?? true),
             (string) ($cookie['same_site'] ?? 'Lax'),
-            function (string $message, object $session): void {
-                error($message, ['session_id' => method_exists($session, 'getId') ? $session->getId() : null]);
+            function (string $message, object $session) use ($container): void {
+                if ($container->has('logger')) {
+                    $container->get('logger')->error($message, [
+                        'session_id' => method_exists($session, 'getId') ? $session->getId() : null,
+                    ]);
+                }
             },
             (int) ($config['gc_probability'] ?? 0),
         );

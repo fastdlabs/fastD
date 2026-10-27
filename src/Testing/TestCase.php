@@ -119,7 +119,7 @@ class TestCase extends PHPUnit
             $input = $input->withCookieParams($cookies);
         }
 
-        return container()->dispatch($input);
+        return $this->runtime->application->dispatch($input);
     }
 
     public function response(ResponseInterface $response, string $expected): void

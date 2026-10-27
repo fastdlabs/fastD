@@ -13,7 +13,7 @@ class Process extends Runtime
     {
         $process = new \FastD\Swoole\Process();
 
-        $workers = container()->config('process');
+        $workers = $this->application->config('process');
 
         foreach ($workers['listener'] as $listener) {
             $process->addListener(new $listener);
