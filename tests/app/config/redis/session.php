@@ -1,10 +1,10 @@
 <?php
 
-use FastD\Session\Handler\SessionRedisHandler;
+use FastD\Http\Session\Handler\RedisSessionHandler;
 
 return [
     'enabled' => true,
-    'handler' => SessionRedisHandler::class,
+    'handler' => RedisSessionHandler::class,
     'ttl' => 60,
     'cookie' => [
         'name' => 'FASTD_SESSID',

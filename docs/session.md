@@ -37,11 +37,11 @@ return [
 ```php
 <?php
 
-use FastD\Session\Handler\SessionRedisHandler;
+use FastD\Http\Session\Handler\RedisSessionHandler;
 
 return [
     'enabled' => true,
-    'handler' => SessionRedisHandler::class,
+    'handler' => RedisSessionHandler::class,
     'ttl' => 1440,
     'redis' => [
         'host' => '127.0.0.1',
@@ -59,11 +59,10 @@ return [
 - `ext-redis`
 - `fastd/http >= 8.2`（`RedisSessionHandler`）
 
-`SessionRedisHandler` 采用延迟连接，并按 PID 隔离：
+Redis 连接由 `SessionServiceProvider` 在初始化时建立：
 
-- 不在 `Application::bootstrap()` 阶段建立 Redis 连接
-- Swoole 多 worker 下每个 worker 独立连接
-- CGI 下首次读写时连接
+- 读取 `redis.host` / `port` / `password` / `database` / `timeout`
+- 创建 `\Redis` 连接后注入 `RedisSessionHandler`
 
 `auto` 仍可继续使用：
 

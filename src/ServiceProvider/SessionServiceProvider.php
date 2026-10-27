@@ -11,9 +11,9 @@ use FastD\Config\FileParser;
 use FastD\Container\Container;
 use FastD\Container\ServiceProviderInterface;
 use FastD\Http\Session\Handler\NativeFileSessionHandler;
+use FastD\Http\Session\Handler\RedisSessionHandler;
 use FastD\Http\Session\Handler\SwooleTableSessionHandler;
 use FastD\Http\Session\SessionMiddleware;
-use FastD\Session\Handler\SessionRedisHandler;
 
 /**
  * 注册 HTTP Session 能力（fastd/http 的 PSR-15 中间件）。
@@ -56,7 +56,7 @@ final class SessionServiceProvider implements ServiceProviderInterface
                 : NativeFileSessionHandler::class,
             'swoole_table' => SwooleTableSessionHandler::class,
             'native_file' => NativeFileSessionHandler::class,
-            'redis' => SessionRedisHandler::class,
+            'redis' => RedisSessionHandler::class,
             default => $handlerClass,
         };
 
@@ -73,11 +73,7 @@ final class SessionServiceProvider implements ServiceProviderInterface
                 (string) ($config['file']['path'] ?? ''),
                 $ttl,
             ),
-            SessionRedisHandler::class => new SessionRedisHandler(
-                (array) ($config['redis'] ?? []),
-                $ttl,
-                $maxDataSize,
-            ),
+            RedisSessionHandler::class => $this->createRedisHandler($config, $ttl, $maxDataSize),
             default => throw new InvalidArgumentException(sprintf('Unsupported session handler "%s".', $handlerClass)),
         };
 
@@ -105,5 +101,48 @@ final class SessionServiceProvider implements ServiceProviderInterface
 
         $container->add('session.middleware', $middleware);
         $container->get('matcher')->push($middleware);
+    }
+
+    private function createRedisHandler(array $config, int $ttl, int $maxDataSize): RedisSessionHandler
+    {
+        if (!class_exists(RedisSessionHandler::class)) {
+            throw new InvalidArgumentException('Redis session handler requires fastd/http >= 8.2.');
+        }
+
+        $redisConfig = (array) ($config['redis'] ?? []);
+        $redis = new \Redis();
+
+        $host = (string) ($redisConfig['host'] ?? '127.0.0.1');
+        $port = (int) ($redisConfig['port'] ?? 6379);
+        $timeout = (float) ($redisConfig['timeout'] ?? 1.0);
+
+        try {
+            if (!$redis->connect($host, $port, $timeout)) {
+                throw new InvalidArgumentException(sprintf('Unable to connect to Redis at %s:%d.', $host, $port));
+            }
+
+            $password = $redisConfig['password'] ?? null;
+            if (is_string($password) && $password !== '' && !$redis->auth($password)) {
+                throw new InvalidArgumentException('Redis authentication failed.');
+            }
+
+            $database = (int) ($redisConfig['database'] ?? 0);
+            if ($database > 0 && !$redis->select($database)) {
+                throw new InvalidArgumentException(sprintf('Unable to select Redis database %d.', $database));
+            }
+        } catch (\Throwable $throwable) {
+            throw new InvalidArgumentException(
+                sprintf('Unable to initialize Redis session storage at %s:%d: %s', $host, $port, $throwable->getMessage()),
+                0,
+                $throwable,
+            );
+        }
+
+        return new RedisSessionHandler(
+            $redis,
+            $ttl,
+            (string) ($redisConfig['prefix'] ?? 'fastd:session:'),
+            $maxDataSize,
+        );
     }
 }
