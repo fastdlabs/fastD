@@ -97,6 +97,7 @@ curl http://127.0.0.1:9527/
 
 - [中文文档](http://docs.fastdlabs.com/#/zh-cn/3.2/readme)
 - [English Document](https://docs.fastdlabs.com/#/en-us/3.2/readme)
+- [Session 文档](docs/session.md)
 
 ## 🧪 测试
 

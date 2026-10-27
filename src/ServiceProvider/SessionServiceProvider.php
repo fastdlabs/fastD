@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FastD\ServiceProvider;
 
+use InvalidArgumentException;
 use Throwable;
 use FastD\Application;
 use FastD\Config\FileParser;
@@ -12,6 +13,7 @@ use FastD\Container\ServiceProviderInterface;
 use FastD\Http\Session\Handler\NativeFileSessionHandler;
 use FastD\Http\Session\Handler\SwooleTableSessionHandler;
 use FastD\Http\Session\SessionMiddleware;
+use FastD\Session\Handler\SessionRedisHandler;
 
 /**
  * 注册 HTTP Session 能力（fastd/http 的 PSR-15 中间件）。
@@ -41,20 +43,43 @@ final class SessionServiceProvider implements ServiceProviderInterface
             return;
         }
 
-        $handlerName = (string) ($config['handler'] ?? 'auto');
-        $useTable = 'swoole_table' === $handlerName
-            || ('auto' === $handlerName && 'swoole' === $container->getRuntime());
+        $handlerClass = $config['handler'] ?? 'auto';
 
-        $handler = $useTable
-            ? new SwooleTableSessionHandler(
-                (int) ($config['ttl'] ?? 1440),
+        if (!is_string($handlerClass)) {
+            throw new InvalidArgumentException('Session handler must be a class name or an auto/native/swoole_table/redis alias.');
+        }
+
+        $handlerClass = ltrim($handlerClass, '\\');
+        $handlerClass = match ($handlerClass) {
+            'auto' => 'swoole' === $container->getRuntime()
+                ? SwooleTableSessionHandler::class
+                : NativeFileSessionHandler::class,
+            'swoole_table' => SwooleTableSessionHandler::class,
+            'native_file' => NativeFileSessionHandler::class,
+            'redis' => SessionRedisHandler::class,
+            default => $handlerClass,
+        };
+
+        $ttl = (int) ($config['ttl'] ?? 1440);
+        $maxDataSize = (int) ($config['swoole_table']['max_data_size'] ?? 4096);
+
+        $handler = match ($handlerClass) {
+            SwooleTableSessionHandler::class => new SwooleTableSessionHandler(
+                $ttl,
                 (int) ($config['swoole_table']['size'] ?? 2048),
-                (int) ($config['swoole_table']['max_data_size'] ?? 4096),
-            )
-            : new NativeFileSessionHandler(
+                $maxDataSize,
+            ),
+            NativeFileSessionHandler::class => new NativeFileSessionHandler(
                 (string) ($config['file']['path'] ?? ''),
-                (int) ($config['ttl'] ?? 1440),
-            );
+                $ttl,
+            ),
+            SessionRedisHandler::class => new SessionRedisHandler(
+                (array) ($config['redis'] ?? []),
+                $ttl,
+                $maxDataSize,
+            ),
+            default => throw new InvalidArgumentException(sprintf('Unsupported session handler "%s".', $handlerClass)),
+        };
 
         $container->add('session.handler', $handler);
 
