@@ -59,7 +59,7 @@
     "suggest": {
         "fastd/cache": "Optional cache component for applications that need caching.",
         "fastd/medoodb": "Optional MedooDB component for applications that need a database.",
-        "ext-redis": "Required by FastD\\Session\\Handler\\SessionRedisHandler."
+        "ext-redis": "Required by FastD\\Http\\Session\\Handler\\RedisSessionHandler."
     },
     "scripts": {
         "post-root-package-install": [
