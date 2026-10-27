@@ -14,7 +14,7 @@ class Console extends Runtime
 {
     public function input(): mixed
     {
-        $app = new Application($this->application->getName(), \FastD\Application::VERSION);
+        $app = new Application($this->application->getName());
 
         $commands = $this->application->config('command');
 

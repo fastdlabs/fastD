@@ -2,7 +2,7 @@
 
 namespace app\src\Http;
 
-use FastD\Http\Response\Response;
+use FastD\Http\Response\Text;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -12,6 +12,6 @@ class Hello implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return new Response('hello');
+        return new Text(200, 'hello');
     }
 }
