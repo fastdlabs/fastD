@@ -7,9 +7,7 @@
 
 <p align="center">
 <a href="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml"><img src="https://github.com/fastdlabs/fastD/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI"></a>
-<a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/quality-score.png?b=master" title="Scrutinizer Code Quality"></a>
-<a href="https://scrutinizer-ci.com/g/fastdlabs/fastD/?branch=master"><img src="https://scrutinizer-ci.com/g/fastdlabs/fastD/badges/coverage.png?b=master" alt="Code Coverage"></a>
-<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D8.2-brightgreen" /></a>
+<a href="http://www.php.net/"><img src="https://img.shields.io/badge/php-%3E%3D8.4.1-brightgreen" /></a>
 <a href="http://www.swoole.com/"><img src="https://img.shields.io/badge/swoole-%3E%3D4.5-brightgreen"/></a>
 <a href="https://fastdlabs.com/"><img src="https://poser.pugx.org/fastd/fastd/license" /></a>
 </p>
@@ -27,7 +25,7 @@ FastD 是一个轻量级的高性能 PHP Web 开发框架，基于 PSR 标准和
 
 ## 📋 要求
 
-- PHP >= 8.4
+- PHP >= 8.4.1
 - Swoole >= 4.5 (可选，用于高性能模式)
 - Composer
 
@@ -36,7 +34,7 @@ FastD 是一个轻量级的高性能 PHP Web 开发框架，基于 PSR 标准和
 ### 安装
 
 ```bash
-composer create-project fastd/fastd my-app
+composer create-project fastd/dobee my-app
 cd my-app
 ```
 
@@ -44,34 +42,32 @@ cd my-app
 
 ```bash
 # Swoole 模式（推荐）
-php server start
+php bin/server start
 
 # FastCGI 模式（传统 PHP-FPM）
 # 配置 Nginx 指向 web 目录
 
 # 命令行模式
-php console list
+php bin/console list
 
 # 多进程模式
-php process start
+php bin/process start
 ```
 
 ### 创建路由
 
 ```php
-// config/routes.php
+// routes/api.php
 return [
-    ['GET', '/hello', function($request) {
-        return json(['message' => 'Hello, FastD!']);
-    }],
+    ['GET', '/', \Http\Controller\WelcomeController::class],
 ];
 ```
 
 ### 访问服务
 
 ```bash
-curl http://localhost:9999/hello
-# {"message":"Hello, FastD!"}
+curl http://127.0.0.1:9527/
+# Hello FastD and goodbye FastD [swoole]
 ```
 
 ## 📚 架构设计
