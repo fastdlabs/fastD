@@ -100,6 +100,25 @@ curl http://127.0.0.1:9527/
 - [English Document (3.2)](https://fastdlabs.github.io/docs/#/en-us/3.2/readme)
 - [Session 指南](https://fastdlabs.github.io/docs/#/zh-cn/8.3/guide/session)
 
+## 🐳 Docker（开发/测试）
+
+FastD 是框架/库，不是可直接启动的应用。仓库中的 `Dockerfile` 只用于开发与 CI 测试镜像：
+
+```bash
+docker build -t fastd-test:8.3.1 .
+docker run --rm fastd-test:8.3.1
+```
+
+覆盖默认测试命令：
+
+```bash
+docker run --rm fastd-test:8.3.1 vendor/bin/phpunit --filter SomeTest
+```
+
+镜像包含 PHP 8.4、Swoole 6、PDO 和开发依赖。
+
+> 应用部署请使用 dobee 的 `Dockerfile`。FastD 本身没有可直接运行的应用入口。
+
 ## 🧪 测试
 
 ```bash
