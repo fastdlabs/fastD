@@ -95,9 +95,10 @@ curl http://127.0.0.1:9527/
 
 我们希望不仅仅是提供一个开发框架，更希望能够将自己的经验整理成解决方案，开发套件分享和贡献给社区。
 
-- [中文文档](http://docs.fastdlabs.com/#/zh-cn/3.2/readme)
-- [English Document](https://docs.fastdlabs.com/#/en-us/3.2/readme)
-- [Session 文档](docs/session.md)
+- [FastD 8.3 使用手册](https://fastdlabs.github.io/docs/#/zh-cn/8.3/readme)
+- [文档站点](https://fastdlabs.github.io/docs/)
+- [English Document (3.2)](https://fastdlabs.github.io/docs/#/en-us/3.2/readme)
+- [Session 指南](https://fastdlabs.github.io/docs/#/zh-cn/8.3/guide/session)
 
 ## 🧪 测试
 
