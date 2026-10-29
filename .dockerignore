@@ -1,0 +1,10 @@
+.git
+.github
+.idea
+.env
+.env.*
+build
+coverage
+runtime
+vendor
+composer.lock
