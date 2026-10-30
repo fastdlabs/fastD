@@ -45,7 +45,7 @@ class SseHelperTest extends TestCase
             {
             }
 
-            public function send(Event|string|array $event): void
+            public function send(string|array|object $event): void
             {
                 $this->frames[] = ($event instanceof Event ? $event : Event::data($event))->format();
             }
